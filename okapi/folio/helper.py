@@ -1,25 +1,28 @@
 # -*- coding: utf-8 -*-
 # Copyright (C) 2020 Tobias Weber <tobi-weber@gmx.de>
 
+import json
 import logging
 
-from okapi import set_config
+from okapi import helper as okapi_helper
+from okapi.config import CONFIG
+from okapi.folio.inventory import InventoryServices
 from okapi.folio.permissions import PermissionServices
-from okapi.folio.servicePoints import ServicePointServices
 from okapi.folio.users import UserServices
 from okapi.okapiClient import OkapiClient
 
 log = logging.getLogger("okapi.folio.helper")
-
-ADD_PERMS = ["okapi.proxy.modules.get"]
 
 
 def create_superuser(tenant: str, username: str = "admin", password: str = "folio"):
     okapi = OkapiClient()
 
     log.info("Disable authtoken for tenant.")
-    mod_authtoken = okapi.get_tenant_interface("authtoken", tenant)[0]
-    disabled_mods = okapi.disable_module(mod_authtoken["id"], tenant)
+    try:
+        mod_authtoken = okapi.get_tenant_interface("authtoken", tenant)[0]
+        disabled_mods = okapi.disable_module(mod_authtoken["id"], tenant)
+    except:
+        pass
 
     userServices = UserServices(tenant)
 
@@ -28,7 +31,7 @@ def create_superuser(tenant: str, username: str = "admin", password: str = "foli
         username, password, permissions=["perms.all"])
 
     log.info("Create service points for user record.")
-    servicepoints = ServicePointServices(tenant).get_servicePoints()
+    servicepoints = InventoryServices(tenant).get_servicePoints()
     servicepointsIds = [sp["id"] for sp in servicepoints["servicepoints"]]
     if servicepointsIds:
         log.debug(servicepoints)
@@ -55,7 +58,8 @@ def create_superuser(tenant: str, username: str = "admin", password: str = "foli
         if len(permission["childOf"]) == mods_perms:
             topLevelPermissions.append(permission["permissionName"])
 
-    topLevelPermissions.extend(ADD_PERMS)
+    add_perms = ["okapi.proxy.modules.get"]
+    topLevelPermissions.extend(add_perms)
 
     log.info("Assigning permissions")
     user_permissions = user_login["permissions"]["permissions"]
@@ -70,18 +74,19 @@ def create_superuser(tenant: str, username: str = "admin", password: str = "foli
         else:
             log.debug("\t%s already assigned", permission)
 
-    log.info("\nSuperuser %s created.", username)
+    log.info("Superuser %s created.", username)
 
     return user
 
 
 def login_supertenant(username, password):
     print("Logging in supertenant")
+    CONFIG.set_okapicfg("Okapi", "token", "")
     userServices = UserServices("supertenant")
     user_login = userServices.login_authn(username, password)
     if user_login is not None:
         headers = userServices.get_okapiClient().headers
-        set_config("Okapi", "token", headers["x-okapi-token"])
+        CONFIG.set_okapicfg("Okapi", "token", headers["x-okapi-token"])
     else:
         print("Login failed")
 
@@ -112,5 +117,27 @@ def secure_supertenant(username: str = "okapi_admin", password: str = "admin"):
     res = o.enable_module(authtoken, tenant)
     # print(res)
 
-    print("Successfully secured Okapi.")
     login_supertenant(username, password)
+    print("Successfully secured Okapi.")
+
+
+def install_stripes(fname, tenant: str):
+
+    with open(fname) as f:
+        data = json.load(f)
+    if isinstance(data, dict):
+        mods = data
+    elif isinstance(data, list):
+        mods = {}
+        for m in data:
+            p = m["id"].split("-")
+            version = p.pop()
+            if "SNAPSHOT" in version:
+                version = "%s-%s" % (p.pop(), version)
+            name = "-".join(p)
+            mods[name] = version
+    if not tenant in [e["id"] for e in OkapiClient().get_tenants()]:
+        OkapiClient().create_tenant(tenant)
+    modules = okapi_helper.create_okapiModules(mods)
+    okapi_helper.add_modules(modules)
+    okapi_helper.enable_modules(modules, tenant)

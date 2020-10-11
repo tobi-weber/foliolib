@@ -31,10 +31,9 @@ class UserServices(FolioServices):
             return None
         else:
             for user in users["users"]:
-                if username in user["username"]:
-                    print(user)
                 if user["username"] == username:
                     return user
+        log.error("User %s not found", username)
         return None
 
     def get_users(self):
@@ -99,11 +98,14 @@ class UserServices(FolioServices):
 
     def set_permissions(self, username: str, permissions: str):
         user = self.get_user(username)
+        if user is None:
+            return None
         perms_user = {"userId":  user["id"],
                       "permissions": permissions
                       }
         res = self._okapi.call_tenant_service("POST", "perms/users",
                                               self._tenant, data=perms_user)
+        return res
 
         #user_permissions = self.get_permissions(username)
         #user_perm_id = user_permissions["id"]

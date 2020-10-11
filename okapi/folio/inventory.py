@@ -8,7 +8,7 @@ from okapi.folio import FolioServices
 log = logging.getLogger("okapi.folio.permissions")
 
 
-class ServicePointServices(FolioServices):
+class InventoryServices(FolioServices):
 
     def get_servicePoints(self):
         return self._okapi.call_tenant_service("GET", "service-points", self._tenant)

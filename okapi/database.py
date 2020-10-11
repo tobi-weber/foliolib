@@ -6,15 +6,19 @@ import logging
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
-from okapi import DB_HOST, DB_PASSWORD, DB_PORT, DB_USER
+from okapi.config import CONFIG
 
 log = logging.getLogger("okapi.database")
 
 
 class Postgres:
 
-    def __init__(self, user: str = DB_USER, password: str = DB_PASSWORD, database: str = "postgres",
-                 host: str = DB_HOST, port: str = DB_PORT) -> None:
+    def __init__(self, user: str = None, password: str = None, database: str = "postgres",
+                 host: str = None, port: str = "5432") -> None:
+        host = host or CONFIG.okapicfg().get("Postgres", "host")
+        port = port or CONFIG.okapicfg().get("Postgres", "port")
+        user = user or CONFIG.okapicfg().get("Postgres", "user")
+        password = password or CONFIG.okapicfg().get("Postgres", "password")
         log.debug("Open postgres %s:%s with database %s", host, port, database)
         self._con = psycopg2.connect(database=database, user=user,
                                      password=password, host=host,

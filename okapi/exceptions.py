@@ -16,7 +16,3 @@ class OkapiNotFound(OkapiException):
 
 class OkapiForbidden(OkapiException):
     pass
-
-
-class TenantNotFound(OkapiNotFound):
-    pass

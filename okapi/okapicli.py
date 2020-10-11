@@ -1,48 +1,43 @@
 # -*- coding: utf-8 -*-
 # Copyright (C) 2020 Tobias Weber <tobi-weber@gmx.de>
 
-import argparse
 import json
-import os
 import pprint
-import shutil
-import sys
 
-import okapi
-from okapi import (DB_HOST, DB_PORT, OKAPI_HOST, OKAPI_PORT, database, helper,
-                   installer)
+from okapi import database, helper
+from okapi.basecli import BaseCLI
+from okapi.config import CONFIG
 from okapi.okapiClient import OkapiClient
 from okapi.okapiModule import OkapiModule
 
 
-class OkapiCLI:
+class OkapiCLI(BaseCLI):
 
     def __init__(self):
-        parser = argparse.ArgumentParser(
-            description='okapi command line interface',
-            usage='''okapicli <command> [<args>]
-
-   Commands:
-
-    servers                 List available server configs
-    setServer               Set server config
+        description = "Okapi command line interface"
+        usage = "okapicli <command> [<args>]"
+        commands = """
     db                      Set db in env
     installModules          Add, deploy and enable modules for a tenant
-    installStripesModules   Add and enable stipes modules
-    addModule               Add a modul from Moduledescriptor.json
-    addModules              Add modules descriptors from dir with ModuleDescriptor.json files
+    addModule               Add module by name and version
+    addModules              Add modules descriptors from json dict
+    addModuleDescriptor     Add a modul from Moduledescriptor.json
+    addModuleDescriptors    Add modules descriptors from dir with ModuleDescriptor.json files
     removeModule            Remove a modul
     deployModule            Deploy a modul for a node
     undeployModule          Undeploy a modul
     enableModule            Enable a modul for a tenant
-    enable_modules          Enable a moduls for a tenant
+    enableModules           Enable a moduls for a tenant
     disableModule           Disable a modul
-    createTenant            Create a tenant
+    addTenant               Create a tenant
     removeTenant            Remove a tenant
 
 Inspection
+    version                 Show Okapi version
+    health                  Show health of modules
     env                     Show env
     nodes                   Show nodes
+    module                  Show ModulDescriptor of a module
     modules                 Show modules
     deployed                Show deployes modules
     tenants                 Show tenants
@@ -50,211 +45,190 @@ Inspection
     tenantInterface         Show interface for a tenant
     tenantInterfaces        Show interfaces for a tenant
     pgdb                    Show complete Postgres db
-    descriptor              Show a descriptor from db
-    descriptors             Show all descriptors from db
 
 Database
     initdb                  Initialize okapi db
     initmoduledb            Initialize module db
     purgemoduledb           Purge module db and delete all users for a tenant
 
-''')
-        parser.add_argument('command', help='Subcommand to run')
-        args = parser.parse_args(sys.argv[1:2])
-        if not hasattr(self, args.command):
-            print("Unrecognized command")
-            parser.print_help()
-            exit(1)
-        print("%s - %s" % (okapi.get_server(),
-                           okapi.CONFIG.get("Okapi", "host")))
-        getattr(self, args.command)()
-
-    def setServer(self):
-        parser = self.__get_parser("setServer")
-        parser.add_argument("name", help="server name")
-        parser.add_argument("-s", "--server", default="", help="")
-        parser.add_argument("-p", "--port", default="9130", help="")
-        args = self.__get_args(parser)
-        okapi.set_server(args.name)
-        if not os.path.exists(os.path.join(okapi.get_server_confdir(), "okapi.conf")):
-            okapi.create_new_config(
-                okapi_host=args.server, okapi_port=args.port)
-        print(f"Load configs for server {args.name}")
-        okapi.load_okapi_conf()
-
-    def servers(self):
-        self.__get_parser("servers")
-        print(f"Active server is {okapi.get_server()}")
-        for f in os.listdir(okapi.get_confdir()):
-            if not f == ".server":
-                print(f)
-
-    def delServer(self):
-        parser = self.__get_parser("delServer")
-        parser.add_argument("name", help="server name")
-        args = self.__get_args(parser)
-        print(f"Del configs for server {args.name}")
-        confdir = os.path.join(okapi.get_confdir(), args.name)
-        if os.path.exists(confdir):
-            print(f"Del {confdir}")
-            shutil.rmtree(confdir)
-        else:
-            print(f"Config for {args.name} does not exist")
-        okapi.set_server("default")
-        okapi.load_okapi_conf()
+"""
+        super().__init__(description, usage, commands)
 
     def db(self):
-        parser = self.__get_parser("db")
+        host = CONFIG.okapicfg().get("Postgres", "host")
+        port = CONFIG.okapicfg().get("Postgres", "port")
+        parser = self._get_parser("db")
         parser.add_argument("-u", "--user",
                             default="folio_admin", help=" ")
         parser.add_argument("-p", "--password",
                             default="folio_admin", help=" ")
         parser.add_argument("-d", "--database",
                             default="okapi_modules", help=" ")
-        parser.add_argument("-s", "--server", default=DB_HOST, help="")
-        parser.add_argument("-o", "--port", default=DB_PORT, help=" ")
-        args = self.__get_args(parser)
-        print("Set db parameters")
+        parser.add_argument("-s", "--server", default=host, help="")
+        parser.add_argument("-o", "--port", default=port, help=" ")
+        args = self._get_args(parser)
+        print("Set db parameters:")
+        print(f"\tdb server: \t{args.server}")
+        print(f"\tdb port: \t{args.port}")
+        print(f"\tdatabase \t{args.database}")
+        print(f"\tusername: \t{args.user}")
+        print(f"\tpassword: \t{args.password}")
         helper.set_env_db(args.server, args.port, args.user,
                           args.password, args.database)
 
-    def installModules(self):
-        parser = self.__get_parser("installModules")
-        parser.add_argument("file", help="path to okapi_install.json")
-        parser.add_argument("tenant", help="tenant id")
-        parser.add_argument("-n", "--node", default=OKAPI_HOST, help="node id")
-        parser.add_argument("--loadSample",  help="", action="store_true")
-        parser.add_argument("--purge",  help="", action="store_true")
-        parser.add_argument("--simulate",  help="", action="store_true")
-        parser.add_argument("--preRelease",  help="", action="store_true")
-        parser.add_argument("--ignoreErrors", help="", action="store_true")
-        parser.add_argument("--loadReference",  help="", action="store_true")
-        parser.add_argument(
-            "-c", "--cache",  help="path to cache dir", default="descriptors")
-        args = self.__get_args(parser)
-        installer.install_with_okapi_install_file(
-            args.file, args.node, args.tenant, preRelease=args.preRelease,
-            ignoreErrors=args.ignoreErrors, purge=args.purge, simulate=args.simulate,
-            loadSample=args.loadSample, loadReference=args.loadReference, cache_dir=args.cache)
-
     def addModule(self):
-        parser = self.__get_parser("addModule")
-        parser.add_argument("descriptor",
+        parser = self._get_parser("addModule")
+        parser.add_argument("module", help="Module, e.g. mod-users")
+        parser.add_argument("-v", "--version", help="Version, e.g. 17.1.0")
+        args = self._get_args(parser)
+        print(f"Add module {args.module} {args.version}")
+        module = helper.create_okapiModule(
+            args.module, version=args.version)
+        OkapiClient().add_module(module)
+
+    def addModules(self):
+        parser = self._get_parser("addModules")
+        parser.add_argument("file",
+                            help="Path to json object, e.g. {'MODULE1': 'VERSION', 'MODULE2': 'VERSION'}]")
+        args = self._get_args(parser)
+        with open(args.file) as f:
+            mods = json.load(f)
+        modules = helper.create_okapiModules(mods)
+        helper.add_modules(modules)
+
+    def addModuleDescriptor(self):
+        parser = self._get_parser("addModule")
+        parser.add_argument("file",
                             help="Path to ModulDescriptor")
-        parser.add_argument(
-            "-m", "--modid", help="Modul id, e.g. mod-users-17.1.0")
-        args = self.__get_args(parser)
-        print(f"Add module {args.descriptor}")
-        with open(args.descriptor) as f:
+        args = self._get_args(parser)
+        print(f"Add module {args.file}")
+        with open(args.file) as f:
             descriptor = json.load(f)
         OkapiClient().add_module(OkapiModule(descriptor))
 
-    def addModules(self):
-        parser = self.__get_parser("addModules")
-        parser.add_argument("path",
+    def addModuleDescriptors(self):
+        parser = self._get_parser("addModules")
+        parser.add_argument("dir",
                             help="Path to ModulDescriptors dir")
-        args = self.__get_args(parser)
-        helper.add_modules_by_dir(args.path)
+        args = self._get_args(parser)
+        helper.add_modules_by_dir(args.dir)
 
     def removeModule(self):
-        parser = self.__get_parser("removeModule")
-        parser.add_argument("modid", help="Modul id, e.g. mod-users-17.1.0")
-        args = self.__get_args(parser)
+        parser = self._get_parser("removeModule")
+        parser.add_argument("modid", nargs='?',
+                            help="Modul id, e.g. mod-users-17.1.0")
+        args = self._get_args(parser)
         print(f"Remove module {args.modid}")
-        OkapiClient().remove_module(args.modid)
+        for modid in args.modid:
+            OkapiClient().remove_module(modid)
 
     def deployModule(self):
-        parser = self.__get_parser("deployModule")
-        parser.add_argument("modid", help="Modul id, e.g. mod-users-17.1.0")
-        parser.add_argument("-n", "--node", default=OKAPI_HOST, help="node id")
-        args = self.__get_args(parser)
+        parser = self._get_parser("deployModule")
+        parser.add_argument(
+            "modid", nargs='?', help="Modul id, e.g. mod-users-17.1.0. Can be repeated")
+        args = self._get_args(parser)
         print(f"Deploy module {args.modid} for node {args.node}")
-        OkapiClient().deploy_module(args.modid, args.node)
+        for modid in args.modid:
+            OkapiClient().deploy_module(modid, args.node)
 
     def undeployModule(self):
-        parser = self.__get_parser("undeployModule")
-        parser.add_argument("modid", help="Modul id, e.g. mod-users-17.1.0")
-        parser.add_argument("-n", "--node", default=OKAPI_HOST, help="node id")
-        parser.add_argument("-p", "--port", default=OKAPI_PORT, help="port")
-        args = self.__get_args(parser)
-        print(f"Unploy module {args.modid}")
-        OkapiClient().undeploy_module(args.modid, args.node, args.port)
+        parser = self._get_parser("undeployModule")
+        parser.add_argument(
+            "modid", nargs='?', help="Modul id, e.g. mod-users-17.1.0. Can be repeated")
+        args = self._get_args(parser)
+        print(f"Undeploy module {args.modid}")
+        for modid in args.modid:
+            OkapiClient().undeploy_module(modid)
+
+    def undeployAll(self):
+        self._get_parser("undeployAll")
+        print("Undeploy all modules")
+        OkapiClient().undeploy_modules()
 
     def enableModule(self):
-        parser = self.__get_parser("enableModule")
-        parser.add_argument("modid", help="Modul id, e.g. mod-users-17.1.0")
+        parser = self._get_parser("enableModule")
         parser.add_argument("tenant", help="tenant id")
-        args = self.__get_args(parser)
+        parser.add_argument(
+            "modid", nargs='?', help="Modul id, e.g. mod-users-17.1.0. Can be repeated")
+        parser.add_argument("--loadSample",  help="", action="store_true")
+        parser.add_argument("--loadReference",  help="", action="store_true")
+        parser.add_argument(
+            "--query",  help="json object with query paramteters")
+        args = self._get_args(parser)
+        query = json.loads(args.query) if args.query else {}
         print(f"Enable module {args.modid} for tenant {args.tenant}")
-        OkapiClient().enable_module(args.modid, args.tenant)
-
-    def enableModules(self):
-        parser = self.__get_parser("enableModules")
-        parser.add_argument("modules", help="Json modules file")
-        parser.add_argument("tenant", help="tenant id")
-        args = self.__get_args(parser)
-        helper.enable_modules(args.modules, args.tenant)
+        for modid in args.modid:
+            OkapiClient().enable_module(modid, args.tenant,
+                                        loadSample=args.loadSample,
+                                        loadReference=args.loadReference,
+                                        **query)
 
     def disableModule(self):
-        parser = self.__get_parser("disableModule")
-        parser.add_argument("modid", help="Modul id, e.g. mod-users-17.1.0")
+        parser = self._get_parser("disableModule")
         parser.add_argument("tenant", help="tenant id")
-        args = self.__get_args(parser)
+        parser.add_argument("modid", nargs='?',
+                            help="Modul id, e.g. mod-users-17.1.0. Can be repeated")
+        args = self._get_args(parser)
         print(f"Disable module {args.modid} for tenant {args.tenant}")
-        OkapiClient().disable_module(args.modid, args.tenant)
+        for modid in args.modid:
+            OkapiClient().disable_module(modid, args.tenant)
 
-    def createTenant(self):
-        parser = self.__get_parser("createTenant")
+    def addTenant(self):
+        parser = self._get_parser("createTenant")
         parser.add_argument("tenant", help="tenant id")
         parser.add_argument("-a", "--name", default="", help="tenant name")
         parser.add_argument("-d", "--description", default="",
                             help="tenant description long")
-        args = self.__get_args(parser)
+        args = self._get_args(parser)
         print(f"Create tenant: {args.tenant}")
         print(f"Name: {args.name}")
         print(f"Description: {args.description}")
         OkapiClient().create_tenant(args.tenant, args.name, args.description)
 
     def removeTenant(self):
-        parser = self.__get_parser("removeTenant")
+        parser = self._get_parser("removeTenant")
         parser.add_argument("tenant", help="tenant id")
-        args = self.__get_args(parser)
+        args = self._get_args(parser)
         print(f"Remove tenant: {args.tenant}")
         OkapiClient().remove_tenant(args.tenant)
 
-    def initdb(self):
-        parser = self.__get_parser("initdb")
-        parser.add_argument("-u", "--user", default="okapi", help=" ")
-        parser.add_argument("-p", "--password",
-                            default="okapi25", help=" ")
-        parser.add_argument("-d", "--database", default="okapi", help=" ")
-        args = self.__get_args(parser)
-
-        database.create_okapi_db(user=args.user, password=args.password,
-                                 database=args.database)
-
-    def initmoduledb(self):
-        parser = self.__get_parser("initmoduledb")
+    def installModules(self):
+        parser = self._get_parser("installModules")
         parser.add_argument(
-            "-u", "--user", default="folio_admin", help=" ")
-        parser.add_argument("-p", "--password",
-                            default="folio_admin", help=" ")
-        parser.add_argument("-d", "--database",
-                            default="okapi_modules", help=" ")
-        args = self.__get_args(parser)
-        database.create_modules_db(
-            user=args.user, password=args.password, database=args.database)
-
-    def purgemoduledb(self):
-        parser = self.__get_parser("purgemoduledb")
+            "file", help="Path to okapi_install.json file or file with json object, e.g. {'MODULE1': 'VERSION', 'MODULE2': 'VERSION'}]")
         parser.add_argument("tenant", help="tenant id")
-        parser.add_argument("-d", "--database",
-                            default="okapi_modules", help=" ")
-        args = self.__get_args(parser)
-        database.purge_modules_db(args.tenant, database=args.database)
+        parser.add_argument(
+            "-n", "--node", default=self._get_node(), help="node id")
+        parser.add_argument("--loadSample",  help="", action="store_true")
+        parser.add_argument("--loadReference",  help="", action="store_true")
+        parser.add_argument(
+            "--query",  help="json object with query paramteters")
+        args = self._get_args(parser)
+        query = json.loads(args.query) if args.query else {}
+        helper.install_okapi(args.file, args.node, args.tenant,
+                             loadSample=args.loadSample,
+                             loadReference=args.loadReference,
+                             **query)
+
+    def version(self):
+        self._get_parser("version")
+        print(OkapiClient().version())
+
+    def health(self):
+        parser = self._get_parser("health")
+        parser.add_argument("-s", "--serviceId", help="")
+        parser.add_argument("-i", "--instanceId", help="requires serviceId")
+        args = self._get_args(parser)
+        res = OkapiClient().health(args.serviceId, args.instanceId)
+        if isinstance(res, dict):
+            res = [res]
+        print("Service ID\t\t\t\t\tMessage\t\tInstall ID\t\t\t\tStatus")
+        for e in res:
+            print("%s\t%s\t\t%s\t%s" % (e["srvcId"].ljust(
+                40), e["healthMessage"], e["instId"], e["healthStatus"]))
 
     def env(self):
-        self.__get_parser("env")
+        self._get_parser("env")
         env = OkapiClient().get_env()
         if not env:
             print("No entries in okapi enviroment!")
@@ -264,26 +238,42 @@ Database
             print(f"{k}\t{v}")
 
     def nodes(self):
-        self.__get_parser("nodes")
+        self._get_parser("nodes")
         nodes = OkapiClient().get_nodes()
         for e in nodes:
-            k = e["nodeId"]
-            v = e["url"]
-            print(f"{k}\t{v}")
+            s = ""
+            s += e["nodeId"]
+            s += "\t"
+            s += e["url"].ljust(25)
+            if "nodeName" in e:
+                s += "\t"
+                s += e["nodeName"]
+            print(s)
+
+    def module(self):
+        parser = self._get_parser("module")
+        parser.add_argument("modid", help="Modul id, e.g. mod-users-17.1.0")
+        args = self._get_args(parser)
+        mod = OkapiClient().get_module(args.modid)
+        print(json.dumps(mod, indent=2))
 
     def modules(self):
-        self.__get_parser("modules")
-        mods = OkapiClient().get_modules()
+        parser = self._get_parser("modules")
+        parser.add_argument(
+            "--query",  help="json object with query paramteters")
+        args = self._get_args(parser)
+        query = json.loads(args.query) if args.query else {}
+        mods = OkapiClient().get_modules(**query)
         for e in mods:
             k = e["id"].ljust(40)
             v = e["name"]
             print(f"{k}\t{v}")
 
     def deployed(self):
-        parser = self.__get_parser("deployed")
+        parser = self._get_parser("deployed")
         parser.add_argument("-v", "--verbose", help="increase output verbosity",
                             action="store_true")
-        args = self.__get_args(parser)
+        args = self._get_args(parser)
         mods = OkapiClient().get_deployed_modules()
         if args.verbose:
             pp = pprint.PrettyPrinter(indent=2)
@@ -303,7 +293,7 @@ Database
                 print(f"{m}\t{n}\t{u}\t{d}")
 
     def tenants(self):
-        self.__get_parser("tenants")
+        self._get_parser("tenants")
         tenants = OkapiClient().get_tenants()
         for e in tenants:
             k = e["id"].ljust(15)
@@ -311,35 +301,47 @@ Database
             d = e["description"]
             print(f"{k}\t{n}\t{d}")
 
+    def tenantModules(self):
+        parser = self._get_parser("tenantModules")
+        parser.add_argument("tenant", help="tenant id")
+        parser.add_argument(
+            "--query",  help="json object with query paramteters")
+        args = self._get_args(parser)
+        query = json.loads(args.query) if args.query else {}
+        mods = OkapiClient().get_tenant_modules(args.tenant,
+                                                **query)
+        for e in mods:
+            k = e["id"]
+            print(f"{k}")
+
     def tenantInterface(self):
-        parser = self.__get_parser("tenantInterface")
+        parser = self._get_parser("tenantInterface")
         parser.add_argument("tenant", help="tenant id")
         parser.add_argument("interface", help="interface id")
-        args = self.__get_args(parser)
-        interface = OkapiClient().get_tenant_interface(args.interface, args.tenant)
+        parser.add_argument(
+            "--query",  help="json object with query paramteters")
+        args = self._get_args(parser)
+        query = json.loads(args.query) if args.query else {}
+        interface = OkapiClient().get_tenant_interface(args.interface, args.tenant,
+                                                       **query)
         print(interface[0]["id"])
 
     def tenantInterfaces(self):
-        parser = self.__get_parser("tenantInterfaces")
+        parser = self._get_parser("tenantInterfaces")
         parser.add_argument("tenant", help="tenant id")
-        args = self.__get_args(parser)
-        interfaces = OkapiClient().get_tenant_interfaces(args.tenant)
+        parser.add_argument(
+            "--query",  help="json object with query paramteters")
+        args = self._get_args(parser)
+        query = json.loads(args.query) if args.query else {}
+        interfaces = OkapiClient().get_tenant_interfaces(args.tenant,
+                                                         **query)
         for e in sorted(interfaces, key=lambda e: e["id"]):
             k = e["id"].ljust(35)
             n = e["version"]
             print(f"{k}\t{n}")
 
-    def tenantModules(self):
-        parser = self.__get_parser("tenantModules")
-        parser.add_argument("tenant", help="tenant id")
-        args = self.__get_args(parser)
-        mods = OkapiClient().get_tenant_modules(args.tenant)
-        for e in mods:
-            k = e["id"]
-            print(f"{k}")
-
     def pgdb(self):
-        parser = self.__get_parser("pgdb")
+        self._get_parser("pgdb")
         print("### Users:")
         for user in database.get_users():
             print(user)
@@ -352,23 +354,35 @@ Database
                     for t in database.get_tables(s, db):
                         print(f"\t\t\t{t}")
 
-    def descriptor(self):
-        parser = self.__get_parser("descriptor")
-        parser.add_argument("modid", help="Modul id, e.g. mod-users-17.1.0")
-        args = self.__get_args(parser)
-        descriptor = database.get_descriptor(args.modid)
-        pp = pprint.PrettyPrinter(indent=2)
-        pp.pprint(descriptor)
+    def initdb(self):
+        parser = self._get_parser("initdb")
+        parser.add_argument("-u", "--user", default="okapi", help=" ")
+        parser.add_argument("-p", "--password",
+                            default="okapi25", help=" ")
+        parser.add_argument("-d", "--database", default="okapi", help=" ")
+        args = self._get_args(parser)
 
-    def descriptors(self):
-        self.__get_parser("descriptors")
-        descriptors = database.get_descriptors()
-        for d in descriptors:
-            print(d)
+        database.create_okapi_db(user=args.user, password=args.password,
+                                 database=args.database)
 
-    def __get_parser(self, cmd, description=""):
-        return argparse.ArgumentParser(f"okapicli {cmd}",
-                                       description=description, formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    def initmoduledb(self):
+        parser = self._get_parser("initmoduledb")
+        parser.add_argument(
+            "-u", "--user", default="folio_admin", help=" ")
+        parser.add_argument("-p", "--password",
+                            default="folio_admin", help=" ")
+        parser.add_argument("-d", "--database",
+                            default="okapi_modules", help=" ")
+        args = self._get_args(parser)
+        database.create_modules_db(
+            user=args.user, password=args.password, database=args.database)
 
-    def __get_args(self, parser):
-        return parser.parse_args(sys.argv[2:])
+    def purgemoduledb(self):
+        parser = self._get_parser("purgemoduledb")
+        parser.add_argument("tenant", help="tenant id")
+        parser.add_argument("-d", "--database",
+                            default="okapi_modules", help=" ")
+        args = self._get_args(parser)
+        print(
+            f"Purge modules for tenant {args.tenant} in database {args.database}")
+        database.purge_modules_db(args.tenant, database=args.database)

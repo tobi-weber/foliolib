@@ -7,9 +7,10 @@ import os
 import pprint
 import sys
 
-from okapi.okapiClient import OkapiClient
-from okapi.okapiModule import (OkapiModule, makeOkapiModule,
-                               makeOkapiModule_with_pkg)
+from okapi.config import CONFIG
+from okapi.okapiClient import (OkapiClient, request_release,
+                               request_snapshot_version)
+from okapi.okapiModule import OkapiModule
 
 log = logging.getLogger("okapi.helper")
 
@@ -42,79 +43,44 @@ def set_env_db(db_host: str, db_port: str = "5432", username: str = "folio_admin
     okapi.set_env("DB_MAXPOOLSIZE", "5")
 
 
-def load_okapi_install(fname: str):
-    mods = []
-    with open(fname) as f:
-        d = json.load(f)
-        for m in d:
-            p = m["id"].split("-")
-            version = p.pop()
-            name = "-".join(p)
-            mods.append((name, version))
+def create_okapiModule(name: str, version: str = None):
 
-    return mods
+    def makeOkapiModule(name: str, version: str = None):
+        okapiClient = OkapiClient(host=CONFIG.pyokapicfg().get("PullNode", "host"),
+                                  port=CONFIG.pyokapicfg().get("PullNode", "port"))
+        if version is None:
+            version = request_release(name)["version"]
+        modId = f"{name}-{version}"
+        descriptor = okapiClient.get_module(modId)
+        if "launchDescriptor" in descriptor:
+            descriptor["launchDescriptor"]["dockerPull"] = True
+        return OkapiModule(descriptor)
 
-
-def create_modules_from_snapshots(modlist: str, cache_dir: str = "/tmp/descriptors",
-                                  docker_repository: str = "folioci"):
-    if not os.path.exists(cache_dir):
-        os.mkdir(cache_dir)
-    modules = {}
-    for name, version in modlist:
-        print(f"Create Descriptor: {name} - {version}")
-        descriptor_fname = f"ModuleDescriptor-{name}-snapshot.json"
-        fname = os.path.join("descriptors", descriptor_fname)
+    log.info("Create Descriptor: %s - %s", name, version)
+    cache_dir = CONFIG.pyokapicfg().get("Cache", "descriptors")
+    descriptor_fname = f"ModuleDescriptor-{name}-{version}.json"
+    fname_cache = os.path.join(cache_dir, descriptor_fname)
+    if os.path.exists(fname_cache):
+        log.info("Load descriptor from %s", fname_cache)
+        with open(fname_cache) as f:
+            descriptor = json.load(f)
+        module = OkapiModule(descriptor=descriptor)
+    else:
+        module = makeOkapiModule(name, version=version)
+        log.debug("Create descriptor for %s", module.get_modId())
+        descriptor_fname = f"ModuleDescriptor-{module.get_modId()}.json"
         fname_cache = os.path.join(cache_dir, descriptor_fname)
-        if os.path.exists(fname_cache):
-            print(f"Load descriptor from {fname_cache}")
-            with open(fname_cache) as f:
-                descriptor = json.load(f)
-            m = OkapiModule(descriptor=descriptor)
-        elif os.path.exists(fname):
-            print(f"Load descriptor from {fname}")
-            with open(fname) as f:
-                descriptor = json.load(f)
-            m = makeOkapiModule(name, version=version, descriptor=descriptor,
-                                docker_repository=docker_repository)
-            with open(fname_cache, "w") as f:
-                json.dump(m.get_descriptor(), f, indent=2)
-        else:
-            m = makeOkapiModule(name, version=version,
-                                docker_repository=docker_repository)
-            print(f"Write descriptor to {fname_cache}")
-            with open(fname_cache, "w") as f:
-                json.dump(m.get_descriptor(), f, indent=2)
-        modules[m.get_modId()] = m
-        print(f"Docker Image: {m.get_docker_image()}")
+        log.debug("Write descriptor to %s", fname_cache)
+        with open(fname_cache, "w") as f:
+            json.dump(module.get_descriptor(), f, indent=2)
+    log.debug("Docker Image: %s", module.get_docker_image())
 
-    return modules
+    return module
 
 
-def create_modules_from_releases(modlist: str, cache_dir: str = "descriptors", pkg_dir: str = "pkg"):
-    if not os.path.exists(cache_dir):
-        os.mkdir(cache_dir)
-    modules = {}
-    for name, version in modlist:
-        print(f"Create Descriptor: {name} - {version}")
-        descriptor_fname = f"ModuleDescriptor-{name}-{version}.json"
-        fname_cache = os.path.join(cache_dir, descriptor_fname)
-        if os.path.exists(fname_cache):
-            print(f"Load descriptor from {fname_cache}")
-            with open(fname_cache) as f:
-                descriptor = json.load(f)
-            m = OkapiModule(descriptor=descriptor)
-        else:
-            m = makeOkapiModule_with_pkg(
-                name, version=version, pkg_dir=pkg_dir)
-            descriptor_fname = f"ModuleDescriptor-{m.get_modId()}.json"
-            fname_cache = os.path.join(cache_dir, descriptor_fname)
-            print(f"Write descriptor to {fname_cache}")
-            with open(fname_cache, "w") as f:
-                json.dump(m.get_descriptor(), f, indent=2)
-        modules[m.get_modId()] = m
-        print(f"Docker Image: {m.get_docker_image()}")
-
-    return modules
+def create_okapiModules(modlist: dict):
+    return [create_okapiModule(name, version=version)
+            for name, version in modlist.items()]
 
 
 def add_modules(modules: list):
@@ -122,34 +88,39 @@ def add_modules(modules: list):
     okapi = OkapiClient()
 
     def add_requirements(name, mod):
-        print(f"\t Add requirements for {name}")
+        log.debug("Add requirements for %s", name)
         for require in mod.get_requires():
-            print(f"\t\t find {require}")
-            for name, module in modules.items():
+            log.debug("find %s", require)
+            for module in modules:
+                name = module.get_modId()
                 if require in module.get_provides():
-                    print(f"\t\t Found in {name}")
+                    log.debug("Found in %s", name)
                     if not name in added_modules:
-                        print(f"\t Add {name}")
+                        log.debug("Prepare %s", name)
                         add_requirements(name, module)
+                        log.info("Add %s", name)
                         okapi.add_module(module)
                         added_modules.append(name)
                     else:
-                        print(f"\t {name} already added")
+                        log.debug("%s already added", name)
 
-    for name, module in modules.items():
+    for module in modules:
+        name = module.get_modId()
         if not name in added_modules:
-            print(f"Add {name}")
+            log.debug("Prepare %s", name)
             add_requirements(name, module)
+            log.info("Add %s", name)
             okapi.add_module(module)
             added_modules.append(name)
         else:
-            print(f"{name} already added")
+            log.debug("%s already added", name)
 
     success = True
     added_modules = [m["id"] for m in okapi.get_modules()]
-    for name in modules.keys():
+    for module in modules:
+        name = module.get_modId()
         if not name in added_modules:
-            print(f"ERROR: Can not add modul {name}")
+            log.error("Can not add modul %s", name)
             success = False
 
     return success
@@ -157,7 +128,7 @@ def add_modules(modules: list):
 
 def add_modules_by_dir(path: str):
     if os.path.exists(path):
-        modules = {}
+        modules = []
         for fname in os.listdir(path):
             with open(os.path.join(path, fname)) as f:
                 try:
@@ -167,67 +138,65 @@ def add_modules_by_dir(path: str):
                     print(os.path.join(path, fname))
                     pp.pprint((descriptor))
                     raise
-            modules[descriptor["id"]] = OkapiModule(descriptor)
+            modules.append(OkapiModule(descriptor))
         add_modules(modules)
         return modules
-    else:
-        print(f"Path {path} does not exist!")
-        sys.exit(1)
+
+    log.info("Path %s does not exist!", path)
+    sys.exit(1)
 
 
 def deploy_modules(modules: list, node: str):
     okapi = OkapiClient()
     deployed_modules = [m["srvcId"] for m in okapi.get_deployed_modules()]
-    for name in modules.keys():
+    for module in modules:
+        name = module.get_modId()
         if not name in deployed_modules:
-            print(f"Deploy {name}")
+            log.info("Deploy %s", name)
             okapi.deploy_module(name, node)
             deployed_modules.append(name)
         else:
-            print(f"Module {name} already deployed")
-    # Check if all is deployed
+            log.info("Module %s already deployed", name)
+    # Check if all deployed
     deployed_modules = [m["srvcId"] for m in okapi.get_deployed_modules()]
-    for name in modules.keys():
+    for module in modules:
+        name = module.get_modId()
         if not name in deployed_modules:
-            print(f"ERROR: {name} is not deployed")
+            log.error("%s is not deployed", name)
 
 
-def enable_modules(modules, tenant: str, preRelease: bool = False,
-                   ignoreErrors: bool = False, purge: bool = False, simulate: bool = False,
-                   deploy: bool = False, loadSample: bool = False, loadReference: bool = False):
-    pp = pprint.PrettyPrinter(indent=2)
+def enable_modules(modules, tenant: str,
+                   loadSample: bool = False, loadReference: bool = False):
     okapi = OkapiClient()
 
     def get_tenant_modules():
         return [m["id"] for m in okapi.get_tenant_modules(tenant)]
 
     def add_module(name, module):
-        print(f"Add {name} to tenant {tenant}")
-        res = okapi.enable_module(module.get_modId(), tenant,
-                                  preRelease=preRelease, deploy=deploy,
-                                  ignoreErrors=ignoreErrors, purge=purge, simulate=simulate,
-                                  loadSample=loadSample, loadReference=loadReference)
-        # pp.pprint(res)
-        # pp.pprint(o.get_tenant_modules(tenant))
+        log.info("Enable %s for tenant %s", name, tenant)
+        okapi.enable_module(module.get_modId(), tenant,
+                            loadSample=loadSample, loadReference=loadReference)
 
     def add_requirements(name, mod):
-        print(f"Add requirements for {name}")
+        log.debug("Add requirements for %s", name)
         for require in mod.get_requires():
-            print(f"\t find {require}")
-            for name, module in modules.items():
+            log.debug("find %s", require)
+            for module in modules:
+                name = module.get_modId()
                 if require in module.get_provides():
-                    print(f"\t Found in {name}")
+                    log.debug("Found in %s", name)
                     if not name in get_tenant_modules():
                         add_requirements(name, module)
                         add_module(name, module)
                     else:
-                        print(f"{name} already enabled")
-    for name, module in modules.items():
+                        log.debug("%s already enabled", name)
+    for module in modules:
+        name = module.get_modId()
         if not name in get_tenant_modules():
             add_requirements(name, module)
             add_module(name, module)
         else:
-            print(f"{name} already enabled")
+            log.debug("%s already enabled", name)
 
 
 def disable_modules(tenant: str):
@@ -236,3 +205,25 @@ def disable_modules(tenant: str):
         names = [m["id"] for m in okapi.get_tenant_modules(tenant)]
         for name in names:
             okapi.disable_module(name, tenant)
+
+
+def install_okapi(fname, node: str, tenant: str, loadSample: bool = False, loadReference: bool = False):
+
+    with open(fname) as f:
+        data = json.load(f)
+    if isinstance(data, dict):
+        mods = data
+    elif isinstance(data, list):
+        mods = {}
+        for m in data:
+            p = m["id"].split("-")
+            version = p.pop()
+            name = "-".join(p)
+            mods[name] = version
+    if not tenant in [e["id"] for e in OkapiClient().get_tenants()]:
+        OkapiClient().create_tenant(tenant)
+    modules = create_okapiModules(mods)
+    add_modules(modules)
+    deploy_modules(modules, node)
+    enable_modules(modules, tenant, loadSample=loadSample,
+                   loadReference=loadReference)
