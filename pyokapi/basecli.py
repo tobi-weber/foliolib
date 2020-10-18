@@ -6,35 +6,38 @@ import os
 import shutil
 import sys
 
-from okapi.config import CONFIG
-from okapi.okapiClient import OkapiClient
+from pyokapi.config import CONFIG
+from pyokapi.okapi.okapiClient import OkapiClient
 
 
 class BaseCLI:
 
     def __init__(self, description, usage, commands):
-        commands = """
+        commands = f"""
    Commands:
 
+{commands}
+
+  Pyokapi
     servers                 List available server configs
     setServer               Set server config
     createServer            Create new server config
     delServer               Delete a server config
-    """ + commands
+    """
 
         usage = f"{usage}\n\n{commands}"
         parser = argparse.ArgumentParser(
             description=description,
             usage=usage)
         parser.add_argument('command', help='Subcommand to run')
+        print("Config: %s - %s:%s" % (CONFIG.get_server(),
+                                      CONFIG.okapicfg().get("Okapi", "host"),
+                                      CONFIG.okapicfg().get("Okapi", "port")))
         args = parser.parse_args(sys.argv[1:2])
         if not hasattr(self, args.command):
             print("Unrecognized command")
             parser.print_help()
             exit(1)
-        print("Config: %s - %s:%s" % (CONFIG.get_server(),
-                                      CONFIG.okapicfg().get("Okapi", "host"),
-                                      CONFIG.okapicfg().get("Okapi", "port")))
         getattr(self, args.command)()
 
     def setServer(self):
@@ -46,7 +49,7 @@ class BaseCLI:
             CONFIG.set_server(args.name)
             CONFIG.load_okapi_conf()
         else:
-            print("Config for server {args.name} does not exist.")
+            print(f"Config for server {args.name} does not exist.")
 
     def createServer(self):
         parser = self._get_parser("createServer")
@@ -64,9 +67,11 @@ class BaseCLI:
     def servers(self):
         self._get_parser("servers")
         print(f"Active server is {CONFIG.get_server()}")
-        for f in os.listdir(CONFIG.get_confdir()):
-            if os.path.exists(os.path.join(CONFIG.get_confdir(), f, "okapi.conf")):
-                print(f)
+        for server in CONFIG.get_servers():
+            print(server)
+        # for f in os.listdir(CONFIG.get_confdir()):
+        #    if os.path.exists(os.path.join(CONFIG.get_confdir(), f, "okapi.conf")):
+        #        print(f)
 
     def delServer(self):
         parser = self._get_parser("delServer")

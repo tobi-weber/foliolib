@@ -11,10 +11,11 @@ from urllib.parse import urlencode
 import requests
 from github import Github
 from lxml import etree
-
-from okapi.config import CONFIG
-from okapi.exceptions import OkapiException, OkapiForbidden, OkapiNotFound
-from okapi.okapiModule import OkapiModule
+from pyokapi.config import CONFIG
+from pyokapi.okapi.exceptions import (OkapiException, OkapiForbidden,
+                                      OkapiInvalid, OkapiNotFound,
+                                      OkapiUnauthorized)
+from pyokapi.okapi.okapiModule import OkapiModule
 
 log = logging.getLogger("okapi.okapiClient")
 
@@ -27,8 +28,8 @@ class OkapiClient:
     tenant_access_tokens = {}
 
     def __init__(self, host: str = None, port: str = None) -> None:
-        host = CONFIG.okapicfg().get("Okapi", "host")
-        port = CONFIG.okapicfg().get("Okapi", "port")
+        host = host or CONFIG.okapicfg().get("Okapi", "host")
+        port = port or CONFIG.okapicfg().get("Okapi", "port")
         self._host = f"http://{host}:{port}"
         self._client = requests.Session()
 
@@ -100,7 +101,7 @@ class OkapiClient:
 
     def add_module(self, okapiModule: OkapiModule, **query):
         """
-        Query Parameters: 
+        Query Parameters:
             check: (boolean - default: true)
             Whether to check dependencies
 
@@ -272,7 +273,7 @@ class OkapiClient:
 
     def install_modules(self, tenantModuleDescriptorList: list, tenantId: str, **query):
         return self._request("POST", f"/_/proxy/tenants/{tenantId}/install",
-                             tenantModuleDescriptorList)
+                             tenantModuleDescriptorList, query=query)
 
     def disable_all_modules(self, tenantId: str, **query):
         """
@@ -286,7 +287,7 @@ class OkapiClient:
             tenantParameters: (string)
             Parameters for Tenant init
         """
-        return self._request("POST", f"/ _/proxy/tenants/{tenantId}/modules")
+        return self._request("POST", f"/ _/proxy/tenants/{tenantId}/modules", query=query)
 
     def upgrade_modules(self, tenantId: str, **query):
         """
@@ -328,7 +329,7 @@ class OkapiClient:
         return modName in [i["id"] for i in self.get_tenant_interfaces(tenantId)]
 
     def call_tenant_service(self, method, service: str, tenantId: str, data: dict = None,
-                            query: dict = None, headers: dict = None):
+                            query: dict = None, headers: dict = None, files: dict = None):
         if not service.startswith(("/")):
             service = "/" + service
         headers = headers or {}
@@ -336,10 +337,12 @@ class OkapiClient:
         if tenantId in OkapiClient.tenant_access_tokens:
             headers["X-Okapi-Token"] = OkapiClient.tenant_access_tokens[tenantId]
         res = self._request(method.upper(), service,
-                            data=data, query=query, headers=headers)
+                            data=data, query=query, headers=headers, files=files)
         if "x-okapi-token" in self.headers:
+            log.debug("Token for %s: %s", tenantId,
+                      self.headers["X-Okapi-Token"])
             OkapiClient.tenant_access_tokens[tenantId] = self.headers["X-Okapi-Token"]
-        if self.status_code == 200 or self.status_code == 201:
+        if self.status_code >= 200 or self.status_code <= 226:
             return res
         else:
             log.debug("ERROR %i - %s: %s", self.status_code,
@@ -347,7 +350,7 @@ class OkapiClient:
             return None
 
     def _request(self, method: str, path: str, data: dict = None,
-                 query: dict = None, headers: dict = None):
+                 query: dict = None, headers: dict = None, files: dict = None):
         url = self._host + path
         if query:
             url += "?" + urlencode(query)
@@ -356,20 +359,19 @@ class OkapiClient:
         if "X-Okapi-Token" not in headers:
             if self._access_token is not None:
                 headers["X-Okapi-Token"] = self._access_token
-        # if data is not None:
-        #    pp = pprint.PrettyPrinter(indent=2)
-        #    pp.pprint(data)
 
-        if method == "GET":
+        if method == "GET" or method == "DELETE":
             request = self._client.prepare_request(
-                requests.Request(method, url, headers)
-            )
+                requests.Request(method, url, headers))
+        elif files is not None:
+            request = self._client.prepare_request(
+                requests.Request(
+                    method, url, files=files, data=data, headers=headers))
         else:
             headers["content-type"] = "application/json"
             request = self._client.prepare_request(
                 requests.Request(
-                    method, url, data=json.dumps(data), headers=headers)
-            )
+                    method, url, data=json.dumps(data), headers=headers))
 
         try:
             response = self._client.send(request)
@@ -386,14 +388,15 @@ class OkapiClient:
                 return response.json()
             except json.decoder.JSONDecodeError:
                 return response.text
+        elif response.status_code == 202:
+            return response.text
         elif response.status_code == 204:
             return True
         elif response.status_code == 400:
-            try:
-                return response.json()
-            except json.decoder.JSONDecodeError:
-                log.error(response.text)
-                return response.text
+            raise OkapiInvalid(response)
+        elif response.status_code == 401:
+            raise OkapiUnauthorized(
+                f"ERROR {response.status_code}: {response.text}")
         elif response.status_code == 403:
             raise OkapiForbidden(
                 f"ERROR {response.status_code}: {response.text}")
@@ -401,14 +404,10 @@ class OkapiClient:
             raise OkapiNotFound(
                 f"ERROR {response.status_code}: {response.text}")
         elif response.status_code == 422:
-            try:
-                return response.json()
-            except:
-                raise OkapiException(
-                    f"ERROR {response.status_code}: {response.text}")
-        elif response.status_code == 500:
+            raise OkapiInvalid(response)
+        elif response.status_code >= 500:
             raise OkapiException(
-                f"ERROR {response.status_code}: {response.text}")
+                f"ERROR {response.status_code}: {response.text}\n{url}")
         else:
             print(response.text)
             raise OkapiException(

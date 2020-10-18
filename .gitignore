@@ -68,3 +68,4 @@ testdata/
 pkg/
 descriptors/
 build*
+test.py

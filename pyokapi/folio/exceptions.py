@@ -6,13 +6,13 @@ class FolioException(BaseException):
     pass
 
 
-class OkapiException(FolioException):
+class FolioTenantMissing(FolioException):
     pass
 
 
-class OkapiNotFound(OkapiException):
+class UserNotFound(FolioException):
     pass
 
 
-class OkapiForbidden(OkapiException):
+class PermissionUserNotFound(FolioException):
     pass

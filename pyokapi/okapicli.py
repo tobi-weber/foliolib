@@ -4,11 +4,11 @@
 import json
 import pprint
 
-from okapi import database, helper
-from okapi.basecli import BaseCLI
-from okapi.config import CONFIG
-from okapi.okapiClient import OkapiClient
-from okapi.okapiModule import OkapiModule
+from pyokapi.basecli import BaseCLI
+from pyokapi.config import CONFIG
+from pyokapi.okapi import database, helper
+from pyokapi.okapi.okapiClient import OkapiClient
+from pyokapi.okapi.okapiModule import OkapiModule
 
 
 class OkapiCLI(BaseCLI):
@@ -32,7 +32,7 @@ class OkapiCLI(BaseCLI):
     addTenant               Create a tenant
     removeTenant            Remove a tenant
 
-Inspection
+  Inspection
     version                 Show Okapi version
     health                  Show health of modules
     env                     Show env
@@ -46,7 +46,7 @@ Inspection
     tenantInterfaces        Show interfaces for a tenant
     pgdb                    Show complete Postgres db
 
-Database
+  Database
     initdb                  Initialize okapi db
     initmoduledb            Initialize module db
     purgemoduledb           Purge module db and delete all users for a tenant
@@ -352,7 +352,8 @@ Database
                     print(f"\t### Schema: {s}")
                     print("\t\t### Tables:")
                     for t in database.get_tables(s, db):
-                        print(f"\t\t\t{t}")
+                        if not t.startswith("rmb_"):
+                            print(f"\t\t\t{t}")
 
     def initdb(self):
         parser = self._get_parser("initdb")
@@ -386,3 +387,42 @@ Database
         print(
             f"Purge modules for tenant {args.tenant} in database {args.database}")
         database.purge_modules_db(args.tenant, database=args.database)
+
+    def schemas(self):
+        parser = self._get_parser("schemas")
+        parser.add_argument("-d", "--database",
+                            default="okapi_modules", help=" ")
+        args = self._get_args(parser)
+        schemas = database.get_schemas(args.database)
+        for schema in schemas:
+            print(schema)
+
+    def tables(self):
+        parser = self._get_parser("tables")
+        parser.add_argument("tenant", help="tenant id")
+        parser.add_argument("module",
+                            help="module, e.g. mod-inventory-storage")
+        parser.add_argument("-d", "--database",
+                            default="okapi_modules", help=" ")
+        args = self._get_args(parser)
+        with database.Postgres(database=args.database) as pg:
+            module = args.module.replace("-", "_")
+            schema = f"{args.tenant}_{module}"
+            r = pg.get_tables(schema)
+            print(r)
+
+    def table(self):
+        parser = self._get_parser("table")
+        parser.add_argument("tenant", help="tenant id")
+        parser.add_argument("module",
+                            help="module, e.g. mod-inventory-storage")
+        parser.add_argument("table", help="table name")
+        parser.add_argument("-d", "--database",
+                            default="okapi_modules", help=" ")
+        args = self._get_args(parser)
+        with database.Postgres(database=args.database) as pg:
+            module = args.module.replace("-", "_")
+            schema = f"{args.tenant}_{module}"
+            r = pg.get_table(args.table, schema)
+            for e in r:
+                print(json.dumps(e[1], indent=2))

@@ -3,7 +3,7 @@
 
 import logging
 
-from okapi.config import CONFIG
+from pyokapi.config import CONFIG
 
 log = logging.getLogger("okapi.okapiModule")
 
@@ -13,7 +13,6 @@ class OkapiModule:
     def __init__(self, descriptor: str) -> None:
         self._descriptor = descriptor
         self.__remove_db_config()
-        self.__fix_permission_required_missing()
         self.__set_modules_parameters()
 
     def get_modId(self):
@@ -58,13 +57,6 @@ class OkapiModule:
                 for k, v in config["Env"].items():
                     remove_entry(env, k)
                     env.append({"name": k.upper(), "value": v})
-
-    def __fix_permission_required_missing(self):
-        if "provides" in self._descriptor:
-            for p in self._descriptor["provides"]:
-                for handler in p["handlers"]:
-                    if not "permissionsRequired" in handler:
-                        handler["permissionsRequired"] = []
 
     def __remove_db_config(self):
         if "launchDescriptor" in self._descriptor:

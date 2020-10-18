@@ -19,6 +19,8 @@ log = logging.getLogger("okapi")
 def set_logging(level=logging.INFO):
     if "PYOKAPI_DEBUG" in os.environ:
         level = logging.DEBUG
+    else:
+        sys.tracebacklimit = 0
     log.setLevel(level)
     if level == logging.INFO:
         formatter = logging.Formatter("%(message)s")

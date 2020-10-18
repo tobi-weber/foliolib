@@ -3,13 +3,13 @@
 
 import json
 import logging
+from distutils.version import StrictVersion
 
-from okapi import helper as okapi_helper
-from okapi.config import CONFIG
-from okapi.folio.inventory import InventoryServices
-from okapi.folio.permissions import PermissionServices
-from okapi.folio.users import UserServices
-from okapi.okapiClient import OkapiClient
+from pyokapi.config import CONFIG
+from pyokapi.folio.inventory import InventoryServices
+from pyokapi.folio.users import UserServices
+from pyokapi.okapi import helper as okapi_helper
+from pyokapi.okapi.okapiClient import OkapiClient
 
 log = logging.getLogger("okapi.folio.helper")
 
@@ -28,27 +28,30 @@ def create_superuser(tenant: str, username: str = "admin", password: str = "foli
 
     log.info("Create user record.")
     user = userServices.create_user(
-        username, password, permissions=["perms.all"])
+        username, password,
+        permissions=["perms.all",
+                     "users.collection.get"],
+        personal={"lastName": "Superuser"})
 
     log.info("Create service points for user record.")
-    servicepoints = InventoryServices(tenant).get_servicePoints()
+    inventory = InventoryServices(tenant)
+    servicepoints = inventory.get_servicePoints()
     servicepointsIds = [sp["id"] for sp in servicepoints["servicepoints"]]
     if servicepointsIds:
         log.debug(servicepoints)
-        userServices.set_service_points(username, servicepointsIds,
-                                        servicepointsIds[0])
+        inventory.set_service_points(username, servicepointsIds,
+                                     servicepointsIds[0])
 
     log.info("Enable mod-authtoken.")
     okapi.enable_modules([m["id"] for m in disabled_mods], tenant)
 
     log.info("Login as superuser")
-    user_login = userServices.login(username, password)
+    userServices.login(username, password)
 
     log.info("Generate list of permissions")
-    query = {"query":
-             "cql.allRecords=1 not permissionName==okapi.* not permissionName==modperms.* not permissionName==SYS#*",
-             "length": "5000"}
-    perms = PermissionServices(tenant).get_permissions(query=query)
+    perms = userServices.get_exisiting_permissions(
+        query="cql.allRecords=1 not permissionName==okapi.* not permissionName==modperms.* not permissionName==SYS#*",
+        length="5000")
     topLevelPermissions = []
     for permission in perms["permissions"]:
         mods_perms = 0
@@ -58,21 +61,12 @@ def create_superuser(tenant: str, username: str = "admin", password: str = "foli
         if len(permission["childOf"]) == mods_perms:
             topLevelPermissions.append(permission["permissionName"])
 
-    add_perms = ["okapi.proxy.modules.get"]
-    topLevelPermissions.extend(add_perms)
-
-    log.info("Assigning permissions")
-    user_permissions = user_login["permissions"]["permissions"]
-    user_perm_id = user_login["permissions"]["id"]
-    for permission in topLevelPermissions:
-        if not permission in user_permissions:
-            res = okapi.call_tenant_service("POST", f"perms/users/{user_perm_id}/permissions", tenant,
-                                            {"permissionName": permission})
-
-            if res:
-                log.debug("\t%s assigned", permission)
-        else:
-            log.debug("\t%s already assigned", permission)
+    # topLevelPermissions.extend(
+    #    ["codex.collection.get",
+    #     "codex-mux.instances.collection.get"])
+    if StrictVersion(okapi.version()) >= StrictVersion("4.0"):
+        topLevelPermissions.extend(["okapi.proxy.modules.get"])
+    userServices.set_permissions(username, topLevelPermissions)
 
     log.info("Superuser %s created.", username)
 
@@ -83,7 +77,7 @@ def login_supertenant(username, password):
     print("Logging in supertenant")
     CONFIG.set_okapicfg("Okapi", "token", "")
     userServices = UserServices("supertenant")
-    user_login = userServices.login_authn(username, password)
+    user_login = userServices.login(username, password)
     if user_login is not None:
         headers = userServices.get_okapiClient().headers
         CONFIG.set_okapicfg("Okapi", "token", headers["x-okapi-token"])

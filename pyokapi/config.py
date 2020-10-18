@@ -7,7 +7,7 @@ import logging
 import os
 import pathlib
 
-log = logging.getLogger("okapi.config")
+log = logging.getLogger("pyokapi.config")
 
 
 class _Config:
@@ -50,8 +50,8 @@ class _Config:
 
     def get_servers(self):
         servers = []
-        for f in os.listdir(self.get_confdir()):
-            if f.endswith(".conf") and f != "pyokapi.conf":
+        for f in os.listdir(CONFIG.get_confdir()):
+            if os.path.exists(os.path.join(CONFIG.get_confdir(), f, "okapi.conf")):
                 servers.append(f)
         return servers
 

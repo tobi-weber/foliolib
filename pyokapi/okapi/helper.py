@@ -7,10 +7,10 @@ import os
 import pprint
 import sys
 
-from okapi.config import CONFIG
-from okapi.okapiClient import (OkapiClient, request_release,
-                               request_snapshot_version)
-from okapi.okapiModule import OkapiModule
+from pyokapi.config import CONFIG
+from pyokapi.okapi.okapiClient import (OkapiClient, request_release,
+                                       request_snapshot_version)
+from pyokapi.okapi.okapiModule import OkapiModule
 
 log = logging.getLogger("okapi.helper")
 

@@ -3,8 +3,8 @@
 
 import sys
 
-from okapi.basecli import BaseCLI
-from okapi.folio import helper as folio_helper
+from pyokapi.basecli import BaseCLI
+from pyokapi.folio import helper as folio_helper
 
 
 class FolioCLI(BaseCLI):
