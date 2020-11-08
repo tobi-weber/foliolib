@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n   \"templateName\": \"Amazon book orders\",\n   \"templateCode\": \"Amazon-B\",\n   \"templateDescription\": \"Use to create orders in FOLIO after they are placed on Amazon\"\n}\n"
+}

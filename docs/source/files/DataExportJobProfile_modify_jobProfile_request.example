@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n  \"id\": \"448ae575-daec-49c1-8041-d64c8ed8e5b1\",\n  \"name\": \"job profile name\",\n  \"destination\": \"fileSystem\",\n  \"description\": \"Job profile description\",\n  \"userInfo\": {\n    \"firstName\": \"DIKU\",\n    \"lastName\": \"ADMINISTRATOR\",\n    \"userName\": \"diku_admin\"\n  },\n  \"mappingProfileId\": \"3798f546-7afb-11ea-bc55-0242ac130003\",\n  \"metadata\": {\n    \"createdDate\": \"2019-07-22T11:22:07Z\",\n    \"createdByUserId\": \"dee12548-9cee-45fa-bbae-675c1cc0ce3b\",\n    \"createdByUsername\": \"janedoeuser\",\n    \"updatedDate\": \"2019-07-27T13:28:54Z\",\n    \"updatedByUserId\": \"dee12548-9cee-45fa-bbae-675c1cc0ce3b\",\n    \"updatedByUsername\": \"\"\n  }\n}\n"
+}

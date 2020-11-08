@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n  \"id\": \"4c66b956-23a8-4418-aef6-1c35dcdaccc4\",\n  \"label\": \"ACM Digital Library\",\n  \"serviceType\": \"My Service\",\n  \"serviceUrl\": \"www.myaggregator.com\",\n  \"aggregatorConfig\": {\n    \"apiKey\": \"abc\",\n    \"requestorId\": \"def\",\n    \"customerId\": \"ghi\",\n    \"reportRelease\": \"4\"\n  },\n  \"accountConfig\": {\n    \"configType\": \"Manual\",\n    \"configMail\": \"ab@counter-stats.com\",\n    \"displayContact\": [\"Counter Aggregator Contact\", \"Tel: +49 1234 - 9876\"]\n  }\n}\n"
+}

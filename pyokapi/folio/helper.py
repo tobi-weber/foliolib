@@ -6,12 +6,12 @@ import logging
 from distutils.version import StrictVersion
 
 from pyokapi.config import CONFIG
-from pyokapi.folio.inventory import InventoryServices
-from pyokapi.folio.users import UserServices
+from pyokapi.folio.api.permissions import Permissions
+from pyokapi.folio.users import UserService
 from pyokapi.okapi import helper as okapi_helper
 from pyokapi.okapi.okapiClient import OkapiClient
 
-log = logging.getLogger("okapi.folio.helper")
+log = logging.getLogger("pyokapi.okapi.folio.helper")
 
 
 def create_superuser(tenant: str, username: str = "admin", password: str = "folio"):
@@ -22,34 +22,33 @@ def create_superuser(tenant: str, username: str = "admin", password: str = "foli
         mod_authtoken = okapi.get_tenant_interface("authtoken", tenant)[0]
         disabled_mods = okapi.disable_module(mod_authtoken["id"], tenant)
     except:
-        pass
+        disabled_mods = None
 
-    userServices = UserServices(tenant)
+    userService = UserService(tenant)
 
     log.info("Create user record.")
-    user = userServices.create_user(
+    user = userService.create_user(
         username, password,
         permissions=["perms.all",
                      "users.collection.get"],
         personal={"lastName": "Superuser"})
 
     log.info("Create service points for user record.")
-    inventory = InventoryServices(tenant)
-    servicepoints = inventory.get_servicePoints()
+    servicepoints = userService.get_servicePoints()
     servicepointsIds = [sp["id"] for sp in servicepoints["servicepoints"]]
     if servicepointsIds:
         log.debug(servicepoints)
-        inventory.set_service_points(username, servicepointsIds,
-                                     servicepointsIds[0])
+        userService.set_servicePoints(username, servicepointsIds,
+                                      servicepointsIds[0])
 
     log.info("Enable mod-authtoken.")
     okapi.enable_modules([m["id"] for m in disabled_mods], tenant)
 
     log.info("Login as superuser")
-    userServices.login(username, password)
+    userService.login(username, password)
 
     log.info("Generate list of permissions")
-    perms = userServices.get_exisiting_permissions(
+    perms = Permissions(tenant).get_permissions(
         query="cql.allRecords=1 not permissionName==okapi.* not permissionName==modperms.* not permissionName==SYS#*",
         length="5000")
     topLevelPermissions = []
@@ -66,7 +65,7 @@ def create_superuser(tenant: str, username: str = "admin", password: str = "foli
     #     "codex-mux.instances.collection.get"])
     if StrictVersion(okapi.version()) >= StrictVersion("4.0"):
         topLevelPermissions.extend(["okapi.proxy.modules.get"])
-    userServices.set_permissions(username, topLevelPermissions)
+    userService.set_permissions(username, topLevelPermissions)
 
     log.info("Superuser %s created.", username)
 
@@ -76,11 +75,10 @@ def create_superuser(tenant: str, username: str = "admin", password: str = "foli
 def login_supertenant(username, password):
     print("Logging in supertenant")
     CONFIG.set_okapicfg("Okapi", "token", "")
-    userServices = UserServices("supertenant")
-    user_login = userServices.login(username, password)
-    if user_login is not None:
-        headers = userServices.get_okapiClient().headers
-        CONFIG.set_okapicfg("Okapi", "token", headers["x-okapi-token"])
+    userService = UserService("supertenant")
+    token = userService.login(username, password)
+    if token is not None:
+        CONFIG.set_okapicfg("Okapi", "token", token)
     else:
         print("Login failed")
 
@@ -100,7 +98,7 @@ def secure_supertenant(username: str = "okapi_admin", password: str = "admin"):
     res = o.enable_modules(modules, tenant)
     # print(res)
 
-    userServices = UserServices(tenant)
+    userServices = UserService(tenant)
 
     log.info("Create user record.")
     user = userServices.create_user(

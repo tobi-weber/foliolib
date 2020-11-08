@@ -1,0 +1,26 @@
+{
+  "waivers" : [ {
+    "nameReason": "First time offender",
+    "description": "Penalty abatement",
+    "metadata": {
+      "createdDate": "2018-03-19T14:22:07Z",
+      "createdByUserId": "1ad737b0-d847-11e6-bf26-cec0c932ce02",
+      "createdByUsername": "Doe",
+      "updatedDate": "2018-03-19T14:22:07Z"
+    },
+    "accountId": "0bab56e5-1ab6-4ac2-afdf-8b2df0434373",
+    "id": "0bab56e5-1ab6-4ac2-afdf-8b2df0434371"
+  }, {
+    "nameReason": "Special Circumstances",
+    "description": "Financial problems",
+    "metadata": {
+      "createdDate": "2018-03-19T14:22:07Z",
+      "createdByUserId": "1ad737b0-d847-11e6-bf26-cec0c932ce02",
+      "createdByUsername": "Doe",
+      "updatedDate": "2018-03-19T14:22:07Z"
+    },
+    "accountId": "0bab56e5-1ab6-4ac2-afdf-8b2df0434364",
+    "id": "0bab56e5-1ab6-4ac2-afdf-8b2df0434374"
+  } ],
+  "totalRecords" : 2
+}

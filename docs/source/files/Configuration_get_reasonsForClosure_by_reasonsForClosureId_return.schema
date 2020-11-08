@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Reason for closure object",
+  "type": "object",
+  "javaType": "org.folio.rest.jaxrs.model.ReasonForClosure",
+  "extends": {
+    "$ref": "../../common/schemas/entity.json"
+  },
+  "properties": {
+    "id": {
+      "description": "UUID of this Reason for closure record",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "reason": {
+      "description": "Reason for closure",
+      "type": "string"
+    },
+    "source": {
+      "description": "Source of reason for closure",
+      "type": "string",
+      "enum": [
+        "User",
+        "System"
+      ],
+      "default": "User"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "reason",
+    "source"
+  ]
+}

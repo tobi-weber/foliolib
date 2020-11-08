@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Describes an instructor for a given section",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "UUID for this instructor",
+      "$ref": "uuid.json"
+    },
+    "userId": {
+      "type": "string",
+      "description": "ID of associated FOLIO user (if exists)",
+      "$ref": "uuid.json"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of this instructor"
+    },
+    "barcode": {
+      "type": "string",
+      "description": "The instructor's user barcode"
+    },
+    "patronGroup": {
+      "type": "string",
+      "description": "The id of the patrongroup associated with the user"
+    },
+    "patronGroupObject": {
+      "type": "object",
+      "description": "The instructor's user patrongroup",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "UUID for the group",
+          "$ref": "uuid.json"
+        },
+        "desc": {
+          "type": "string",
+          "description": "description of the group"
+        },
+        "group": {
+          "type": "string",
+          "description": "the unique name of the group"
+        }
+      }
+    },
+    "courseListingId": {
+      "type": "string",
+      "description": "The course listing this instructor teaches",
+      "$ref": "uuid.json"
+    },
+    "metadata": {
+      "type": "object",
+      "$ref": "raml-util/schemas/metadata.schema"
+    }
+  },
+  "required": [
+    "courseListingId",
+    "name"
+  ]
+}

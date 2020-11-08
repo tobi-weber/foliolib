@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "collection of vouchers",
+  "type": "object",
+  "properties": {
+    "vouchers": {
+      "description": "an array of voucher records",
+      "id": "vouchers",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "voucher.json"
+      }
+    },
+    "totalRecords": {
+      "description": "total number of records in the array",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "vouchers",
+    "totalRecords"
+  ]
+}

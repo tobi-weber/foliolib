@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of phone numbers",
+  "type": "object",
+  "properties": {
+    "phoneNumbers": {
+      "description": "The list of phone numbers in this collection",
+      "type": "array",
+      "id": "phoneNumbers",
+      "items": {
+        "type": "object",
+        "$ref": "phone_number.json"
+      }
+    },
+    "totalRecords": {
+      "description": "The number of phone numbers returned in this collection",
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "phoneNumbers",
+    "totalRecords"
+  ]
+}

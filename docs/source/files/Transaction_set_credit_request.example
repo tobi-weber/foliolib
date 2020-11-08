@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n  \"id\": \"21425789-acdb-44b2-b44f-f2291cc48b42\",\n  \"amount\": 25,\n  \"currency\": \"USD\",\n  \"description\": \"PO_Line: History of Incas\",\n  \"fiscalYearId\": \"684b5dc5-92f6-4db7-b996-b549d88f5e4e\",\n  \"source\": \"Invoice\",\n  \"sourceFiscalYearId\": \"684b5dc5-92f6-4db7-b996-b549d88f5e4e\",\n  \"sourceInvoiceId\": \"041c1fe8-adfa-44eb-b6b3-f85acdd71f81\",\n  \"sourceInvoiceLineId\": \"ee60ee78-f487-4940-adcf-fa0726989823\",\n  \"toFundId\": \"7fbd5d84-62d1-44c6-9c45-6cb173998bbd\",\n  \"transactionType\": \"Credit\",\n  \"metadata\": {\n    \"createdDate\": \"2020-01-09T20:53:43.984+0000\",\n    \"createdByUserId\": \"28d0fb04-d137-11e8-a8d5-f2801f1b9fd1\",\n    \"updatedDate\": \"2020-01-09T20:53:43.984+0000\",\n    \"updatedByUserId\": \"28d0fb04-d137-11e8-a8d5-f2801f1b9fd1\"\n  }\n}\n"
+}

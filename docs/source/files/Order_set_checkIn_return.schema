@@ -1,0 +1,88 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A collection of receiving results",
+  "type": "object",
+  "properties": {
+    "receivingResults": {
+      "description": "List of receiving/checkin results",
+      "id": "receivingResults",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "poLineId": {
+            "description": "The id of the receiving/checkin po line",
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+          },
+          "processedSuccessfully": {
+            "description": "The number of items processed successfully",
+            "type": "integer"
+          },
+          "processedWithError": {
+            "description": "The number of items processed with error",
+            "type": "integer"
+          },
+          "receivingItemResults": {
+            "description": "List of processed receiving item details",
+            "id": "receivingItemResults",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "pieceId": {
+                  "description": "UUID of this piece record",
+                  "type": "string",
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+                },
+                "processingStatus": {
+                  "description": "The status describing item processing result",
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "description": "Resulting status of the processed piece record",
+                      "type": "string",
+                      "enum": [
+                        "success",
+                        "failure"
+                      ]
+                    },
+                    "error": {
+                      "description": "Error details in case receiving/check-in process for the piece record has failed",
+                      "type": "object",
+                      "$ref": "../../../raml-util/schemas/error.schema",
+                      "readonly": true
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "pieceId",
+                "processingStatus"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "poLineId",
+          "receivingItemResults"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "totalRecords": {
+      "description": "The total number of receiving/check-in items in the list",
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "receivingResults",
+    "totalRecords"
+  ]
+}

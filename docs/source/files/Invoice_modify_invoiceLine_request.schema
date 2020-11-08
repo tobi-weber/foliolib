@@ -1,0 +1,134 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "invoice line",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "UUID of this invoice line",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "accountingCode": {
+      "description": "Pulled based on account number.",
+      "type": "string"
+    },
+    "accountNumber": {
+      "description": "Account number that the vendor assigned",
+      "type": "string"
+    },
+    "adjustments": {
+      "description": "Defined in settings - the amount field will be editable and pro-rate toggle will be editable if enabled for that adjustment",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "adjustment.json"
+      }
+    },
+    "adjustmentsTotal": {
+      "description": "Sum of all invoice line adjustments. This amount is always calculated by system.",
+      "type": "number"
+    },
+    "comment": {
+      "description": "Free form commentary",
+      "type": "string"
+    },
+    "description": {
+      "description": "Title as captured in the Purchase Order Line. In the absence of a POL link this could be used to describe the POL",
+      "type": "string"
+    },
+    "fundDistributions": {
+      "description": "List of fund distributions",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "fund_distribution.json"
+      }
+    },
+    "invoiceId": {
+      "description": "UUID of this parent invoice",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "invoiceLineNumber": {
+      "description": "Sequentially generated and not editable by the user.",
+      "type": "string"
+    },
+    "invoiceLineStatus": {
+      "description": "Invoice line status",
+      "type": "string",
+      "enum": [
+        "Open",
+        "Reviewed",
+        "Approved",
+        "Paid",
+        "Cancelled",
+        "Error"
+      ]
+    },
+    "poLineId": {
+      "description": "UUID of the corresponding purchase order line this invoice line is based on",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "productId": {
+      "description": "product identifier",
+      "type": "string"
+    },
+    "productIdType": {
+      "description": "the type of product id",
+      "type": "string",
+      "$ref": "../../common/schemas/product_id_type.json"
+    },
+    "quantity": {
+      "description": "quantity",
+      "type": "integer"
+    },
+    "releaseEncumbrance": {
+      "description": "This is intended to not only release encumbrances but to indicate that this is the final invoice line for corresponding order line. This should take into account the fiscal year. We may release encumbrance for this FY but for on-going orders expect to encumber again next year.",
+      "type": "boolean",
+      "default": true
+    },
+    "subscriptionInfo": {
+      "description": "The user should use this field to provide info on the subscription (eg. which volumes are being invoiced). It is MANDATORY if the chk_subscription_overlap is FALSE AND there is no start date provided",
+      "type": "string"
+    },
+    "subscriptionStart": {
+      "description": "Subscription start date",
+      "type": "string",
+      "format": "date-time"
+    },
+    "subscriptionEnd": {
+      "description": "Subscription end date",
+      "type": "string",
+      "format": "date-time"
+    },
+    "subTotal": {
+      "description": "Invoice line amount before adjustments are applied",
+      "type": "number"
+    },
+    "total": {
+      "description": "Invoice line total amount which is sum of subTotal and adjustmentsTotal. This amount is always calculated by system.",
+      "type": "number"
+    },
+    "vendorRefNo": {
+      "description": "This is the number used to match POLs created by import to invoices created by import",
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object",
+      "$ref": "../../../raml-util/schemas/metadata.schema",
+      "readonly": true
+    },
+    "tags": {
+      "type": "object",
+      "description": "arbitrary tags associated with this invoice line",
+      "$ref": "../../../raml-util/schemas/tags.schema"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "description",
+    "invoiceId",
+    "invoiceLineStatus",
+    "subTotal",
+    "quantity",
+    "releaseEncumbrance"
+  ]
+}

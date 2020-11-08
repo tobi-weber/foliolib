@@ -1,0 +1,17 @@
+{
+  "strict": false,
+  "value": {
+    "data": {
+      "type": "tags",
+      "attributes": {
+        "name": "test package for documentation",
+        "contentType": "Unknown",
+        "tags": {
+          "tagList": [
+            "folio"
+          ]
+        }
+      }
+    }
+  }
+}

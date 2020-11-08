@@ -1,0 +1,35 @@
+{
+  "funds": [
+    {
+      "id": "20ad2b8d-84b0-4320-ad83-347c525dc8e1",
+      "allocatedFromIds": [
+        "b1f857ba-0e39-4c5b-851a-1b837a56b201",
+        "1097980d-97c9-4130-b6f0-a11b7804887d"
+      ],
+      "allocatedToIds": [
+        "24fa4a94-8aa2-4f69-abeb-f12b67f711e3"
+      ],
+      "code": "HIST",
+      "description": "Tracking fund for the History department",
+      "externalAccountNo": "52186156468152",
+      "fundStatus": "Active",
+      "fundTypeId": "c93373df-e7ec-4d31-b200-719736610d89",
+      "ledgerId": "a3ec5552-c4a4-4a15-a57c-0046db536369",
+      "name": "History",
+      "acqUnitIds": [
+        "1895e539-8dac-441e-b1f5-aab62b3fde60",
+        "47f504bd-0c1b-498e-a2ae-e2f0a0cea273"
+      ],
+      "tags": {
+        "tagList": [
+          "tag"
+        ]
+      },
+      "metadata": {
+        "createdDate": "2020-07-19T10:00:00.000+0000",
+        "createdByUserId": "28d1057c-d137-11e8-a8d5-f2801f1b9fd1"
+      }
+    }
+  ],
+  "totalRecords": 1
+}

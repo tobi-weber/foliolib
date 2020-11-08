@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A collection of group expense class total records",
+  "type": "object",
+  "properties": {
+    "groupExpenseClassTotals": {
+      "description": "The list of group expense class total objects contained in this collection",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "group_expense_class_totals.json"
+      }
+    },
+    "totalRecords": {
+      "description": "The number of objects contained in this collection",
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "groupExpenseClassTotals",
+    "totalRecords"
+  ]
+}

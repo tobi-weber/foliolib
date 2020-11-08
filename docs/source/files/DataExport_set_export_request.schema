@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Necessary data to start export process",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "fileDefinitionId": {
+      "description": "File definition id",
+      "$ref": "../../ramls/raml-util/schemas/uuid.schema"
+    },
+    "jobProfileId": {
+      "description": "Related Job profile id",
+      "$ref": "../../ramls/raml-util/schemas/uuid.schema"
+    },
+    "metadata": {
+      "description": "Meta information ",
+      "type": "object",
+      "$ref": "../../ramls/raml-util/schemas/metadata.schema"
+    }
+  },
+  "required": [
+    "fileDefinitionId",
+    "jobProfileId"
+  ]
+}

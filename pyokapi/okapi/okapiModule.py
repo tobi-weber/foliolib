@@ -2,42 +2,95 @@
 # Copyright (C) 2020 Tobias Weber <tobi-weber@gmx.de>
 
 import logging
+from typing import Union
 
 from pyokapi.config import CONFIG
+from pyokapi.okapi import okapiClient
 
-log = logging.getLogger("okapi.okapiModule")
+log = logging.getLogger("pyokapi.okapi.okapiModule")
 
 
 class OkapiModule:
+    """Defines an okapi module.
+    """
 
-    def __init__(self, descriptor: str) -> None:
-        self._descriptor = descriptor
+    def __init__(self, descriptor: Union[dict, str], version: str = None) -> None:
+        """
+        Args:
+            descriptor (Union[dict, str]): ModuleDescriptor or Module name, e.g. mod-users
+            version (str, optional): Optional module version if value of descriptor is a Module name. Defaults to None.
+        """
+        if isinstance(descriptor, dict):
+            self._descriptor = descriptor
+        elif isinstance(descriptor, str):
+            self._descriptor = self.__get_descriptor(descriptor, version)
         self.__remove_db_config()
         self.__set_modules_parameters()
 
     def get_modId(self):
+        """ Get module name
+
+        Returns:
+            str: Module name
+        """
         return self._descriptor["id"]
 
     def get_descriptor(self):
+        """ Get ModuleDescriptor
+
+        Returns:
+            dict: ModuleDescriptor
+        """
         return self._descriptor
 
     def get_requires(self):
+        """ Get requirements for the module
+
+        Returns:
+            dict: Dict with requirements
+        """
         if "requires" in self._descriptor:
             return [r["id"] for r in self._descriptor["requires"]]
         else:
             return []
 
     def get_provides(self):
+        """ Get provides
+
+        Returns:
+            dict: Dict with provides
+        """
         if "provides" in self._descriptor:
             return [r["id"] for r in self._descriptor["provides"]]
         else:
             return []
 
     def get_docker_image(self):
+        """ Get docker image name
+
+        Returns:
+            str: Get the name of the docker image
+        """
         if "launchDescriptor" in self._descriptor:
             return self._descriptor["launchDescriptor"]["dockerImage"]
         else:
             return ""
+
+    def __get_descriptor(self, name: str, version: str = None):
+        host = CONFIG.pyokapicfg().get("PullNode", "host")
+        port = CONFIG.pyokapicfg().get("PullNode", "port")
+        log.info("Pull descriptor for %s-%s from %s:%s",
+                 name, str(version), host, port)
+        client = okapiClient.OkapiClient(host=host, port=port)
+        if version is None:
+            log.info("Get version for %s from latest release", name)
+            version = okapiClient.request_release(name)["version"]
+            log.info("Version is %s", version)
+        modId = f"{name}-{version}"
+        descriptor = client.get_module(modId)
+        if "launchDescriptor" in descriptor:
+            descriptor["launchDescriptor"]["dockerPull"] = True
+        return descriptor
 
     def __set_modules_parameters(self):
 

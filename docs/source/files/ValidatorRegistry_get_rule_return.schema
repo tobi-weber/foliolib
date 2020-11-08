@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Rule Schema",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "Rule id",
+      "type": "string"
+    },
+    "ruleId": {
+      "description": "Rule id",
+      "type": "string"
+    },
+    "name": {
+      "description": "Rule name",
+      "type": "string"
+    },
+    "type": {
+      "description": "Rule type: RegExp or Programmatic",
+      "type": "string",
+      "enum": [
+        "RegExp",
+        "Programmatic"
+      ]
+    },
+    "validationType": {
+      "description": "Validation type: Strong or Soft. In case of soft rule validation failure the password processing can be continued",
+      "type": "string",
+      "enum": [
+        "Soft",
+        "Strong"
+      ]
+    },
+    "state": {
+      "description": "Rule state: Enabled or Disabled",
+      "type": "string",
+      "enum": [
+        "Enabled",
+        "Disabled"
+      ]
+    },
+    "moduleName": {
+      "description": "Name of the module",
+      "type": "string"
+    },
+    "implementationReference": {
+      "description": "For Programmatic rules ImplementationReference reflects the approach to call particular validation implementation whether it REST endpoint or local service",
+      "type": "string"
+    },
+    "expression": {
+      "description": "For RegExp type contains the actual expression",
+      "type": "string"
+    },
+    "description": {
+      "description": "Validation rule description",
+      "type": "string"
+    },
+    "orderNo": {
+      "description": "Defines the order of rule processing",
+      "type": "integer"
+    },
+    "errMessageId": {
+      "description": "message identifier which should be returned to UI in case the rule validation fails",
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object",
+      "$ref": "raml-util/schemas/metadata.schema"
+    }
+  },
+  "required": [
+    "name",
+    "type",
+    "validationType",
+    "state",
+    "moduleName",
+    "orderNo"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "eventType": "CREATED_SRS_MARC_BIB_RECORD_WITH_ORDER_DATA",
+  "description": "Created SRS Marc Bibliographic Record with order data in 9xx fields",
+  "eventTTL": 1,
+  "signed": false
+}

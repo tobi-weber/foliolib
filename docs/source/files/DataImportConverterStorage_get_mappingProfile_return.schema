@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Mapping Profile schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "Unique identifier",
+      "$ref": "../common/uuid.json"
+    },
+    "name": {
+      "description": "Mapping Profile name",
+      "type": "string"
+    },
+    "description": {
+      "description": "Mapping Profile description",
+      "type": "string"
+    },
+    "tags": {
+      "description": "Set of tags assigned to the current Mapping Profile",
+      "type": "object",
+      "$ref": "../../raml-util/schemas/tags.schema"
+    },
+    "incomingRecordType": {
+      "description": "Incoming record type",
+      "type": "string",
+      "$ref": "./entityType.json"
+    },
+    "existingRecordType": {
+      "description": "FOLIO record type to mapping",
+      "type": "string",
+      "$ref": "./entityType.json"
+    },
+    "deleted": {
+      "description": "Flag indicates that the Mapping Profile marked as deleted",
+      "type": "boolean",
+      "default": false
+    },
+    "userInfo": {
+      "description": "First name, last name and username of the user, who updated the Mapping Profile",
+      "type": "object",
+      "$ref": "../common/userInfo.json"
+    },
+    "marcFieldProtectionSettings": {
+      "description": "MARC field protection settings",
+      "javaType": "java.util.List<org.folio.rest.jaxrs.model.MarcFieldProtectionSetting>",
+      "items": {
+        "type": "object",
+        "$ref": "marc-field-protection/marcFieldProtectionSetting.json"
+      }
+    },
+    "parentProfiles": {
+      "description": "Associated parent profiles. Not required field that uses only for batch update/create",
+      "javaType": "java.util.List<org.folio.rest.jaxrs.model.ProfileSnapshotWrapper>",
+      "items": {
+        "type": "object",
+        "$ref": "./profileSnapshotWrapper.json"
+      }
+    },
+    "childProfiles": {
+      "description": "Associated children profiles. Not required field that uses only for batch update/create",
+      "javaType": "java.util.List<org.folio.rest.jaxrs.model.ProfileSnapshotWrapper>",
+      "items": {
+        "type": "object",
+        "$ref": "./profileSnapshotWrapper.json"
+      }
+    },
+    "mappingDetails": {
+      "description": "Mapping details with mapping rules",
+      "$ref": "mapping-profile-detail/mappingDetail.json"
+    },
+    "metadata": {
+      "description": "Metadata provided by the server",
+      "type": "object",
+      "$ref": "../../raml-util/schemas/metadata.schema",
+      "readonly": true
+    }
+  },
+  "required": [
+    "name",
+    "incomingRecordType"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "strict": false,
+  "value": {
+    "data": {
+      "type": "tags",
+      "attributes": {
+        "name": "test resource for documentation",
+        "tags": {
+          "tagList": [
+            "folio"
+          ]
+        }
+      }
+    }
+  }
+}

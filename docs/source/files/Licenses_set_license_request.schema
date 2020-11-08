@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "A license",
+  "additionalProperties": true,
+  "properties": {
+    "id": {
+      "description": "The ID of the license",
+      "type": "string"
+    },
+    "tags": {
+      "description": "Tags are not a string",
+      "type": "string"
+    },
+    "name": {
+      "description": "Name of license",
+      "type": "string"
+    },
+    "description": {
+      "description": "Description of license",
+      "type": "string"
+    },
+    "customProperties": {
+      "description": "Custom properties",
+      "type": "string"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

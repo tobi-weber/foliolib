@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A budget",
+  "type": "object",
+  "extends": {
+    "$ref": "../../mod-finance/schemas/budget.json"
+  },
+  "properties": {
+    "statusExpenseClasses": {
+      "description": "Expense classes associated with this budget",
+      "type": "array",
+      "items": {
+        "description": "Expense classes associated with this budget",
+        "type": "object",
+        "$ref": "status_expense_class.json"
+      }
+    }
+  },
+  "additionalProperties": false
+}

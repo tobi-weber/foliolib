@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A collection of fund types",
+  "type": "object",
+  "properties": {
+    "fundTypes": {
+      "description": "The list of objects contained in this collection",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "fund_type.json"
+      }
+    },
+    "totalRecords": {
+      "description": "The number of object contained in this collection",
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "fundTypes",
+    "totalRecords"
+  ]
+}

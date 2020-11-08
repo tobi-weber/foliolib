@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "collection of alert records",
+  "type": "object",
+  "properties": {
+    "alerts": {
+      "description": "collection of alert records",
+      "type": "array",
+      "id": "alerts",
+      "items": {
+        "type": "object",
+        "$ref": "alert.json"
+      }
+    },
+    "totalRecords": {
+      "description": "The number of objects contained in this collection",
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "alerts",
+    "totalRecords"
+  ]
+}

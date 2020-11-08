@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Role taken by an instructor in a course",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The UUID of this role",
+      "$ref": "uuid.json"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the role"
+    },
+    "description": {
+      "type": "string",
+      "description": "A description of this role"
+    },
+    "metadata": {
+      "type": "object",
+      "$ref": "raml-util/schemas/metadata.schema"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

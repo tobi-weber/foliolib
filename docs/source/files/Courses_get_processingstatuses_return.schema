@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A collection of processing statuses",
+  "type": "object",
+  "properties": {
+    "processingStatuses": {
+      "description": "List of processing status records",
+      "id": "processingStatus",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "processingstatus.json"
+      }
+    },
+    "totalRecords": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "processingStatuses",
+    "totalRecords"
+  ]
+}

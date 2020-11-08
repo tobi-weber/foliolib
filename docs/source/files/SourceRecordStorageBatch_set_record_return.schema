@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Response schema for Records batch requests",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "records": {
+      "description": "List of successfully processed records",
+      "type": "array",
+      "id": "recordList",
+      "items": {
+        "type": "object",
+        "$ref": "record.json"
+      }
+    },
+    "errorMessages": {
+      "description": "List of error messages",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "totalRecords": {
+      "description": "Total number of records",
+      "type": "integer"
+    }
+  },
+  "excludedFromEqualsAndHashCode": [
+    "totalRecords"
+  ],
+  "required": [
+    "records",
+    "totalRecords"
+  ]
+}

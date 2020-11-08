@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Collection of note types",
+  "javaType": "org.folio.rest.jaxrs.model.NoteTypeCollection",
+  "additionalProperties": false,
+  "properties": {
+    "noteTypes": {
+      "description": "List of note type items",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "noteTypeItem.json"
+      }
+    },
+    "totalRecords": {
+      "type": "integer"
+    }
+  }
+}

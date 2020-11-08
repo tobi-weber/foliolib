@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Event List",
+  "type": "object",
+  "properties": {
+    "eventEntity": {
+      "description": "event entries",
+      "id": "eventEntriesData",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "event_config_entity.json"
+      }
+    },
+    "totalRecords": {
+      "description": "total records",
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "eventEntity",
+    "totalRecords"
+  ]
+}

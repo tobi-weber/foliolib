@@ -1,0 +1,77 @@
+{
+  "loans": [
+    {
+      "id": "cf23adf0-61ba-4887-bf82-956c4aae2260",
+      "userId": "df7f4993-8c14-4a0f-ab63-93975ab01c76",
+      "proxyUserId": "346ad017-dac1-417d-9ed8-0ac7eeb886aa",
+      "itemId": "cb20f34f-b773-462f-a091-b233cc96b9e6",
+      "item": {
+        "title": "The Long Way to a Small, Angry Planet",
+        "barcode": "036000291452",
+        "status": {
+          "name": "Checked out"
+        }
+      },
+      "loanDate": "2017-03-01T22:34:11Z",
+      "dueDate": "2017-04-01T22:34:11.000Z",
+      "status": {
+        "name": "Open"
+      },
+      "location": {
+        "name": "Main Library"
+      },
+      "action": "checkedout",
+      "renewalCount": 1,
+      "loanPolicyId": "e2af3ba4-6801-4722-be45-d7a49d13564d",
+      "loanPolicy": {
+        "name": "Can Circulate Rolling"
+      },
+      "borrower": {
+        "firstName": "FirstName",
+        "lastName": "LastName",
+        "middleName": "MiddleName",
+        "barcode": "109322966913845"
+      }
+    },
+    {
+      "id": "1d09af65-aeaa-499c-80cb-d52847b75a60",
+      "userId": "15054e48-03e8-4ed5-810b-7192b86accab",
+      "itemId": "94838fa2-288a-45c2-ad19-9102f5645127",
+      "item": {
+        "title": "Nod",
+        "barcode": "565578437802",
+        "status": {
+          "name": "Available"
+        },
+        "location": {
+          "name": "Annex"
+        }
+      },
+      "loanDate": "2017-01-14T19:14:36Z",
+      "returnDate": "2017-01-16T09:15:23Z",
+      "status": {
+        "name": "Closed"
+      },
+      "action": "checkedin",
+      "loanPolicyId": "e2af3ba4-6801-4722-be45-d7a49d13564d",
+      "loanPolicy": {
+        "name": "Can Circulate Rolling"
+      },
+      "overdueFinePolicyId": "b59fe39f-efdc-4a88-993a-04fb405e5ecc",
+      "overdueFinePolicy": {
+        "name": "Overdue fine policy"
+      },
+      "lostItemPolicyId": "ea77439c-9ff5-4c37-8c92-0df02576c873",
+      "lostItemPolicy": {
+        "name": "Lost item policy"
+      },
+      "borrower": {
+        "firstName": "FirstName",
+        "lastName": "LastName",
+        "middleName": "MiddleName",
+        "barcode": "102322966933845"
+      }
+    }
+  ],
+  "totalRecords": 2
+}

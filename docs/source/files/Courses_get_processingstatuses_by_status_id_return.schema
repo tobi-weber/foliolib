@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "The processing status for a reserve",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The UUID of this status",
+      "$ref": "uuid.json"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the status"
+    },
+    "description": {
+      "type": "string",
+      "description": "A description of this status"
+    },
+    "metadata": {
+      "type": "object",
+      "$ref": "raml-util/schemas/metadata.schema"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

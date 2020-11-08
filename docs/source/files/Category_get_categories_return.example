@@ -1,0 +1,25 @@
+{
+  "categories": [
+    {
+      "id": "08e0eb27-b57f-4638-a703-9a2c57bd8708",
+      "value": "Accounting",
+      "metadata": {
+          "createdDate": "2018-05-19T00:00:00.000+0000",
+          "createdByUserId": "28d1057c-d137-11e8-a8d5-f2801f1b9fd1"
+      }
+    },
+    {
+      "id": "a5da9c44-6619-403f-bd3b-f9bd2f63bc59",
+      "value": "Books"
+    },
+    {
+      "id": "da0272e4-7ff7-4ea8-9bc9-9d9cd5c81580",
+      "value": "Customer Service"
+    },
+    {
+      "id": "ab18897b-0e40-4f31-896b-9c9adc979a88",
+      "value": "Ebooks"
+    }
+  ],
+  "totalRecords": 1
+}

@@ -58,6 +58,8 @@ local.properties
 # Locally stored "Eclipse launch configurations"
 *.launch
 
+# Sphinx documentation
+docs/build
 
 # Other
 apidoc/

@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of Messaging Modules",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "messagingModules": {
+      "description": "List of Messaging Modules",
+      "type": "array",
+      "id": "messagingModulesList",
+      "items": {
+        "type": "object",
+        "$ref": "./messagingModule.json"
+      }
+    },
+    "totalRecords": {
+      "description": "Total number of Messaging Modules",
+      "type": "integer"
+    }
+  },
+  "excludedFromEqualsAndHashCode": [
+    "totalRecords"
+  ],
+  "required": [
+    "messagingModules",
+    "totalRecords"
+  ]
+}

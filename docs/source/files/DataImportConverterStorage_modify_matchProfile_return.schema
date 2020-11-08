@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Match Profile schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "Unique identifier",
+      "$ref": "../common/uuid.json"
+    },
+    "name": {
+      "description": "Match Profile name",
+      "type": "string"
+    },
+    "description": {
+      "description": "Match Profile description",
+      "type": "string"
+    },
+    "tags": {
+      "description": "Set of tags assigned to the current Match Profile",
+      "type": "object",
+      "$ref": "../../raml-util/schemas/tags.schema"
+    },
+    "incomingRecordType": {
+      "description": "Incoming record type",
+      "type": "string",
+      "$ref": "entityType.json"
+    },
+    "existingRecordType": {
+      "description": "Existing record type to match",
+      "type": "string",
+      "$ref": "entityType.json"
+    },
+    "matchDetails": {
+      "description": "Match profile details list",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "match-profile-detail/matchDetail.json"
+      }
+    },
+    "deleted": {
+      "description": "Flag indicates that the Match Profile marked as deleted",
+      "type": "boolean",
+      "default": false
+    },
+    "userInfo": {
+      "description": "First name, last name and username of the user, who updated the Match Profile",
+      "type": "object",
+      "$ref": "../common/userInfo.json"
+    },
+    "parentProfiles": {
+      "description": "Associated parent profiles. Not required field that uses only for batch update/create",
+      "javaType": "java.util.List<org.folio.rest.jaxrs.model.ProfileSnapshotWrapper>",
+      "items": {
+        "type": "object",
+        "$ref": "./profileSnapshotWrapper.json"
+      }
+    },
+    "childProfiles": {
+      "description": "Associated children profiles. Not required field that uses only for batch update/create",
+      "javaType": "java.util.List<org.folio.rest.jaxrs.model.ProfileSnapshotWrapper>",
+      "items": {
+        "type": "object",
+        "$ref": "./profileSnapshotWrapper.json"
+      }
+    },
+    "metadata": {
+      "description": "Metadata provided by the server",
+      "type": "object",
+      "$ref": "../../raml-util/schemas/metadata.schema",
+      "readonly": true
+    }
+  },
+  "required": [
+    "name",
+    "incomingRecordType",
+    "existingRecordType"
+  ]
+}

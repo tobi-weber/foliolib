@@ -1,0 +1,10 @@
+{
+  "id": "a28dc77a-995b-43d4-9af8-a7b345a13bce",
+  "scope": "user",
+  "userId": "92a16061-77e8-48d0-8434-717c17258f2c",
+  "status": "in-progress",
+  "totalNumberOfLoans": 10,
+  "totalNumberOfFeesFines": 10,
+  "numberOfProcessedLoans": 5,
+  "numberOfProcessedFeesFines": 5
+}

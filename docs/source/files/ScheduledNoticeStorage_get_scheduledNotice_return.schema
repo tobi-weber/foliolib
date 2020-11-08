@@ -1,0 +1,99 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "UUID of scheduled task",
+      "$ref": "raml-util/schemas/uuid.schema"
+    },
+    "loanId": {
+      "type": "string",
+      "description": "UUID of related loan for loan notices",
+      "$ref": "raml-util/schemas/uuid.schema"
+    },
+    "requestId": {
+      "type": "string",
+      "description": "UUID of related request for request notices",
+      "$ref": "raml-util/schemas/uuid.schema"
+    },
+    "feeFineActionId": {
+      "type": "string",
+      "description": "UUID of related action for fee/fine notices",
+      "$ref": "raml-util/schemas/uuid.schema"
+    },
+    "recipientUserId": {
+      "type": "string",
+      "description": "Id of the user to whom this notice should be sent to",
+      "$ref": "raml-util/schemas/uuid.schema"
+    },
+    "nextRunTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Next run time"
+    },
+    "triggeringEvent": {
+      "type": "string",
+      "description": "Scheduled notice triggering event",
+      "enum": [
+        "Hold expiration",
+        "Request expiration",
+        "Due date",
+        "Overdue fine returned",
+        "Overdue fine renewed"
+      ]
+    },
+    "noticeConfig": {
+      "type": "object",
+      "properties": {
+        "timing": {
+          "type": "string",
+          "description": "Timing represents when we need to send notice, before, at or after loan due date",
+          "enum": [
+            "Upon At",
+            "Before",
+            "After"
+          ]
+        },
+        "recurringPeriod": {
+          "type": "object",
+          "$ref": "period.json",
+          "description": "Interval for recurring events"
+        },
+        "templateId": {
+          "type": "string",
+          "description": "UUID of related template",
+          "$ref": "raml-util/schemas/uuid.schema"
+        },
+        "format": {
+          "type": "string",
+          "description": "Notice format",
+          "enum": [
+            "Email",
+            "SMS",
+            "Print"
+          ]
+        },
+        "sendInRealTime": {
+          "type": "boolean",
+          "description": "Real time notice flag"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "timing",
+        "templateId",
+        "format"
+      ]
+    },
+    "metadata": {
+      "$ref": "raml-util/schemas/metadata.schema",
+      "readonly": true
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "nextRunTime",
+    "noticeConfig"
+  ]
+}

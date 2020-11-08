@@ -1,0 +1,14 @@
+{
+  "configs": [
+    {
+      "module": "CIRCULATION",
+      "configName": "validation_rules",
+      "code": "PATRON_RULE",
+      "description": "for patrons",
+      "default": true,
+      "enabled": true,
+      "value": ""
+    }
+  ],
+  "totalRecords": 1
+}

@@ -16,3 +16,7 @@ class UserNotFound(FolioException):
 
 class PermissionUserNotFound(FolioException):
     pass
+
+
+class ServicePointsUserNotFound(FolioException):
+    pass

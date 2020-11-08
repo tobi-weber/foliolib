@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Password reset entity",
+  "type": "object",
+  "properties": {
+    "newPassword": {
+      "description": "New password",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "newPassword"
+  ]
+}

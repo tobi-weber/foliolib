@@ -12,7 +12,7 @@ from pyokapi.okapi.okapiClient import (OkapiClient, request_release,
                                        request_snapshot_version)
 from pyokapi.okapi.okapiModule import OkapiModule
 
-log = logging.getLogger("okapi.helper")
+log = logging.getLogger("pyokapi.okapi.helper")
 
 
 def print_okapi_all():
@@ -44,18 +44,6 @@ def set_env_db(db_host: str, db_port: str = "5432", username: str = "folio_admin
 
 
 def create_okapiModule(name: str, version: str = None):
-
-    def makeOkapiModule(name: str, version: str = None):
-        okapiClient = OkapiClient(host=CONFIG.pyokapicfg().get("PullNode", "host"),
-                                  port=CONFIG.pyokapicfg().get("PullNode", "port"))
-        if version is None:
-            version = request_release(name)["version"]
-        modId = f"{name}-{version}"
-        descriptor = okapiClient.get_module(modId)
-        if "launchDescriptor" in descriptor:
-            descriptor["launchDescriptor"]["dockerPull"] = True
-        return OkapiModule(descriptor)
-
     log.info("Create Descriptor: %s - %s", name, version)
     cache_dir = CONFIG.pyokapicfg().get("Cache", "descriptors")
     descriptor_fname = f"ModuleDescriptor-{name}-{version}.json"
@@ -64,9 +52,9 @@ def create_okapiModule(name: str, version: str = None):
         log.info("Load descriptor from %s", fname_cache)
         with open(fname_cache) as f:
             descriptor = json.load(f)
-        module = OkapiModule(descriptor=descriptor)
+        module = OkapiModule(descriptor)
     else:
-        module = makeOkapiModule(name, version=version)
+        module = OkapiModule(name, version=version)
         log.debug("Create descriptor for %s", module.get_modId())
         descriptor_fname = f"ModuleDescriptor-{module.get_modId()}.json"
         fname_cache = os.path.join(cache_dir, descriptor_fname)
@@ -131,13 +119,7 @@ def add_modules_by_dir(path: str):
         modules = []
         for fname in os.listdir(path):
             with open(os.path.join(path, fname)) as f:
-                try:
-                    descriptor = json.load(f)
-                except:
-                    pp = pprint.PrettyPrinter(indent=2)
-                    print(os.path.join(path, fname))
-                    pp.pprint((descriptor))
-                    raise
+                descriptor = json.load(f)
             modules.append(OkapiModule(descriptor))
         add_modules(modules)
         return modules

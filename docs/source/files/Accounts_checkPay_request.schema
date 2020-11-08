@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Accounts check request",
+  "type": "object",
+  "properties": {
+    "amount": {
+      "type": "string",
+      "description": "Action amount to be validated"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "amount"
+  ]
+}

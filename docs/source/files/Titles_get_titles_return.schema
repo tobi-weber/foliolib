@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of titles",
+  "type": "object",
+  "properties": {
+    "titles": {
+      "description": "Collection of titles",
+      "type": "array",
+      "id": "titles",
+      "items": {
+        "$ref": "title.json"
+      }
+    },
+    "totalRecords": {
+      "description": "The number of objects contained in this collection",
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "titles",
+    "totalRecords"
+  ]
+}

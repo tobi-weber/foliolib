@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A fund to track financial transactions",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "UUID of this fund",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "allocatedFromIds": {
+      "description": "All the funds that this fund is allowed to receive money from. This would be 1 fund or none. If this field is blank their is no restriction on allocating to this fund",
+      "type": "array",
+      "items": {
+        "description": "UUID of the fund this fund is allowed to receive money from",
+        "$ref": "../../common/schemas/uuid.json"
+      }
+    },
+    "allocatedToIds": {
+      "description": "All the funds that this fund is allowed to send money to. This could be one or many.",
+      "type": "array",
+      "items": {
+        "description": "UUID of the fund this fund is allowed to send money to",
+        "$ref": "../../common/schemas/uuid.json"
+      }
+    },
+    "code": {
+      "description": "A unique code associated with the fund",
+      "type": "string"
+    },
+    "description": {
+      "description": "The description of this fund",
+      "type": "string"
+    },
+    "externalAccountNo": {
+      "description": "Corresponding account in the financial system. Will be recorded in payment generated as well.",
+      "type": "string"
+    },
+    "fundStatus": {
+      "description": "The current status of this fund",
+      "type": "string",
+      "enum": [
+        "Active",
+        "Frozen",
+        "Inactive"
+      ]
+    },
+    "fundTypeId": {
+      "description": "UUID of the fund type associated with this fund",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "ledgerId": {
+      "description": "UUID of the financial ledger associated with this fund",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "name": {
+      "description": "The name of this fund",
+      "type": "string"
+    },
+    "acqUnitIds": {
+      "description": "acquisition unit ids associated with this fund",
+      "type": "array",
+      "items": {
+        "$ref": "../../common/schemas/uuid.json"
+      }
+    },
+    "tags": {
+      "type": "object",
+      "description": "arbitrary tags associated with this fund",
+      "$ref": "../../../raml-util/schemas/tags.schema"
+    },
+    "metadata": {
+      "description": "Metadata about creation and changes to record, provided by the server (client should not provide)",
+      "type": "object",
+      "$ref": "../../../raml-util/schemas/metadata.schema",
+      "readonly": true
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "code",
+    "fundStatus",
+    "ledgerId",
+    "name"
+  ]
+}

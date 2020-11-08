@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Exchange rate schema",
+  "type": "object",
+  "properties": {
+    "from": {
+      "description": "From currency code",
+      "$ref": "../../common/schemas/currency_code.json"
+    },
+    "to": {
+      "description": "To currency code",
+      "$ref": "../../common/schemas/currency_code.json"
+    },
+    "exchangeRate": {
+      "description": "Exchange rate value",
+      "type": "number"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "from",
+    "to",
+    "exchangeRate"
+  ]
+}

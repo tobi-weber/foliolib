@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "The department a course belongs to",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The UUID of this department",
+      "$ref": "uuid.json"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the department"
+    },
+    "description": {
+      "type": "string",
+      "description": "A description of this department"
+    },
+    "metadata": {
+      "type": "object",
+      "$ref": "raml-util/schemas/metadata.schema"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Message with free-form text",
+  "type": "object",
+  "properties": {
+    "message": {
+      "description": "Free-form text",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

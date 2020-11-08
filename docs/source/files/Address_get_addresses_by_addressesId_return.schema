@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "An address record",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "UUID",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "addressLine1": {
+      "description": "The first line of this address",
+      "type": "string"
+    },
+    "addressLine2": {
+      "description": "The second line of this address",
+      "type": "string"
+    },
+    "city": {
+      "description": "The city for this address",
+      "type": "string"
+    },
+    "stateRegion": {
+      "description": "The state or region for this address",
+      "type": "string"
+    },
+    "zipCode": {
+      "description": "The zip code for this address",
+      "type": "string"
+    },
+    "country": {
+      "description": "The country for this address",
+      "type": "string"
+    },
+    "isPrimary": {
+      "description": "Used to set this address as primary for the contact",
+      "type": "boolean"
+    },
+    "categories": {
+      "id": "categories",
+      "description": "The list of categories for this organization address",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "language": {
+      "description": "The language for this organization address",
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object",
+      "$ref": "../../../raml-util/schemas/metadata.schema",
+      "readonly": true
+    }
+  },
+  "additionalProperties": false
+}

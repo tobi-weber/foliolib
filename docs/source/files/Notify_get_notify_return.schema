@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "A notification to a user",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "The UUID of this notification",
+      "type": "string"
+    },
+    "recipientId": {
+      "description": "The UUID of the receiving user",
+      "type": "string"
+    },
+    "senderId": {
+      "description": "The UUID of the sender",
+      "type": "string"
+    },
+    "text": {
+      "description": "The text of this notification",
+      "type": "string"
+    },
+    "link": {
+      "description": "Link to the relevant item for this notification",
+      "type": "string"
+    },
+    "eventConfigName": {
+      "description": "Unique event config name",
+      "type": "string"
+    },
+    "lang": {
+      "description": "Notification language",
+      "type": "string"
+    },
+    "context": {
+      "type": "object",
+      "description": "Context object"
+    },
+    "seen": {
+      "description": "Whether the user has seen this notification",
+      "type": "boolean",
+      "default": false
+    },
+    "metadata": {
+      "type": "object",
+      "$ref": "raml-util/schemas/metadata.schema"
+    }
+  },
+  "required": [
+    "text"
+  ]
+}

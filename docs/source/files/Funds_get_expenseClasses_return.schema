@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A collection of expense classes",
+  "type": "object",
+  "properties": {
+    "expenseClasses": {
+      "description": "The list of  expense classes objects in this collection",
+      "type": "array",
+      "id": "expense_classes",
+      "items": {
+        "type": "object",
+        "$ref": "expense_class.json"
+      }
+    },
+    "totalRecords": {
+      "description": "The number of objects in this collection",
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "expenseClasses",
+    "totalRecords"
+  ]
+}

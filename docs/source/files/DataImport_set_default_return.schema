@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of file extensions",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "fileExtensions": {
+      "description": "List of file extensions",
+      "type": "array",
+      "id": "fileExtensionList",
+      "items": {
+        "type": "object",
+        "$ref": "fileExtension.json"
+      }
+    },
+    "totalRecords": {
+      "description": "Total number of file extensions",
+      "type": "integer"
+    }
+  },
+  "excludedFromEqualsAndHashCode": [
+    "totalRecords"
+  ],
+  "required": [
+    "fileExtensions",
+    "totalRecords"
+  ]
+}

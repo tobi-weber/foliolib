@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Action response",
+  "type": "object",
+  "properties": {
+    "accountId": {
+      "type": "string",
+      "description": "Unique ID of the account",
+      "$ref": "../uuid.json"
+    },
+    "amount": {
+      "type": "string",
+      "description": "Action amount"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "accountId",
+    "amount"
+  ]
+}

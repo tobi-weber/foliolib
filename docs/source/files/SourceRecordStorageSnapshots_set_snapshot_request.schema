@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Snapshot Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "jobExecutionId": {
+      "description": "Corresponding jobExecution id",
+      "$ref": "../common/uuid.json"
+    },
+    "status": {
+      "description": "Current status",
+      "type": "string",
+      "$ref": "../common/status.json"
+    },
+    "processingStartedDate": {
+      "description": "Date and time when parsing of records started, set when status is updated to PARSING_IN_PROGRESS",
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "description": "Metadata provided by the server",
+      "type": "object",
+      "$ref": "../../raml-util/schemas/metadata.schema",
+      "readonly": true
+    }
+  },
+  "required": [
+    "jobExecutionId",
+    "status"
+  ]
+}

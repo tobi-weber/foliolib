@@ -1,0 +1,12 @@
+{
+  "audits": [
+    {
+      "id": "8d850f8d-3433-41e3-b0da-0c4b2d9a384e",
+      "orig_id": "8d850f8d-1111-41e3-b0da-0c4b2d9a384e",
+      "operation": "I",
+      "creation_date": "",
+      "jsonb": {}
+    }
+  ],
+  "totalRecords": 1
+}

@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "voucher line",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "UUID of this voucher line",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "amount": {
+      "description": "Total amount of this voucher",
+      "type": "number"
+    },
+    "externalAccountNumber": {
+      "description": "All distributions that come from funds with the same account number are grouped by voucher line",
+      "type": "string"
+    },
+    "fundDistributions": {
+      "description": "List of fund distributions",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "fund_distribution.json"
+      },
+      "minItems": 1
+    },
+    "sourceIds": {
+      "description": "UUID of invoice lines. There could be many invoice lines against a single voucher line. These are group on a voucher line based on External account number",
+      "type": "array",
+      "items": {
+        "$ref": "../../common/schemas/uuid.json"
+      }
+    },
+    "subTransactionId": {
+      "description": "UUID of sub transactions",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "voucherId": {
+      "description": "UUID of the voucher this line belongs to",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "metadata": {
+      "type": "object",
+      "$ref": "../../../raml-util/schemas/metadata.schema",
+      "readonly": true
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "amount",
+    "externalAccountNumber",
+    "fundDistributions",
+    "sourceIds",
+    "voucherId"
+  ]
+}

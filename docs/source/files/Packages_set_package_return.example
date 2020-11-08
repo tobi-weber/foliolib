@@ -1,0 +1,49 @@
+{
+  "data": {
+    "id": "123356-3168443",
+    "type": "packages",
+    "attributes": {
+      "contentType": "E-Journal",
+      "customCoverage": {
+        "beginCoverage": "2003-01-01",
+        "endCoverage": "2003-12-01"
+      },
+      "isCustom": true,
+      "isSelected": true,
+      "name": "DT custom packages api test one",
+      "packageId": 3168443,
+      "packageType": "Custom",
+      "providerId": 123356,
+      "providerName": "API DEV GOVERNMENT CUSTOMER",
+      "selectedCount": 0,
+      "titleCount": 0,
+      "vendorId": 123356,
+      "vendorName": "API DEV GOVERNMENT CUSTOMER",
+      "visibilityData": {
+        "isHidden": false,
+        "reason": ""
+      },
+      "allowKbToAddTitles": false,
+      "packageToken": null,
+      "proxy": {
+        "id": "<n>",
+        "inherited": true
+      }
+    },
+    "relationships": {
+      "resources": {
+        "meta": {
+          "included": false
+        }
+      },
+      "provider": {
+        "meta": {
+          "included": false
+        }
+      }
+    }
+  },
+  "jsonapi": {
+    "version": "1.0"
+  }
+}

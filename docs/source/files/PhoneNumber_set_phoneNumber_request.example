@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n    \"phoneNumber\": \"19789999999\",\n    \"language\": \"en-us\",\n     \"categories\": [\n        \"0e3f9680-ab06-4565-af64-609b7364e6eb\",\n        \"996ecd31-7ca4-4d8d-9bbf-bc94dff5f6c6\"\n     ],\n    \"type\": \"Office\",\n    \"isPrimary\": true\n}\n"
+}

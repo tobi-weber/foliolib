@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n  \"username\": \"jhandey\",\n  \"id\": \"7261ecaae3a74dc68b468e12a70b1aec\",\n  \"active\": true,\n  \"type\": \"patron\",\n  \"patronGroup\": \"4bb563d9-3f9d-4e1e-8d1d-04e75666d68f\",\n  \"meta\": {\n    \"creation_date\": \"2016-11-05T0723\",\n    \"last_login_date\": \"\"\n  },\n  \"personal\": {\n    \"lastName\": \"Handey\",\n    \"firstName\": \"Jack\",\n    \"preferredFirstName\": \"Jackie\",\n    \"email\": \"jhandey@biglibrary.org\",\n    \"phone\": \"2125551212\"\n  }\n}\n"
+}

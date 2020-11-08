@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "List of AggregatorSettings",
+  "type": "object",
+  "properties": {
+    "aggregatorSettings": {
+      "type": "array",
+      "description": "Entries",
+      "id": "aggregatorsettings",
+      "items": {
+        "type": "object",
+        "$ref": "aggregatorsetting.json"
+      }
+    },
+    "totalRecords": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "aggregatorSettings",
+    "totalRecords"
+  ]
+}

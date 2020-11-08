@@ -1,0 +1,6 @@
+{
+   "id": "4dee318b-f5b3-40dc-be93-cc89b8c45b6f",
+   "templateName": "Amazon book orders",
+   "templateCode": "Amazon-B",
+   "templateDescription": "Use to create orders in FOLIO after they are placed on Amazon"
+}

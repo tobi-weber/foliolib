@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of Event Descriptors",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "eventDescriptors": {
+      "description": "List of Event Descriptors",
+      "type": "array",
+      "id": "eventDescriptorsList",
+      "items": {
+        "type": "object",
+        "$ref": "./eventDescriptor.json"
+      }
+    },
+    "totalRecords": {
+      "description": "Total number of Event Descriptors",
+      "type": "integer"
+    }
+  },
+  "excludedFromEqualsAndHashCode": [
+    "totalRecords"
+  ],
+  "required": [
+    "eventDescriptors",
+    "totalRecords"
+  ]
+}

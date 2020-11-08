@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Resource Collection Schema",
+  "description": "Resource Collection Schema",
+  "javaType": "org.folio.rest.jaxrs.model.ResourceCollection",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "type": "array",
+      "description": "List of resources",
+      "items": {
+        "type": "object",
+        "$ref": "resourceCollectionItem.json"
+      }
+    },
+    "meta": {
+      "type": "object",
+      "description": "metadata containing total results in resources collection",
+      "$ref": "../metaTotalResults.json"
+    },
+    "jsonapi": {
+      "type": "object",
+      "description": "version of json api",
+      "$ref": "../jsonapi.json"
+    }
+  },
+  "required": [
+    "data",
+    "jsonapi"
+  ]
+}

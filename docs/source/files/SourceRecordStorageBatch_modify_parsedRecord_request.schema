@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of record DTO",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "records": {
+      "description": "List of records",
+      "type": "array",
+      "id": "recordList",
+      "items": {
+        "type": "object",
+        "$ref": "record.json"
+      }
+    },
+    "totalRecords": {
+      "description": "Total number of records",
+      "type": "integer"
+    }
+  },
+  "excludedFromEqualsAndHashCode": [
+    "totalRecords"
+  ],
+  "required": [
+    "records",
+    "totalRecords"
+  ]
+}

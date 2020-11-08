@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Purchase order number prefix",
+  "type": "object",
+  "extends": {
+    "$ref": "../../common/schemas/entity.json"
+  },
+  "properties": {
+    "id": {
+      "description": "UUID of this prefix",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "name": {
+      "description": "Prefix name",
+      "type": "string"
+    },
+    "description": {
+      "description": "Prefix description",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "name"
+  ]
+}

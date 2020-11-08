@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Action Profile schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "Unique identifier",
+      "$ref": "../common/uuid.json"
+    },
+    "name": {
+      "description": "Action Profile name",
+      "type": "string"
+    },
+    "description": {
+      "description": "Action Profile description",
+      "type": "string"
+    },
+    "tags": {
+      "description": "Set of tags assigned to the current Action Profile",
+      "type": "object",
+      "$ref": "../../raml-util/schemas/tags.schema"
+    },
+    "reactTo": {
+      "description": "Non-match also used when there is no match profile in the job",
+      "type": "string",
+      "enum": [
+        "MATCH",
+        "NON-MATCH"
+      ]
+    },
+    "action": {
+      "description": "Action type. CREATE allowed for all record types. UPDATE allowed for all record types except Orders, Invoices. DELETE allowed for all records types. MODIFY allowed for MARC records only",
+      "type": "string",
+      "enum": [
+        "CREATE",
+        "UPDATE",
+        "DELETE",
+        "MODIFY"
+      ]
+    },
+    "folioRecord": {
+      "description": "Record type",
+      "type": "string",
+      "enum": [
+        "INSTANCE",
+        "HOLDINGS",
+        "ITEM",
+        "ORDER",
+        "INVOICE",
+        "MARC_BIBLIOGRAPHIC",
+        "MARC_HOLDINGS",
+        "MARC_AUTHORITY"
+      ]
+    },
+    "deleted": {
+      "description": "Flag indicates that the Action Profile marked as deleted",
+      "type": "boolean",
+      "default": false
+    },
+    "userInfo": {
+      "description": "First name, last name and username of the user, who updated the Action Profile",
+      "type": "object",
+      "$ref": "../common/userInfo.json"
+    },
+    "parentProfiles": {
+      "description": "Associated parent profiles. Not required field that uses only for batch update/create",
+      "javaType": "java.util.List<org.folio.rest.jaxrs.model.ProfileSnapshotWrapper>",
+      "items": {
+        "type": "object",
+        "$ref": "./profileSnapshotWrapper.json"
+      }
+    },
+    "childProfiles": {
+      "description": "Associated children profiles. Not required field that uses only for batch update/create",
+      "javaType": "java.util.List<org.folio.rest.jaxrs.model.ProfileSnapshotWrapper>",
+      "items": {
+        "type": "object",
+        "$ref": "./profileSnapshotWrapper.json"
+      }
+    },
+    "metadata": {
+      "description": "Metadata provided by the server",
+      "type": "object",
+      "$ref": "../../raml-util/schemas/metadata.schema",
+      "readonly": true
+    }
+  },
+  "required": [
+    "name",
+    "action",
+    "folioRecord"
+  ]
+}

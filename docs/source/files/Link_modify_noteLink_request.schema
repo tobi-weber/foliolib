@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Collection of note links",
+  "javaType": "org.folio.rest.jaxrs.model.NoteLinksPut",
+  "additionalProperties": false,
+  "properties": {
+    "notes": {
+      "description": "List of note links",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "noteLinkPut.json"
+      }
+    }
+  }
+}

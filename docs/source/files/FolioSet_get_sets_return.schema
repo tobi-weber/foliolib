@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Filtering condition DTO Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "sets": {
+      "description": "list of folio sets",
+      "type": "array",
+      "id": "folioSetList",
+      "items": {
+        "javaType": "org.folio.rest.jaxrs.model.FolioSet",
+        "type": "object",
+        "$ref": "folioSet.json"
+      }
+    },
+    "totalRecords": {
+      "type": "integer",
+      "description": "Total number of records"
+    }
+  },
+  "required": [
+    "precedingSucceedingTitles",
+    "totalRecords"
+  ]
+}

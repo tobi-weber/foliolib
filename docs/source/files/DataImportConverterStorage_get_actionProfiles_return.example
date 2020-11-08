@@ -1,0 +1,32 @@
+{
+  "actionProfiles": [
+    {
+      "id": "cf3d7393-8534-44fb-93fd-7495d220f4f6",
+      "name": "Create preliminary instance",
+      "description": "Brief instance created by order, will be updated later",
+      "tags": {
+        "tagList": [
+          "acq-related", "preliminary"
+        ]
+      },
+      "reactTo": "NON-MATCH",
+      "action": "CREATE",
+      "folioRecord": "INSTANCE",
+      "deleted": false,
+      "userInfo": {
+        "firstName": "DIKU",
+        "lastName": "ADMINISTRATOR",
+        "userName": "diku_admin"
+      },
+      "metadata": {
+        "createdDate": "2018-10-30T12:41:22.000",
+        "createdByUserId": "",
+        "createdByUsername": "",
+        "updatedDate": "2018-11-02T12:09:51.000",
+        "updatedByUserId": "",
+        "updatedByUsername": ""
+      }
+    }
+  ],
+  "totalRecords": 1
+}

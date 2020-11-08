@@ -1,0 +1,13 @@
+{
+  "budgetExpenseClassTotals": [
+    {
+      "expenseClassName": "Electronic",
+      "expenseClassStatus": "Active",
+      "encumbered": "30.05",
+      "awaitingPayment": "0.0",
+      "expended": "103.0",
+      "percentageExpended": "51.5"
+    }
+  ],
+  "totalRecords": 1
+}

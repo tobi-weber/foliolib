@@ -1,0 +1,77 @@
+{
+  "id": "2be1e551-be27-4b03-b770-30e5e8211d19",
+  "accountingCode": "0206",
+  "accountNumber": "GOBI-HIST-12",
+  "adjustments": [
+    {
+      "description":"Service Fee",
+      "exportToAccounting" : false,
+      "type":"Amount",
+      "value":4.00,
+      "prorate":"Not prorated",
+      "relationToTotal":"In addition to"
+    },
+    {
+      "description":"Sales Tax",
+      "exportToAccounting" : false,
+      "type":"Percentage",
+      "value":8,
+      "prorate":"Not prorated",
+      "relationToTotal":"In addition to"
+    },
+    {
+      "adjustmentId": "14263aab-b22b-4ddc-9ecc-3434427c2c8f",
+      "exportToAccounting" : false,
+      "description":"Shipping",
+      "type":"Amount",
+      "value":2.50,
+      "prorate":"By line",
+      "relationToTotal":"In addition to"
+    }
+
+  ],
+  "adjustmentsTotal": 8.50,
+  "comment": "Sample invoice line",
+  "description": "Some description",
+  "fundDistributions": [
+    {
+      "code": "USHIST",
+      "encumbrance": "1c8fc9f4-d2cc-4bd1-aa9a-cb02291cbe65",
+      "expenseClassId" : "5b5ebe3a-cf8b-4f16-a880-46873ef21388",
+      "fundId": "1d1574f1-9196-4a57-8d1f-3b2e4309eb81",
+      "distributionType": "percentage",
+      "value": 50
+    },
+    {
+      "code": "EUHIST",
+      "expenseClassId" : "5b5ebe3a-cf8b-4f16-a880-46873ef21388",
+      "encumbrance": "5f9bfc74-f6ff-4877-be1f-793f8ce90ade",
+      "fundId": "63157e96-0693-426d-b0df-948bacdfdb08",
+      "distributionType": "percentage",
+      "value": 50
+    }
+  ],
+  "invoiceId": "c0d08448-347b-418a-8c2f-5fb50248d67e",
+  "invoiceLineNumber": "123invoicenumber45-1",
+  "invoiceLineStatus": "Open",
+  "poLineId": "e8971620-8ee4-4f3b-b5b5-93b864df16ed",
+  "productId": "9780764354113",
+  "productIdType": "8261054f-be78-422d-bd51-4ed9f33c3422",
+  "quantity": 3,
+  "releaseEncumbrance": true,
+  "subscriptionInfo": "Subscription information",
+  "subscriptionStart": "2018-08-01T00:00:00.000+0000",
+  "subscriptionEnd": "2019-01-01T00:00:00.000+0000",
+  "subTotal": 25.00,
+  "total": 33.50,
+  "vendorRefNo": "1",
+  "tags": {
+      "tagList": [
+        "tag"
+     ]
+   },
+  "metadata": {
+    "createdDate": "2018-07-19T00:00:00.000+0000",
+    "createdByUserId": "28d1057c-d137-11e8-a8d5-f2801f1b9fd1"
+  }
+}

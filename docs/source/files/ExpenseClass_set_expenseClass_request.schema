@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "An expense class",
+  "type": "object",
+  "extends": {
+    "$ref": "../../common/schemas/entity.json"
+  },
+  "properties": {
+    "id": {
+      "description": "UUID of the expense class record",
+      "type": "string",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "code": {
+      "description": "The code of the expense class",
+      "type": "string"
+    },
+    "externalAccountNumberExt": {
+      "description": "An external account number extension",
+      "type": "string"
+    },
+    "name": {
+      "description": "The name of the expense class",
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object",
+      "$ref": "../../../raml-util/schemas/metadata.schema",
+      "readonly": true
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "name"
+  ]
+}

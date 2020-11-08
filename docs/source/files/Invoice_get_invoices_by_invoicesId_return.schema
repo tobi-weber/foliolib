@@ -1,0 +1,194 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "invoice",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "UUID of this invoice",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "accountingCode": {
+      "description": "Number that represents the vendor is an external accounting system which may include details like \"Address code\" in it. This is the number as stated on the invoice",
+      "type": "string"
+    },
+    "adjustments": {
+      "description": "List of invoice level adjustments. The adjustments can be pro-rated which are defined at the invoice level, but are applied to the invoice lines. A generic example is a shipping fee which should be spread out across all of the invoice lines so that all funds involved pay some portion of the fee.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "adjustment.json"
+      }
+    },
+    "adjustmentsTotal": {
+      "description": "Total amount which is sum of all invoice line adjustments and all non-prorated invoice level adjustments. This amount is always calculated by system.",
+      "type": "number"
+    },
+    "approvedBy": {
+      "description": "UUID of user that approved this invoice",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "approvalDate": {
+      "description": "Date the invoice was approved for processing",
+      "type": "string",
+      "format": "date-time"
+    },
+    "batchGroupId": {
+      "description": "UUID of the batch group to use when generating batch vouchers",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$",
+      "default": "2a2cb998-1437-41d1-88ad-01930aaeadd5"
+    },
+    "billTo": {
+      "description": "UUID of the billing address",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "chkSubscriptionOverlap": {
+      "description": "IF TRUE the system will check if there is another invoice for this subscription and whether the dates overlap. IF the dates overlap, the system should issue an alert.",
+      "type": "boolean"
+    },
+    "currency": {
+      "description": "Ideally this is the ISO code and not something the user defines",
+      "type": "string"
+    },
+    "enclosureNeeded": {
+      "description": "Indicates that an enclosure is needed",
+      "type": "boolean",
+      "default": false
+    },
+    "exchangeRate": {
+      "description": "Exchange rate",
+      "type": "number"
+    },
+    "exportToAccounting": {
+      "description": "This would keep the invoice from being feed into the batch process (i.e. not generate an external voucher/payment) but would still move values in the system. This might be defined by the vendor relationship and exposed for override on the invoice.",
+      "type": "boolean",
+      "default": false
+    },
+    "folioInvoiceNo": {
+      "description": "Invoice number in folio system",
+      "type": "string"
+    },
+    "invoiceDate": {
+      "description": "Invoice date",
+      "type": "string",
+      "format": "date-time"
+    },
+    "lockTotal": {
+      "description": "Indicates that the total is keyed in and shouldn't be updated based on calculations. The calculated total must match this before the invoice can be approved",
+      "type": "boolean",
+      "default": false
+    },
+    "note": {
+      "description": "Invoice note",
+      "type": "string"
+    },
+    "paymentDue": {
+      "description": "When this is required to be paid. Generally governed by the relationship with the Vendor",
+      "type": "string",
+      "format": "date-time"
+    },
+    "paymentTerms": {
+      "description": "Invoice payment terms",
+      "type": "string"
+    },
+    "paymentMethod": {
+      "description": "Inherited from vendor record",
+      "type": "string"
+    },
+    "status": {
+      "description": "Open: Record has been created, Reviewed: details have been verified, Approved: Funds are release, Paid: confirmation that funds have been exchanged and check number has been returned amounts are frozen, cancelled.\nNote: invoices are never partially paid.",
+      "type": "string",
+      "enum": [
+        "Open",
+        "Reviewed",
+        "Approved",
+        "Paid",
+        "Cancelled"
+      ]
+    },
+    "source": {
+      "description": "This does not denote a user ID but describes how the record was created. Eg. User, API, EDI",
+      "type": "string",
+      "enum": [
+        "User",
+        "API",
+        "EDI"
+      ]
+    },
+    "subTotal": {
+      "description": "Invoice amount before adjustments are applied. This is sum of all subTotal amounts of the corresponding invoice lines. This amount is always calculated by system.",
+      "type": "number"
+    },
+    "total": {
+      "description": "The total amount of this invoice which is sum of subTotal and adjustmentsTotal. If lockTotal is true, then total is persisted and never replaced with a calculated value. Otherwise total is calculated \"on the fly\" and never persisted.",
+      "type": "number"
+    },
+    "vendorInvoiceNo": {
+      "description": "This is the number from the vendor's invoice, which is different from the folioInvoiceNo",
+      "type": "string"
+    },
+    "disbursementNumber": {
+      "description": "The identifier for the physical transaction corresponding to a payment (Eg. Check #, EFT # etc.) Brought in from external source",
+      "type": "string"
+    },
+    "voucherNumber": {
+      "description": "Number generated by folio that will eventually identify the payment request sent out to external financial system.",
+      "type": "string"
+    },
+    "paymentId": {
+      "description": "Id of payment",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "disbursementDate": {
+      "description": "Date payment was made from financial system (eg. corresponding check date)",
+      "type": "string",
+      "format": "date-time"
+    },
+    "poNumbers": {
+      "description": "May or may not be provided; references the PO associated to the invoice",
+      "id": "poNumbers",
+      "type": "array",
+      "items": {
+        "description": "A human readable ID assigned to this purchase order",
+        "type": "string",
+        "pattern": "^[a-zA-Z0-9]{1,16}$"
+      }
+    },
+    "vendorId": {
+      "description": "UUID of vendor",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "manualPayment": {
+      "description": "This would keep the invoice from being feed into the batch process (Not generate a external voucher/payment) but would still move values in the system. Note: this is ideally defined by the vendor relationship and exposed for override on the invoice.",
+      "type": "boolean"
+    },
+    "acqUnitIds": {
+      "description": "acquisition unit ids associated with this invoice",
+      "type": "array",
+      "items": {
+        "$ref": "../../common/schemas/uuid.json"
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "$ref": "../../../raml-util/schemas/metadata.schema",
+      "readonly": true
+    },
+    "tags": {
+      "type": "object",
+      "description": "arbitrary tags associated with this invoice",
+      "$ref": "../../../raml-util/schemas/tags.schema"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "batchGroupId",
+    "currency",
+    "invoiceDate",
+    "paymentMethod",
+    "status",
+    "source",
+    "vendorInvoiceNo",
+    "vendorId"
+  ]
+}

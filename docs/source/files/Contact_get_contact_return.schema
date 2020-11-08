@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A contact record",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "The unique id of this contact",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "prefix": {
+      "description": "The prefix for this contact person",
+      "type": "string"
+    },
+    "firstName": {
+      "description": "The first name of this contact person",
+      "type": "string"
+    },
+    "lastName": {
+      "description": "The last name of this contact person",
+      "type": "string"
+    },
+    "language": {
+      "description": "The preferred language for this contact person",
+      "type": "string"
+    },
+    "notes": {
+      "description": "The notes for this contact person",
+      "type": "string"
+    },
+    "phoneNumbers": {
+      "id": "phoneNumbers",
+      "description": "The list of phone numbers for this contact person",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "phone_number.json"
+      }
+    },
+    "emails": {
+      "id": "emailAddresses",
+      "description": "The list of emails for this contact person",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "email.json"
+      }
+    },
+    "addresses": {
+      "id": "addresses",
+      "description": "The list of addresses for this contact person",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "address.json"
+      }
+    },
+    "urls": {
+      "id": "urls",
+      "description": "The list of URLs for this contact person",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "url.json"
+      }
+    },
+    "categories": {
+      "id": "contactCategory",
+      "description": "The list of contact categories associated with this organization contact person",
+      "type": "array",
+      "items": {
+        "description": "UUID of the contact category",
+        "$ref": "../../common/schemas/uuid.json"
+      }
+    },
+    "inactive": {
+      "description": "Used to indicate that a contact is no longer active",
+      "type": "boolean",
+      "default": false
+    },
+    "metadata": {
+      "type": "object",
+      "$ref": "../../../raml-util/schemas/metadata.schema",
+      "readonly": true
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "firstName",
+    "lastName"
+  ]
+}

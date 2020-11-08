@@ -1,0 +1,21 @@
+{
+  "orderInvoiceRelationships":
+    [
+     {
+        "id": "2A1030d4-C4EC-5A66-8EfC-3fc8e608e2De",
+        "purchaseOrderId": "0610be6d-0ddd-494b-b867-19f63d8b5d6d",
+        "invoiceId": "c0d08448-347b-418a-8c2f-5fb50248d67e"
+     },
+     {
+        "id": "DbDD493a-345c-4D0C-aFb5-6CdDB6a3FEE9",
+        "purchaseOrderId": "589a6016-3463-49f6-8aa2-dc315d0665fd",
+        "invoiceId": "9917d4a6-fbb2-4ed6-946d-6cf8c42369e4"
+     },
+     {
+        "id": "bA0A09Be-cAeB-2Fbd-a5fb-6bf962BCcBbF",
+        "purchaseOrderId": "9447d062-89ec-486e-a14b-572f3efb9f8c",
+        "invoiceId": "e6ac6e5b-2dde-4904-bc2d-def3a0b17052"
+     }
+    ],
+  "totalRecords": 3
+}

@@ -1,0 +1,22 @@
+{
+  "reserves": [
+    {
+      "id": "970e07c5-1354-4f4a-8326-2d10a94eb33c",
+      "sectionId": "79628277-984d-437a-a640-3d29fa89957b",
+      "itemId": "d64ecfda-17b2-4af6-a168-4b8b4ae0afa6",
+      "barcode": "234543678233",
+      "status": {
+        "name": "Available"
+      },
+      "title": "Underwater Basket Weaving: A Holistic Approach",
+      "contributors": [
+        {
+          "name": "Weevin, Ben",
+          "contributorNameTypeId": "37105705-bba4-4fc1-9709-2edd4842b41c",
+          "primary": true
+        }
+      ]
+    }
+  ],
+  "totalRecords": 1
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A collection of copyright status records",
+  "type": "object",
+  "properties": {
+    "copyrightStatuses": {
+      "description": "List of copyright statuses",
+      "id": "copyrightStatus",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "copyrightstatus.json"
+      }
+    },
+    "totalRecords": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "copyrightStatuses",
+    "totalRecords"
+  ]
+}

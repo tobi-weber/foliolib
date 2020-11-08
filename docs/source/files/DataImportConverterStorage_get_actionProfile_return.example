@@ -1,0 +1,70 @@
+{
+   "id":"cf3d7393-8534-44fb-93fd-7495d220f4f6",
+   "name":"Create preliminary instance",
+   "description":"Brief instance created by order, will be updated later",
+   "tags":{
+      "tagList":[
+         "acq-related",
+         "preliminary"
+      ]
+   },
+   "reactTo":"NON-MATCH",
+   "action":"CREATE",
+   "folioRecord":"INSTANCE",
+   "deleted":false,
+   "userInfo":{
+      "firstName":"DIKU",
+      "lastName":"ADMINISTRATOR",
+      "userName":"diku_admin"
+   },
+   "parentProfiles":[
+      {
+         "id":"0fc0ba76-d560-4541-826f-f8bdd3b09841",
+         "profileId":"dc4ac439-57ae-4779-872e-1892b163bb47",
+         "contentType":"JOB_PROFILE",
+         "content":{
+            "id":"dc4ac439-57ae-4779-872e-1892b163bb47",
+            "name":"Load vendor order records",
+            "description":"Ordered on vendor site; load MARC to create bib, holdings, item, and order; keep MARC",
+            "dataTypes":[
+               "MARC"
+            ],
+            "tags":{
+               "tagList":[
+                  "acq",
+                  "daily"
+               ]
+            }
+         }
+      }
+   ],
+   "childProfiles":[
+      {
+         "id":"0fc0ba76-d560-4541-826f-f8bdd3b09841",
+         "profileId":"dc4ac439-57ae-4779-872e-1892b163bb47",
+         "contentType":"JOB_PROFILE",
+         "content":{
+            "id":"dc4ac439-57ae-4779-872e-1892b163bb47",
+            "name":"Load vendor order records",
+            "description":"Ordered on vendor site; load MARC to create bib, holdings, item, and order; keep MARC",
+            "dataTypes":[
+               "MARC"
+            ],
+            "tags":{
+               "tagList":[
+                  "acq",
+                  "daily"
+               ]
+            }
+         }
+      }
+   ],
+   "metadata":{
+      "createdDate":"2018-10-30T12:41:22.000",
+      "createdByUserId":"",
+      "createdByUsername":"",
+      "updatedDate":"2018-11-02T12:09:51.000",
+      "updatedByUserId":"",
+      "updatedByUsername":""
+   }
+}

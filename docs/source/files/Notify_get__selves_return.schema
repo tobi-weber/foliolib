@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Collection of notifications",
+  "properties": {
+    "notifications": {
+      "description": "List of notifications",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "notify.json"
+      }
+    },
+    "totalRecords": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "notifications",
+    "totalRecords"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+   "acquisitionsUnits":
+     [
+       {
+          "name": "main",
+          "isDeleted": false,
+          "protectCreate": true,
+          "protectRead": false,
+          "protectUpdate": true,
+          "protectDelete": true
+       },
+       {
+          "name": "law",
+          "isDeleted": false,
+          "protectCreate": true,
+          "protectRead": true,
+          "protectUpdate": true,
+          "protectDelete": true
+       },
+       {
+         "name": "general",
+         "isDeleted": true,
+         "protectCreate": false,
+         "protectRead": false,
+         "protectUpdate": false,
+         "protectDelete": false
+       }
+     ],
+   "totalRecords": 3
+}

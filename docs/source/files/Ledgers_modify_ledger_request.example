@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n  \"id\": \"7cef8378-7cbd-1fae-bcdd-8b9d7c0af9de\",\n  \"name\": \"Main Library\",\n  \"code\": \"MAIN-LIB\",\n  \"description\": \"This is the ledger for the Main Library\",\n  \"fiscalYearOneId\": \"d875618b-7cf5-442f-a823-9814e7bce92a\",\n  \"ledgerStatus\": \"Active\",\n  \"allocated\": 2000,\n  \"available\": 1000,\n  \"netTransfers\": 0,\n  \"unavailable\": 1000,\n  \"currency\": \"USD\",\n  \"restrictEncumbrance\": false,\n  \"restrictExpenditures\": false,\n  \"acqUnitIds\": [\n    \"ac2164c7-ba3d-1bc2-912c-e35ceccbfaf2\"\n  ]\n}\n"
+}

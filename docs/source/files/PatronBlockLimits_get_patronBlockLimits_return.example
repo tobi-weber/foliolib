@@ -1,0 +1,17 @@
+{
+  "patronBlockLimits": [
+    {
+      "id": "1de95200-72e4-4967-bdf8-257fb7559536",
+      "patronGroupId": "ac502f9e-a611-4644-8a8c-a5bb9768a7f6",
+      "conditionId": "72b67965-5b73-4840-bc0b-be8f3f6e047e",
+      "value": "10"
+    },
+    {
+      "id": "d3106d61-1867-47e0-84b9-5a21f1928ebd",
+      "patronGroupId": "72b67965-5b73-4840-bc0b-be8f3f6e047e",
+      "conditionId": "584fbd4f-6a34-4730-a6ca-73a6a6a9d845",
+      "value": "10"
+    }
+  ],
+  "totalRecords": 2
+}

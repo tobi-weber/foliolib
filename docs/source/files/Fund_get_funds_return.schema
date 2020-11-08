@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A collection of funds",
+  "type": "object",
+  "properties": {
+    "funds": {
+      "description": "The list of funds contained in this collection",
+      "type": "array",
+      "id": "funds",
+      "items": {
+        "type": "object",
+        "$ref": "fund.json"
+      }
+    },
+    "totalRecords": {
+      "description": "The number of objects contained in this collection",
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "funds",
+    "totalRecords"
+  ]
+}

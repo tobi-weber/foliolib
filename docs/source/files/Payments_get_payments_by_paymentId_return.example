@@ -1,0 +1,12 @@
+{
+  "nameMethod": "Cash",
+  "allowedRefundMethod": true,
+  "metadata": {
+    "createdDate": "2018-03-19T14:22:07Z",
+    "createdByUserId": "1ad737b0-d847-11e6-bf26-cec0c932ce02",
+    "createdByUsername": "Doe",
+    "updatedDate": "2018-03-19T14:22:07Z"
+  },
+  "ownerId": "0bab56e5-1ab6-4ac2-afdf-8b2df0434379",
+  "id": "0bab56e5-1ab6-4ac2-afdf-8b2df0434382"
+}

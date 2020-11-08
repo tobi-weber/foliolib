@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "collection of batch groups",
+  "type": "object",
+  "properties": {
+    "batchGroups": {
+      "description": "an array of batch group records",
+      "id": "batchGroups",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "batch_group.json"
+      }
+    },
+    "totalRecords": {
+      "description": "total number of records in the array",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "batchGroups",
+    "totalRecords"
+  ]
+}

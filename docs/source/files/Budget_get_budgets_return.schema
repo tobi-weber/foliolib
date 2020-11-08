@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A collection of budgets",
+  "type": "object",
+  "properties": {
+    "budgets": {
+      "description": "The list of budget objects contained in this collection",
+      "type": "array",
+      "id": "budgets",
+      "items": {
+        "type": "object",
+        "$ref": "budget.json"
+      }
+    },
+    "totalRecords": {
+      "description": "The number of objects contained in this collection",
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "budgets",
+    "totalRecords"
+  ]
+}

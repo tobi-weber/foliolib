@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Budget expense class mapping schema",
+  "type": "object",
+  "extends": {
+    "$ref": "../../common/schemas/entity.json"
+  },
+  "properties": {
+    "id": {
+      "description": "UUID of the expense class record",
+      "type": "string",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "budgetId": {
+      "description": "UUID of the budget record",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "expenseClassId": {
+      "description": "UUID of the expense class record",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "status": {
+      "description": "Status for expense class within the budget ",
+      "type": "string",
+      "enum": [
+        "Active",
+        "Inactive"
+      ],
+      "default": "Active"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "budgetId",
+    "expenseClassId"
+  ]
+}

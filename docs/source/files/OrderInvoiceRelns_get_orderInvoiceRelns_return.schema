@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of relationship between invoice and order",
+  "type": "object",
+  "properties": {
+    "orderInvoiceRelationships": {
+      "description": "Collection of relationship",
+      "type": "array",
+      "id": "order_invoice_relationship",
+      "items": {
+        "type": "object",
+        "$ref": "order_invoice_relationship.json"
+      }
+    },
+    "totalRecords": {
+      "description": "The number of objects contained in this collection",
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "orderInvoiceRelationships",
+    "totalRecords"
+  ]
+}

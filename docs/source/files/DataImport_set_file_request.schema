@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Uploaded file metadata entity",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "UUID",
+      "$ref": "../common/uuid.json"
+    },
+    "sourcePath": {
+      "description": "The path to the file location",
+      "type": "string",
+      "readonly": true
+    },
+    "name": {
+      "description": "Name of the file with extension",
+      "type": "string"
+    },
+    "status": {
+      "description": "Status of files upload",
+      "type": "string",
+      "enum": [
+        "NEW",
+        "UPLOADING",
+        "UPLOADED",
+        "ERROR"
+      ]
+    },
+    "jobExecutionId": {
+      "description": "Link to JobExecution entity",
+      "$ref": "../common/uuid.json"
+    },
+    "uploadDefinitionId": {
+      "description": "Link to UploadDefinition entity",
+      "$ref": "../common/uuid.json"
+    },
+    "createDate": {
+      "description": "Date and time when the file definition was created",
+      "type": "string",
+      "format": "date-time"
+    },
+    "uploadedDate": {
+      "description": "Date and time when the file was uploaded",
+      "type": "string",
+      "format": "date-time"
+    },
+    "size": {
+      "description": "Size of the file in Kbyte",
+      "type": "integer"
+    },
+    "uiKey": {
+      "description": "Unique key for the file definition on ui before entity saved",
+      "type": "string"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Message payload for event",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "eventId": {
+      "description": "Unique Event type id, UUID",
+      "$ref": "uuid.json"
+    },
+    "content": {
+      "description": "String representation of JSON message's payload",
+      "type": "string"
+    }
+  },
+  "excludedFromEqualsAndHashCode": [
+    "content"
+  ],
+  "required": [
+    "eventId"
+  ]
+}

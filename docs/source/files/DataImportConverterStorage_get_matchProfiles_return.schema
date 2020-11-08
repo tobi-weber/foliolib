@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of Match Profiles",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "matchProfiles": {
+      "description": "List of Match Profiles",
+      "type": "array",
+      "id": "matchProfileList",
+      "items": {
+        "type": "object",
+        "$ref": "matchProfile.json"
+      }
+    },
+    "totalRecords": {
+      "description": "Total number of Match Profiles",
+      "type": "integer"
+    }
+  },
+  "excludedFromEqualsAndHashCode": [
+    "totalRecords"
+  ],
+  "required": [
+    "matchProfiles",
+    "totalRecords"
+  ]
+}

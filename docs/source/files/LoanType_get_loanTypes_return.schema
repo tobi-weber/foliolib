@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A collection of loan types",
+  "type": "object",
+  "properties": {
+    "loantypes": {
+      "description": "List of loan types",
+      "id": "loantype",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "loantype.json"
+      }
+    },
+    "totalRecords": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "loantypes",
+    "totalRecords"
+  ]
+}

@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n  \"id\": \"bf6c9ddc-ff82-40c4-be64-dd2414bdcd72\",\n  \"label\": \"Data provider without aggregator\",\n  \"harvestingConfig\": {\n    \"harvestingStatus\": \"active\",\n    \"harvestVia\": \"sushi\",\n    \"sushiConfig\": {\n      \"serviceType\": \"cs41\",\n      \"serviceUrl\": \"http://myvendor.com\"\n    },\n    \"reportRelease\": 4,\n    \"requestedReports\": [\n      \"JR1\",\n      \"TR1\"\n    ],\n    \"harvestingStart\": \"2018-01\",\n    \"harvestingEnd\": \"2018-12\"\n  },\n  \"sushiCredentials\": {\n    \"customerId\": \"12345def\",\n    \"requestorId\": \"1234abcd\",\n    \"apiKey\": \"678iuoi\",\n    \"requestorName\": \"Karla Kolumna\",\n    \"requestorMail\": \"kolumna@ub.uni-leipzig.de\"\n  },\n  \"earliestReport\": \"2017-01\",\n  \"latestReport\": \"2017-12\",\n  \"harvestingDate\": \"2020-01-22T13:26:40.687+0000\",\n  \"notes\": \"This is a note!\"\n}\n"
+}

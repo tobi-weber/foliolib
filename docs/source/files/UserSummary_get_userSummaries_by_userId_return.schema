@@ -1,0 +1,108 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Stores patron data used to calculate patron blocks",
+  "properties": {
+    "id": {
+      "description": "Unique ID of the user summary",
+      "type": "string",
+      "$ref": "raml-util/schemas/uuid.schema"
+    },
+    "userId": {
+      "description": "Unique ID of the user",
+      "type": "string",
+      "$ref": "raml-util/schemas/uuid.schema"
+    },
+    "openLoans": {
+      "description": "User's open loans",
+      "type": "array",
+      "items": {
+        "description": "Collection of user's open loans",
+        "type": "object",
+        "properties": {
+          "loanId": {
+            "description": "Unique ID of the loan",
+            "type": "string",
+            "$ref": "raml-util/schemas/uuid.schema"
+          },
+          "dueDate": {
+            "description": "Due date of the loan",
+            "type": "string",
+            "format": "date-time"
+          },
+          "recall": {
+            "description": "Indicates if the item was recalled",
+            "type": "boolean",
+            "default": false
+          },
+          "itemLost": {
+            "description": "Indicates if the item associated with the loan is in status 'Aged to lost' or 'Declared lost'",
+            "type": "boolean",
+            "default": false
+          },
+          "itemClaimedReturned": {
+            "description": "Indicates if the item associated with the loan is in status 'Claimed returned'",
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "loanId",
+          "dueDate",
+          "recall"
+        ]
+      }
+    },
+    "openFeesFines": {
+      "description": "User's open fees/fines",
+      "type": "array",
+      "items": {
+        "description": "Collection of user's open fees/fines",
+        "type": "object",
+        "javaName": "openFeeFine",
+        "properties": {
+          "feeFineId": {
+            "description": "Unique ID of the fee/fine",
+            "type": "string",
+            "$ref": "raml-util/schemas/uuid.schema"
+          },
+          "feeFineTypeId": {
+            "description": "Unique ID of the fee/fine type",
+            "type": "string",
+            "$ref": "raml-util/schemas/uuid.schema"
+          },
+          "loanId": {
+            "description": "Unique ID of the loan the fee/fine was created for",
+            "type": "string",
+            "$ref": "raml-util/schemas/uuid.schema"
+          },
+          "balance": {
+            "description": "Balance",
+            "type": "number",
+            "javaType": "java.math.BigDecimal"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "feeFineId",
+          "feeFineTypeId",
+          "balance"
+        ]
+      }
+    },
+    "metadata": {
+      "description": "Metadata about object's creation and changes. Is provided by server, not by client.",
+      "type": "object",
+      "$ref": "raml-util/schemas/metadata.schema",
+      "readonly": true
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "userId",
+    "openLoans",
+    "openFeesFines"
+  ]
+}

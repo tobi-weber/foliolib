@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n  \"accountName\": \"Bursar\",\n  \"desc\": \"Central University Bursar Office\",\n  \"metadata\": {\n    \"createdDate\": \"2019-01-14T14:22:07Z\",\n    \"createdByUserId\": \"1ad737b0-d847-11e6-bf26-cec0c932ce01\",\n    \"createdByUsername\": \"diku_admin\",\n    \"updatedDate\": \"2019-01-14T14:22:07Z\"\n  },\n  \"ownerId\": \"1e20449e-e469-4c4d-9d9f-9c87a1c969d6\",\n  \"id\": \"0bab56e5-1ab6-4ac2-afdf-8b2df0434482\"\n}\n"
+}

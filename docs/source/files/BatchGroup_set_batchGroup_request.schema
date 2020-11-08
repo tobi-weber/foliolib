@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Simple controlled vocabulary for batch groups",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "UUID of batch group",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "name": {
+      "description": "Name of batch group",
+      "type": "string"
+    },
+    "description": {
+      "description": "Free-form description for this batch group",
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object",
+      "$ref": "../../../raml-util/schemas/metadata.schema",
+      "readonly": true
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "name"
+  ]
+}

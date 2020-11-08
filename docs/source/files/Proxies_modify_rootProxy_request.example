@@ -1,0 +1,13 @@
+{
+  "strict": false,
+  "value": {
+    "data": {
+      "id": "root-proxy",
+      "type": "rootProxies",
+      "attributes": {
+        "id": "root-proxy",
+        "proxyTypeId": "EZProxy"
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of Profile associations",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "profileAssociations": {
+      "description": "List of Profile associations",
+      "type": "array",
+      "id": "profileAssociationList",
+      "items": {
+        "type": "object",
+        "$ref": "profileAssociation.json"
+      }
+    },
+    "totalRecords": {
+      "description": "Total number of Profile associations",
+      "type": "integer"
+    }
+  },
+  "excludedFromEqualsAndHashCode": [
+    "totalRecords"
+  ],
+  "required": [
+    "profileAssociations",
+    "totalRecords"
+  ]
+}

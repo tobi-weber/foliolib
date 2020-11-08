@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A collection of group fiscal year summaries",
+  "type": "object",
+  "properties": {
+    "groupFiscalYearSummaries": {
+      "description": "The list of group fiscal year summaries",
+      "type": "array",
+      "items": {
+        "$ref": "group_fiscal_year_summary.json"
+      }
+    },
+    "totalRecords": {
+      "description": "The number of records contained in this collection",
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "groupFiscalYearSummaries",
+    "totalRecords"
+  ]
+}

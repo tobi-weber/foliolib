@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Sequence number object",
+  "type": "object",
+  "properties": {
+    "sequenceNumber": {
+      "description": "Sequence number",
+      "type": "string"
+    }
+  },
+  "required": [
+    "sequenceNumber"
+  ],
+  "additionalProperties": false
+}

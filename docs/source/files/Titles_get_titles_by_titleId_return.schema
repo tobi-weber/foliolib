@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Title object schema",
+  "description": "Title object schema",
+  "javaType": "org.folio.rest.jaxrs.model.Title",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "data": {
+      "type": "object",
+      "description": "The Data Schema",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The Id Schema",
+          "example": "100130"
+        },
+        "type": {
+          "type": "string",
+          "description": "Title Type",
+          "example": "titles"
+        },
+        "attributes": {
+          "type": "object",
+          "description": "The Attributes Schema",
+          "$ref": "titleData.json"
+        },
+        "relationships": {
+          "type": "object",
+          "description": "Displays title relationships",
+          "$ref": "../relationships.json"
+        }
+      }
+    },
+    "included": {
+      "type": "array",
+      "description": "List of resources for a given title",
+      "items": {
+        "type": "object",
+        "$ref": "../resources/resourceCollectionItem.json"
+      }
+    },
+    "jsonapi": {
+      "type": "object",
+      "description": "version of json api",
+      "$ref": "../jsonapi.json"
+    }
+  },
+  "required": [
+    "data"
+  ]
+}

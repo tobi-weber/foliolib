@@ -1,0 +1,25 @@
+{
+  "noteTypes" : [
+    {
+      "id": "2cf21797-d25b-46dc-8427-1759d1db2057",
+      "name": "High Priority",
+      "usage": {
+        "noteTotal": 10
+      }
+    },
+    {
+      "id": "92c44fe3-9244-403f-a25a-e808b084d277",
+      "name": "Medium Priority",
+      "usage": {
+        "noteTotal": 310
+      }
+    },
+    {
+      "id": "2133caaa-bf88-4e83-a043-ff014d0053a5",
+      "name": "Low Priority",
+      "usage": {
+        "noteTotal": 89
+      }
+    }
+  ]
+}

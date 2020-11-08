@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n  \"id\": \"7ec2ed06-0504-40dc-bc53-7515955ff0cb\",\n  \"name\": \"main\",\n  \"isDeleted\": false,\n  \"protectCreate\": true,\n  \"protectRead\": false,\n  \"protectUpdate\": true,\n  \"protectDelete\": true\n}\n"
+}

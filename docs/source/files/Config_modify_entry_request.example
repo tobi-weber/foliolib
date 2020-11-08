@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n  \"module\": \"CIRCULATION\",\n  \"configName\": \"validation_rules\",\n  \"code\": \"PATRON_RULE\",\n  \"description\": \"for patrons\",\n  \"default\": true,\n  \"enabled\": true,\n  \"value\": \"\"\n}\n"
+}

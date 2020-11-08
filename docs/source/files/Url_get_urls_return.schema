@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of URL records",
+  "type": "object",
+  "properties": {
+    "urls": {
+      "description": "The list of urls in this collection",
+      "type": "array",
+      "id": "urls",
+      "items": {
+        "type": "object",
+        "$ref": "url.json"
+      }
+    },
+    "totalRecords": {
+      "description": "The number of URL records returned in this collection",
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "urls",
+    "totalRecords"
+  ]
+}

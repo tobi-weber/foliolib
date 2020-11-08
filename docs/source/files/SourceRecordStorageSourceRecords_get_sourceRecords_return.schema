@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of Source record DTO",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "sourceRecords": {
+      "description": "List of Source records",
+      "type": "array",
+      "id": "sourceRecordList",
+      "items": {
+        "type": "object",
+        "$ref": "sourceRecord.json"
+      }
+    },
+    "totalRecords": {
+      "description": "Total number of Source records",
+      "type": "integer"
+    }
+  },
+  "excludedFromEqualsAndHashCode": [
+    "totalRecords"
+  ],
+  "required": [
+    "sourceRecords",
+    "totalRecords"
+  ]
+}

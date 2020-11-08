@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A relationship between group and fund on a per fiscal year basis",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "UUID of the record",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "budgetId": {
+      "description": "UUID of the budget record",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "groupId": {
+      "description": "UUID of the group record",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "fiscalYearId": {
+      "description": "UUID of the fiscal year record",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "fundId": {
+      "description": "UUID of the fund record",
+      "$ref": "../../common/schemas/uuid.json"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "groupId",
+    "fiscalYearId",
+    "fundId"
+  ]
+}

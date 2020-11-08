@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A collection of service points users",
+  "type": "object",
+  "properties": {
+    "servicePointsUsers": {
+      "description": "List of service points users",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "servicepointsuser.json"
+      }
+    },
+    "totalRecords": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "servicePointsUsers",
+    "totalRecords"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Order transactions summary",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "UUID of this summary",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "numTransactions": {
+      "description": "Total number of transactions (encumbrances) expected for this order. Negative value indicates that all transactions have been processed",
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "numTransactions"
+  ]
+}

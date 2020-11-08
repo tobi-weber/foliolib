@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Event Descriptor data model",
+  "javaType": "org.folio.rest.jaxrs.model.EventDescriptor",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "eventType": {
+      "description": "Unique Event type, human-readable String, not UUID",
+      "type": "string"
+    },
+    "description": {
+      "description": "Detailed description of the event type",
+      "type": "string"
+    },
+    "eventTTL": {
+      "description": "Default time-to-live (TTL) for events of this type in minutes",
+      "type": "integer"
+    },
+    "signed": {
+      "description": "Indicates whether all events of this event type must be digitally signed by the publisher",
+      "type": "boolean",
+      "default": false
+    },
+    "tmp": {
+      "description": "Indicates whether descriptor is temporary and should be overwritten",
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "eventType",
+    "eventTTL"
+  ]
+}

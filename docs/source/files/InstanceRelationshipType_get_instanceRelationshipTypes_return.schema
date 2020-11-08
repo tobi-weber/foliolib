@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A collection of InstanceRelationshipType records (controlled vocabulary)",
+  "type": "object",
+  "properties": {
+    "instanceRelationshipTypes": {
+      "description": "List of instance relationship types",
+      "id": "instanceRelationshipType",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "instancerelationshiptype.json"
+      }
+    },
+    "totalRecords": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "instanceRelationshipTypes",
+    "totalRecords"
+  ]
+}

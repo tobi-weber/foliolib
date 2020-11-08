@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "top-level batch voucher, i.e. a collection of batched vouchers",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "UUID of batch voucher",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "batchGroup": {
+      "description": "The human-readable name of the batch group used when generating this batch voucher",
+      "type": "string"
+    },
+    "batchedVouchers": {
+      "description": "an array of batched voucher records",
+      "id": "batchVouchers",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "batched_voucher.json"
+      }
+    },
+    "created": {
+      "description": "When this batch voucher was created",
+      "type": "string",
+      "format": "date-time"
+    },
+    "start": {
+      "description": "This export is for all vouchers between start and end",
+      "type": "string",
+      "format": "date-time"
+    },
+    "end": {
+      "description": "This export is for all vouchers between start and end",
+      "type": "string",
+      "format": "date-time"
+    },
+    "totalRecords": {
+      "description": "total number of records in the array",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "batchGroup",
+    "batchedVouchers",
+    "created",
+    "start",
+    "end",
+    "totalRecords"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A composite fund to track financial transactions",
+  "type": "object",
+  "properties": {
+    "fund": {
+      "description": "Fund to track financial transactions",
+      "type": "object",
+      "$ref": "fund.json"
+    },
+    "groupIds": {
+      "description": "Group ids associated with this fund",
+      "type": "array",
+      "items": {
+        "$ref": "../../common/schemas/uuid.json"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "fund"
+  ]
+}

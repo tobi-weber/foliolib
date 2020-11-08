@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n   \"id\": \"4dee318b-f5b3-40dc-be93-cc89b8c45b6f\",\n   \"templateName\": \"Amazon book orders\",\n   \"templateCode\": \"Amazon-B\",\n   \"templateDescription\": \"Use to create orders in FOLIO after they are placed on Amazon\"\n}\n"
+}

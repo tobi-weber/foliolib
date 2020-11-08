@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Collection of loans",
+  "description": "Collection of loans",
+  "type": "object",
+  "properties": {
+    "loans": {
+      "description": "Paged collection of loans",
+      "id": "loans",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "loan.json"
+      }
+    },
+    "totalRecords": {
+      "description": "Total number of loan records",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "loans",
+    "totalRecords"
+  ]
+}

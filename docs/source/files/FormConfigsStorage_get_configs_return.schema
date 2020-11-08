@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of forms configs",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "formConfigs": {
+      "description": "List of forms configs",
+      "type": "array",
+      "id": "formConfigList",
+      "items": {
+        "type": "object",
+        "$ref": "./formConfig.json"
+      }
+    },
+    "totalRecords": {
+      "description": "Total number of forms configs",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "formConfigs",
+    "totalRecords"
+  ]
+}

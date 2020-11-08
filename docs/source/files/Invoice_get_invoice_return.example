@@ -1,0 +1,73 @@
+{
+  "id": "733cafd3-895f-4e33-87b7-bf40dc3c8069",
+  "accountingCode" : "0206",
+  "adjustments": [
+    {
+      "id": "14263aab-b22b-4ddc-9ecc-3434427c2c8f",
+      "description": "Shipping",
+      "exportToAccounting" : false,
+      "type": "Amount",
+      "value": 4.50,
+      "prorate": "By line",
+      "relationToTotal": "In addition to"
+    },
+    {
+      "description": "Some Tax",
+      "exportToAccounting" : false,
+      "fundDistributions": [
+        {
+          "code": "USHIST",
+          "encumbrance": "1c8fc9f4-d2cc-4bd1-aa9a-cb02291cbe65",
+          "fundId": "1d1574f1-9196-4a57-8d1f-3b2e4309eb81",
+          "distributionType": "percentage",
+          "value": 100
+        }
+      ],
+      "type": "Amount",
+      "value": 10,
+      "prorate": "Not prorated",
+      "relationToTotal": "In addition to"
+    }
+  ],
+  "adjustmentsTotal": 14.50,
+  "batchGroupId": "2a2cb998-1437-41d1-88ad-01930aaeadd5",
+  "chkSubscriptionOverlap": false,
+  "currency": "USD",
+  "enclosureNeeded" : false,
+  "exchangeRate" : 1.092,
+  "exportToAccounting": true,
+  "folioInvoiceNo": "123invoicenumber45",
+  "invoiceDate": "2018-07-20T00:00:00.000+0000",
+  "lockTotal": true,
+  "note": "Some note",
+  "paymentDue": "2018-08-29T00:00:00.000+0000",
+  "paymentTerms": "Payment in Advance",
+  "paymentMethod": "EFT",
+  "status": "Reviewed",
+  "source": "User",
+  "subTotal": 50.00,
+  "total": 64.50,
+  "vendorInvoiceNo": "YK75851",
+  "disbursementNumber": "58",
+  "voucherNumber": "478",
+  "paymentId": "a5065f0d-fb88-4d23-b0c1-57e754fba40e",
+  "disbursementDate": "2018-08-19T00:00:00.000+0000",
+  "poNumbers": [
+    "AB268758XYZ"
+  ],
+  "vendorId": "168f8a63-d612-406e-813f-c7527f241ac3",
+  "manualPayment": true,
+  "tags": {
+    "tagList": [
+      "tag"
+    ]
+   },
+  "acqUnitIds": [
+    "1895e539-8dac-441e-b1f5-aab62b3fde60",
+    "47f504bd-0c1b-498e-a2ae-e2f0a0cea273"
+  ],
+  "metadata": {
+    "createdDate": "2018-07-19T00:00:00.000+0000",
+    "createdByUserId": "28d1057c-d137-11e8-a8d5-f2801f1b9fd1"
+  }
+}

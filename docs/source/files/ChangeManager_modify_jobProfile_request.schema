@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Related JobProfile information",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "Unique JobProfile identifier",
+      "$ref": "uuid.json"
+    },
+    "name": {
+      "description": "Job Profile name",
+      "type": "string"
+    },
+    "dataType": {
+      "description": "Data type",
+      "type": "string",
+      "$ref": "./dataType.json"
+    }
+  },
+  "required": [
+    "id",
+    "name"
+  ]
+}

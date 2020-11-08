@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n  \"name\": \"main\",\n  \"isDeleted\": false,\n  \"protectCreate\": true,\n  \"protectRead\": false,\n  \"protectUpdate\": true,\n  \"protectDelete\": true\n}\n"
+}

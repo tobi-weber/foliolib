@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "User List object",
+  "properties": {
+    "compositeUsers": {
+      "type": "array",
+      "id": "compositeUserList",
+      "description": "Users array",
+      "items": {
+        "type": "object",
+        "$ref": "compositeUser.json"
+      }
+    },
+    "totalResults": {
+      "type": "integer",
+      "description": "Total results amount"
+    },
+    "recordCount": {
+      "type": "integer",
+      "description": "Record count"
+    }
+  },
+  "required": [
+    "compositeUsers",
+    "totalResults",
+    "recordCount"
+  ]
+}

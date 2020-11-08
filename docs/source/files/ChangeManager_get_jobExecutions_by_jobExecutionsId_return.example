@@ -1,0 +1,84 @@
+{
+  "id":"67dfac11-1caf-4470-9ad1-d533f6360bdd",
+  "hrId": 10000,
+  "jobProfileInfo":{
+    "id":"88dfac11-1caf-4470-9ad1-d533f6360bad",
+    "name":"stub job profile",
+    "dataType":"MARC"
+  },
+  "jobProfileSnapshotWrapper": {
+    "id": "0fc0ba76-d560-4541-826f-f8bdd3b09841",
+    "profileId": "dc4ac439-57ae-4779-872e-1892b163bb47",
+    "contentType": "JOB_PROFILE",
+    "reactTo":"NON-MATCH",
+    "content": {
+      "id": "dc4ac439-57ae-4779-872e-1892b163bb47",
+      "name": "Load vendor order records",
+      "description": "Ordered on vendor site; load MARC to create bib, holdings, item, and order; keep MARC",
+      "dataTypes": ["MARC"],
+      "tags": {"tagList": ["acq", "daily"]}
+    },
+    "childSnapshotWrappers": [
+      {
+        "id": "0d1db69a-87b7-4147-9ef2-2a674add4f0c",
+        "profileId": "2fb94d27-3d46-4ee8-97f4-c2b5d0cd20c6",
+        "contentType": "MATCH_PROFILE",
+        "content": {
+          "id": "2fb94d27-3d46-4ee8-97f4-c2b5d0cd20c6",
+          "name": "Dolor sit",
+          "description": "Lorem ipsum dolor sit amet",
+          "tags": {"tagList": ["acq", "daily"]},
+          "match": "Order 998"
+        },
+        "childSnapshotWrappers": [
+          {
+            "id": "5de73bc8-434e-492d-8469-2e7847488a24",
+            "profileId": "34a0839a-57aa-4a53-af10-431ad23ed0cc",
+            "contentType": "ACTION_PROFILE",
+            "content": {
+              "id": "34a0839a-57aa-4a53-af10-431ad23ed0cc",
+              "name": "Dolor sit",
+              "description": "Lorem ipsum dolor sit amet",
+              "tags": {"tagList": ["lorem", "ipsum", "dolor"]},
+              "action": "Create order",
+              "mapping": "EDI orders"
+            },
+            "childSnapshotWrappers": [
+              {
+                "id": "e5850dcf-2c4f-472d-b6a9-9cf40f6ec9c9",
+                "profileId": "143d81ef-ffdf-46ff-8718-281d64d7460a",
+                "contentType": "MAPPING_PROFILE",
+                "content": {
+                    "id": "143d81ef-ffdf-46ff-8718-281d64d7460a",
+                    "name": "Profile for mapping",
+                    "description": "Description for mapping profile",
+                    "tags": {"tagList": ["lorem", "ipsum", "dolor"]},
+                    "mapped": "Order - 3 fields"
+                },
+                "childSnapshotWrappers": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "parentJobId":"67dfac11-1caf-4470-9ad1-d533f6360bdd",
+  "subordinationType":"PARENT_SINGLE",
+  "sourcePath":"C:\import\files\import_1.csv",
+  "fileName": "import_1.csv"
+  "runBy":{
+    "firstName":"DIKU",
+    "lastName":"ADMINISTRATOR"
+  },
+  "progress":{
+    "jobExecutionId":"67dfac11-1caf-4470-9ad1-d533f6360bdd",
+    "current":50,
+    "total":50
+  },
+  "startedDate":"2018-10-30T12:36:55.000",
+  "completedDate":"2018-10-30T12:40:01.000",
+  "status":"COMMITTED",
+  "uiStatus":"RUNNING_COMPLETE",
+  "userId":"c9db5d7a-e1d4-11e8-9f32-f2801f1b9fd1"
+}

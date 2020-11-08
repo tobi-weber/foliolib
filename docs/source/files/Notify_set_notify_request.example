@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n  \"id\": \"12345\",\n  \"recipientId\": \"77777777-7777-7777-7777-777777777777\",\n  \"text\": \"The book is now available for you\",\n  \"link\": \"items/23456\"\n}\n"
+}

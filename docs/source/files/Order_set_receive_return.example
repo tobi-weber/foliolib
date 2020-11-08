@@ -1,0 +1,41 @@
+{
+  "receivingResults": [
+    {
+      "poLineId": "0804ddec-6545-404a-b54d-a693f505681d",
+      "processedSuccessfully": 1,
+      "processedWithError": 1,
+      "receivingItemResults": [
+        {
+          "pieceId": "c18c49b7-d970-44d6-b5d4-bd76c1c62d83",
+          "processingStatus": {
+            "type": "success"
+          }
+        },
+        {
+          "pieceId": "cb9b0468-f2b4-4a13-b64c-662c4c9ec3ed",
+          "processingStatus": {
+            "type": "failure",
+            "error": {
+              "code": "pieceAlreadyReceived",
+              "message": "The piece record is already received"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "poLineId": "7f0c4975-885e-47d5-8d5a-793dffbba9b2",
+      "processedSuccessfully": 1,
+      "processedWithError": 0,
+      "receivingItemResults": [
+        {
+          "pieceId": "20241b8c-9076-4cf5-817b-f2c1e2cb242f",
+          "processingStatus": {
+            "type": "success"
+          }
+        }
+      ]
+    }
+  ],
+  "totalRecords": 3
+}

@@ -1,0 +1,11 @@
+{
+  "holdings" : [
+    {
+      "id": "112ae2e4-88ae-4fa5-a75b-2379d2035e52",
+      "location": "Sample Library",
+      "callNumber": "123456",
+      "status": "On loan",
+      "dueDate": "2018-05-01T12:01:59Z"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "CounterReports sorted by year and report",
+  "type": "object",
+  "properties": {
+    "counterReportsPerYear": {
+      "type": "array",
+      "description": "Counter reports grouped year",
+      "id": "counterReportData",
+      "items": {
+        "type": "object",
+        "properties": {
+          "year": {
+            "type": "integer",
+            "description": "The current year"
+          },
+          "reportsPerType": {
+            "type": "array",
+            "description": "The reports of the current year",
+            "items": {
+              "type": "object",
+              "properties": {
+                "reportType": {
+                  "type": "string",
+                  "description": "The current report type"
+                },
+                "counterReports": {
+                  "type": "array",
+                  "description": "The reports of the current year and the current type",
+                  "items": {
+                    "type": "object",
+                    "$ref": "counterreport.json"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

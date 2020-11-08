@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Result of template processing",
+  "type": "object",
+  "properties": {
+    "templateId": {
+      "type": "string",
+      "description": "Source template id"
+    },
+    "result": {
+      "type": "object",
+      "description": "Template processing output",
+      "$ref": "templateContent.json"
+    },
+    "meta": {
+      "type": "object",
+      "description": "Template output metadata",
+      "properties": {
+        "size": {
+          "type": "integer",
+          "description": "Size of output in bytes"
+        },
+        "dateCreate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date of template processing"
+        },
+        "lang": {
+          "type": "string",
+          "description": "Processed template language"
+        },
+        "outputFormat": {
+          "type": "string",
+          "description": "Output format"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

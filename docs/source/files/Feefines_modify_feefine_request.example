@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n  \"feeFineType\": \"Overdue\",\n  \"defaultAmount\": 100,\n  \"chargeNoticeId\": \"09eb3fcb-eeec-4aca-a38e-3cbaac495cfc\",\n  \"actionNoticeId\": \"a8fcb171-5bd2-4913-97ef-4c7ed322b3ed\",\n  \"ownerId\": \"03ece16e-3fc6-4390-8511-ca7a7882c5c6\",\n  \"id\": \"39a14e03-c372-4659-860b-5423c970633e\"\n}\n"
+}

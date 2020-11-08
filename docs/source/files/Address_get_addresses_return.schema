@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of address records",
+  "type": "object",
+  "properties": {
+    "addresses": {
+      "description": "The list of addresses in this collection",
+      "type": "array",
+      "id": "addresses",
+      "items": {
+        "type": "object",
+        "$ref": "address.json"
+      }
+    },
+    "totalRecords": {
+      "description": "The number of address records returned in this collection",
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "addresses",
+    "totalRecords"
+  ]
+}

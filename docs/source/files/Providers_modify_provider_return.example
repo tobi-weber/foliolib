@@ -1,0 +1,32 @@
+{
+  "data": {
+    "id": "18",
+    "type": "providers",
+    "attributes": {
+      "name": "Gale | Cengage",
+      "packagesTotal": 243,
+      "packagesSelected": 18,
+      "providerToken": {
+        "factName": "[[galesiteid]]",
+        "prompt": "/itweb/",
+        "helpText": "<ul>\r\n    <li>Enter your Gale<sup>\u00ae</sup> site ID in the space provided below. The site ID may contain a combination of alpha/numeric characters, varying in length. <blockquote style=\"margin-right: 0px;\" dir=\"ltr\">\r\n    <p>\u00a0Example: The site ID immediately follows /itweb/ in a URL. The site ID in the following URL is <i>aa11bb22</i>. </p>\r\n    </blockquote></li>\r\n</ul>\r\n<blockquote style=\"margin-right: 0px;\" dir=\"ltr\"><blockquote style=\"margin-right: 0px;\" dir=\"ltr\">\r\n<p><span style=\"text-decoration: underline;\">http://infotrac.galegroup.com/itweb/aa11bb22?db=AIM</span></p>\r\n</blockquote></blockquote><br />\r\n<ul>\r\n    <li>If no site ID is specified, your Gale Group links may not function properly, as Gale Group requires this information for authentication. </li>\r\n    <li>If you are unable to locate the site ID, please contact Gale Group. For contact information, visit: <a href=\"http://access.gale.com/authentication/\">http://access.gale.com/authentication/</a>. </li>\r\n</ul>\r\n",
+        "value": "hellotoken"
+      },
+      "supportsCustomPackages": false,
+      "proxy": {
+        "id": "EZProxy",
+        "inherited": false
+      }
+    },
+    "relationships": {
+      "packages": {
+        "meta": {
+          "included": false
+        }
+      }
+    }
+  },
+  "jsonapi": {
+    "version": "1.0"
+  }
+}

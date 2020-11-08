@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of cancellation reasons",
+  "type": "object",
+  "properties": {
+    "cancellationReasons": {
+      "description": "List of items",
+      "id": "cancellationReasons",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "cancellation-reason.json"
+      }
+    },
+    "totalRecords": {
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "cancellationReasons",
+    "totalRecords"
+  ]
+}

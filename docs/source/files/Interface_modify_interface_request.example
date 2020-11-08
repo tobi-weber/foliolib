@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n    \"id\": \"588b5c42-8634-4af7-bc9b-5e0116ed96b6\",\n    \"name\": \"Sales Portal\",\n    \"uri\": \"https://www.gobi3.com/Pages/Login.aspx\",\n    \"notes\": \"This is the store-front for GOBI.\",\n    \"available\": true,\n    \"deliveryMethod\": \"Online\",\n    \"statisticsFormat\": \"PDF\",\n    \"locallyStored\": \"\",\n    \"onlineLocation\": \"\",\n    \"statisticsNotes\": \"\",\n    \"type\": [\n      \"End user\",\n      \"Orders\"\n    ],\n    \"metadata\": {\n        \"createdDate\": \"2019-06-06T00:00:00.000+0000\",\n        \"createdByUserId\": \"16d2457c-d137-11e8-a8d5-f2801f1b9fd1\"\n    }\n}\n"
+}

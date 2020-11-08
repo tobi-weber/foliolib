@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Acquisitions Units",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "UUID of this acquisitions unit record",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "name": {
+      "description": "a name for this acquisitions unit",
+      "type": "string"
+    },
+    "isDeleted": {
+      "description": "If true, the record is marked for deletion at some point. This prevents it from being assigned to any record.",
+      "type": "boolean",
+      "default": false
+    },
+    "protectCreate": {
+      "description": "if true, only members can create records associated with this acq unit.",
+      "type": "boolean",
+      "default": true
+    },
+    "protectRead": {
+      "description": "if true, only members can read/view records associated with this acq unit.",
+      "type": "boolean",
+      "default": false
+    },
+    "protectUpdate": {
+      "description": "if true, only members can update records associated with this acq unit.",
+      "type": "boolean",
+      "default": true
+    },
+    "protectDelete": {
+      "description": "if true, only members can delete records associated with this acq unit.",
+      "type": "boolean",
+      "default": true
+    },
+    "metadata": {
+      "type": "object",
+      "$ref": "../../../raml-util/schemas/metadata.schema",
+      "readonly": true
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "name",
+    "isDeleted"
+  ]
+}

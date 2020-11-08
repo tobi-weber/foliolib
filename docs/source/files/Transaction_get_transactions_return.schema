@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A collection of transactions",
+  "type": "object",
+  "properties": {
+    "transactions": {
+      "description": "The list of objects contained in this collection",
+      "type": "array",
+      "id": "transactions",
+      "items": {
+        "type": "object",
+        "$ref": "transaction.json"
+      }
+    },
+    "totalRecords": {
+      "description": "The number of objects in this collection",
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "transactions",
+    "totalRecords"
+  ]
+}

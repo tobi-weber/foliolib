@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "List of error codes existent in saved counter reports",
+  "properties": {
+    "errorCodes": {
+      "description": "Error codes",
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "errorCodes"
+  ]
+}

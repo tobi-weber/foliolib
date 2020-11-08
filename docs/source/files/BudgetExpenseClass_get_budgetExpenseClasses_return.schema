@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A collection of budget expense class records",
+  "type": "object",
+  "properties": {
+    "budgetExpenseClasses": {
+      "description": "The list of budget expense class objects contained in this collection",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "budget_expense_class.json"
+      }
+    },
+    "totalRecords": {
+      "description": "The number of objects contained in this collection",
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "budgetExpenseClasses",
+    "totalRecords"
+  ]
+}

@@ -7,7 +7,7 @@ import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from pyokapi.config import CONFIG
 
-log = logging.getLogger("okapi.database")
+log = logging.getLogger("pyokapi.okapi.database")
 
 
 class Postgres:

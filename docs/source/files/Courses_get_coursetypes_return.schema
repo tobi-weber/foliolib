@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A collection of course type records",
+  "type": "object",
+  "properties": {
+    "courseTypes": {
+      "description": "List of course types",
+      "id": "courseType",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "coursetype.json"
+      }
+    },
+    "totalRecords": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "courseTypes",
+    "totalRecords"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "ac2164c7-ba3d-1bc2-a12c-e35ceccbfaf2",
+  "name": "Fiscal Year 2020",
+  "acqUnitIds": [
+    "1895e539-8dac-441e-b1f5-aab62b3fde60",
+    "47f504bd-0c1b-498e-a2ae-e2f0a0cea273"
+  ],
+  "code": "FY2020",
+  "description": "January 1 - December 30",
+  "periodStart": "2020-01-01T00:00:00Z",
+  "periodEnd": "2020-12-30T23:59:59Z",
+  "series": "FY",
+  "metadata": {
+    "createdDate": "2019-06-17T14:12:42.497+0000",
+    "createdByUserId": "498492aa-f909-42f6-b154-5bf66e6486ba",
+    "updatedDate": "2019-08-28T08:37:19.263+0000",
+    "updatedByUserId": "7ec56c96-e9f2-4079-9509-86b00f8dacd5"
+  }
+}

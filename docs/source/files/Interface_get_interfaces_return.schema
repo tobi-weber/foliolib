@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of interface records",
+  "type": "object",
+  "properties": {
+    "interfaces": {
+      "description": "The list of interfaces in this collection",
+      "type": "array",
+      "id": "interfaces",
+      "items": {
+        "type": "object",
+        "$ref": "interface.json"
+      }
+    },
+    "totalRecords": {
+      "description": "The number of interface records returned in this collection",
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "interfaces",
+    "totalRecords"
+  ]
+}

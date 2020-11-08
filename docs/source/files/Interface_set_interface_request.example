@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n    \"name\": \"Sales Portal\",\n    \"uri\": \"https://www.gobi3.com/Pages/Login.aspx\",\n    \"notes\": \"This is the store-front for GOBI.\",\n    \"available\": true,\n    \"deliveryMethod\": \"Online\",\n    \"statisticsFormat\": \"PDF\",\n    \"locallyStored\": \"\",\n    \"onlineLocation\": \"\",\n    \"statisticsNotes\": \"\",\n    \"type\": []\n}\n"
+}

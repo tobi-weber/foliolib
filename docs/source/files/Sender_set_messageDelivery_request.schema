@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Notification containing messages to be sent",
+  "additionalProperties": false,
+  "properties": {
+    "notificationId": {
+      "type": "string",
+      "description": "Notification id; UUID format; Is used to receive notification when messages are delivered"
+    },
+    "recipientUserId": {
+      "type": "string",
+      "description": "Recipient user id; Is used to get contact information to deliver messages"
+    },
+    "messages": {
+      "type": "array",
+      "description": "Array of messages to be sent",
+      "items": {
+        "type": "object",
+        "$ref": "message.json"
+      }
+    }
+  },
+  "required": [
+    "notificationId",
+    "recipientUserId",
+    "messages"
+  ]
+}

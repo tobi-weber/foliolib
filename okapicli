@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-from pyokapi import set_logging
 from pyokapi.okapicli import OkapiCLI
 
-set_logging()
 OkapiCLI()

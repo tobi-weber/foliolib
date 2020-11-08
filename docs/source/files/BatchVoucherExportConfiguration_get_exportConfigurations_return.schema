@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "collection of batch voucher export configurations",
+  "type": "object",
+  "properties": {
+    "exportConfigs": {
+      "description": "an array of batch voucher export configuration records",
+      "id": "exportConfigs",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "export_configuration.json"
+      }
+    },
+    "totalRecords": {
+      "description": "total number of records in the array",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "exportConfigs",
+    "totalRecords"
+  ]
+}

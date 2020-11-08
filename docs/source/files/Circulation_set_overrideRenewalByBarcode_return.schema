@@ -1,0 +1,409 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "title": "Loan",
+  "description": "Links the item with the patron and applies certain conditions based on policies",
+  "properties": {
+    "id": {
+      "description": "Unique ID (generated UUID) of the loan",
+      "type": "string",
+      "$ref": "uuid.json"
+    },
+    "userId": {
+      "description": "ID of the patron the item was lent to. Required for open loans, not required for closed loans (for anonymization).",
+      "type": "string",
+      "$ref": "uuid.json"
+    },
+    "borrower": {
+      "description": "Additional information about the borrower of the item, taken from the user referred to by the userId",
+      "readonly": true,
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "description": "first name of the borrower (read only, defined by the server)",
+          "type": "string",
+          "readonly": true
+        },
+        "lastName": {
+          "description": "last name of the borrower (read only, defined by the server)",
+          "type": "string",
+          "readonly": true
+        },
+        "middleName": {
+          "description": "middle name of the borrower (read only, defined by the server)",
+          "type": "string",
+          "readonly": true
+        },
+        "barcode": {
+          "description": "barcode used to identify the borrower (read only, defined by the server)",
+          "type": "string",
+          "readonly": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "proxyUserId": {
+      "description": "ID of the user representing a proxy for the patron",
+      "type": "string",
+      "$ref": "uuid.json"
+    },
+    "itemId": {
+      "description": "ID of the item lent to the patron",
+      "type": "string",
+      "$ref": "uuid.json"
+    },
+    "loanPolicyId": {
+      "description": "ID of last policy used in relation to this loan",
+      "type": "string",
+      "$ref": "uuid.json"
+    },
+    "loanPolicy": {
+      "description": "Additional information about the loan policy of the item, taken from the loan loanPolicyId",
+      "readonly": true,
+      "type": "object",
+      "properties": {
+        "name": {
+          "readonly": true,
+          "description": "Name of last policy used in relation to this loan (read only, defined by the server)",
+          "type": "string"
+        }
+      }
+    },
+    "overdueFinePolicyId": {
+      "description": "ID of last overdue fine policy used in relation to this loan",
+      "type": "string",
+      "$ref": "uuid.json"
+    },
+    "overdueFinePolicy": {
+      "description": "Additional information about the overdue fine policy of the item, taken from the loan overdueFinePolicyId",
+      "readonly": true,
+      "type": "object",
+      "properties": {
+        "name": {
+          "readonly": true,
+          "description": "Name of last overdue fine policy used in relation to this loan (read only, defined by the server)",
+          "type": "string"
+        }
+      }
+    },
+    "lostItemPolicyId": {
+      "description": "ID of last lost item policy used in relation to this loan",
+      "type": "string",
+      "$ref": "uuid.json"
+    },
+    "lostItemPolicy": {
+      "description": "Additional information about the lost item policy of the item, taken from the loan lostItemPolicyId",
+      "readonly": true,
+      "type": "object",
+      "properties": {
+        "name": {
+          "readonly": true,
+          "description": "Name of last lost item policy used in relation to this loan (read only, defined by the server)",
+          "type": "string"
+        }
+      }
+    },
+    "item": {
+      "description": "Additional information about the item",
+      "type": "object",
+      "readonly": true,
+      "properties": {
+        "id": {
+          "description": "ID of the item",
+          "type": "string",
+          "readonly": true,
+          "$ref": "uuid.json"
+        },
+        "title": {
+          "description": "The title of the item lent to the patron",
+          "type": "string",
+          "readonly": true
+        },
+        "callNumber": {
+          "description": "Deprecated call number from the holdings record, use callNumberComponents.callNumber instead",
+          "type": "string",
+          "readonly": true
+        },
+        "materialType": {
+          "description": "The material type from the item record",
+          "type": "object",
+          "readonly": true,
+          "properties": {
+            "name": {
+              "description": "Name of the material type",
+              "type": "string",
+              "readonly": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "contributors": {
+          "description": "Contributors from the instance record",
+          "type": "array",
+          "readonly": true,
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "description": "Name of the contributor",
+                "type": "string",
+                "readonly": true
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "holdingsRecordId": {
+          "description": "The ID of the holdings for the item",
+          "type": "string",
+          "readonly": true,
+          "$ref": "uuid.json"
+        },
+        "instanceId": {
+          "description": "The ID of the instance for the item",
+          "type": "string",
+          "readonly": true,
+          "$ref": "uuid.json"
+        },
+        "barcode": {
+          "description": "The barcode of the item",
+          "type": "string",
+          "readonly": true
+        },
+        "location": {
+          "description": "The effective location of the item",
+          "type": "object",
+          "readonly": true,
+          "properties": {
+            "name": {
+              "description": "The name of the location",
+              "type": "string",
+              "readonly": true
+            }
+          }
+        },
+        "status": {
+          "description": "Overall status of the item",
+          "type": "object",
+          "readonly": true,
+          "properties": {
+            "name": {
+              "description": "Name of the item status",
+              "type": "string",
+              "readonly": true
+            },
+            "date": {
+              "type": "string",
+              "description": "Date time when status was last changed",
+              "format": "date-time",
+              "readonly": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "inTransitDestinationServicePointId": {
+          "description": "Service point an item is intended to be transited to (should only be present when in transit)",
+          "type": "string",
+          "$ref": "uuid.json",
+          "readonly": true
+        },
+        "inTransitDestinationServicePoint": {
+          "description": "Service point an item is intended to be transited to (should only be present when in transit)",
+          "type": "object",
+          "readonly": true,
+          "properties": {
+            "name": {
+              "description": "Name of the service point",
+              "type": "string",
+              "readonly": true
+            }
+          }
+        },
+        "enumeration": {
+          "description": "Item`s enumeration",
+          "type": "string",
+          "readonly": true
+        },
+        "chronology": {
+          "description": "Item`s chronology",
+          "type": "string",
+          "readonly": true
+        },
+        "volume": {
+          "description": "Item`s volume",
+          "type": "string",
+          "readonly": true
+        },
+        "callNumberComponents": {
+          "description": "Elements of a full call number",
+          "$ref": "schema/call-number-components.json",
+          "readonly": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "itemEffectiveLocationIdAtCheckOut": {
+      "description": "The effective location, at the time of checkout, of the item loaned to the patron.",
+      "type": "string",
+      "$ref": "uuid.json"
+    },
+    "status": {
+      "description": "Overall status of the loan",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Name of the status (currently can be any value, values commonly used are Open and Closed)",
+          "type": "string"
+        }
+      }
+    },
+    "loanDate": {
+      "description": "Date and time when the loan began",
+      "type": "string",
+      "format": "date-time"
+    },
+    "dueDate": {
+      "description": "Date and time when the item is due to be returned",
+      "type": "string",
+      "format": "date-time"
+    },
+    "returnDate": {
+      "description": "Date and time when the item was returned",
+      "type": "string",
+      "format": "date-time"
+    },
+    "systemReturnDate": {
+      "description": "Date and time when return was processed",
+      "type": "string",
+      "format": "date-time"
+    },
+    "action": {
+      "description": "Last action performed on a loan (currently can be any value, values commonly used are checkedout and checkedin)",
+      "type": "string"
+    },
+    "renewalCount": {
+      "description": "Count of how many times a loan has been renewed (incremented by the client)",
+      "type": "integer",
+      "minimum": 0
+    },
+    "checkoutServicePointId": {
+      "description": "ID of the Service Point where the last checkout occured",
+      "type": "string",
+      "$ref": "uuid.json"
+    },
+    "checkinServicePointId": {
+      "description": "ID of the Service Point where the last checkin occured",
+      "type": "string",
+      "$ref": "uuid.json"
+    },
+    "checkoutServicePoint": {
+      "description": "The Service Point where the last checkout occurred",
+      "type": "object",
+      "readonly": true,
+      "properties": {
+        "name": {
+          "description": "The unique name of the service point",
+          "type": "string",
+          "readonly": true
+        },
+        "code": {
+          "description": "The short code for the service point",
+          "type": "string",
+          "readonly": true
+        },
+        "discoveryDisplayName": {
+          "description": "The human readable name",
+          "type": "string",
+          "readonly": true
+        },
+        "shelvingLagTime": {
+          "description": "The time to shelving",
+          "type": "integer",
+          "readonly": true
+        },
+        "pickupLocation": {
+          "description": "Is this a pickup location",
+          "type": "boolean",
+          "readonly": true
+        }
+      }
+    },
+    "checkinServicePoint": {
+      "description": "The Service Point where the last checkout occurred",
+      "type": "object",
+      "readonly": true,
+      "properties": {
+        "name": {
+          "description": "Name of the service point",
+          "type": "string",
+          "readonly": true
+        },
+        "code": {
+          "description": "The short code for the service point",
+          "type": "string",
+          "readonly": true
+        },
+        "discoveryDisplayName": {
+          "description": "The human readable name",
+          "type": "string",
+          "readonly": true
+        },
+        "shelvingLagTime": {
+          "description": "The time to shelving",
+          "type": "integer",
+          "readonly": true
+        },
+        "pickupLocation": {
+          "description": "Is this a pickup location",
+          "type": "boolean",
+          "readonly": true
+        }
+      }
+    },
+    "patronGroupAtCheckout": {
+      "description": "Patron Group at checkout",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Unique ID (generated UUID) of the patron group",
+          "type": "string",
+          "readonly": true,
+          "$ref": "uuid.json"
+        },
+        "name": {
+          "description": "Patron group name",
+          "type": "string",
+          "readonly": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "feesAndFines": {
+      "description": "Fees and fines associated with loans",
+      "type": "object",
+      "properties": {
+        "amountRemainingToPay": {
+          "type": "number",
+          "description": "Total remaining amount due on fees and fines for the loan (read only, defined by the server)",
+          "readonly": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "declaredLostDate": {
+      "description": "Date and time the item was declared lost during this loan",
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "description": "Metadata about creation and changes to loan, provided by the server (client should not provide)",
+      "type": "object",
+      "$ref": "raml-util/schemas/metadata.schema"
+    }
+  },
+  "required": [
+    "itemId",
+    "loanDate",
+    "action"
+  ]
+}

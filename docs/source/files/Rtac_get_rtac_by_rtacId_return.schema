@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "javaType": "org.folio.rest.jaxrs.model.LegacyHoldings",
+  "description": "Collection of holdings",
+  "properties": {
+    "holdings": {
+      "description": "Collection of holdings",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "holding.json"
+      }
+    }
+  },
+  "required": [
+    "holdings"
+  ]
+}

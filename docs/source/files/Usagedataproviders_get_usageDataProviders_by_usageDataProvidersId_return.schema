@@ -1,0 +1,189 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Usage Data Provider Schema",
+  "title": "Usage Data Provider Schema",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "label": {
+      "description": "Usage Data Provider name",
+      "type": "string"
+    },
+    "description": {
+      "description": "Usage Data Provider description",
+      "type": "string"
+    },
+    "harvestingConfig": {
+      "type": "object",
+      "description": "Specifies harvesting configuration",
+      "properties": {
+        "harvestingStatus": {
+          "description": "Enables or disables automatic harvesting for this provider",
+          "type": "string",
+          "enum": [
+            "active",
+            "inactive"
+          ]
+        },
+        "harvestVia": {
+          "type": "string",
+          "description": "Specifies how to harvest usage data, from an aggregator or directly from a provider via Sushi.",
+          "enum": [
+            "aggregator",
+            "sushi"
+          ]
+        },
+        "sushiConfig": {
+          "description": "SUSHI service properties",
+          "type": "object",
+          "properties": {
+            "serviceType": {
+              "type": "string",
+              "description": "Type of SUSHI service (i.e. cs41 for Counter-Sushi 4.1) for direct harvesting (see /erm-usage-harvester/impl)."
+            },
+            "serviceUrl": {
+              "type": "string",
+              "description": "SUSHI service URL to access provider's SUSHI service."
+            }
+          },
+          "required": [
+            "serviceType",
+            "serviceUrl"
+          ]
+        },
+        "aggregator": {
+          "type": "object",
+          "description": "Links to aggregator, if statistic shall be harvested via aggregator",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Id of aggregator, linking of an aggregator predefined by an admin in the app settings"
+            },
+            "name": {
+              "type": "string",
+              "description": "Name of the linked aggregator"
+            },
+            "vendorCode": {
+              "type": "string",
+              "description": "Code used by the aggregator to identify the vendor (e. g. platform parameter at National Statistic Server)"
+            }
+          },
+          "required": [
+            "id"
+          ]
+        },
+        "reportRelease": {
+          "type": "integer",
+          "description": "Specifies the counter report version."
+        },
+        "requestedReports": {
+          "description": "Report types that are harvested. Note, types differ between counter 4 and counter 5.",
+          "type": "array",
+          "minItems": 0,
+          "items": {
+            "type": "string"
+          }
+        },
+        "harvestingStart": {
+          "description": "First month getting harvested",
+          "type": "string",
+          "format": "date-month"
+        },
+        "harvestingEnd": {
+          "description": "Last month getting harvested",
+          "type": "string",
+          "format": "date-month"
+        }
+      },
+      "required": [
+        "harvestingStatus",
+        "useAggregator",
+        "reportRelease",
+        "requestedReports",
+        "harvestingStart"
+      ]
+    },
+    "sushiCredentials": {
+      "type": "object",
+      "description": "Defines credentials to access SUSHI service of usage data provider",
+      "properties": {
+        "customerId": {
+          "description": "Customer identifier",
+          "type": "string"
+        },
+        "requestorId": {
+          "description": "Requestor identifier",
+          "type": "string"
+        },
+        "apiKey": {
+          "description": "API Key",
+          "type": "string"
+        },
+        "platform": {
+          "description": "Name of the Platform the usage is being requested for",
+          "type": "string"
+        },
+        "requestorName": {
+          "description": "Requestor name",
+          "type": "string"
+        },
+        "requestorMail": {
+          "description": "Requestor mail",
+          "type": "string"
+        }
+      },
+      "required": [
+        "customerId"
+      ]
+    },
+    "latestReport": {
+      "description": "Newest report available for provider",
+      "type": "string"
+    },
+    "earliestReport": {
+      "description": "Oldest report available for provider",
+      "type": "string"
+    },
+    "hasFailedReport": {
+      "description": "Indicator if this provider has a failed report",
+      "type": "string",
+      "enum": [
+        "yes",
+        "no"
+      ],
+      "default": "no"
+    },
+    "reportErrorCodes": {
+      "description": "Counter error codes of reports",
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "type": "string"
+      }
+    },
+    "harvestingDate": {
+      "description": "Date and time of the last harvesting attempt",
+      "type": "string",
+      "format": "date-time"
+    },
+    "notes": {
+      "description": "Notes for provider",
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object",
+      "$ref": "../raml-util/schemas/metadata.schema"
+    },
+    "tags": {
+      "type": "object",
+      "$ref": "../raml-util/schemas/tags.schema"
+    }
+  },
+  "required": [
+    "label",
+    "harvestingConfig"
+  ],
+  "additionalProperties": true
+}

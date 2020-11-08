@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of documents",
+  "type": "object",
+  "properties": {
+    "documents": {
+      "description": "an array of document records",
+      "id": "documents",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "document_metadata.json"
+      }
+    },
+    "totalRecords": {
+      "description": "total number of records in the array",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "documents",
+    "totalRecords"
+  ]
+}

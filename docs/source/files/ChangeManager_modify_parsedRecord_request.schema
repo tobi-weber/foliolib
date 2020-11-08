@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Record DTO Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "UUID",
+      "$ref": "../common/uuid.json"
+    },
+    "externalIdsHolder": {
+      "description": "Container for identifiers of external entities",
+      "type": "object",
+      "$ref": "../common/externalIdsHolder.json"
+    },
+    "recordType": {
+      "description": "Type of record, e.g. MARC",
+      "type": "string",
+      "$ref": "../mod-source-record-storage/recordType.json"
+    },
+    "parsedRecord": {
+      "description": "Parsed record",
+      "type": "object",
+      "$ref": "../mod-source-record-storage/parsedRecord.json"
+    },
+    "recordState": {
+      "description": "State of source record in QM workflow",
+      "type": "string",
+      "enum": [
+        "ACTUAL",
+        "IN_PROGRESS",
+        "ERROR"
+      ],
+      "default": "ACTUAL"
+    },
+    "additionalInfo": {
+      "description": "Auxiliary data which is not related to MARC type record",
+      "type": "object",
+      "$ref": "../mod-source-record-storage/additionalInfo.json"
+    },
+    "metadata": {
+      "description": "Metadata provided by the server",
+      "type": "object",
+      "$ref": "../../raml-util/schemas/metadata.schema",
+      "readonly": true
+    }
+  },
+  "required": [
+    "id",
+    "recordType",
+    "parsedRecord"
+  ]
+}

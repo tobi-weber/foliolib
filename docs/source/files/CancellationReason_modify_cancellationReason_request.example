@@ -1,0 +1,10 @@
+{
+  "strict": false,
+  "value": {
+    "id": "5aace7aa-a741-4d69-9741-46737da78f7f",
+    "name": "Not available",
+    "description": "The item is no longer available",
+    "publicDescription": "The item status is unknown",
+    "requiresAdditionalInformation": false
+  }
+}

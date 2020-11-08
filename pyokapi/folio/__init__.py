@@ -3,19 +3,18 @@
 
 import uuid
 
-from pyokapi.folio.exceptions import FolioTenantMissing
 from pyokapi.okapi.okapiClient import OkapiClient
 
 
-class FolioServices:
-    tenant = None
+class FolioApi:
 
-    def __init__(self, tenant, okapi: OkapiClient = None):
-        self._tenant = tenant or FolioServices.tenant
-        if tenant is None:
-            raise FolioTenantMissing("Tenant id must be given.")
-        else:
-            FolioServices.tenant = tenant
+    def __init__(self, tenant: str, okapi: OkapiClient = None):
+        """
+        Args:
+            tenant (str): Tenant id
+            okapi (OkapiClient, optional): Instance of OkapiClient. Defaults to None.
+        """
+        self._tenant = tenant
         self._okapi = okapi or OkapiClient()
 
     def get_tenant(self):
@@ -24,13 +23,23 @@ class FolioServices:
     def get_okapiClient(self):
         return self._okapi
 
-    def generate_uuid(self):
-        return str(uuid.uuid4())
-
     def headers(self):
         return self._okapi.headers
 
-    def call(self, method, service, data: dict = None,
+    def call(self, method: str, service: str, data: dict = None,
              query: dict = None, headers: dict = None, files: dict = None):
         return self._okapi.call_tenant_service(method, service, self._tenant, data=data,
                                                query=query, headers=headers, files=files)
+
+
+class FolioService:
+
+    def __init__(self, tenant: str):
+        """
+        Args:
+            tenant (str): Tenant id
+        """
+        self._tenant = tenant
+
+    def get_tenant(self):
+        return self._tenant

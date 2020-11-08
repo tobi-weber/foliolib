@@ -1,0 +1,20 @@
+{
+  "id": "4879f476-2b5c-4b8d-9a1b-48d200e61517",
+  "userId": "16b5c87a-5fd6-41d5-b154-2e408f69a8ee",
+  "openLoans": [
+    {
+      "loanId": "c929faa8-f34b-4086-a193-45a25cbafa95",
+      "dueDate": "2020-01-01T23:23:23.000Z",
+      "recall": false,
+      "itemLost": false
+    }
+  ],
+  "openFeesFines": [
+    {
+      "feeFineId": "83eded7c-d480-4f36-bfca-6ccfaf5b013b",
+      "balance": 0,
+      "loanId": "f941762e-abad-4627-84e9-1a83de4cdc90",
+      "feeFineTypeId": "48aa663a-2ba4-4917-a193-ebe0c5e7caf5"
+    }
+  ]
+}

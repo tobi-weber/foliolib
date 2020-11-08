@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A collection of fiscal years",
+  "type": "object",
+  "properties": {
+    "fiscalYears": {
+      "description": "The list of fiscal year objects in this collection",
+      "type": "array",
+      "id": "fiscal_years",
+      "items": {
+        "type": "object",
+        "$ref": "fiscal_year.json"
+      }
+    },
+    "totalRecords": {
+      "description": "The number of objects in this collection",
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "fiscalYears",
+    "totalRecords"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Request for template processing",
+  "type": "object",
+  "properties": {
+    "templateId": {
+      "type": "string",
+      "description": "Target template id"
+    },
+    "lang": {
+      "type": "string",
+      "description": "Target template language"
+    },
+    "outputFormat": {
+      "type": "string",
+      "description": "Output format"
+    },
+    "context": {
+      "type": "object",
+      "description": "Context object"
+    }
+  },
+  "required": [
+    "templateId",
+    "lang",
+    "outputFormat"
+  ],
+  "additionalProperties": false
+}

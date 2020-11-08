@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n  \"id\": \"zx5thml9-6hnq-45n0-23c0-13n8gbkl7091\",\n  \"description\": \"Marc file\",\n  \"extension\": \".marc\",\n  \"dataTypes\": [\n    \"MARC\"\n    ],\n  \"importBlocked\": false,\n  \"userInfo\": {\n    \"firstName\": \"DIKU\",\n    \"lastName\": \"ADMINISTRATOR\",\n    \"userName\": \"diku_admin\"\n  },\n  \"metadata\": {\n    \"createdDate\": \"2019-01-01T11:550:09Z\",\n    \"createdByUserId\": \"\",\n    \"createdByUsername\": \"\",\n    \"updatedDate\": \"2019-01-12T14:21:11Z\",\n    \"updatedByUserId\": \"\",\n    \"updatedByUsername\": \"\"\n  }\n}\n"
+}

@@ -1,0 +1,116 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A budget",
+  "type": "object",
+  "javaName": "budget",
+  "extends": {
+    "$ref": "../../common/schemas/entity.json"
+  },
+  "properties": {
+    "id": {
+      "description": "UUID of this budget",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "name": {
+      "description": "The name of the budget",
+      "type": "string"
+    },
+    "budgetStatus": {
+      "description": "The status of the budget",
+      "type": "string",
+      "enum": [
+        "Active",
+        "Frozen",
+        "Inactive",
+        "Planned",
+        "Closed"
+      ]
+    },
+    "allowableEncumbrance": {
+      "description": "The encumbrance percentage limit for this budget",
+      "type": "number"
+    },
+    "allowableExpenditure": {
+      "description": "The expenditure percentage limit for this budget",
+      "type": "number"
+    },
+    "allocated": {
+      "default": 0,
+      "description": "The amount currently allocated to this budget",
+      "type": "number"
+    },
+    "awaitingPayment": {
+      "default": 0,
+      "description": "The amount currently awaiting payment for this budget",
+      "type": "number"
+    },
+    "available": {
+      "default": 0,
+      "description": "The amount currently available for this budge",
+      "type": "number"
+    },
+    "encumbered": {
+      "default": 0,
+      "description": "The amount currently encumbered for this budget",
+      "type": "number"
+    },
+    "expenditures": {
+      "default": 0,
+      "description": "The amount currently expended for this budget",
+      "type": "number"
+    },
+    "netTransfers": {
+      "default": 0,
+      "description": "Summing all the transfers on this budget",
+      "type": "number"
+    },
+    "unavailable": {
+      "default": 0,
+      "description": "Unavailable amount for this budget",
+      "type": "number"
+    },
+    "overEncumbrance": {
+      "default": 0,
+      "description": "The amount currently over-encumbered for this budget",
+      "type": "number"
+    },
+    "overExpended": {
+      "default": 0,
+      "description": "Amount the budget is over expended.",
+      "type": "number"
+    },
+    "fundId": {
+      "description": "UUID of fund",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "fiscalYearId": {
+      "description": "UUID of fiscal year",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "acqUnitIds": {
+      "description": "acquisition unit ids associated with this budget",
+      "type": "array",
+      "items": {
+        "$ref": "../../common/schemas/uuid.json"
+      }
+    },
+    "tags": {
+      "type": "object",
+      "description": "arbitrary tags associated with this budget",
+      "$ref": "../../../raml-util/schemas/tags.schema"
+    },
+    "metadata": {
+      "type": "object",
+      "$ref": "../../../raml-util/schemas/metadata.schema",
+      "readonly": true
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "allocated",
+    "budgetStatus",
+    "name",
+    "fundId",
+    "fiscalYearId"
+  ]
+}

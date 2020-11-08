@@ -1,0 +1,23 @@
+{
+  "counterReports": [
+    {
+    	"id": "8c6b1c02-e153-4413-970b-1b1a3eca1328",
+    	"downloadTime": "2018-09-13T12:57:01.414+0000",
+    	"creationTime": "2018-09-13T12:57:01.414+0000",
+    	"release": "4",
+    	"reportName": "JR1",
+    	"yearMonth": "2018-07",
+    	"report": {}
+    },
+    {
+    	"id": "8c6b1c02-e153-4413-970b-1b1a3eca1330",
+    	"downloadTime": "2018-09-13T12:57:01.414+0000",
+    	"creationTime": "2018-09-13T12:57:01.414+0000",
+    	"release": "5",
+    	"reportName": "TR_J1",
+    	"yearMonth": "2018-07",
+    	"report": {}
+    }
+  ],
+  "totalRecords": 2
+}

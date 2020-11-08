@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Invoice transactions Summary",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "UUID of this summary",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "numPendingPayments": {
+      "description": "Total number of pending payments(transactions) expected for this invoice. Negative value indicates that all transactions have been processed",
+      "type": "integer"
+    },
+    "numPaymentsCredits": {
+      "description": "Total number of payments/credits(transactions) expected for this invoice. Negative value indicates that all transactions have been processed",
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "numPendingPayments",
+    "numPaymentsCredits"
+  ]
+}

@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n    \"phoneNumber\": \"19789999999\",\n    \"language\": \"en-us\",\n     \"categories\": [\n        \"0e3f9680-ab06-4565-af64-609b7364e6eb\",\n        \"996ecd31-7ca4-4d8d-9bbf-bc94dff5f6c6\"\n     ],\n    \"type\": \"Mobile\",\n    \"isPrimary\": true,\n    \"metadata\": {\n        \"createdDate\": \"2019-06-08T00:00:00.000+0000\",\n        \"createdByUserId\": \"12d2457c-d137-11e8-a8d5-f2802f1b9fd1\"\n    }\n}\n"
+}

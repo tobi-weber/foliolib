@@ -1,0 +1,40 @@
+{
+  "data": [
+    {
+      "id": "<n>",
+      "type": "proxyTypes",
+      "credentialsId": "2ffa1940-2cf6-48b1-8cc9-5e539c61d93f",
+      "attributes": {
+        "id": "<n>",
+        "name": "None",
+        "urlMask": ""
+      }
+    },
+    {
+      "id": "EZProxy",
+      "type": "proxyTypes",
+      "credentialsId": "2ffa1940-2cf6-48b1-8cc9-5e539c61d93f",
+      "attributes": {
+        "id": "EZProxy",
+        "name": "EZProxy",
+        "urlMask": "http://ezproxy.myinstitute.edu/login?url={targetURL}"
+      }
+    },
+    {
+      "id": "TestingFolio",
+      "type": "proxyTypes",
+      "credentialsId": "2ffa1940-2cf6-48b1-8cc9-5e539c61d93f",
+      "attributes": {
+        "id": "TestingFolio",
+        "name": "TestingFolio",
+        "urlMask": "https://folio.frontside.io"
+      }
+    }
+  ],
+  "meta": {
+    "totalResults": 3
+  },
+  "jsonapi": {
+    "version": "1.0"
+  }
+}

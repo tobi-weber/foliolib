@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Patron block limits schema",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "A UUID identifying the limit",
+      "$ref": "raml-util/schemas/uuid.schema"
+    },
+    "patronGroupId": {
+      "type": "string",
+      "description": "A UUID identifying the patron group",
+      "$ref": "raml-util/schemas/uuid.schema"
+    },
+    "conditionId": {
+      "type": "string",
+      "description": "A UUID identifying the condition",
+      "$ref": "raml-util/schemas/uuid.schema"
+    },
+    "value": {
+      "type": "number",
+      "description": "Limit value"
+    },
+    "metadata": {
+      "$ref": "raml-util/schemas/metadata.schema",
+      "readonly": true
+    }
+  },
+  "required": [
+    "id",
+    "patronGroupId",
+    "conditionId",
+    "value"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of email records",
+  "type": "object",
+  "properties": {
+    "emails": {
+      "description": "The list of emails in this collection",
+      "type": "array",
+      "id": "emails",
+      "items": {
+        "type": "object",
+        "$ref": "email.json"
+      }
+    },
+    "totalRecords": {
+      "description": "The number of email records returned in this collection",
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "emails",
+    "totalRecords"
+  ]
+}

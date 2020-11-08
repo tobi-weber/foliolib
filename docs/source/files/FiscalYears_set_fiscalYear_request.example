@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n  \"id\": \"ac2164c7-ba3d-1bc2-a12c-e35ceccbfaf2\",\n  \"name\": \"Fiscal Year 2020\",\n  \"acqUnitIds\": [\n    \"1895e539-8dac-441e-b1f5-aab62b3fde60\",\n    \"47f504bd-0c1b-498e-a2ae-e2f0a0cea273\"\n  ],\n  \"code\": \"FY2020\",\n  \"description\": \"January 1 - December 30\",\n  \"periodStart\": \"2020-01-01T00:00:00Z\",\n  \"periodEnd\": \"2020-12-30T23:59:59Z\",\n  \"series\": \"FY\",\n  \"metadata\": {\n    \"createdDate\": \"2019-06-17T14:12:42.497+0000\",\n    \"createdByUserId\": \"498492aa-f909-42f6-b154-5bf66e6486ba\",\n    \"updatedDate\": \"2019-08-28T08:37:19.263+0000\",\n    \"updatedByUserId\": \"7ec56c96-e9f2-4079-9509-86b00f8dacd5\"\n  }\n}\n"
+}

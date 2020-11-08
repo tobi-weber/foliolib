@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n  \"id\": \"ee683f15-b1e1-40c8-866d-4e70da03c723\",\n  \"amount\": 25,\n  \"currency\": \"USD\",\n  \"description\": \"PO_Line: History of Incas\",\n  \"fiscalYearId\": \"4438bc3b-4b4a-4e5e-9886-5f69b48a7a32\",\n  \"fromFundId\": \"27f27438-3197-4281-a353-511829421d6e\",\n  \"paymentEncumbranceId\": \"80c28fb4-c34e-48d6-b8c2-de6660c3e0aa\",\n  \"source\": \"Invoice\",\n  \"sourceFiscalYearId\": \"01705ce5-3c3d-4c30-b23d-a36feec28259\",\n  \"tags\": {\n    \"tagList\": [\n      \"important\"\n    ]\n  },\n  \"toFundId\": \"2e51c019-97f3-4523-87e9-59250e3b48bc\",\n  \"transactionType\": \"Allocation\",\n  \"metadata\": {\n    \"createdDate\": \"2018-07-19T00:00:00.000+0000\",\n    \"createdByUserId\": \"28d1057c-d137-11e8-a8d5-f2801f1b9fd1\",\n    \"updatedDate\" : \"2018-07-19T00:00:00.000+0000\",\n    \"updatedByUserId\" : \"28d1057c-d137-11e8-a8d5-f2801f1b9fd1\"\n  }\n}\n"
+}

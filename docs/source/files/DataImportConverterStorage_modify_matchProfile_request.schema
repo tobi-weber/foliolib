@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Match Profile Update/Create schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "Profile identifier",
+      "$ref": "../common/uuid.json"
+    },
+    "profile": {
+      "description": "Match Profile object",
+      "javaType": "org.folio.rest.jaxrs.model.MatchProfile"
+    },
+    "addedRelations": {
+      "description": "Match profile added relations",
+      "javaType": "java.util.List<org.folio.rest.jaxrs.model.ProfileAssociation>",
+      "items": {
+        "type": "object",
+        "$ref": "profileAssociation.json"
+      }
+    },
+    "deletedRelations": {
+      "description": "Match profile deleted relations",
+      "javaType": "java.util.List<org.folio.rest.jaxrs.model.ProfileAssociation>",
+      "items": {
+        "type": "object",
+        "$ref": "profileAssociation.json"
+      }
+    }
+  },
+  "required": [
+    "profile"
+  ]
+}

@@ -1,0 +1,253 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "composite purchase order line with dereferenced/expanded orders fields",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "UUID identifying this purchase order line",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "edition": {
+      "description": "edition of the material",
+      "type": "string"
+    },
+    "checkinItems": {
+      "description": "if true this will toggle the Check-in workflow for details associated with this PO line",
+      "type": "boolean",
+      "default": false
+    },
+    "instanceId": {
+      "description": "UUID of the instance record this purchase order line is related to",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "agreementId": {
+      "description": "UUID of the agreement this purchase order line is related to",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "acquisitionMethod": {
+      "description": "the acquisition method for this purchase order line",
+      "type": "string",
+      "enum": [
+        "Approval Plan",
+        "Demand Driven Acquisitions (DDA)",
+        "Depository",
+        "Evidence Based Acquisitions (EBA)",
+        "Exchange",
+        "Gift",
+        "Purchase At Vendor System",
+        "Purchase",
+        "Technical"
+      ]
+    },
+    "alerts": {
+      "description": "alerts associated with this purchase order line",
+      "id": "alerts",
+      "type": "array",
+      "items": {
+        "description": "an alert record",
+        "type": "object",
+        "$ref": "../../mod-orders-storage/schemas/alert.json"
+      }
+    },
+    "cancellationRestriction": {
+      "description": "whether or not there are cancellation restrictions for this purchase order line",
+      "type": "boolean"
+    },
+    "cancellationRestrictionNote": {
+      "description": "free-form notes related to cancellation restrictions",
+      "type": "string"
+    },
+    "claims": {
+      "description": "claims associated with this purchase order line",
+      "id": "claims",
+      "type": "array",
+      "items": {
+        "description": "a claim record",
+        "type": "object",
+        "$ref": "../../mod-orders-storage/schemas/claim.json"
+      }
+    },
+    "collection": {
+      "description": "whether or not this purchase order line is for a collection",
+      "type": "boolean"
+    },
+    "contributors": {
+      "description": "list of contributors to the material",
+      "id": "contributors",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "../../mod-orders-storage/schemas/contributor.json"
+      }
+    },
+    "cost": {
+      "description": "cost details associated with this purchase order line",
+      "type": "object",
+      "$ref": "../../mod-orders-storage/schemas/cost.json"
+    },
+    "description": {
+      "description": "description of the material",
+      "type": "string"
+    },
+    "details": {
+      "description": "details about this purchase order line",
+      "type": "object",
+      "$ref": "../../mod-orders-storage/schemas/details.json"
+    },
+    "donor": {
+      "description": "the donor contributing to this purchase order line",
+      "type": "string"
+    },
+    "eresource": {
+      "description": "eresource-related details of this purchase order line",
+      "type": "object",
+      "$ref": "../../mod-orders-storage/schemas/eresource.json"
+    },
+    "fundDistribution": {
+      "description": "the UUIDs of the fund distribution records for this purchase order line",
+      "id": "fundDistribution",
+      "type": "array",
+      "items": {
+        "description": "a fund distribution record",
+        "type": "object",
+        "$ref": "../../mod-orders-storage/schemas/fund_distribution.json"
+      }
+    },
+    "isPackage": {
+      "description": "Indicates that this POL is for a package",
+      "type": "boolean",
+      "default": false
+    },
+    "locations": {
+      "description": "a list of the location records for this purchase order line",
+      "id": "locations",
+      "type": "array",
+      "items": {
+        "description": "The location details",
+        "type": "object",
+        "$ref": "../../mod-orders-storage/schemas/location.json"
+      }
+    },
+    "orderFormat": {
+      "description": "The purchase order line format",
+      "type": "object",
+      "$ref": "../../mod-orders-storage/schemas/order_format.json"
+    },
+    "packagePoLineId": {
+      "description": "UUID referencing the poLine that represents the package that this POLs title belongs to",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "paymentStatus": {
+      "description": "The purchase order line payment status",
+      "type": "string",
+      "enum": [
+        "Awaiting Payment",
+        "Cancelled",
+        "Fully Paid",
+        "Partially Paid",
+        "Payment Not Required",
+        "Pending"
+      ],
+      "default": "Pending"
+    },
+    "physical": {
+      "description": "details of this purchase order line relating to physical materials",
+      "type": "object",
+      "$ref": "../../mod-orders-storage/schemas/physical.json"
+    },
+    "poLineDescription": {
+      "description": "purchase order line description",
+      "type": "string"
+    },
+    "poLineNumber": {
+      "description": "A human readable number assigned to this PO line",
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9]{1,16}-[0-9]{1,3}$",
+      "readonly": true
+    },
+    "publicationDate": {
+      "description": "date (year) of the material's publication",
+      "type": "string",
+      "pattern": "^[0-9]{4}$"
+    },
+    "publisher": {
+      "description": "publisher of the material",
+      "type": "string"
+    },
+    "purchaseOrderId": {
+      "description": "UUID of this parent purchase order",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "receiptDate": {
+      "description": "date the purchase order line was received",
+      "type": [
+        "null",
+        "string"
+      ],
+      "format": "date-time"
+    },
+    "receiptStatus": {
+      "description": "The purchase order line receipt status",
+      "type": "object",
+      "$ref": "../../mod-orders-storage/schemas/receipt_status.json"
+    },
+    "reportingCodes": {
+      "description": "a list of reporting codes associated with this purchase order line",
+      "id": "reportingCodes",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "../../mod-orders-storage/schemas/reporting_code.json"
+      }
+    },
+    "requester": {
+      "description": "who requested this purchase order line",
+      "type": "string"
+    },
+    "rush": {
+      "description": "whether or not this is a rush order",
+      "type": "boolean"
+    },
+    "selector": {
+      "description": "who selected this material",
+      "type": "string"
+    },
+    "source": {
+      "description": "the source of this purchase order line",
+      "type": "object",
+      "$ref": "../../mod-orders-storage/schemas/source.json"
+    },
+    "tags": {
+      "description": "arbitrary tags associated with this purchase order line",
+      "id": "tags",
+      "type": "object",
+      "$ref": "../../../raml-util/schemas/tags.schema"
+    },
+    "titleOrPackage": {
+      "description": "title of the material",
+      "type": "string"
+    },
+    "vendorDetail": {
+      "description": "details related to the vendor of this purchase order line",
+      "type": "object",
+      "$ref": "../../mod-orders-storage/schemas/vendor_detail.json"
+    },
+    "metadata": {
+      "type": "object",
+      "$ref": "../../../raml-util/schemas/metadata.schema",
+      "readonly": true
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "acquisitionMethod",
+    "cost",
+    "orderFormat",
+    "source",
+    "titleOrPackage"
+  ]
+}

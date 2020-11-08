@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "User Data Import Collection Schema",
+  "description": "The user data import collection",
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "users": {
+      "id": "usersData",
+      "type": "array",
+      "description": "List of users' data to import",
+      "items": {
+        "type": "object",
+        "$ref": "userdataimport.json"
+      }
+    },
+    "totalRecords": {
+      "description": "Total number of users' data to import",
+      "type": "integer"
+    },
+    "deactivateMissingUsers": {
+      "description": "Indicates whether to deactivate users that missing in current users' data collection",
+      "type": "boolean"
+    },
+    "updateOnlyPresentFields": {
+      "description": "Indicates whether to update only present fields in user's data",
+      "type": "boolean"
+    },
+    "sourceType": {
+      "description": "A prefix for the externalSystemId",
+      "type": "string"
+    },
+    "included": {
+      "description": "Entities that should be imported with users",
+      "javaType": "org.folio.rest.jaxrs.model.IncludedObjects",
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "departments": {
+          "description": "Departments entities that should be imported with users",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "$ref": "department.json"
+          }
+        },
+        "customFields": {
+          "description": "Custom fields entities that should be updated with users",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "$ref": "customField.json"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "users",
+    "totalRecords"
+  ]
+}

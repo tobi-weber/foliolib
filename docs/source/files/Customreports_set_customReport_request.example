@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n  \"id\": \"d359c28b-1b32-4d8c-9775-e0b444d3b370\",\n  \"year\": 2019,\n  \"note\": \"This is a custom report for January 2019\",\n  \"fileId\": \"d70d55be-06b4-42f7-8a2e-a4270686a062\",\n  \"fileName\": \"filename.txt\",\n  \"fileSize\": 1024,\n  \"providerId\": \"4b659cb9-e4bb-493d-ae30-5f5690c54802\"\n}"
+}

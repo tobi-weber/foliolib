@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n  \"dateAction\": \"2017-07-24T01:24:01Z\",\n  \"typeAction\": \"Payment-ckeck\",\n  \"amountAction\": 200.00,\n  \"balance\": 50.00,\n  \"transactionInformation\": \"Department ENG-345\",\n  \"comments\": \"This a comment\",\n  \"notify\": true,\n  \"createdAt\": \"Main Library\",\n  \"source\": \"Doe,Jane\",\n  \"paymentMethod\": \"Check\",\n  \"accountId\": \"fc8a995f-f076-465e-b108-6b5d528d0d38\",\n  \"userId\": \"1ad737b0-d847-11e6-bf26-cec0c932ce01\",\n  \"id\": \"bcb9b1d9-b967-41c4-a476-a4c282527cea\"\n}\n"
+}

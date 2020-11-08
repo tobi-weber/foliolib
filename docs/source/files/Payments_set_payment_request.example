@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n  \"nameMethod\": \"Cash\",\n  \"allowedRefundMethod\": true,\n  \"metadata\": {\n    \"createdDate\": \"2018-03-19T14:22:07Z\",\n    \"createdByUserId\": \"1ad737b0-d847-11e6-bf26-cec0c932ce02\",\n    \"createdByUsername\": \"Doe\",\n    \"updatedDate\": \"2018-03-19T14:22:07Z\"\n  },\n  \"ownerId\": \"0bab56e5-1ab6-4ac2-afdf-8b2df0434379\",\n  \"id\": \"0bab56e5-1ab6-4ac2-afdf-8b2df0434382\"\n}\n"
+}

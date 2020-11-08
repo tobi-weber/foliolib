@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "collection of acquisition unit membership records",
+  "type": "object",
+  "properties": {
+    "acquisitionsUnitMemberships": {
+      "description": "collection of acquistitions unit membership records",
+      "type": "array",
+      "id": "acquisitionsUnitMemberships",
+      "items": {
+        "type": "object",
+        "$ref": "acquisitions_unit_membership.json"
+      }
+    },
+    "totalRecords": {
+      "description": "The number of objects contained in this collection",
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "acquisitionsUnitMemberships",
+    "totalRecords"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+    "id": "588b5c42-8634-4af7-bc9b-5e0116ed96b6",
+    "name": "Sales Portal",
+    "uri": "https://www.gobi3.com/Pages/Login.aspx",
+    "notes": "This is the store-front for GOBI.",
+    "available": true,
+    "deliveryMethod": "Online",
+    "statisticsFormat": "PDF",
+    "locallyStored": "",
+    "onlineLocation": "",
+    "statisticsNotes": "",
+    "type": [
+      "End user",
+      "Orders"
+    ],
+    "metadata": {
+        "createdDate": "2019-06-06T00:00:00.000+0000",
+        "createdByUserId": "16d2457c-d137-11e8-a8d5-f2801f1b9fd1"
+    }
+}

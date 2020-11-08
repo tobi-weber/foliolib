@@ -1,0 +1,22 @@
+{
+  "ledgers": [
+    {
+      "id": "7cef8378-7cbd-1fae-bcdd-8b9d7c0af9de",
+      "name": "Main Library",
+      "code": "MAIN-LIB",
+      "description": "This is the ledger for the Main Library",
+      "fiscalYearOneId": "d875618b-7cf5-442f-a823-9814e7bce92a",
+      "ledgerStatus": "Active",
+      "allocated": 2000,
+      "available": 1000,
+      "unavailable": 1000,
+      "currency": "USD",
+      "restrictEncumbrance": false,
+      "restrictExpenditures": false,
+      "acqUnitIds": [
+         "ac2164c7-ba3d-1bc2-b12c-e35ceccbfaf2"
+      ]
+     }
+  ],
+  "totalRecords": 1
+}

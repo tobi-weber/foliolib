@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n    \"addressLine1\": \"10 Estes Street\",\n    \"addressLine2\": \"\",\n    \"city\": \"Ipswich\",\n    \"stateRegion\": \"MA\",\n    \"zipCode\": \"01938\",\n    \"country\": \"USA\"\n}"
+}

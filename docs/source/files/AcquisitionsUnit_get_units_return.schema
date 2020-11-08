@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "collection of acquisitions unit records",
+  "type": "object",
+  "properties": {
+    "acquisitionsUnits": {
+      "description": "collection of acquisitions unit records",
+      "type": "array",
+      "id": "acquisitionsUnits",
+      "items": {
+        "type": "object",
+        "$ref": "acquisitions_unit.json"
+      }
+    },
+    "totalRecords": {
+      "description": "The number of objects contained in this collection",
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "acquisitionsUnits",
+    "totalRecords"
+  ]
+}

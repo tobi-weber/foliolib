@@ -1,0 +1,31 @@
+{
+  "mappingProfiles": [
+    {
+      "id": "1kl9m60r-fvb7-45n0-23c0-13n8gbkl7091",
+      "name": "MARC brief instance 1",
+      "description": "Preliminary instance from CoolVendor MARC order record",
+      "tags": {
+        "tagList": [
+          "cool-vendor"
+        ]
+      },
+      "incomingRecordType": "MARC_BIBLIOGRAPHIC",
+      "existingRecordType": "INSTANCE",
+      "deleted": false,
+      "userInfo": {
+        "firstName": "Jane",
+        "lastName": "Doe",
+        "userName": "@janedoe"
+      },
+      "metadata": {
+        "createdDate": "2019-01-01T11:550:09Z",
+        "createdByUserId": "",
+        "createdByUsername": "",
+        "updatedDate": "2019-01-12T14:21:11Z",
+        "updatedByUserId": "",
+        "updatedByUsername": ""
+      }
+    }
+  ],
+  "totalRecords": 1
+}

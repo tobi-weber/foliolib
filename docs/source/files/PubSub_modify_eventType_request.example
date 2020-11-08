@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n  \"eventType\": \"CREATED_SRS_MARC_BIB_RECORD_WITH_ORDER_DATA\",\n  \"description\": \"Created SRS Marc Bibliographic Record with order data in 9xx fields\",\n  \"eventTTL\": 1,\n  \"signed\": false\n}\n"
+}

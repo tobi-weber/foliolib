@@ -1,0 +1,114 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A collection of check-in",
+  "type": "object",
+  "properties": {
+    "toBeCheckedIn": {
+      "description": "List of check-in",
+      "id": "toBeCheckedIn",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "poLineId": {
+            "description": "The id of the checkin PO line",
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+          },
+          "checkedIn": {
+            "description": "The number of pieces to check-in",
+            "type": "integer"
+          },
+          "checkInPieces": {
+            "description": "A collection of piece records",
+            "type": "array",
+            "id": "checkInPieces",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "description": "The id of the piece",
+                  "type": "string",
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+                },
+                "barcode": {
+                  "description": "The barcode assigned to the piece",
+                  "type": "string"
+                },
+                "callNumber": {
+                  "description": "The call number assigned to the piece",
+                  "type": "string"
+                },
+                "comment": {
+                  "description": "The free form notes pertaining to the piece",
+                  "type": "string"
+                },
+                "caption": {
+                  "description": "The enumeration caption of the piece",
+                  "type": "string"
+                },
+                "createItem": {
+                  "description": "Whether or not to create an item record for this piece",
+                  "type": "boolean"
+                },
+                "supplement": {
+                  "description": "Whether or not this is a supplementary material for this piece",
+                  "type": "boolean"
+                },
+                "locationId": {
+                  "description": "The id of the location",
+                  "type": "string",
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+                },
+                "materialTypeId": {
+                  "description": "The id of the materialType",
+                  "type": "string",
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+                },
+                "productId": {
+                  "description": "The id of the Product",
+                  "type": "string"
+                },
+                "productIdType": {
+                  "description": "The UUID corresponding to the type of product id",
+                  "type": "string",
+                  "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+                },
+                "accessionNumber": {
+                  "description": "The number referencing physical item acquired by the library",
+                  "type": "string"
+                },
+                "itemDescription": {
+                  "description": "The description associated with the item record",
+                  "type": "string"
+                },
+                "electronicBookplate": {
+                  "description": "A text that relates to the owner of the book",
+                  "type": "string"
+                },
+                "itemStatus": {
+                  "description": "The status of the Check in piece",
+                  "$ref": "item_status.json"
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "poLineId"
+        ]
+      }
+    },
+    "totalRecords": {
+      "description": "The total number of pieces to check-in in the list",
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "toBeCheckedIn",
+    "totalRecords"
+  ]
+}

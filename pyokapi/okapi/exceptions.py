@@ -3,31 +3,94 @@
 
 
 class OkapiException(Exception):
-    pass
+    description = ""
 
 
-class OkapiNotFound(OkapiException):
-    pass
+class OkapiRedirect(OkapiException):
+    description = "Moved temporarily"
+    """
+    Status code >= 300
+    """
 
 
-class OkapiForbidden(OkapiException):
-    pass
+class OkapiMoved(OkapiRedirect):
+    description = "Moved temporarily"
+    """
+    Status code = 302
+    """
 
 
-class OkapiUnauthorized(OkapiException):
-    pass
-
-
-class OkapiInvalid(OkapiException):
+class OkapiRequestError(OkapiException):
+    description = "Bad Request"
+    """
+    Status code >= 400
+    """
 
     def __init__(self, response):
+        self.status_code = response.status_code
+        self.headers = response.headers
         try:
             obj = response.json()
             super().__init__(obj["errors"][0]["message"])
-            self.errorobj = obj
         except:
             super().__init__(response.text)
-            self.errorobj = None
 
-    def get_error(self):
-        return self.errorobj
+
+class OkapiRequestUnauthorized(OkapiRequestError):
+    description = "Authentication is required"
+    """
+    Status code = 401
+    """
+
+
+class OkapiRequestForbidden(OkapiRequestError):
+    description = "Forbidden"
+    """
+    Status code = 403
+    """
+
+
+class OkapiRequestNotFound(OkapiRequestError):
+    description = "Not Found"
+    """
+    Status code = 404
+    """
+
+
+class OkapiRequestNotAcceptable(OkapiRequestError):
+    description = "Not Acceptable"
+    """
+    Status code = 406
+    """
+
+
+class OkapiRequestTimeout(OkapiRequestError):
+    description = "Request Timeout"
+    """
+    Status code = 408
+    """
+
+
+class OkapiRequestConflict(OkapiRequestError):
+    description = "Conflict"
+    """
+    Status code = 409
+    """
+
+
+class OkapiRequestPayloadToLarge(OkapiRequestError):
+    description = "Payload Too Large"
+    """
+    Status code = 413
+    """
+
+
+class OkapiRequestUnprocessableEntity(OkapiRequestError):
+    description = "Unprocessable Entity"
+    """
+    Status code = 422
+    """
+
+
+class OkapiFatalError(OkapiRequestError):
+    description = "Server Error"

@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "List of CustomReports",
+  "type": "object",
+  "properties": {
+    "customReports": {
+      "type": "array",
+      "description": "Entries",
+      "id": "customReportData",
+      "items": {
+        "type": "object",
+        "$ref": "customreport.json"
+      }
+    },
+    "totalRecords": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "customReports",
+    "totalRecords"
+  ]
+}

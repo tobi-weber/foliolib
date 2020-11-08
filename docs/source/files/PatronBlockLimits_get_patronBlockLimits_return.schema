@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of available patron block limits",
+  "type": "object",
+  "properties": {
+    "patronBlockLimits": {
+      "description": "List of available patron block limits",
+      "id": "patronBlockLimits",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "patron-block-limit.json"
+      }
+    },
+    "totalRecords": {
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "patronBlockLimits",
+    "totalRecords"
+  ]
+}

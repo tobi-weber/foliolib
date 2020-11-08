@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Collection of templates",
+  "properties": {
+    "templates": {
+      "type": "array",
+      "description": "List of templates",
+      "items": {
+        "type": "object",
+        "$ref": "template.json"
+      }
+    },
+    "totalRecords": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "templates",
+    "totalRecords"
+  ]
+}

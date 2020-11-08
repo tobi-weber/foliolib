@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Custom Report and Metadata",
+  "title": "Custom Report Schema",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "year": {
+      "type": "integer",
+      "description": "The year the report is valid. The report may not cover a whole year. You can add multiple reports with the same year. Then please specify the accurate reporting period in the notes."
+    },
+    "note": {
+      "type": "string",
+      "description": "Field to give additional information, e.g. month the report covers."
+    },
+    "fileId": {
+      "type": "string",
+      "description": "UUID of the binary file (which is uploaded before this custom report document)."
+    },
+    "fileName": {
+      "type": "string",
+      "description": "The file's filename."
+    },
+    "fileSize": {
+      "type": "number",
+      "description": "Size of file in kb."
+    },
+    "providerId": {
+      "description": "Id of associated usage data provider",
+      "type": "string"
+    },
+    "metadata": {
+      "description": "Metadata about creation and changes, provided by the server (client should not provide)",
+      "type": "object",
+      "$ref": "../raml-util/schemas/metadata.schema",
+      "readonly": true
+    }
+  },
+  "required": [
+    "year",
+    "fileId",
+    "fileName",
+    "fileSize",
+    "providerId"
+  ],
+  "additionalProperties": false
+}

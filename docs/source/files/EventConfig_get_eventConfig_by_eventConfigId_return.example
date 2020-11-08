@@ -1,0 +1,12 @@
+{
+  "id": "0b1b7cac-f6fe-45ec-99f5-6758d54a51d7",
+  "name": "RESET_PASSWORD_EVENT",
+  "active": true,
+  "templates": [
+    {
+      "templateId": "ed8c1c67-897b-4a23-a702-c36e280c6a93",
+      "outputFormat": "text/plain",
+      "deliveryChannel": "email"
+    }
+  ]
+}

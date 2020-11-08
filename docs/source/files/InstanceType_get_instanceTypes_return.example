@@ -1,0 +1,23 @@
+{
+  "instanceTypes": [
+    {
+      "id": "535e3160-763a-42f9-b0c0-d8ed7df6e2a2",
+      "name": "still image",
+      "code": "sti",
+      "source": "rdacarrier"
+    },
+    {
+      "id": "df5dddff-9c30-4507-8b82-119ff972d4d7",
+      "name": "computer dataset",
+      "code": "cod",
+      "source": "rdacarrier"
+    },
+    {
+      "id": "8105bd44-e7bd-487e-a8f2-b804a361d92f",
+      "name": "tactile text",
+      "code": "tct",
+      "source": "rdacarrier"
+    }
+  ],
+  "totalRecords": 3
+}

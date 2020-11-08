@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of Audit Messages",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "auditMessages": {
+      "description": "List of Audit Messages",
+      "type": "array",
+      "id": "auditMessagesList",
+      "items": {
+        "type": "object",
+        "$ref": "./auditMessage.json"
+      }
+    },
+    "totalRecords": {
+      "description": "Total number of Audit Messages",
+      "type": "integer"
+    }
+  },
+  "excludedFromEqualsAndHashCode": [
+    "totalRecords"
+  ],
+  "required": [
+    "auditMessages",
+    "totalRecords"
+  ]
+}

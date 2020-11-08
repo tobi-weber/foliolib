@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Patron block conditions schema",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "A UUID identifying the condition",
+      "$ref": "raml-util/schemas/uuid.schema"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the condition"
+    },
+    "blockBorrowing": {
+      "type": "boolean",
+      "description": "This flag indicates the block for borrowings"
+    },
+    "blockRenewals": {
+      "type": "boolean",
+      "description": "This flag indicates the block for renewals"
+    },
+    "blockRequests": {
+      "type": "boolean",
+      "description": "This flag indicates the block for requests"
+    },
+    "valueType": {
+      "type": "string",
+      "description": "Defines limit type",
+      "enum": [
+        "Integer",
+        "Double"
+      ]
+    },
+    "message": {
+      "type": "string",
+      "description": "A message to be displayed"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Metadata about creation and changes to patron block conditions, provided by the server (client should not provide)",
+      "$ref": "raml-util/schemas/metadata.schema"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "blockBorrowing",
+    "blockRenewals",
+    "blockRequests",
+    "valueType"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "collection of category records",
+  "type": "object",
+  "properties": {
+    "categories": {
+      "description": "The list of categories in this collection",
+      "type": "array",
+      "id": "categories",
+      "items": {
+        "type": "object",
+        "$ref": "category.json"
+      }
+    },
+    "totalRecords": {
+      "description": "The number of category objects returned in this collection",
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "categories",
+    "totalRecords"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of available conditions",
+  "type": "object",
+  "properties": {
+    "patronBlockConditions": {
+      "description": "List of of available patron block conditions",
+      "id": "patronBlockConditions",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "patron-block-condition.json"
+      }
+    },
+    "totalRecords": {
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "patronBlockConditions",
+    "totalRecords"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "21425789-acdb-44b2-b44f-f2291cc48b42",
+  "amount": 25,
+  "currency": "USD",
+  "description": "PO_Line: History of Incas",
+  "fiscalYearId": "684b5dc5-92f6-4db7-b996-b549d88f5e4e",
+  "source": "Invoice",
+  "sourceFiscalYearId": "684b5dc5-92f6-4db7-b996-b549d88f5e4e",
+  "sourceInvoiceId": "041c1fe8-adfa-44eb-b6b3-f85acdd71f81",
+  "sourceInvoiceLineId": "ee60ee78-f487-4940-adcf-fa0726989823",
+  "toFundId": "7fbd5d84-62d1-44c6-9c45-6cb173998bbd",
+  "transactionType": "Credit",
+  "metadata": {
+    "createdDate": "2020-01-09T20:53:43.984+0000",
+    "createdByUserId": "28d0fb04-d137-11e8-a8d5-f2801f1b9fd1",
+    "updatedDate": "2020-01-09T20:53:43.984+0000",
+    "updatedByUserId": "28d0fb04-d137-11e8-a8d5-f2801f1b9fd1"
+  }
+}

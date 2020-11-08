@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of reasons for closure",
+  "type": "object",
+  "properties": {
+    "reasonsForClosure": {
+      "description": "Collection of reasons for closure",
+      "type": "array",
+      "id": "reasonsForClosure",
+      "items": {
+        "type": "object",
+        "$ref": "reason_for_closure.json"
+      }
+    },
+    "totalRecords": {
+      "description": "The number of objects contained in this collection",
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "reasonsForClosure",
+    "totalRecords"
+  ]
+}

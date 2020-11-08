@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Describes the types of events the module is subscribed",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "moduleId": {
+      "description": "Subscriber module name and version",
+      "type": "string"
+    },
+    "subscriptionDefinitions": {
+      "description": "List of event types (subscription definition) the module is subscribed",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "./subscriptionDefinition.json"
+      }
+    }
+  },
+  "required": [
+    "moduleId",
+    "subscriptionDefinitions"
+  ]
+}

@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n  \"id\": \"2d706874-8a10-4d3e-a190-33c301d157e3\",\n  \"field\": \"001\",\n  \"indicator1\": \"\",\n  \"indicator2\": \"\",\n  \"subfield\": \"\",\n  \"data\": \"*\",\n  \"source\": \"SYSTEM\",\n  \"override\": false,\n  \"metadata\":{\n    \"createdDate\":\"2020-08-13T14:44:07Z\",\n    \"createdByUserId\":\"00000000-0000-0000-0000-000000000000\",\n    \"createdByUsername\":\"System\",\n    \"updatedDate\":\"2020-08-13T14:44:07Z\",\n    \"updatedByUserId\":\"00000000-0000-0000-0000-000000000000\",\n    \"updatedByUsername\":\"System\"\n  }\n}\n"
+}
