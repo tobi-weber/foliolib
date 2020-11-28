@@ -10,6 +10,7 @@ import inflection
 from pyokapi import RAISE
 from pyokapi.raml import tpl
 from pyokapi.raml.exceptions import CodeBuilderError
+from pyokapi.raml.helper import pluralize, singularize
 from pyokapi.raml.ramlMethod import RamlMethod
 from pyokapi.raml.ramlUrl import RamlUrl
 
@@ -90,7 +91,7 @@ class CodeBuilder:
         dataParam = None
         if data["request"] is not None:
             if "type" in data["request"]:
-                dataParam = inflection.singularize(
+                dataParam = singularize(
                     data["resourcePathName"])
                 log.debug("Request parameter: %s", dataParam)
         return dataParam
@@ -113,22 +114,23 @@ class CodeBuilder:
                 if returns is not None:
                     if "type" in returns:
                         if isinstance(returns["type"], dict):
-                            if "totalRecords" in returns["type"]["properties"]:
-                                is_collection = True
+                            if "properties" in returns["type"]:
+                                if "totalRecords" in returns["type"]["properties"]:
+                                    is_collection = True
                 if data["resourceType"] == "collection" or not methodParams or is_collection:
                     # if data["resourceType"] in ["collection"] or is_collection:
-                    methodName = inflection.pluralize(methodName)
+                    methodName = pluralize(methodName)
                 elif data["resourceType"] == "collection-item":
-                    methodName = inflection.singularize(methodName)
+                    methodName = singularize(methodName)
                 elif len(methodParams) > 0 and not method.get_url().endswith("}"):
                     s = methodParams[0].replace("Id", "")
-                    if methodName == s or methodName == inflection.pluralize(s):
-                        methodName = inflection.singularize(methodName)
+                    if methodName == s or methodName == pluralize(s):
+                        methodName = singularize(methodName)
                     else:
                         methodName = methodName + "_by_" + \
-                            inflection.singularize(s)
+                            singularize(s)
                 else:
-                    methodName = inflection.singularize(methodName)
+                    methodName = singularize(methodName)
                 methodName = "get_" + methodName
                 if methodName in methodNames:
                     methodName = self._rename_method(methodName,
@@ -136,29 +138,28 @@ class CodeBuilder:
 
             elif method.get_method() == "post":
 
-                if requestPyType == "filePath":
+                if requestPyType in ["filePath", "binary"]:
                     methodName = "upload_" + \
-                        inflection.pluralize(methodName)
+                        singularize(methodName)
                 elif data["resourceType"] is not None:
                     if "action" in data["resourceType"].lower():
-                        methodName = inflection.singularize(methodName)
+                        methodName = singularize(methodName)
                     else:
                         methodName = "set_" + \
-                            inflection.singularize(methodName)
+                            singularize(methodName)
                 else:
                     methodName = "set_" + \
-                        inflection.singularize(
-                            methodName)
+                        singularize(methodName)
                 if methodName in methodNames:
                     methodName = self._rename_method(methodName, method,
                                                      methodNames)
 
             elif method.get_method() == "put":
 
-                methodName = "modify_" + inflection.singularize(methodName)
+                methodName = "modify_" + singularize(methodName)
                 if data["resourceType"] is not None:
                     if "action" in data["resourceType"].lower():
-                        methodName = inflection.singularize(methodName)
+                        methodName = singularize(methodName)
                 if methodName in methodNames:
                     methodName = self._rename_method(methodName, method,
                                                      methodNames)
@@ -166,17 +167,17 @@ class CodeBuilder:
             elif method.get_method() == "delete":
 
                 if data["resourceType"] in ["collection"] or not methodParams:
-                    methodName = "delete_" + inflection.pluralize(methodName)
+                    methodName = "delete_" + pluralize(methodName)
                 else:
-                    methodName = "delete_" + inflection.singularize(methodName)
+                    methodName = "delete_" + singularize(methodName)
 
                 if methodName in methodNames:
                     methodName = self._rename_method(methodName, method,
                                                      methodNames)
                     if data["resourceType"] in ["collection"] or not methodParams:
-                        methodName = inflection.pluralize(methodName)
+                        methodName = pluralize(methodName)
                     else:
-                        methodName = inflection.singularize(methodName)
+                        methodName = singularize(methodName)
 
             if methodName is not None:
                 if not methodName in methodNames:
@@ -201,7 +202,7 @@ class CodeBuilder:
         def rename_method_by_parameter(methodName, methodParams):
             suffix = methodParams[0].replace(
                 "_id_", "").replace("Id", "").replace("_id", "")
-            suffix = inflection.singularize(suffix)
+            suffix = singularize(suffix)
             if suffix in methodName:
                 methodName = methodName + "_by_" + methodParams[0]
             else:

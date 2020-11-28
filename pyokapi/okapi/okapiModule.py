@@ -4,7 +4,7 @@
 import logging
 from typing import Union
 
-from pyokapi.config import CONFIG
+from pyokapi.config import Config
 from pyokapi.okapi import okapiClient
 
 log = logging.getLogger("pyokapi.okapi.okapiModule")
@@ -77,8 +77,8 @@ class OkapiModule:
             return ""
 
     def __get_descriptor(self, name: str, version: str = None):
-        host = CONFIG.pyokapicfg().get("PullNode", "host")
-        port = CONFIG.pyokapicfg().get("PullNode", "port")
+        host = Config().pyokapicfg().get("PullNode", "host")
+        port = Config().pyokapicfg().get("PullNode", "port")
         log.info("Pull descriptor for %s-%s from %s:%s",
                  name, str(version), host, port)
         client = okapiClient.OkapiClient(host=host, port=port)
@@ -99,7 +99,7 @@ class OkapiModule:
                 if e["name"].lower() == name.lower():
                     l.remove(e)
 
-        config = CONFIG.modulescfg(self.get_modId())
+        config = Config().modulescfg(self.get_modId())
         if config is not None:
             if "Docker" in config:
                 if "Memory" in config["Docker"]:

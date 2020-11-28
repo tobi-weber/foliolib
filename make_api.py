@@ -51,6 +51,7 @@ FOLIO_MODS = [
     "mod-licenses",
     "mod-login",
     "mod-login-saml",
+    "mod-marccat",
     # "mod-ncip",
     "mod-notes",
     "mod-notify",
@@ -74,6 +75,7 @@ FOLIO_MODS = [
     "mod-user-import",
     "mod-users",
     "mod-users-bl",
+    "mod-quick-marc",
 ]
 
 
@@ -87,28 +89,22 @@ def create_dirs():
     os.mkdir(API_PATH)
 
 
-def get_ramls(mod):
-    log.info("")
-    log.info(mod)
-    log.info("=====================")
-    ramls = []
+def get_repos():
     cur_path = os.getcwd()
     os.chdir("temp")
-    if not os.path.exists(mod):
-        os.system(f"git clone --recurse-submodules {FOLIO_GITURL}{mod}.git")
-    # TODO: check that raml-utils are cloned
-    os.chdir(os.path.join(mod, "ramls"))
-    if mod == "mod-configuration":
-        os.chdir(os.path.join("configuration"))
-    for fname in os.listdir():
-        if fname.endswith(".raml"):
-            log.info("Read %s", os.path.join(cur_path, "temp",
-                                             mod, "ramls", fname))
-            ramls.append(load_raml(fname))
-
-    os.chdir(cur_path)
-
-    return ramls
+    for mod in FOLIO_MODS:
+        log.info("")
+        log.info("Get repository: %s", mod)
+        log.info("=========================================")
+        if not os.path.exists(mod):
+            os.system(
+                f"git clone --recurse-submodules {FOLIO_GITURL}{mod}.git")
+        else:
+            os.chdir(mod)
+            os.system(f"git pull --recurse-submodules {FOLIO_GITURL}{mod}.git")
+        # TODO: check that raml-utils are cloned
+        os.chdir(os.path.join(cur_path, "temp"))
+    os.chdir(os.path.join(cur_path))
 
 
 def write_api(mod, ramls):
@@ -127,11 +123,29 @@ def write_api(mod, ramls):
         f.write(mod)
 
 
+def process_ramls():
+    for mod in FOLIO_MODS:
+        log.info("")
+        log.info(mod)
+        log.info("=====================")
+        ramls = []
+        cur_path = os.getcwd()
+        os.chdir(os.path.join("temp", mod, "ramls"))
+        if mod == "mod-configuration":
+            os.chdir(os.path.join("configuration"))
+        for fname in os.listdir():
+            if fname.endswith(".raml"):
+                log.info("Read %s", os.path.join(cur_path, "temp",
+                                                 mod, "ramls", fname))
+                ramls.append(load_raml(fname))
+        os.chdir(os.path.join(cur_path))
+        write_api(mod, ramls)
+
+
 def main():
     create_dirs()
-    for mod in FOLIO_MODS:
-        ramls = get_ramls(mod)
-        write_api(mod, ramls)
+    get_repos()
+    process_ramls()
 
 
 if __name__ == "__main__":

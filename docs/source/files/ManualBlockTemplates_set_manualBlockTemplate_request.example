@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n  \"name\": \"Reader card lost\",\n  \"code\": \"RCL\",\n  \"desc\": \"Template to use if a patron lost his/her reader card\",\n  \"blockTemplate\": {\n    \"desc\": \"Reader card lost\",\n    \"patronMessage\": \"Please contact the library's service desk for a new reader card.\",\n    \"borrowing\": true,\n    \"renewals\": true,\n    \"requests\": true\n  },\n  \"metadata\": {\n    \"createdDate\": \"2018-10-16T23:07:02Z\",\n    \"createdByUserId\": \"1ad737b0-d847-11e6-bf26-cec0c932ce02\",\n    \"createdByUsername\": \"Doe\",\n    \"updatedDate\": \"2018-10-16T23:07:02Z\",\n    \"updatedByUserId\": \"695540df-cf63-4c67-91c1-d8746920d1dd\",\n    \"updatedByUsername\": \"robertjones\"\n  },\n  \"id\": \"a6905826-d84e-4900-a1f8-de1e3829d18d\"\n}\n"
+}

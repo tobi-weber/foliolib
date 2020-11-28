@@ -5,7 +5,7 @@ import json
 import logging
 from distutils.version import StrictVersion
 
-from pyokapi.config import CONFIG
+from pyokapi.config import Config
 from pyokapi.folio.api.permissions import Permissions
 from pyokapi.folio.users import UserService
 from pyokapi.okapi import helper as okapi_helper
@@ -74,11 +74,11 @@ def create_superuser(tenant: str, username: str = "admin", password: str = "foli
 
 def login_supertenant(username, password):
     print("Logging in supertenant")
-    CONFIG.set_okapicfg("Okapi", "token", "")
+    Config().set_okapicfg("Okapi", "token", "")
     userService = UserService("supertenant")
     token = userService.login(username, password)
     if token is not None:
-        CONFIG.set_okapicfg("Okapi", "token", token)
+        Config().set_okapicfg("Okapi", "token", token)
     else:
         print("Login failed")
 

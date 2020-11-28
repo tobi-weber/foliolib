@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-08
+# Generated at 2020-11-21
 
 import logging
 
@@ -296,3 +296,28 @@ class PubSub(FolioApi):
             .. literalinclude:: ../files/PubSub_set_publish_request.schema
         """
         return self.call("POST", "/pubsub/publish", data=publish)
+
+    def delete_messagingModules(self, **kwargs):
+        """
+
+        ``DELETE /pubsub/messaging-modules``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            moduleId (str):  module name and version
+                    
+                    Example:
+                    
+                     - mod-pubsub-1.0.0
+            moduleRole (str):  module role (PUBLISHER/SUBSCRIBER)
+                    
+                    Example:
+                    
+                     - PUBLISHER
+
+        Raises:
+            OkapiRequestError: Bad Request
+        """
+        return self.call("DELETE", "/pubsub/messaging-modules", query=kwargs)

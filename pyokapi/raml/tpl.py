@@ -83,6 +83,20 @@ def get_method_code(methodName: str, method: 'RamlMethod', dataParam: str = None
         """
         requestParams += ", files=files"
         methodParams += ", filePath: str"
+    elif requestPyType == "binary":
+        requestParams += ", headers=headers"
+        code = """
+        import os
+        headers = {}
+        headers[\"Content-Type\"] = \"application/octet-stream\"
+        headers[\"Content-length\"] = str(os.path.getsize(filePath))
+        headers[\"Content-Disposition\"] = \"attachment; filename=%s\" % os.path.basename(
+            filePath)
+        with open(filePath, 'rb') as f:
+            data = f.read()
+        """
+        requestParams += ", data=data"
+        methodParams += ", filePath: str"
 
     doc = get_doc(methodName, method, methodParams, dataParam)
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-08
+# Generated at 2020-11-21
 
 import logging
 
@@ -186,7 +186,7 @@ class DataImport(FolioApi):
         """
         return self.call("DELETE", f"/data-import/uploadDefinitions/{uploadDefinitionId}/files/{fileId}")
 
-    def set_file_for_uploadDefinition(self, uploadDefinitionId: str, fileId: str):
+    def upload_file(self, uploadDefinitionId: str, fileId: str, filePath: str):
         """Upload file
 
         ``POST /data-import/uploadDefinitions/{uploadDefinitionId}/files/{fileId}``
@@ -205,9 +205,18 @@ class DataImport(FolioApi):
 
         Schema:
 
-            .. literalinclude:: ../files/DataImport_set_file_for_uploadDefinition_return.schema 
+            .. literalinclude:: ../files/DataImport_upload_file_return.schema 
         """
-        return self.call("POST", f"/data-import/uploadDefinitions/{uploadDefinitionId}/files/{fileId}")
+        import os
+        headers = {}
+        headers["Content-Type"] = "application/octet-stream"
+        headers["Content-length"] = str(os.path.getsize(filePath))
+        headers["Content-Disposition"] = "attachment; filename=%s" % os.path.basename(
+            filePath)
+        with open(filePath, 'rb') as f:
+            data = f.read()
+        
+        return self.call("POST", f"/data-import/uploadDefinitions/{uploadDefinitionId}/files/{fileId}", headers=headers, data=data)
 
     def set_processFile(self, uploadDefinitionId: str, processFile: dict, **kwargs):
         """Starts the file processing

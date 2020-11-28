@@ -17,12 +17,11 @@ log = logging.getLogger("pyokapi.folio.users")
 
 class UserService(FolioService):
     """
-    mod-login, mod-users, mod-permissions
+    Requirements:
 
-    Create a user:
-    set user => userId 
-                        -> set credential => credentialId
-                        -> set permissionUser => permissionUserId
+        - mod-login
+        - mod-users
+        - mod-inventory-storage
     """
 
     def __init__(self, tenant: str) -> None:

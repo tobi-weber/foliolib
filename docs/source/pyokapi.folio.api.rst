@@ -34,6 +34,7 @@ Modules
 	pyokapi.folio.api.licenses
 	pyokapi.folio.api.login
 	pyokapi.folio.api.loginSaml
+	pyokapi.folio.api.marccat
 	pyokapi.folio.api.notes
 	pyokapi.folio.api.notify
 	pyokapi.folio.api.oaiPmh

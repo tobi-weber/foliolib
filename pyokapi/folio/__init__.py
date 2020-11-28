@@ -41,5 +41,8 @@ class FolioService:
         """
         self._tenant = tenant
 
+    def make_uuid(self):
+        return str(uuid.uuid4())
+
     def get_tenant(self):
         return self._tenant

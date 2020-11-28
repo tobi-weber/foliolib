@@ -5,7 +5,7 @@ import json
 import pprint
 
 from pyokapi.basecli import BaseCLI
-from pyokapi.config import CONFIG
+from pyokapi.config import Config
 from pyokapi.okapi import database, helper
 from pyokapi.okapi.okapiClient import OkapiClient
 from pyokapi.okapi.okapiModule import OkapiModule
@@ -44,19 +44,15 @@ class OkapiCLI(BaseCLI):
     tenantModules           Show mods of a tenant
     tenantInterface         Show interface for a tenant
     tenantInterfaces        Show interfaces for a tenant
-    pgdb                    Show complete Postgres db
 
   Database
     initdb                  Initialize okapi db
     initmoduledb            Initialize module db
-    purgemoduledb           Purge module db and delete all users for a tenant
 
 """
         super().__init__(description, usage, commands)
 
     def db(self):
-        host = CONFIG.okapicfg().get("Postgres", "host")
-        port = CONFIG.okapicfg().get("Postgres", "port")
         parser = self._get_parser("db")
         parser.add_argument("-u", "--user",
                             default="folio_admin", help=" ")
@@ -64,16 +60,16 @@ class OkapiCLI(BaseCLI):
                             default="folio_admin", help=" ")
         parser.add_argument("-d", "--database",
                             default="okapi_modules", help=" ")
-        parser.add_argument("-s", "--server", default=host, help="")
-        parser.add_argument("-o", "--port", default=port, help=" ")
         args = self._get_args(parser)
+        server = Config().pyokapicfg().get("Postgres", "host")
+        port = Config().pyokapicfg().get("Postgres", "port")
         print("Set db parameters:")
-        print(f"\tdb server: \t{args.server}")
-        print(f"\tdb port: \t{args.port}")
+        print(f"\tdb server: \t{server}")
+        print(f"\tdb port: \t{port}")
         print(f"\tdatabase \t{args.database}")
         print(f"\tusername: \t{args.user}")
         print(f"\tpassword: \t{args.password}")
-        helper.set_env_db(args.server, args.port, args.user,
+        helper.set_env_db(server, port, args.user,
                           args.password, args.database)
 
     def addModule(self):
@@ -153,25 +149,76 @@ class OkapiCLI(BaseCLI):
         parser.add_argument("--loadSample",  help="", action="store_true")
         parser.add_argument("--loadReference",  help="", action="store_true")
         parser.add_argument(
-            "--query",  help="json object with query paramteters")
+            "--async",  action="store_true", help="Install in the background")
+        parser.add_argument(
+            "--deploy",  action="store_true", help="Deploy modules")
+        parser.add_argument(
+            "--ignoreErrors",  action="store_true", help="Ignore errors during the install operation")
+        parser.add_argument(
+            "--invoke",  action="store_false", help="Not invoke for tenant init/permissions/purge")
+        parser.add_argument(
+            "--npmSnapshot",  action="store_false", help="Not include NPM module snapshots")
+        parser.add_argument(
+            "--preRelease",  action="store_false", help="Pre-releases should be considered for installation")
+        parser.add_argument(
+            "--simulate",  action="store_true", help="Simulate the installation")
         args = self._get_args(parser)
-        query = json.loads(args.query) if args.query else {}
+        kwargs = {}
+        if getattr(args, "async"):
+            kwargs["async"] = getattr(args, "async")
+        if args.deploy:
+            kwargs["deploy"] = args.deploy
+        if args.ignoreErrors:
+            kwargs["ignoreErrors"] = args.ignoreErrors
+        if args.simulate:
+            kwargs["simulate"] = args.simulate
+        if not args.invoke:
+            kwargs["invoke"] = args.invoke
+        if not args.npmSnapshot:
+            kwargs["npmSnapshot"] = args.npmSnapshot
+        if not args.preRelease:
+            kwargs["preRelease"] = args.preRelease
         print(f"Enable module {args.modid} for tenant {args.tenant}")
         for modid in args.modid:
             OkapiClient().enable_module(modid, args.tenant,
                                         loadSample=args.loadSample,
                                         loadReference=args.loadReference,
-                                        **query)
+                                        **kwargs)
 
     def disableModule(self):
         parser = self._get_parser("disableModule")
         parser.add_argument("tenant", help="tenant id")
         parser.add_argument("modid", nargs='?',
                             help="Modul id, e.g. mod-users-17.1.0. Can be repeated")
+        parser.add_argument(
+            "--async",  action="store_true", help="Uninstall in the background")
+        parser.add_argument(
+            "--undeploy",  action="store_true", help="Undeploy modules")
+        parser.add_argument(
+            "--ignoreErrors",  action="store_true", help="Ignore errors during the uninstall operation")
+        parser.add_argument(
+            "--invoke",  action="store_false", help="Not invoke for tenant init/permissions/purge")
+        parser.add_argument(
+            "--purge",  action="store_true", help="Modules will also be purged.")
+        parser.add_argument(
+            "--simulate",  action="store_true", help="Simulate the installation")
         args = self._get_args(parser)
+        kwargs = {}
+        if getattr(args, "async"):
+            kwargs["async"] = getattr(args, "async")
+        if args.undeploy:
+            kwargs["deploy"] = args.undeploy
+        if args.ignoreErrors:
+            kwargs["ignoreErrors"] = args.ignoreErrors
+        if args.purge:
+            kwargs["purge"] = args.purge
+        if args.simulate:
+            kwargs["simulate"] = args.simulate
+        if not args.invoke:
+            kwargs["invoke"] = args.invoke
         print(f"Disable module {args.modid} for tenant {args.tenant}")
         for modid in args.modid:
-            OkapiClient().disable_module(modid, args.tenant)
+            OkapiClient().disable_module(modid, args.tenant, **kwargs)
 
     def addTenant(self):
         parser = self._get_parser("createTenant")
@@ -202,13 +249,39 @@ class OkapiCLI(BaseCLI):
         parser.add_argument("--loadSample",  help="", action="store_true")
         parser.add_argument("--loadReference",  help="", action="store_true")
         parser.add_argument(
-            "--query",  help="json object with query paramteters")
+            "--async",  action="store_true", help="Install in the background")
+        parser.add_argument(
+            "--deploy",  action="store_true", help="Deploy modules")
+        parser.add_argument(
+            "--ignoreErrors",  action="store_true", help="Ignore errors during the install operation")
+        parser.add_argument(
+            "--invoke",  action="store_false", help="Not invoke for tenant init/permissions/purge")
+        parser.add_argument(
+            "--npmSnapshot",  action="store_false", help="Not include NPM module snapshots")
+        parser.add_argument(
+            "--preRelease",  action="store_false", help="Pre-releases should be considered for installation")
+        parser.add_argument(
+            "--simulate",  action="store_true", help="Simulate the installation")
         args = self._get_args(parser)
-        query = json.loads(args.query) if args.query else {}
+        kwargs = {}
+        if getattr(args, "async"):
+            kwargs["async"] = getattr(args, "async")
+        if args.deploy:
+            kwargs["deploy"] = args.deploy
+        if args.ignoreErrors:
+            kwargs["ignoreErrors"] = args.ignoreErrors
+        if args.simulate:
+            kwargs["simulate"] = args.simulate
+        if not args.invoke:
+            kwargs["invoke"] = args.invoke
+        if not args.npmSnapshot:
+            kwargs["npmSnapshot"] = args.npmSnapshot
+        if not args.preRelease:
+            kwargs["preRelease"] = args.preRelease
         helper.install_okapi(args.file, args.node, args.tenant,
                              loadSample=args.loadSample,
                              loadReference=args.loadReference,
-                             **query)
+                             **kwargs)
 
     def version(self):
         self._get_parser("version")
@@ -260,10 +333,12 @@ class OkapiCLI(BaseCLI):
     def modules(self):
         parser = self._get_parser("modules")
         parser.add_argument(
-            "--query",  help="json object with query paramteters")
+            "--full",  help="Full MD should be returned")
         args = self._get_args(parser)
-        query = json.loads(args.query) if args.query else {}
-        mods = OkapiClient().get_modules(**query)
+        kwargs = {}
+        if args.full:
+            kwargs["full"] = args.full
+        mods = OkapiClient().get_modules(**kwargs)
         for e in mods:
             k = e["id"].ljust(40)
             v = e["name"]
@@ -305,11 +380,13 @@ class OkapiCLI(BaseCLI):
         parser = self._get_parser("tenantModules")
         parser.add_argument("tenant", help="tenant id")
         parser.add_argument(
-            "--query",  help="json object with query paramteters")
+            "--full",  help="Full MD should be returned")
         args = self._get_args(parser)
-        query = json.loads(args.query) if args.query else {}
+        kwargs = {}
+        if args.full:
+            kwargs["full"] = args.full
         mods = OkapiClient().get_tenant_modules(args.tenant,
-                                                **query)
+                                                **kwargs)
         for e in mods:
             k = e["id"]
             print(f"{k}")
@@ -318,23 +395,21 @@ class OkapiCLI(BaseCLI):
         parser = self._get_parser("tenantInterface")
         parser.add_argument("tenant", help="tenant id")
         parser.add_argument("interface", help="interface id")
-        parser.add_argument(
-            "--query",  help="json object with query paramteters")
         args = self._get_args(parser)
-        query = json.loads(args.query) if args.query else {}
-        interface = OkapiClient().get_tenant_interface(args.interface, args.tenant,
-                                                       **query)
+        interface = OkapiClient().get_tenant_interface(args.interface, args.tenant)
         print(interface[0]["id"])
 
     def tenantInterfaces(self):
         parser = self._get_parser("tenantInterfaces")
         parser.add_argument("tenant", help="tenant id")
         parser.add_argument(
-            "--query",  help="json object with query paramteters")
+            "--full",  help="Full MD should be returned")
         args = self._get_args(parser)
-        query = json.loads(args.query) if args.query else {}
+        kwargs = {}
+        if args.full:
+            kwargs["full"] = args.full
         interfaces = OkapiClient().get_tenant_interfaces(args.tenant,
-                                                         **query)
+                                                         **kwargs)
         for e in sorted(interfaces, key=lambda e: e["id"]):
             k = e["id"].ljust(35)
             n = e["version"]

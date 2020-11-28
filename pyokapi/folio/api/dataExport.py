@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-08
+# Generated at 2020-11-21
 
 import logging
 
@@ -116,7 +116,7 @@ class DataExportFileDefinition(FolioApi):
         """
         return self.call("GET", f"/data-export/file-definitions/{fileDefinitionId}")
 
-    def set_upload(self, fileDefinitionId: str):
+    def upload_upload(self, fileDefinitionId: str, filePath: str):
         """Method to upload file
 
         ``POST /data-export/file-definitions/{fileDefinitionId}/upload``
@@ -134,9 +134,18 @@ class DataExportFileDefinition(FolioApi):
 
         Schema:
 
-            .. literalinclude:: ../files/DataExportFileDefinition_set_upload_return.schema 
+            .. literalinclude:: ../files/DataExportFileDefinition_upload_upload_return.schema 
         """
-        return self.call("POST", f"/data-export/file-definitions/{fileDefinitionId}/upload")
+        import os
+        headers = {}
+        headers["Content-Type"] = "application/octet-stream"
+        headers["Content-length"] = str(os.path.getsize(filePath))
+        headers["Content-Disposition"] = "attachment; filename=%s" % os.path.basename(
+            filePath)
+        with open(filePath, 'rb') as f:
+            data = f.read()
+        
+        return self.call("POST", f"/data-export/file-definitions/{fileDefinitionId}/upload", headers=headers, data=data)
 
 
 class DataExportMappingProfiles(FolioApi):
@@ -399,6 +408,19 @@ class DataExport(FolioApi):
             OkapiRequestUnprocessableEntity: Unprocessable Entity
         """
         return self.call("POST", "/data-export/expire-jobs")
+
+    def set_cleanUpFile(self):
+        """
+
+        ``POST /data-export/clean-up-files``
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+        """
+        return self.call("POST", "/data-export/clean-up-files")
 
 
 class DataExportJobProfile(FolioApi):

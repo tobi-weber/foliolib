@@ -1,4 +1,4 @@
 {
   "strict": false,
-  "value": "{\n  \"group\": \"librarian\",\n  \"desc\": \"basic lib group\",\n  \"id\": \"b4b5e97a-0a99-4db9-97df-4fdf406ec74d\"\n}\n"
+  "value": "{\n  \"group\": \"librarian\",\n  \"desc\": \"basic lib group\",\n  \"expirationOffsetInDays\": 365,\n  \"id\": \"b4b5e97a-0a99-4db9-97df-4fdf406ec74d\"\n}\n"
 }

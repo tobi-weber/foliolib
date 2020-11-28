@@ -60,14 +60,13 @@ local.properties
 
 # Sphinx documentation
 docs/build
+docs/source/generated
 
 # Other
-apidoc/
 temp/
 *.autosave
 *.html
-testdata/
 pkg/
-descriptors/
 build*
-test.py
+__*
+.bak

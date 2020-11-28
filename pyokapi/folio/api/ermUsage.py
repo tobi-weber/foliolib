@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-08
+# Generated at 2020-11-21
 
 import logging
 
@@ -512,7 +512,7 @@ class Counterreports(FolioApi):
         """
         return self.call("GET", f"/counter-reports/export/provider/{providerId}/report/{name}/version/{aversion}/from/{begin}/to/{end}", query=kwargs)
 
-    def set_provider(self, providerId: str, **kwargs):
+    def upload_provider(self, providerId: str, filePath: str, **kwargs):
         """
 
         ``POST /counter-reports/upload/provider/{providerId}``
@@ -528,7 +528,16 @@ class Counterreports(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiFatalError: Server Error
         """
-        return self.call("POST", f"/counter-reports/upload/provider/{providerId}", query=kwargs)
+        import os
+        headers = {}
+        headers["Content-Type"] = "application/octet-stream"
+        headers["Content-length"] = str(os.path.getsize(filePath))
+        headers["Content-Disposition"] = "attachment; filename=%s" % os.path.basename(
+            filePath)
+        with open(filePath, 'rb') as f:
+            data = f.read()
+        
+        return self.call("POST", f"/counter-reports/upload/provider/{providerId}", headers=headers, data=data, query=kwargs)
 
     def get_codes(self):
         """Get counter/sushi error codes existent in counter reports
@@ -691,7 +700,7 @@ class Files(FolioApi):
     This documents the API calls that can be made to query and manage files in module erm-usage
     """
 
-    def set_file(self):
+    def upload_file(self, filePath: str):
         """Upload/update a file in module erm-usage.
 
         ``POST /erm-usage/files``
@@ -700,7 +709,16 @@ class Files(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiFatalError: Server Error
         """
-        return self.call("POST", "/erm-usage/files")
+        import os
+        headers = {}
+        headers["Content-Type"] = "application/octet-stream"
+        headers["Content-length"] = str(os.path.getsize(filePath))
+        headers["Content-Disposition"] = "attachment; filename=%s" % os.path.basename(
+            filePath)
+        with open(filePath, 'rb') as f:
+            data = f.read()
+        
+        return self.call("POST", "/erm-usage/files", headers=headers, data=data)
 
     def get_file(self, filesId: str):
         """Get file by id

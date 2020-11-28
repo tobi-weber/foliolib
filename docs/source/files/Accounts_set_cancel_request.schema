@@ -13,12 +13,17 @@
     },
     "servicePointId": {
       "type": "string",
-      "$ref": "../uuid.json",
+      "$ref": "../raml-util/schemas/uuid.schema",
       "description": "Unique ID of the service point where the payment was made"
     },
     "userName": {
       "type": "string",
       "description": "Name of the user that was logged in when the action was performed"
+    },
+    "cancellationReason": {
+      "type": "string",
+      "description": "Reason for cancellation",
+      "default": "Cancelled as error"
     }
   },
   "additionalProperties": false,

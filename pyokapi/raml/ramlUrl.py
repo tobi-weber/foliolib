@@ -8,7 +8,7 @@ import re
 import inflection
 from pyokapi import RAISE
 from pyokapi.raml.exceptions import CodeBuilderError, RamlResourceTypeNotFound
-from pyokapi.raml.helper import merge_dict
+from pyokapi.raml.helper import merge_dict, pluralize, singularize
 from pyokapi.raml.ramlMethod import RamlMethod
 
 log = logging.getLogger("pyokapi.raml.ramlUrl")
@@ -96,10 +96,10 @@ class RamlUrl:
             for param in params:
                 if param.startswith("resourcePathName"):
                     if param.endswith("singularize"):
-                        methodData = methodData.replace(f"<<{param}>>", inflection.singularize(
+                        methodData = methodData.replace(f"<<{param}>>", singularize(
                             resourcePathName))
                     else:
-                        methodData = methodData.replace(f"<<{param}>>", inflection.pluralize(
+                        methodData = methodData.replace(f"<<{param}>>", pluralize(
                             resourcePathName))
                 else:
                     value = urlTypes[param]

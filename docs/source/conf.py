@@ -71,8 +71,9 @@ autodoc_mock_imports = []
 
 # This value selects if automatically documented members are sorted alphabetical (value 'alphabetical'),
 # by member type (value 'groupwise') or by source order (value 'bysource'). The default is alphabetical.
-autodoc_member_order = 'bysource'
-autodoc_default_options = {'autosummary': True}
+autodoc_member_order = 'bysource',
+autodoc_default_options = {'autosummary': True
+                           }
 autodoc_default_flags = [
     # Make sure that any autodoc declarations show the right members
     "members",

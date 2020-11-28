@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-08
+# Generated at 2020-11-21
 
 import logging
 
@@ -1828,7 +1828,7 @@ class InstanceStorage(FolioApi):
         """
         return self.call("GET", f"/instance-storage/instances/{instanceId}/source-record/mods")
 
-    def modify_mod(self, instanceId: str):
+    def modify_mods(self, instanceId: str):
         """
 
         ``PUT /instance-storage/instances/{instanceId}/source-record/mods``

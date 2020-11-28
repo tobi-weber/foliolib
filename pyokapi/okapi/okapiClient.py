@@ -12,7 +12,7 @@ from urllib.parse import urlencode
 import requests
 from github import Github
 from lxml import etree
-from pyokapi.config import CONFIG
+from pyokapi.config import Config
 from pyokapi.okapi import okapiModule
 from pyokapi.okapi.exceptions import (OkapiException, OkapiFatalError,
                                       OkapiMoved, OkapiRequestConflict,
@@ -54,13 +54,13 @@ class OkapiClient:
             host (str, optional): IP or Hostame of the Okapi server. Defaults from pyokapi.conf.
             port (str, optional):. Defaults from pyokapi.conf.
         """
-        host = host or CONFIG.okapicfg().get("Okapi", "host")
-        port = port or CONFIG.okapicfg().get("Okapi", "port")
+        host = host or Config().okapicfg().get("Okapi", "host")
+        port = port or Config().okapicfg().get("Okapi", "port")
         self._host = f"http://{host}:{port}"
         self._client = requests.Session()
 
-        self._access_token = CONFIG.okapicfg().get(
-            "Okapi", "token") if CONFIG.okapicfg().has_option("Okapi", "token") else None
+        self._access_token = Config().okapicfg().get(
+            "Okapi", "token") if Config().okapicfg().has_option("Okapi", "token") else None
         self.headers = None
         self.status_code = 0
 
@@ -384,7 +384,7 @@ class OkapiClient:
             async (boolean): default = false
                         Whether to install in the background
             deploy (boolean): default = false
-                        Whether to deploy (or undeploy if disabling)
+                        Whether to deploy
             ignoreErrors (boolean): default = false
                         Okapi 4.2.0 and later, it is possible to ignore errors during the install operation. This is done by supplying parameter ignoreErrors=true.
                         In this case, Okapi will try to upgrade all modules in the modules list, regardless if one of them fails. However, for individual modules,
@@ -396,8 +396,6 @@ class OkapiClient:
                         Whether to include NPM module snapshots (default:true).
             preRelease (boolean): default = true
                         Whether pre-releases should be considered for installation.
-            purge (boolean): default = false
-                        Disabled modules will also be purged.
             simulate (boolean): default = false
                         Whether the installation is simulated
 
@@ -422,7 +420,7 @@ class OkapiClient:
             async (boolean): default = false
                         Whether to install in the background
             deploy (boolean): default = false
-                        Whether to deploy (or undeploy if disabling)
+                        Whether to deploy
             ignoreErrors (boolean): default = false
                         Okapi 4.2.0 and later, it is possible to ignore errors during the install operation. This is done by supplying parameter ignoreErrors=true.
                         In this case, Okapi will try to upgrade all modules in the modules list, regardless if one of them fails. However, for individual modules,
@@ -434,8 +432,6 @@ class OkapiClient:
                         Whether to include NPM module snapshots (default:true).
             preRelease (boolean): default = true
                         Whether pre-releases should be considered for installation.
-            purge (boolean): default = false
-                        Disabled modules will also be purged.
             simulate (boolean): default = false
                         Whether the installation is simulated
 
@@ -462,9 +458,9 @@ class OkapiClient:
 
         Keyword Args:
             async (boolean): default = false
-                        Whether to install in the background
+                        Whether to uninstall in the background
             deploy (boolean): default = false
-                        Whether to deploy (or undeploy if disabling)
+                        Whether to undeploy
             ignoreErrors (boolean): default = false
                         Okapi 4.2.0 and later, it is possible to ignore errors during the install operation. This is done by supplying parameter ignoreErrors=true.
                         In this case, Okapi will try to upgrade all modules in the modules list, regardless if one of them fails. However, for individual modules,
@@ -472,10 +468,6 @@ class OkapiClient:
                         This is an experimental parameter which was added to be able to inspect all problem(s) with module upgrade(s).
             invoke (boolean): default = true
                         Whether to invoke for tenant init/permissions/purge
-            npmSnapshot (boolean): default = true
-                        Whether to include NPM module snapshots (default:true).
-            preRelease (boolean): default = true
-                        Whether pre-releases should be considered for installation.
             purge (boolean): default = false
                         Disabled modules will also be purged.
             simulate (boolean): default = false
@@ -496,9 +488,9 @@ class OkapiClient:
 
         Keyword Args:
             async (boolean): default = false
-                        Whether to install in the background
+                        Whether to uninstall in the background
             deploy (boolean): default = false
-                        Whether to deploy (or undeploy if disabling)
+                        Whether to undeploy
             ignoreErrors (boolean): default = false
                         Okapi 4.2.0 and later, it is possible to ignore errors during the install operation. This is done by supplying parameter ignoreErrors=true.
                         In this case, Okapi will try to upgrade all modules in the modules list, regardless if one of them fails. However, for individual modules,
@@ -508,8 +500,6 @@ class OkapiClient:
                         Whether to invoke for tenant init/permissions/purge
             npmSnapshot (boolean): default = true
                         Whether to include NPM module snapshots (default:true).
-            preRelease (boolean): default = true
-                        Whether pre-releases should be considered for installation.
             purge (boolean): default = false
                         Disabled modules will also be purged.
             simulate (boolean): default = false
@@ -586,7 +576,7 @@ class OkapiClient:
         """
         return self._request("POST", f"/ _/proxy/tenants/{tenantId}/modules", query=query)
 
-    def upgrade_modules(self, tenantId: str, **query):
+    def upgrade_modules(self, tenantId: str, **kwargs):
         """[summary]
 
         Args:
@@ -618,7 +608,7 @@ class OkapiClient:
             dict: Tenant module descriptors
         """
         path = f"/_/proxy/tenants/{tenantId}/upgrade"
-        return self._request("POST", path, data="", query=query)
+        return self._request("POST", path, data="", query=kwargs)
 
     def get_install_jobs(self, tenantId: str, install_id: str = None):
         """Get install jobs for a tenant
@@ -714,11 +704,11 @@ class OkapiClient:
         if query:
             url += "?" + urlencode(query)
         headers = headers or {}
+        headers = requests.structures.CaseInsensitiveDict(data=headers)
         headers["Accept"] = 'application/json, text/plain'
         if "X-Okapi-Token" not in headers:
             if self._access_token is not None:
                 headers["X-Okapi-Token"] = self._access_token
-
         if method == "GET" or method == "DELETE":
             request = self._client.prepare_request(
                 requests.Request(method, url, headers))
@@ -726,6 +716,10 @@ class OkapiClient:
             request = self._client.prepare_request(
                 requests.Request(
                     method, url, files=files, data=data, headers=headers))
+        elif "Content-Type" in headers and "octet-stream" in headers["Content-Type"]:
+            request = self._client.prepare_request(
+                requests.Request(
+                    method, url, data=data, headers=headers))
         else:
             headers["content-type"] = "application/json"
             request = self._client.prepare_request(
@@ -792,7 +786,7 @@ def request_release(name: str, version: str = None):
     Returns:
         dict: Dict with release data.
     """
-    access_token = CONFIG.pyokapicfg().get("GitHub", "access-token")
+    access_token = Config().pyokapicfg().get("GitHub", "access-token")
     g = Github(access_token)
     repo = g.get_repo(f"folio-org/{name}")
     if version is None:

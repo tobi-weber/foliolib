@@ -10,7 +10,20 @@ import pathlib
 log = logging.getLogger("pyokapi.config")
 
 
-class _Config:
+class Config:
+    """Config class is a singleton.
+    This class defines the handling of the config files.
+    """
+
+    def __new__(cls, *dt, **mp):
+        if not hasattr(cls, "_inst"):
+            cls._inst = super(Config, cls).__new__(cls)
+        else:
+            def init_pass(self, *dt, **mp):
+                pass
+            cls.__init__ = init_pass
+
+        return cls._inst
 
     def __init__(self):
         self.__pyokapicfg = configparser.ConfigParser()
@@ -19,12 +32,25 @@ class _Config:
         self.load_okapi_conf()
 
     def pyokapicfg(self):
+        """Get pyokapi.conf ConfigParser object.
+        Returns:
+            ConfigParser: ConfigParser object of pyokapi.conf
+        """
         return self.__pyokapicfg
 
     def okapicfg(self):
+        """Get okapi.conf ConfigParser object.
+        Returns:
+            ConfigParser: ConfigParser object of okapi.conf of the current server setted.
+        """
         return self.__okapicfg
 
     def modulescfg(self, modId):
+        """Get ConfigParser object of a module config file.
+
+        Returns:
+            ConfigParser: ConfigParser object of $MODULENAME.conf for a specific module.
+        """
         modules_dir = os.path.join(self.get_confdir(),
                                    self.get_server(),
                                    "modules")
@@ -41,6 +67,11 @@ class _Config:
             return None
 
     def get_server(self):
+        """Get current server name.
+
+        Returns:
+            str: Current server name.
+        """
         fname = os.path.join(self.get_confdir(), ".server")
         if os.path.exists(fname):
             with open(fname) as f:
@@ -49,20 +80,37 @@ class _Config:
             return self.set_server("default")
 
     def get_servers(self):
+        """Get all available server configs.
+
+        Returns:
+            List: List of available servers.
+        """
         servers = []
-        for f in os.listdir(CONFIG.get_confdir()):
-            if os.path.exists(os.path.join(CONFIG.get_confdir(), f, "okapi.conf")):
+        for f in os.listdir(self.get_confdir()):
+            if os.path.exists(os.path.join(self.get_confdir(), f, "okapi.conf")):
                 servers.append(f)
         return servers
 
-    def set_server(self, name):
+    def set_server(self, name: str):
+        """Switch to a server.
+
+        Args:
+            name (str): Server name
+        """
         fname = os.path.join(self.get_confdir(), ".server")
         with open(fname, "w") as f:
             f.write(name)
             return name
         self.load_okapi_conf()
 
-    def set_okapicfg(self, section, option, value):
+    def set_okapicfg(self, section: str, option: str, value):
+        """Set a value in okapi.conf
+
+        Args:
+            section (str): Section
+            option (str): Option
+            value (any): Value
+        """
         fname = os.path.join(self.get_confdir(),
                              self.get_server(),
                              "okapi.conf")
@@ -70,7 +118,14 @@ class _Config:
         with open(fname, "w") as f:
             self.__okapicfg.write(f)
 
-    def set_pyokapicfg(self, section, option, value):
+    def set_pyokapicfg(self, section: str, option: str, value):
+        """Set a value in pyokapi.conf
+
+        Args:
+            section (str): Section
+            option (str): Option
+            value (any): Value
+        """
         fname = os.path.join(self.get_confdir(),
                              "pyokapi.conf")
         self.__okapicfg.set(section, option, value)
@@ -78,6 +133,11 @@ class _Config:
             self.__okapicfg.write(f)
 
     def get_confdir(self):
+        """Get the configuration directory
+
+        Returns:
+            str: Path to configuration directory
+        """
         if "PYOKAPI_CONFDIR" in os.environ:
             confdir = os.environ["PYOKAPI_CONFDIR"]
         else:
@@ -87,6 +147,8 @@ class _Config:
         return confdir
 
     def load_pyokapi_config(self):
+        """Read the pyokapi.conf
+        """
         fname = os.path.join(self.get_confdir(), "pyokapi.conf")
         if not os.path.exists(fname):
             self.create_pyokapi_conf()
@@ -98,6 +160,8 @@ class _Config:
                         ["descriptors"], exist_ok=True)
 
     def load_okapi_conf(self):
+        """Read the okapi.conf
+        """
         sdir = os.path.join(self.get_confdir(), self.get_server())
         fname = os.path.join(sdir, "okapi.conf")
         if not os.path.exists(sdir):
@@ -107,6 +171,8 @@ class _Config:
             self.__okapicfg.read(fname)
 
     def create_pyokapi_conf(self):
+        """Create pyokapi.conf
+        """
         fname = os.path.join(self.get_confdir(), "pyokapi.conf")
         log.debug("Write new config %s", fname)
         self.__pyokapicfg["PullNode"] = {}
@@ -121,9 +187,20 @@ class _Config:
         with open(fname, "w") as f:
             self.__pyokapicfg.write(f)
 
-    def create_okapi_conf(self, name, okapi_host="localhost", okapi_port="9130",
-                          db_host="localhost", db_port="5432",
-                          db_user="postgres", db_password="postgres"):
+    def create_okapi_conf(self, name: str, okapi_host: str = "localhost", okapi_port: str = "9130",
+                          db_host: str = "localhost", db_port: str = "5432",
+                          db_user: str = "postgres", db_password: str = "postgres"):
+        """Create okapi.conf for given server config name.
+
+        Args:
+            name (str): Server name.
+            okapi_host (str, optional): Okapi host. Defaults to "localhost".
+            okapi_port (str, optional): Okapi port. Defaults to "9130".
+            db_host (str, optional): Postgres host. Defaults to "localhost".
+            db_port (str, optional): Postgres port. Defaults to "5432".
+            db_user (str, optional): Postgres user. Defaults to "postgres".
+            db_password (str, optional): Postgres password. Defaults to "postgres".
+        """
         self.set_server(name)
         sdir = os.path.join(self.get_confdir(), self.get_server())
         fname = os.path.join(sdir, "okapi.conf")
@@ -150,6 +227,3 @@ KAFKA_HOST = {okapi_host}
 KAFKA_PORT = 9092
 OKAPI_URL = http://{okapi_host}:9130
     """)
-
-
-CONFIG = _Config()

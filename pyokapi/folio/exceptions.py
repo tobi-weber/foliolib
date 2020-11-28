@@ -20,3 +20,7 @@ class PermissionUserNotFound(FolioException):
 
 class ServicePointsUserNotFound(FolioException):
     pass
+
+
+class UnknownFile(FolioException):
+    pass

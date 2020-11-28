@@ -6,7 +6,7 @@ import os
 import shutil
 import sys
 
-from pyokapi.config import CONFIG
+from pyokapi.config import Config
 from pyokapi.okapi.okapiClient import OkapiClient
 
 
@@ -30,9 +30,9 @@ class BaseCLI:
             description=description,
             usage=usage)
         parser.add_argument('command', help='Subcommand to run')
-        print("Config: %s - %s:%s" % (CONFIG.get_server(),
-                                      CONFIG.okapicfg().get("Okapi", "host"),
-                                      CONFIG.okapicfg().get("Okapi", "port")))
+        print("Config: %s - %s:%s" % (Config().get_server(),
+                                      Config().okapicfg().get("Okapi", "host"),
+                                      Config().okapicfg().get("Okapi", "port")))
         args = parser.parse_args(sys.argv[1:2])
         if not hasattr(self, args.command):
             print("Unrecognized command")
@@ -44,10 +44,10 @@ class BaseCLI:
         parser = self._get_parser("setServer")
         parser.add_argument("name", help="server name")
         args = self._get_args(parser)
-        if args.name in CONFIG.get_servers():
+        if args.name in Config().get_servers():
             print(f"Load configs for server {args.name}.")
-            CONFIG.set_server(args.name)
-            CONFIG.load_okapi_conf()
+            Config().set_server(args.name)
+            Config().load_okapi_conf()
         else:
             print(f"Config for server {args.name} does not exist.")
 
@@ -57,20 +57,20 @@ class BaseCLI:
         parser.add_argument("host", help="")
         parser.add_argument("-p", "--port", default="9130", help="")
         args = self._get_args(parser)
-        if not args.name in CONFIG.get_servers():
+        if not args.name in Config().get_servers():
             print(f"Create configs for server {args.name}.")
-            CONFIG.create_okapi_conf(args.name, okapi_host=args.host,
-                                     okapi_port=args.port, db_host=args.host)
+            Config().create_okapi_conf(args.name, okapi_host=args.host,
+                                       okapi_port=args.port, db_host=args.host)
         else:
             print("Config for server {args.name} exist already.")
 
     def servers(self):
         self._get_parser("servers")
-        print(f"Active server is {CONFIG.get_server()}")
-        for server in CONFIG.get_servers():
+        print(f"Active server is {Config().get_server()}")
+        for server in Config().get_servers():
             print(server)
-        # for f in os.listdir(CONFIG.get_confdir()):
-        #    if os.path.exists(os.path.join(CONFIG.get_confdir(), f, "okapi.conf")):
+        # for f in os.listdir(Config().get_confdir()):
+        #    if os.path.exists(os.path.join(Config().get_confdir(), f, "okapi.conf")):
         #        print(f)
 
     def delServer(self):
@@ -78,17 +78,17 @@ class BaseCLI:
         parser.add_argument("name", help="server name")
         args = self._get_args(parser)
         print(f"Del configs for server {args.name}")
-        confdir = os.path.join(CONFIG.get_confdir(), args.name)
+        confdir = os.path.join(Config().get_confdir(), args.name)
         if os.path.exists(confdir):
             print(f"Del {confdir}")
             shutil.rmtree(confdir)
         else:
             print(f"Config for {args.name} does not exist")
-        CONFIG.set_server("default")
+        Config().set_server("default")
 
     def clean(self):
         self._get_parser("clean")
-        shutil.rmtree(CONFIG.pyokapicfg().get("Cache", "descriptors"))
+        shutil.rmtree(Config().pyokapicfg().get("Cache", "descriptors"))
 
     def _get_parser(self, cmd, description=""):
         return argparse.ArgumentParser(f"okapicli {cmd}",
@@ -98,9 +98,12 @@ class BaseCLI:
         return parser.parse_args(sys.argv[2:])
 
     def _get_node(self):
-        nodes = OkapiClient().get_nodes()
-        host = CONFIG.okapicfg().get("Okapi", "host")
-        port = CONFIG.okapicfg().get("Okapi", "port")
+        try:
+            nodes = OkapiClient().get_nodes()
+        except:
+            nodes = []
+        host = Config().okapicfg().get("Okapi", "host")
+        port = Config().okapicfg().get("Okapi", "port")
         for node in nodes:
             if "nodeName" in node:
                 if f"{host}:{port}" in node["url"]:

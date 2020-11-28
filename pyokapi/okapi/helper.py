@@ -7,7 +7,7 @@ import os
 import pprint
 import sys
 
-from pyokapi.config import CONFIG
+from pyokapi.config import Config
 from pyokapi.okapi.okapiClient import (OkapiClient, request_release,
                                        request_snapshot_version)
 from pyokapi.okapi.okapiModule import OkapiModule
@@ -45,7 +45,7 @@ def set_env_db(db_host: str, db_port: str = "5432", username: str = "folio_admin
 
 def create_okapiModule(name: str, version: str = None):
     log.info("Create Descriptor: %s - %s", name, version)
-    cache_dir = CONFIG.pyokapicfg().get("Cache", "descriptors")
+    cache_dir = Config().pyokapicfg().get("Cache", "descriptors")
     descriptor_fname = f"ModuleDescriptor-{name}-{version}.json"
     fname_cache = os.path.join(cache_dir, descriptor_fname)
     if os.path.exists(fname_cache):
