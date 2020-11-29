@@ -29,7 +29,7 @@ The installation requires python 3.6 or higher.
 
 .. code-block:: bash
 
-    $
+    pip install foliolib
 
 
 Command-line interfaces
