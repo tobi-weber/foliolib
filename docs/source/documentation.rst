@@ -5,11 +5,11 @@ Configuration
 -------------
 
 After the first start of okapicli a configuration with default values will be created
-under $HOME/.pyokapi.
+under $HOME/.foliolib.
 
 
-``$HOME/pyokapi/pyokapi.conf``
-******************************
+``$HOME/foliolib/foliolib.conf``
+********************************
 
 .. code-block:: bash
 
@@ -18,7 +18,7 @@ under $HOME/.pyokapi.
     port = 80
     
     [Cache]
-    descriptors = /home/tobi/.pyokapi/cache/descriptors
+    descriptors = /home/tobi/.foliolib/cache/descriptors
 
 * PullNode
     * host: The hostname where to pull module descriptors
@@ -27,16 +27,16 @@ under $HOME/.pyokapi.
     * descriptors: Directory where the pulled module descriptors are cached.
 
 
-``$HOME/pyokapi/default``
-*************************
+``$HOME/foliolib/default``
+**************************
 
 The default directory contains configuration files for the default server config.
-PyOkapi provides the ability to have serveral server configs, which can be managed through the
+FolioLib provides the ability to have serveral server configs, which can be managed through the
 okapicli tool.
 
 
-``$HOME/pyokapi/default/okapi.conf``
-************************************
+``$HOME/foliolib/default/okapi.conf``
+*************************************
 
 .. code-block::
 
@@ -59,15 +59,15 @@ okapicli tool.
     * user: Administrator username of the postgres server
     * password: Administrator password of the postgres server
 
-``$HOME/pyokapi/default/modules``
-*********************************
+``$HOME/foliolib/default/modules``
+**********************************
 
 The modules directory contains configuration files for specific modules.
 The name of the file is modulename.conf, e.g. mod-pubsub.conf.
 It is possible to define module properties, which will be added or modified in the module
 descriptor, if a module will be added to Okapi.
 
-Example ``$HOME/pyokapi/default/modules/mod-users.conf``:
+Example ``$HOME/foliolib/default/modules/mod-users.conf``:
 
 .. code-block::
 
@@ -77,7 +77,7 @@ Example ``$HOME/pyokapi/default/modules/mod-users.conf``:
     [Docker]
     Memory = 536870912
 
-Example ``$HOME/pyokapi/default/modules/mod-pubsub.conf``:
+Example ``$HOME/foliolib/default/modules/mod-pubsub.conf``:
 
 .. code-block::
 
@@ -139,7 +139,7 @@ okapicli
         initdb                  Initialize okapi db
         initmoduledb            Initialize module db
     
-      Pyokapi
+      foliolib
         servers                 List available server configs
         setServer               Set server config
         createServer            Create new server config
@@ -170,7 +170,7 @@ foliocli
         secureOkapi             Secure Okapi
         loginOkapi              Login Okapi
     
-      Pyokapi
+      foliolib
         servers                 List available server configs
         setServer               Set server config
         createServer            Create new server config

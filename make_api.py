@@ -6,12 +6,12 @@ import shutil
 
 import inflection
 
-from pyokapi.raml import load_raml, tpl
-from pyokapi.raml.codeBuilder import CodeBuilder
+from foliolib.raml import load_raml, tpl
+from foliolib.raml.codeBuilder import CodeBuilder
 
-log = logging.getLogger("pyokapi.generate_api_code")
+log = logging.getLogger("foliolib.generate_api_code")
 
-API_PATH = "pyokapi/folio/api"
+API_PATH = "foliolib/folio/api"
 
 FOLIO_GITURL = "https://github.com/folio-org/"
 
@@ -144,7 +144,7 @@ def process_ramls():
 
 def main():
     create_dirs()
-    get_repos()
+    # get_repos()
     process_ramls()
 
 

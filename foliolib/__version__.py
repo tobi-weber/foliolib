@@ -1,0 +1,8 @@
+__title__ = "foliolib"
+__description__ = "Okapi/Folio Manager and Library"
+__url__ = "https://github.com/tobi-weber/foliolib"
+__version__ = "0.0.1"
+__author__ = "Tobias Weber"
+__author_email__ = "tobi-weber@gmx.de"
+__license__ = "GPL-3.0 License"
+__copyright__ = "Copyright 2020 Tobias Weber"

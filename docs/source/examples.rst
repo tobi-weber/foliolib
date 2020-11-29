@@ -5,7 +5,7 @@ Example
 Install folio
 -------------
 
-Pyokapi provides an easy way to install Folio on your system.
+FolioLib provides an easy way to install Folio on your system.
 As an example we use Folios `platform-core <https://github.com/folio-org/platform-core>`_.
 This requires that Postgres, Docker, Okapi and Kafka are already installed and configured correctly.
 
@@ -15,8 +15,8 @@ First we need to run okapicli, to create the configuration directory.
 
     okapicli
 
-Pyokapi provides the possibility to handle configurations for several servers.
-For now we need to edit the default configuration under $HOME/.pyokapi/default/okapi.conf.
+FolioLib provides the possibility to handle configurations for several servers.
+For now we need to edit the default configuration under $HOME/.foliolib/default/okapi.conf.
 Set the correct values for the Okapi and Postgres installation:
 
 .. code-block::
@@ -32,9 +32,9 @@ Set the correct values for the Okapi and Postgres installation:
     password = postgres
 
 
-The configuration for the modules can be done in the directory $HOME/.pyokapi/default/modules.
+The configuration for the modules can be done in the directory $HOME/.foliolib/default/modules.
 Here we need to configure the module mod-pubsub for the kafka installation.
-Edit the file $HOME/.pyokapi/default/modules/mod-pubsub.conf and set the values for your Kafka
+Edit the file $HOME/.foliolib/default/modules/mod-pubsub.conf and set the values for your Kafka
 installation and set the Okapi url:
 
 .. code-block::

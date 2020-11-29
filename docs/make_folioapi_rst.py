@@ -2,11 +2,11 @@
 
 import os
 
-FOLIOAPI = os.path.join("..", "pyokapi", "folio", "api")
-FOLIOAPI_RST = os.path.join("source", "pyokapi.folio.api.rst")
+FOLIOAPI = os.path.join("..", "foliolib", "folio", "api")
+FOLIOAPI_RST = os.path.join("source", "foliolib.folio.api.rst")
 
 RST_TPL = """
-pyokapi.folio.api package
+foliolib.folio.api package
 =========================
 
 Modules
@@ -26,7 +26,7 @@ def main():
     for mod in os.listdir(FOLIOAPI):
         if not mod.startswith("__"):
             mod_name = os.path.splitext(mod)[0]
-            mods.append(f"pyokapi.folio.api.{mod_name}")
+            mods.append(f"foliolib.folio.api.{mod_name}")
             mods.sort()
 
     rst = RST_TPL.format("\n\t".join(mods))

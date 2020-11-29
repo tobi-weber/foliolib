@@ -7,7 +7,7 @@ Users API
 
 .. code-block:: python
 
-    from pyokapi.folio.api.users import Users
+    from foliolib.folio.api.users import Users
     
     tenant = "mylib"
     usersApi = Users(tenant)
@@ -31,8 +31,8 @@ Inventory API
 
 .. code-block:: python
 
-    from pyokapi.folio.api.inventory import Inventory
-    from pyokapi.folio.api.inventoryStorage import InstanceStorage
+    from foliolib.folio.api.inventory import Inventory
+    from foliolib.folio.api.inventoryStorage import InstanceStorage
 
     tenant = "mylib"
     instanceStorageApi = InstanceStorage(tenant)

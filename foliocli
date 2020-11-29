@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
 
-from pyokapi.foliocli import FolioCLI
+from foliolib.foliocli import FolioCLI
 
 FolioCLI()
