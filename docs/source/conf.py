@@ -14,8 +14,9 @@ import os
 import sys
 
 current_dir = os.path.dirname(__file__)
-target_dir = os.path.abspath(os.path.join(current_dir, "../.."))
-sys.path.insert(0, target_dir)
+sys.path.insert(0, os.path.abspath(current_dir))
+sys.path.insert(0, os.path.abspath(os.path.join(current_dir, "..")))
+sys.path.insert(0, os.path.abspath(os.path.join(current_dir, "../..")))
 
 # -- Project information -----------------------------------------------------
 
@@ -46,7 +47,7 @@ napoleon_include_special_with_doc = True
 napoleon_use_admonition_for_examples = False
 napoleon_use_admonition_for_notes = False
 napoleon_use_admonition_for_references = False
-#napoleon_use_ivar = False
+# napoleon_use_ivar = False
 napoleon_use_ivar = True
 napoleon_use_param = True
 napoleon_use_rtype = True
@@ -85,7 +86,7 @@ autodoc_default_flags = [
 
 autosummary_generate = True
 
-#add_module_names = False
+# add_module_names = False
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
