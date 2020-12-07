@@ -8,8 +8,8 @@ After the first start of okapicli a configuration with default values will be cr
 under $HOME/.foliolib.
 
 
-``$HOME/foliolib/foliolib.conf``
-********************************
+``$HOME/.foliolib/foliolib.conf``
+*********************************
 
 .. code-block:: bash
 
@@ -27,16 +27,16 @@ under $HOME/.foliolib.
     * descriptors: Directory where the pulled module descriptors are cached.
 
 
-``$HOME/foliolib/default``
-**************************
+``$HOME/.foliolib/default``
+***************************
 
 The default directory contains configuration files for the default server config.
 FolioLib provides the ability to have serveral server configs, which can be managed through the
 okapicli tool.
 
 
-``$HOME/foliolib/default/okapi.conf``
-*************************************
+``$HOME/.foliolib/default/okapi.conf``
+**************************************
 
 .. code-block::
 
@@ -59,8 +59,8 @@ okapicli tool.
     * user: Administrator username of the postgres server
     * password: Administrator password of the postgres server
 
-``$HOME/foliolib/default/modules``
-**********************************
+``$HOME/.foliolib/default/modules``
+***********************************
 
 The modules directory contains configuration files for specific modules.
 The name of the file is modulename.conf, e.g. mod-pubsub.conf.

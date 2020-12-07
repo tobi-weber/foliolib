@@ -56,3 +56,7 @@ class FolioCLI(BaseCLI):
         print(
             f"Login supertenant with {args.user}:{args.password}")
         folio_helper.login_supertenant(args.user, args.password)
+
+
+def cli():
+    FolioCLI()

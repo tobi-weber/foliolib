@@ -501,3 +501,7 @@ class OkapiCLI(BaseCLI):
             r = pg.get_table(args.table, schema)
             for e in r:
                 print(json.dumps(e[1], indent=2))
+
+
+def cli():
+    OkapiCLI()
