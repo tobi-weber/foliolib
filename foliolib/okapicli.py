@@ -333,16 +333,19 @@ class OkapiCLI(BaseCLI):
     def modules(self):
         parser = self._get_parser("modules")
         parser.add_argument(
-            "--full",  help="Full MD should be returned")
+            "--full",  action="store_true",  help="Full MD should be returned")
         args = self._get_args(parser)
         kwargs = {}
         if args.full:
             kwargs["full"] = args.full
         mods = OkapiClient().get_modules(**kwargs)
         for e in mods:
-            k = e["id"].ljust(40)
-            v = e["name"]
-            print(f"{k}\t{v}")
+            if args.full:
+                print(json.dumps(e, indent=2)+"\n")
+            else:
+                k = e["id"].ljust(40)
+                v = e["name"]
+                print(f"{k}\t{v}")
 
     def deployed(self):
         parser = self._get_parser("deployed")

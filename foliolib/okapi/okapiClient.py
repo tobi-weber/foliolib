@@ -10,19 +10,20 @@ from typing import Union
 from urllib.parse import urlencode
 
 import requests
-from github import Github
-from lxml import etree
 from foliolib.config import Config
 from foliolib.okapi import okapiModule
 from foliolib.okapi.exceptions import (OkapiException, OkapiFatalError,
                                        OkapiMoved, OkapiRequestConflict,
-                                       OkapiRequestError, OkapiRequestForbidden,
+                                       OkapiRequestError,
+                                       OkapiRequestForbidden,
                                        OkapiRequestNotAcceptable,
                                        OkapiRequestNotFound,
                                        OkapiRequestPayloadToLarge,
                                        OkapiRequestTimeout,
                                        OkapiRequestUnauthorized,
                                        OkapiRequestUnprocessableEntity)
+from github import Github
+from lxml import etree
 
 log = logging.getLogger("foliolib.okapi.okapiClient")
 
@@ -560,7 +561,7 @@ class OkapiClient:
         return self._request("POST", f"/_/proxy/tenants/{tenantId}/install",
                              tenantModuleDescriptorList, query=kwargs)
 
-    def disable_all_modules(self, tenantId: str, **query):
+    def disable_all_modules(self, tenantId: str, **kwargs):
         """Disable all modules of a tenant
 
         Args:
@@ -574,7 +575,7 @@ class OkapiClient:
                             Disabled modules will also be purged.
             tenantParameters (string): Parameters for Tenant init
         """
-        return self._request("POST", f"/ _/proxy/tenants/{tenantId}/modules", query=query)
+        return self._request("POST", f"/ _/proxy/tenants/{tenantId}/modules", query=kwargs)
 
     def upgrade_modules(self, tenantId: str, **kwargs):
         """[summary]
@@ -702,7 +703,9 @@ class OkapiClient:
         """
         url = self._host + path
         if query:
-            url += "?" + urlencode(query)
+            query = urlencode(query)
+            query = query.replace("True", "true").replace("False", "false")
+            url += "?" + query
         headers = headers or {}
         headers = requests.structures.CaseInsensitiveDict(data=headers)
         headers["Accept"] = 'application/json, text/plain'
