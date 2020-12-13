@@ -1,0 +1,9 @@
+Document: python-foliolib-doc
+Title: python-foliolib-doc Documentation
+Author: Tobias Weber
+Abstract: Sphinx documentation for python-foliolib-doc
+Section: Programming/Python
+
+Format: HTML
+Index: /usr/share/doc/python-foliolib-doc/html/index.html
+Files: /usr/share/doc/python-foliolib-doc/html/*

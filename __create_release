@@ -1,0 +1,35 @@
+#!/usr/bin/xonsh
+
+import os
+import sys
+import argparse
+from distutils.version import LooseVersion
+
+from foliolib.__version__ import __version__ as version
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument("version", help=f"current version = {version}")
+args = parser.parse_args()
+new_version = args.version
+
+if LooseVersion(new_version) <= version:
+    parser.print_help()
+    sys.exit(1)
+
+with open("foliolib/__version__.py", "r") as f:
+    data = ""
+    for line in f:
+        if line.startswith("__version__"):
+            data += f"__version__ = \"{new_version}\"\n"
+        else:
+            data += line
+
+with open("foliolib/__version__.py", "w") as f:
+    f.write(data)
+
+python3 setup.py sdist
+
+print(f"twine upload dist/foliolib-{args.version}.tar.gz")
+
+print(f"git commit -a -m \"release {args.version}\"")
