@@ -30,9 +30,9 @@ class BaseCLI:
             description=description,
             usage=usage)
         parser.add_argument('command', help='Subcommand to run')
-        print("Config: %s - %s:%s" % (Config().get_server(),
-                                      Config().okapicfg().get("Okapi", "host"),
-                                      Config().okapicfg().get("Okapi", "port")))
+        print("Current config: %s - %s:%s" % (Config().get_server(),
+                                              Config().okapicfg().get("Okapi", "host"),
+                                              Config().okapicfg().get("Okapi", "port")))
         args = parser.parse_args(sys.argv[1:2])
         if not hasattr(self, args.command):
             print("Unrecognized command")
@@ -48,6 +48,9 @@ class BaseCLI:
             print(f"Load configs for server {args.name}.")
             Config().set_server(args.name)
             Config().load_okapi_conf()
+            print("Loaded config: %s - %s:%s" % (Config().get_server(),
+                                                 Config().okapicfg().get("Okapi", "host"),
+                                                 Config().okapicfg().get("Okapi", "port")))
         else:
             print(f"Config for server {args.name} does not exist.")
 

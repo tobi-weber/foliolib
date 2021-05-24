@@ -94,3 +94,10 @@ class OkapiRequestUnprocessableEntity(OkapiRequestError):
 
 class OkapiFatalError(OkapiRequestError):
     description = "Server Error"
+
+
+class TenantNotFound(OkapiException):
+    description = "Tenant not found"
+
+    def __init__(self, tenant):
+        self.msg = f"Tenant {tenant} not found"

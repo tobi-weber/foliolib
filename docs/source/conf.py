@@ -22,7 +22,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(current_dir, "../..")))
 # -- Project information -----------------------------------------------------
 
 project = 'foliolib'
-copyright = '2020, Tobias Weber'
+copyright = '2021, Tobias Weber'
 author = 'Tobias Weber'
 
 # The full version, including alpha/beta/rc tags

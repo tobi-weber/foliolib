@@ -113,8 +113,21 @@ def secure_supertenant(username: str = "okapi_admin", password: str = "admin"):
     print("Successfully secured Okapi.")
 
 
-def install_stripes(fname, tenant: str):
+def unsecure_supertenant():
+    tenant = "supertenant"
+    mods = ["permissions", "users", "login", "authtoken"]
+    o = OkapiClient()
+    for m in mods:
+        for tm in [m["id"] for m in o.get_tenant_modules(tenant)]:
+            if tm.startswith(f"mod-{m}"):
+                log.info("Disable %s", m)
+                #o.disable_module(tm, tenant, purge=True)
+                o.disable_module(tm, tenant)
 
+    print("Successfully unsecured Okapi.")
+
+
+def install_stripes(fname, tenant: str):
     with open(fname) as f:
         data = json.load(f)
     if isinstance(data, dict):
@@ -133,3 +146,27 @@ def install_stripes(fname, tenant: str):
     modules = okapi_helper.create_okapiModules(mods)
     okapi_helper.add_modules(modules)
     okapi_helper.enable_modules(modules, tenant)
+
+
+def upgrade_stripes(fname, tenant: str):
+    with open(fname) as f:
+        data = json.load(f)
+    if isinstance(data, dict):
+        mods = data
+    elif isinstance(data, list):
+        mods = {}
+        for m in data:
+            p = m["id"].split("-")
+            version = p.pop()
+            if "SNAPSHOT" in version:
+                version = "%s-%s" % (p.pop(), version)
+            name = "-".join(p)
+            mods[name] = version
+    if not tenant in [e["id"] for e in OkapiClient().get_tenants()]:
+        OkapiClient().create_tenant(tenant)
+    modules = okapi_helper.create_okapiModules(mods)
+    okapi_helper.add_modules(modules)
+    log.info("Upgrade tenant %s", tenant)
+    res = OkapiClient().upgrade_modules(tenant)
+
+    return res

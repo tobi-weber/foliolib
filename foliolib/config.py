@@ -227,3 +227,17 @@ KAFKA_HOST = {okapi_host}
 KAFKA_PORT = 9092
 OKAPI_URL = http://{okapi_host}:9130
     """)
+        fname = os.path.join(sdir, "modules", "mod-inventory-storage.conf")
+        with open(fname, "w") as f:
+            f.write(f"""
+[Env]
+KAFKA_HOST = {okapi_host}
+KAFKA_PORT = 9092
+    """)
+        fname = os.path.join(sdir, "modules", "mod-source-record-manager.conf")
+        with open(fname, "w") as f:
+            f.write(f"""
+[Env]
+KAFKA_HOST = {okapi_host}
+KAFKA_PORT = 9092
+    """)

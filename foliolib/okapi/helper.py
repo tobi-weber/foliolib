@@ -8,9 +8,11 @@ import pprint
 import sys
 
 from foliolib.config import Config
+from foliolib.okapi.exceptions import TenantNotFound
 from foliolib.okapi.okapiClient import (OkapiClient, request_release,
                                         request_snapshot_version)
-from foliolib.okapi.okapiModule import OkapiModule
+from foliolib.okapi.okapiModule import (OkapiModule, create_okapiModule,
+                                        create_okapiModules)
 
 log = logging.getLogger("foliolib.okapi.helper")
 
@@ -43,32 +45,12 @@ def set_env_db(db_host: str, db_port: str = "5432", username: str = "folio_admin
     okapi.set_env("DB_MAXPOOLSIZE", "5")
 
 
-def create_okapiModule(name: str, version: str = None):
-    log.info("Create Descriptor: %s - %s", name, version)
-    cache_dir = Config().foliolibcfg().get("Cache", "descriptors")
-    descriptor_fname = f"ModuleDescriptor-{name}-{version}.json"
-    fname_cache = os.path.join(cache_dir, descriptor_fname)
-    if os.path.exists(fname_cache):
-        log.info("Load descriptor from %s", fname_cache)
-        with open(fname_cache) as f:
-            descriptor = json.load(f)
-        module = OkapiModule(descriptor)
-    else:
-        module = OkapiModule(name, version=version)
-        log.debug("Create descriptor for %s", module.get_modId())
-        descriptor_fname = f"ModuleDescriptor-{module.get_modId()}.json"
-        fname_cache = os.path.join(cache_dir, descriptor_fname)
-        log.debug("Write descriptor to %s", fname_cache)
-        with open(fname_cache, "w") as f:
-            json.dump(module.get_descriptor(), f, indent=2)
-    log.debug("Docker Image: %s", module.get_docker_image())
-
-    return module
-
-
-def create_okapiModules(modlist: dict):
-    return [create_okapiModule(name, version=version)
-            for name, version in modlist.items()]
+def set_env_kafka(kafka_host: str, kafka_port: str = "9092"):
+    okapi = OkapiClient()
+    okapi_host = Config().okapicfg().get("Okapi", "host")
+    okapi.set_env("KAFKA_HOST", kafka_host)
+    okapi.set_env("KAFKA_PORT",  kafka_port)
+    okapi.set_env("OKAPI_URL", f"http://{okapi_host}")
 
 
 def add_modules(modules: list):
@@ -147,8 +129,8 @@ def deploy_modules(modules: list, node: str):
             log.error("%s is not deployed", name)
 
 
-def enable_modules(modules, tenant: str,
-                   loadSample: bool = False, loadReference: bool = False):
+def enable_modules(modules, tenant: str, loadSample: bool = False,
+                   loadReference: bool = False, **kwargs):
     okapi = OkapiClient()
 
     def get_tenant_modules():
@@ -157,7 +139,7 @@ def enable_modules(modules, tenant: str,
     def add_module(name, module):
         log.info("Enable %s for tenant %s", name, tenant)
         okapi.enable_module(module.get_modId(), tenant,
-                            loadSample=loadSample, loadReference=loadReference)
+                            loadSample=loadSample, loadReference=loadReference, **kwargs)
 
     def add_requirements(name, mod):
         log.debug("Add requirements for %s", name)
@@ -189,23 +171,68 @@ def disable_modules(tenant: str):
             okapi.disable_module(name, tenant)
 
 
-def install_okapi(fname, node: str, tenant: str, loadSample: bool = False, loadReference: bool = False):
-
-    with open(fname) as f:
-        data = json.load(f)
-    if isinstance(data, dict):
-        mods = data
-    elif isinstance(data, list):
-        mods = {}
-        for m in data:
-            p = m["id"].split("-")
-            version = p.pop()
-            name = "-".join(p)
-            mods[name] = version
+def install_okapi_modules(fname, node: str, tenant: str, loadSample: bool = False,
+                          loadReference: bool = False, **kwargs):
+    mods = parse_modules_file(fname)
     if not tenant in [e["id"] for e in OkapiClient().get_tenants()]:
         OkapiClient().create_tenant(tenant)
     modules = create_okapiModules(mods)
     add_modules(modules)
     deploy_modules(modules, node)
     enable_modules(modules, tenant, loadSample=loadSample,
-                   loadReference=loadReference)
+                   loadReference=loadReference, **kwargs)
+
+
+def upgrade_okapi_modules(fname, node: str, tenant: str, **kwargs):
+    mods = parse_modules_file(fname)
+    if not tenant in [e["id"] for e in OkapiClient().get_tenants()]:
+        OkapiClient().create_tenant(tenant)
+    modules = create_okapiModules(mods)
+    add_modules(modules)
+    deploy_modules(modules, node)
+    log.info("Upgrade tenant %s", tenant)
+    res = OkapiClient().upgrade_modules(tenant, **kwargs)
+
+    return res
+
+
+def removeUnusedModules():
+    okapi = OkapiClient()
+    tenants = okapi.get_tenants()
+    enabledModules = []
+    modsToRemove = []
+    deployedModules = []
+    for tenant in tenants:
+        for mod in okapi.get_tenant_modules(tenant["id"]):
+            if not mod["id"] in enabledModules:
+                enabledModules.append(mod["id"])
+    for mod in okapi.get_deployed_modules():
+        deployedModules.append(mod["srvcId"])
+    for mod in okapi.get_modules():
+        if not mod["id"] in enabledModules:
+            modsToRemove.append(mod["id"])
+    for mod in modsToRemove:
+        if mod in deployedModules:
+            log.info("Undeploy %s", mod)
+            okapi.undeploy_module(mod)
+    for mod in modsToRemove:
+        log.info("Remove %s", mod)
+        okapi.remove_module(mod)
+
+    return modsToRemove
+
+
+def parse_modules_file(fname):
+    mods = {}
+    with open(fname) as f:
+        data = json.load(f)
+    if isinstance(data, dict):
+        mods = data
+    elif isinstance(data, list):
+        for m in data:
+            p = m["id"].split("-")
+            version = p.pop()
+            name = "-".join(p)
+            mods[name] = version
+
+    return mods

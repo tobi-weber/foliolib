@@ -1,13 +1,52 @@
 # -*- coding: utf-8 -*-
 # Copyright (C) 2020 Tobias Weber <tobi-weber@gmx.de>
 
+import json
 import logging
+import os
 from typing import Union
 
 from foliolib.config import Config
 from foliolib.okapi import okapiClient
 
 log = logging.getLogger("foliolib.okapi.okapiModule")
+
+
+def create_okapiModule(name: str, version: str = None):
+    """Create a instance of OkapiModule
+
+    Args:
+        name (str): Name of the module
+        version (str, optional): Version of the okapi module. Defaults to None.
+
+    Returns:
+        [OkapiModule]: Instance of OkapiModule
+    """
+    log.info("Create Descriptor: %s - %s", name, version)
+    cache_dir = Config().foliolibcfg().get("Cache", "descriptors")
+    descriptor_fname = f"ModuleDescriptor-{name}-{version}.json"
+    fname_cache = os.path.join(cache_dir, descriptor_fname)
+    if os.path.exists(fname_cache):
+        log.info("Load descriptor from %s", fname_cache)
+        with open(fname_cache) as f:
+            descriptor = json.load(f)
+        module = OkapiModule(descriptor)
+    else:
+        module = OkapiModule(name, version=version)
+        log.debug("Create descriptor for %s", module.get_modId())
+        descriptor_fname = f"ModuleDescriptor-{module.get_modId()}.json"
+        fname_cache = os.path.join(cache_dir, descriptor_fname)
+        log.debug("Write descriptor to %s", fname_cache)
+        with open(fname_cache, "w") as f:
+            json.dump(module.get_descriptor(), f, indent=2)
+    log.debug("Docker Image: %s", module.get_docker_image())
+
+    return module
+
+
+def create_okapiModules(modlist: dict):
+    return [create_okapiModule(name, version=version)
+            for name, version in modlist.items()]
 
 
 class OkapiModule:

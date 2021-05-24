@@ -68,11 +68,15 @@ class DataImportService(FolioService):
             fileDefinitions.append({"name": basename})
 
         # Create UploadDefinition
+        log.info("Create UploadDefintion")
         uploadDefinition = self._dataImport.set_uploadDefinition(
             {"fileDefinitions": fileDefinitions})
 
+        
         # Upload files
+        time.sleep(60)
         uploadDefinitionId = uploadDefinition["id"]
+        log.info("Upload Files")
         for fileDefinition in uploadDefinition["fileDefinitions"]:
             fileId = fileDefinition["id"]
             name = fileDefinition["name"]

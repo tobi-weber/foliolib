@@ -7,7 +7,7 @@ import logging
 import sys
 from distutils.version import LooseVersion
 from typing import Union
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urljoin
 
 import requests
 from foliolib.config import Config
@@ -371,7 +371,7 @@ class OkapiClient:
         return self._request("DELETE", f"/_/proxy/tenants/{tenantId}")
 
     def enable_module(self, modId: str, tenantId: str, loadSample: bool = False,
-                      loadReference: bool = False, **kwargs):
+                      loadReference: bool = False, upgrade=False, **kwargs):
         """Enable a module for a tenant
 
         Args:
@@ -404,7 +404,8 @@ class OkapiClient:
         Returns:
             dict: Tenant module descriptor
         """
-        return self.enable_modules([modId], tenantId, loadSample=loadSample, loadReference=loadReference, **kwargs)
+        return self.enable_modules([modId], tenantId, loadSample=loadSample, loadReference=loadReference,
+                                   upgrade=upgrade, **kwargs)
 
     def enable_modules(self, modIds: list, tenantId: str, loadSample: bool = False,
                        loadReference: bool = False, **kwargs):
@@ -608,8 +609,7 @@ class OkapiClient:
         Returns:
             dict: Tenant module descriptors
         """
-        path = f"/_/proxy/tenants/{tenantId}/upgrade"
-        return self._request("POST", path, data="", query=kwargs)
+        return self._request("POST", f"/_/proxy/tenants/{tenantId}/upgrade", query=kwargs)
 
     def get_install_jobs(self, tenantId: str, install_id: str = None):
         """Get install jobs for a tenant
@@ -660,6 +660,8 @@ class OkapiClient:
         headers["X-Okapi-Tenant"] = tenantId
         if tenantId in OkapiClient.tenant_access_tokens:
             headers["X-Okapi-Token"] = OkapiClient.tenant_access_tokens[tenantId]
+        else:
+            headers["X-Okapi-Token"] = ""
         res = self._request(method.upper(), service,
                             data=data, query=query, headers=headers, files=files)
         if "x-okapi-token" in self.headers:
@@ -701,7 +703,7 @@ class OkapiClient:
         Returns:
             any: return the response of the request
         """
-        url = self._host + path
+        url = urljoin(self._host, path)
         if query:
             query = urlencode(query)
             query = query.replace("True", "true").replace("False", "false")
@@ -711,6 +713,7 @@ class OkapiClient:
         headers["Accept"] = 'application/json, text/plain'
         if "X-Okapi-Token" not in headers:
             if self._access_token is not None:
+                log.debug("Token for supertenant: %s", self._access_token)
                 headers["X-Okapi-Token"] = self._access_token
         if method == "GET" or method == "DELETE":
             request = self._client.prepare_request(
@@ -742,7 +745,8 @@ class OkapiClient:
         if response.status_code == 200 or response.status_code == 201:
             try:
                 return response.json()
-            except json.decoder.JSONDecodeError:
+            # except json.decoder.JSONDecodeError:
+            except:
                 return response.text
         elif response.status_code == 202:
             return Success(response)

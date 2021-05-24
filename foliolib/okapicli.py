@@ -17,8 +17,9 @@ class OkapiCLI(BaseCLI):
         description = "Okapi command line interface"
         usage = "okapicli <command> [<args>]"
         commands = """
-    db                      Set db in env
-    installModules          Add, deploy and enable modules for a tenant
+    installTenant           Add, deploy and enable modules for a tenant
+    upgradeTenant           Upgrade a tenant
+    removeUnusedModules     Undeploy and remove all modules not used by a tenant
     addModule               Add module by name and version
     addModules              Add modules descriptors from json dict
     addModuleDescriptor     Add a modul from Moduledescriptor.json
@@ -31,6 +32,10 @@ class OkapiCLI(BaseCLI):
     disableModule           Disable a modul
     addTenant               Create a tenant
     removeTenant            Remove a tenant
+
+  Enviroment
+    db                      Set db parameters in global okapi enviroment
+    kafka                   Set kafka parameters in global okapi enviroment
 
   Inspection
     version                 Show Okapi version
@@ -64,13 +69,24 @@ class OkapiCLI(BaseCLI):
         server = Config().okapicfg().get("Postgres", "host")
         port = Config().okapicfg().get("Postgres", "port")
         print("Set db parameters:")
-        print(f"\tdb server: \t{server}")
+        print(f"\tdb host: \t{server}")
         print(f"\tdb port: \t{port}")
         print(f"\tdatabase \t{args.database}")
         print(f"\tusername: \t{args.user}")
         print(f"\tpassword: \t{args.password}")
         helper.set_env_db(server, port, args.user,
                           args.password, args.database)
+
+    def kafka(self):
+        parser = self._get_parser("db")
+        parser.add_argument("host", help="Kafka host")
+        parser.add_argument("-p", "--port",
+                            default="9092", help="Kafka port")
+        args = self._get_args(parser)
+        print("Set kafka parameters:")
+        print(f"\tkafka host: \t{args.host}")
+        print(f"\tkafka port: \t{args.port}")
+        helper.set_env_kafka(args.host, args.port)
 
     def addModule(self):
         parser = self._get_parser("addModule")
@@ -115,8 +131,11 @@ class OkapiCLI(BaseCLI):
                             help="Modul id, e.g. mod-users-17.1.0")
         args = self._get_args(parser)
         print(f"Remove module {args.modid}")
-        for modid in args.modid:
-            OkapiClient().remove_module(modid)
+        if isinstance(args.modid, list):
+            for modid in args.modid:
+                OkapiClient().remove_module(modid)
+        else:
+            OkapiClient().remove_module(args.modid)
 
     def deployModule(self):
         parser = self._get_parser("deployModule")
@@ -133,8 +152,11 @@ class OkapiCLI(BaseCLI):
             "modid", nargs='?', help="Modul id, e.g. mod-users-17.1.0. Can be repeated")
         args = self._get_args(parser)
         print(f"Undeploy module {args.modid}")
-        for modid in args.modid:
-            OkapiClient().undeploy_module(modid)
+        if isinstance(args.modid, list):
+            for modid in args.modid:
+                OkapiClient().undeploy_module(modid)
+        else:
+            OkapiClient().undeploy_module(args.modid)
 
     def undeployAll(self):
         self._get_parser("undeployAll")
@@ -145,7 +167,7 @@ class OkapiCLI(BaseCLI):
         parser = self._get_parser("enableModule")
         parser.add_argument("tenant", help="tenant id")
         parser.add_argument(
-            "modid", nargs='?', help="Modul id, e.g. mod-users-17.1.0. Can be repeated")
+            "modid", help="Modul id, e.g. mod-users-17.1.0.")
         parser.add_argument("--loadSample",  help="", action="store_true")
         parser.add_argument("--loadReference",  help="", action="store_true")
         parser.add_argument(
@@ -179,17 +201,16 @@ class OkapiCLI(BaseCLI):
         if not args.preRelease:
             kwargs["preRelease"] = args.preRelease
         print(f"Enable module {args.modid} for tenant {args.tenant}")
-        for modid in args.modid:
-            OkapiClient().enable_module(modid, args.tenant,
-                                        loadSample=args.loadSample,
-                                        loadReference=args.loadReference,
-                                        **kwargs)
+        OkapiClient().enable_module(args.modid, args.tenant,
+                                    loadSample=args.loadSample,
+                                    loadReference=args.loadReference,
+                                    **kwargs)
 
     def disableModule(self):
         parser = self._get_parser("disableModule")
         parser.add_argument("tenant", help="tenant id")
         parser.add_argument("modid", nargs='?',
-                            help="Modul id, e.g. mod-users-17.1.0. Can be repeated")
+                            help="Modul id, e.g. mod-users-17.1.0.")
         parser.add_argument(
             "--async",  action="store_true", help="Uninstall in the background")
         parser.add_argument(
@@ -217,8 +238,7 @@ class OkapiCLI(BaseCLI):
         if not args.invoke:
             kwargs["invoke"] = args.invoke
         print(f"Disable module {args.modid} for tenant {args.tenant}")
-        for modid in args.modid:
-            OkapiClient().disable_module(modid, args.tenant, **kwargs)
+        OkapiClient().disable_module(args.modid, args.tenant, **kwargs)
 
     def addTenant(self):
         parser = self._get_parser("createTenant")
@@ -239,8 +259,8 @@ class OkapiCLI(BaseCLI):
         print(f"Remove tenant: {args.tenant}")
         OkapiClient().remove_tenant(args.tenant)
 
-    def installModules(self):
-        parser = self._get_parser("installModules")
+    def installTenant(self):
+        parser = self._get_parser("installTenant")
         parser.add_argument(
             "file", help="Path to okapi_install.json file or file with json object, e.g. {'MODULE1': 'VERSION', 'MODULE2': 'VERSION'}]")
         parser.add_argument("tenant", help="tenant id")
@@ -248,10 +268,6 @@ class OkapiCLI(BaseCLI):
             "-n", "--node", default=self._get_node(), help="node id")
         parser.add_argument("--loadSample",  help="", action="store_true")
         parser.add_argument("--loadReference",  help="", action="store_true")
-        parser.add_argument(
-            "--async",  action="store_true", help="Install in the background")
-        parser.add_argument(
-            "--deploy",  action="store_true", help="Deploy modules")
         parser.add_argument(
             "--ignoreErrors",  action="store_true", help="Ignore errors during the install operation")
         parser.add_argument(
@@ -264,10 +280,6 @@ class OkapiCLI(BaseCLI):
             "--simulate",  action="store_true", help="Simulate the installation")
         args = self._get_args(parser)
         kwargs = {}
-        if getattr(args, "async"):
-            kwargs["async"] = getattr(args, "async")
-        if args.deploy:
-            kwargs["deploy"] = args.deploy
         if args.ignoreErrors:
             kwargs["ignoreErrors"] = args.ignoreErrors
         if args.simulate:
@@ -278,10 +290,49 @@ class OkapiCLI(BaseCLI):
             kwargs["npmSnapshot"] = args.npmSnapshot
         if not args.preRelease:
             kwargs["preRelease"] = args.preRelease
-        helper.install_okapi(args.file, args.node, args.tenant,
-                             loadSample=args.loadSample,
-                             loadReference=args.loadReference,
-                             **kwargs)
+        helper.install_okapi_modules(args.file, args.node, args.tenant,
+                                     loadSample=args.loadSample,
+                                     loadReference=args.loadReference,
+                                     **kwargs)
+
+    def upgradeTenant(self):
+        parser = self._get_parser("upgradeTenant")
+        parser.add_argument(
+            "file", help="Path to okapi_install.json file or file with json object, e.g. {'MODULE1': 'VERSION', 'MODULE2': 'VERSION'}]")
+        parser.add_argument("tenant", help="tenant id")
+        parser.add_argument(
+            "-n", "--node", default=self._get_node(), help="node id")
+        parser.add_argument(
+            "--ignoreErrors",  action="store_true", help="Ignore errors during the install operation")
+        parser.add_argument(
+            "--invoke",  action="store_false", help="Not invoke for tenant init/permissions/purge")
+        parser.add_argument(
+            "--npmSnapshot",  action="store_false", help="Not include NPM module snapshots")
+        parser.add_argument(
+            "--preRelease",  action="store_false", help="Pre-releases should be considered for installation")
+        parser.add_argument(
+            "--simulate",  action="store_true", help="Simulate the upgrade")
+        args = self._get_args(parser)
+        kwargs = {}
+        if args.ignoreErrors:
+            kwargs["ignoreErrors"] = args.ignoreErrors
+        if args.simulate:
+            kwargs["simulate"] = args.simulate
+        if not args.invoke:
+            kwargs["invoke"] = args.invoke
+        if not args.npmSnapshot:
+            kwargs["npmSnapshot"] = args.npmSnapshot
+        if not args.preRelease:
+            kwargs["preRelease"] = args.preRelease
+        res = helper.upgrade_okapi_modules(args.file, args.node, args.tenant,
+                                           **kwargs)
+
+        print(json.dumps(res, indent=2))
+
+    def removeUnusedModules(self):
+        parser = self._get_parser("removeUnusedModules")
+        args = self._get_args(parser)
+        helper.removeUnusedModules()
 
     def version(self):
         self._get_parser("version")
