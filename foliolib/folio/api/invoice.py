@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-29
+# Generated at 2021-05-24
 
 import logging
 
@@ -191,30 +191,15 @@ class Invoice(FolioApi):
         """
         return self.call("GET", f"/invoice/invoices/{invoicesId}/documents", query=kwargs)
 
-    def set_document(self, invoicesId: str, **kwargs):
-        """Post document attachment/link;
+    def set_document(self, invoicesId: str):
+        """
 
         ``POST /invoice/invoices/{invoicesId}/documents``
 
         Args:
             invoicesId (str)
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiRequestPayloadToLarge: Payload Too Large
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Headers:
-            - **Location** - URI to the created Invoice Document item
         """
-        return self.call("POST", f"/invoice/invoices/{invoicesId}/documents", query=kwargs)
+        return self.call("POST", f"/invoice/invoices/{invoicesId}/documents")
 
     def get_document(self, invoicesId: str, documentId: str):
         """Retrieve document item with given {documentId}
@@ -403,29 +388,12 @@ class Invoice(FolioApi):
         """
         return self.call("GET", "/invoice/invoice-number")
 
-    def set_invoiceNumber(self, **kwargs):
-        """Post document attachment/link;
+    def set_invoiceNumber(self):
+        """
 
         ``POST /invoice/invoice-number``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiRequestPayloadToLarge: Payload Too Large
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Headers:
-            - **Location** - URI to the created Invoice Document item
         """
-        return self.call("POST", "/invoice/invoice-number", query=kwargs)
+        return self.call("POST", "/invoice/invoice-number")
 
 
 class BatchVoucher(FolioApi):
@@ -1049,30 +1017,15 @@ class Voucher(FolioApi):
         """
         return self.call("GET", f"/voucher/vouchers/{vouchersId}")
 
-    def modify_voucher(self, vouchersId: str, voucher: dict, **kwargs):
-        """Update a voucher with given {Id}
+    def modify_voucher(self, vouchersId: str):
+        """
 
         ``PUT /voucher/vouchers/{vouchersId}``
 
         Args:
             vouchersId (str)
-            voucher (dict)
-            **kwargs (properties): Keyword Arguments: See Schema below
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/Voucher_modify_voucher_request.schema
         """
-        return self.call("PUT", f"/voucher/vouchers/{vouchersId}", data=voucher, query=kwargs)
+        return self.call("PUT", f"/voucher/vouchers/{vouchersId}")
 
     def get_voucherLines(self):
         """Retrieve a list of voucher lines.
@@ -1143,20 +1096,15 @@ class Voucher(FolioApi):
         """
         return self.call("GET", f"/voucher/voucher-lines/{voucherLinesId}", query=kwargs)
 
-    def modify_voucherLine(self, voucherLinesId: str, voucherLine: dict):
-        """Update a voucher line with given {id}
+    def modify_voucherLine(self, voucherLinesId: str):
+        """
 
         ``PUT /voucher/voucher-lines/{voucherLinesId}``
 
         Args:
             voucherLinesId (str)
-            voucherLine (dict): See Schema below
-
-        Schema:
-
-            .. literalinclude:: ../files/Voucher_modify_voucherLine_request.schema
         """
-        return self.call("PUT", f"/voucher/voucher-lines/{voucherLinesId}", data=voucherLine)
+        return self.call("PUT", f"/voucher/voucher-lines/{voucherLinesId}")
 
     def set_start(self, value: str):
         """(Re)set the start value of the voucher number sequence

@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n  \"id\": \"33d89850-4670-4d0a-b56f-d594c8ba0589\",\n  \"ledgerRolloverId\": \"e7ed4439-a5ea-4976-b7e6-264e495fbfe8\",\n  \"errorType\": \"Order\",\n  \"failedAction\": \"Create Encumbrance\",\n  \"errorMessage\": \"Not enough money available in the Fund to create encumbrance\",\n  \"details\": {\n    \"purchaseOrderId\": \"5f94d848-83d9-4a23-8dd7-fa94f2d769eb\",\n    \"poLineId\": \"9bf4cebd-04ad-4af7-bc18-eca28ac6ba5a\",\n    \"polNumber\": \"10000-1\",\n    \"amount\": 1346.11,\n    \"fundId\": \"ef1f3200-2bd3-4184-914f-a9b9f247b4fb\",\n    \"fundCode\": \"HIST\"\n  },\n  \"metadata\": {\n    \"createdDate\": \"2020-07-19T10:00:00.000+0000\",\n    \"createdByUserId\": \"28d1057c-d137-11e8-a8d5-f2801f1b9fd1\"\n  }\n}\n\n"
+}

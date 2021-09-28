@@ -21,7 +21,10 @@ class IncludeTag(yaml.YAMLObject):
                 if include_var.endswith(".raml"):
                     value = yaml.load(f, Loader=yaml.Loader)
                 elif include_var.endswith(".json"):
-                    value = json.load(f)
+                    try:
+                        value = json.load(f)
+                    except:
+                        value = ""  # f.read()
                 else:
                     value = f.read()
         else:

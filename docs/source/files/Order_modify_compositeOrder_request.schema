@@ -6,7 +6,7 @@
     "id": {
       "description": "UUID of this purchase order",
       "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      "$ref": "../../common/schemas/uuid.json"
     },
     "approved": {
       "description": "whether or not the purchase order has been approved",
@@ -26,12 +26,12 @@
     "assignedTo": {
       "description": "UUID of the user this purchase order his assigned to",
       "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      "$ref": "../../common/schemas/uuid.json"
     },
     "billTo": {
       "description": "UUID of the billing address",
       "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      "$ref": "../../common/schemas/uuid.json"
     },
     "closeReason": {
       "description": "Close reason for purchase order",
@@ -90,16 +90,26 @@
     "shipTo": {
       "description": "UUID of the shipping address",
       "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      "$ref": "../../common/schemas/uuid.json"
     },
     "template": {
       "description": "The ID of the order template used for this order. Applies to both PO and POL",
       "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      "$ref": "../../common/schemas/uuid.json"
     },
     "totalEstimatedPrice": {
       "description": "total estimated price of this purchase order",
       "type": "number"
+    },
+    "totalEncumbered": {
+      "description": "Total encumbered for the order",
+      "type": "number",
+      "readonly": true
+    },
+    "totalExpended": {
+      "description": "Total expended for the order",
+      "type": "number",
+      "readonly": true
     },
     "totalItems": {
       "description": "total number of items included in the purchase order",
@@ -108,17 +118,12 @@
     "vendor": {
       "description": "UUID of the vendorDetails record",
       "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+      "$ref": "../../common/schemas/uuid.json"
     },
     "workflowStatus": {
       "description": "the workflow status for this purchase order",
       "type": "string",
-      "enum": [
-        "Pending",
-        "Open",
-        "Closed"
-      ],
-      "default": "Pending"
+      "$ref": "../../mod-orders-storage/schemas/workflow_status.json"
     },
     "compositePoLines": {
       "description": "a list of completely de-referenced purchase order lines",
@@ -144,6 +149,11 @@
     "metadata": {
       "type": "object",
       "$ref": "../../../raml-util/schemas/metadata.schema",
+      "readonly": true
+    },
+    "needReEncumber": {
+      "description": "Indicates that order needs to be re-encumbered",
+      "type": "boolean",
       "readonly": true
     }
   },

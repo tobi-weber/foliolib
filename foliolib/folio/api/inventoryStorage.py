@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-29
+# Generated at 2021-05-24
 
 import logging
 
@@ -85,22 +85,12 @@ class Location(FolioApi):
         """
         return self.call("POST", "/locations", data=location)
 
-    def delete_locations(self, **kwargs):
-        """Delete all locations
+    def delete_locations(self):
+        """
 
         ``DELETE /locations``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
-
-        Raises:
-            OkapiFatalError: Server Error
         """
-        return self.call("DELETE", "/locations", query=kwargs)
+        return self.call("DELETE", "/locations")
 
     def get_location(self, locationsId: str):
         """Retrieve location item with given {locationId}
@@ -150,6 +140,7 @@ class Location(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
@@ -237,22 +228,12 @@ class HoldingsStorage(FolioApi):
         """
         return self.call("POST", "/holdings-storage/holdings", data=holding)
 
-    def delete_holdings(self, **kwargs):
+    def delete_holdings(self):
         """
 
         ``DELETE /holdings-storage/holdings``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
-
-        Raises:
-            OkapiFatalError: Server Error
         """
-        return self.call("DELETE", "/holdings-storage/holdings", query=kwargs)
+        return self.call("DELETE", "/holdings-storage/holdings")
 
     def get_holding(self, holdingsRecordId: str):
         """Retrieve holding item with given {holdingId}
@@ -302,6 +283,7 @@ class HoldingsStorage(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -330,6 +312,7 @@ class ItemSync(FolioApi):
             upsert (bool): (default=False) When a record with the same id already exists upsert=true will update it, upsert=false will fail the complete batch.
 
         Raises:
+            OkapiRequestConflict: Conflict
             OkapiRequestPayloadToLarge: Payload Too Large
             OkapiRequestUnprocessableEntity: Unprocessable Entity
             OkapiFatalError: Server Error
@@ -466,6 +449,7 @@ class HoldingsSources(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -473,6 +457,61 @@ class HoldingsSources(FolioApi):
             .. literalinclude:: ../files/HoldingsSources_modify_holdingsSource_request.schema
         """
         return self.call("PUT", f"/holdings-sources/{holdingsSourcesId}", data=holdingsSource)
+
+
+class InventoryView(FolioApi):
+    """Inventory view
+
+    Inventory view endpoints
+    """
+
+    def get_instances(self, **kwargs):
+        """Get instances by id with their holdings and items
+
+        ``GET /inventory-view/instances``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+            query (str):  A query expressed as a CQL string
+                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
+                    using valid searchable fields.
+                    The first example below shows the general form of a full CQL query,
+                    but those fields might not be relevant in this context.
+                    
+                    using CQL
+                    
+                    
+                    Example:
+                    
+                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
+                    
+                     - title="*uproot*"
+
+        Returns:
+            binary: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/InventoryView_get_instances_return.schema 
+        """
+        return self.call("GET", "/inventory-view/instances", query=kwargs)
 
 
 class HoldingsNoteType(FolioApi):
@@ -600,6 +639,7 @@ class HoldingsNoteType(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -734,6 +774,7 @@ class ClassificationType(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -868,6 +909,7 @@ class CallNumberType(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -1010,6 +1052,7 @@ class InstancePrecedingSucceedingTitles(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
             OkapiRequestUnprocessableEntity: Unprocessable Entity
@@ -1098,22 +1141,12 @@ class ModeOfIssuance(FolioApi):
         """
         return self.call("POST", "/modes-of-issuance", data=modesOfIssuance)
 
-    def delete_modesOfIssuances(self, **kwargs):
-        """Delete all modes of issuance
+    def delete_modesOfIssuances(self):
+        """
 
         ``DELETE /modes-of-issuance``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
-
-        Raises:
-            OkapiFatalError: Server Error
         """
-        return self.call("DELETE", "/modes-of-issuance", query=kwargs)
+        return self.call("DELETE", "/modes-of-issuance")
 
     def get_modesOfIssuance(self, modeOfIssuanceId: str):
         """Retrieve modesOfIssuance item with given {modesOfIssuanceId}
@@ -1163,6 +1196,7 @@ class ModeOfIssuance(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -1297,6 +1331,7 @@ class InstanceFormat(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -1383,22 +1418,12 @@ class ShelfLocation(FolioApi):
         """
         return self.call("POST", "/shelf-locations", data=shelfLocation)
 
-    def delete_shelfLocations(self, **kwargs):
-        """DEPRECATED and NOT IMPLEMENTED: Delete all shelf locations
+    def delete_shelfLocations(self):
+        """
 
         ``DELETE /shelf-locations``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
-
-        Raises:
-            OkapiFatalError: Server Error
         """
-        return self.call("DELETE", "/shelf-locations", query=kwargs)
+        return self.call("DELETE", "/shelf-locations")
 
     def get_shelfLocation(self, shelfLocationsId: str):
         """Retrieve shelfLocation item with given {shelfLocationId}
@@ -1450,6 +1475,7 @@ class ShelfLocation(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
             OkapiFatalError: Server Error
 
@@ -1584,6 +1610,7 @@ class InstanceStorage(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -1662,22 +1689,12 @@ class InstanceStorage(FolioApi):
         """
         return self.call("POST", "/instance-storage/instances", data=instance)
 
-    def delete_instances(self, **kwargs):
+    def delete_instances(self):
         """
 
         ``DELETE /instance-storage/instances``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
-
-        Raises:
-            OkapiFatalError: Server Error
         """
-        return self.call("DELETE", "/instance-storage/instances", query=kwargs)
+        return self.call("DELETE", "/instance-storage/instances")
 
     def get_instance(self, instanceId: str):
         """Get Instance by InstanceId
@@ -1730,6 +1747,7 @@ class InstanceStorage(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -1807,6 +1825,7 @@ class InstanceStorage(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -1967,6 +1986,7 @@ class HoldingsType(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -2053,22 +2073,12 @@ class ItemStorage(FolioApi):
         """
         return self.call("POST", "/item-storage/items", data=item)
 
-    def delete_items(self, **kwargs):
+    def delete_items(self):
         """
 
         ``DELETE /item-storage/items``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
-
-        Raises:
-            OkapiFatalError: Server Error
         """
-        return self.call("DELETE", "/item-storage/items", query=kwargs)
+        return self.call("DELETE", "/item-storage/items")
 
     def get_item(self, itemId: str):
         """Retrieve item item with given {itemId}
@@ -2118,6 +2128,7 @@ class ItemStorage(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -2280,6 +2291,7 @@ class ItemDamagedStatuses(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -2414,6 +2426,7 @@ class ContributorType(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -2421,6 +2434,63 @@ class ContributorType(FolioApi):
             .. literalinclude:: ../files/ContributorType_modify_contributorType_request.schema
         """
         return self.call("PUT", f"/contributor-types/{contributorTypeId}", data=contributorType)
+
+
+class RecordBulk(FolioApi):
+    """Inventory Storage records Bulk Download API
+
+    **API for downloading a bulk set of instances or holdings IDs**
+    """
+
+    def get_ids(self, **kwargs):
+        """Retrieve a list of record IDs.
+
+        ``GET /record-bulk/ids``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            query (str):  A query expressed as a CQL string
+                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
+                    using valid searchable fields.
+                    The first example below shows the general form of a full CQL query,
+                    but those fields might not be relevant in this context.
+                    
+                    with valid searchable fields
+                    
+                    
+                    Example:
+                    
+                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
+                    
+                     - name=aaa
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/RecordBulk_get_ids_return.schema 
+        """
+        return self.call("GET", "/record-bulk/ids", query=kwargs)
 
 
 class NatureOfContentTerm(FolioApi):
@@ -2548,6 +2618,7 @@ class NatureOfContentTerm(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -2635,22 +2706,12 @@ class ServicePoint(FolioApi):
         """
         return self.call("POST", "/service-points", data=servicePoint)
 
-    def delete_servicePoints(self, **kwargs):
-        """Delete all service points
+    def delete_servicePoints(self):
+        """
 
         ``DELETE /service-points``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
-
-        Raises:
-            OkapiFatalError: Server Error
         """
-        return self.call("DELETE", "/service-points", query=kwargs)
+        return self.call("DELETE", "/service-points")
 
     def get_servicePoint(self, servicepointId: str):
         """Retrieve servicePoint item with given {servicePointId}
@@ -2700,6 +2761,7 @@ class ServicePoint(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
             OkapiRequestUnprocessableEntity: Unprocessable Entity
@@ -2882,6 +2944,7 @@ class ItemNoteType(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -2968,22 +3031,12 @@ class Locationunit(FolioApi):
         """
         return self.call("POST", "/location-units/institutions", data=institution)
 
-    def delete_institutions(self, **kwargs):
-        """Delete all institutions
+    def delete_institutions(self):
+        """
 
         ``DELETE /location-units/institutions``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
-
-        Raises:
-            OkapiFatalError: Server Error
         """
-        return self.call("DELETE", "/location-units/institutions", query=kwargs)
+        return self.call("DELETE", "/location-units/institutions")
 
     def get_institution(self, institutionsId: str):
         """Retrieve institution item with given {institutionId}
@@ -3033,6 +3086,7 @@ class Locationunit(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -3112,22 +3166,12 @@ class Locationunit(FolioApi):
         """
         return self.call("POST", "/location-units/campuses", data=campuse)
 
-    def delete_campuses(self, **kwargs):
-        """Delete all campuses
+    def delete_campuses(self):
+        """
 
         ``DELETE /location-units/campuses``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
-
-        Raises:
-            OkapiFatalError: Server Error
         """
-        return self.call("DELETE", "/location-units/campuses", query=kwargs)
+        return self.call("DELETE", "/location-units/campuses")
 
     def get_campuse(self, campusesId: str):
         """Retrieve campuse item with given {campuseId}
@@ -3177,6 +3221,7 @@ class Locationunit(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -3256,22 +3301,12 @@ class Locationunit(FolioApi):
         """
         return self.call("POST", "/location-units/libraries", data=library)
 
-    def delete_libraries(self, **kwargs):
-        """Delete all libraries
+    def delete_libraries(self):
+        """
 
         ``DELETE /location-units/libraries``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
-
-        Raises:
-            OkapiFatalError: Server Error
         """
-        return self.call("DELETE", "/location-units/libraries", query=kwargs)
+        return self.call("DELETE", "/location-units/libraries")
 
     def get_library(self, librariesId: str):
         """Retrieve library item with given {libraryId}
@@ -3321,6 +3356,7 @@ class Locationunit(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -3455,6 +3491,7 @@ class ContributorNameType(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -3589,6 +3626,7 @@ class IllPolicy(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -3617,6 +3655,7 @@ class InstanceSync(FolioApi):
             upsert (bool): (default=False) When a record with the same id already exists upsert=true will update it, upsert=false will fail the complete batch.
 
         Raises:
+            OkapiRequestConflict: Conflict
             OkapiRequestPayloadToLarge: Payload Too Large
             OkapiRequestUnprocessableEntity: Unprocessable Entity
             OkapiFatalError: Server Error
@@ -3753,6 +3792,7 @@ class InstanceNoteType(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -3781,6 +3821,7 @@ class HoldingsSync(FolioApi):
             upsert (bool): (default=False) When a record with the same id already exists upsert=true will update it, upsert=false will fail the complete batch.
 
         Raises:
+            OkapiRequestConflict: Conflict
             OkapiRequestPayloadToLarge: Payload Too Large
             OkapiRequestUnprocessableEntity: Unprocessable Entity
             OkapiFatalError: Server Error
@@ -3917,6 +3958,7 @@ class ElectronicAccessRelationship(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -3924,54 +3966,6 @@ class ElectronicAccessRelationship(FolioApi):
             .. literalinclude:: ../files/ElectronicAccessRelationship_modify_electronicAccessRelationship_request.schema
         """
         return self.call("PUT", f"/electronic-access-relationships/{electronicAccessRelationshipId}", data=electronicAccessRelationship)
-
-
-class InstanceBulk(FolioApi):
-    """Inventory Storage Instance Bulk Download API
-
-    **API for downloading a bulk set of Instance IDs**
-    """
-
-    def get_ids(self, **kwargs):
-        """Retrieve a list of Instance IDs.
-
-        ``GET /instance-bulk/ids``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            field (str): (default=id) Field
-            query (str):  A query expressed as a CQL string
-                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
-                    using valid searchable fields.
-                    The first example below shows the general form of a full CQL query,
-                    but those fields might not be relevant in this context.
-                    
-                    with valid searchable fields
-                    
-                    
-                    Example:
-                    
-                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
-                    
-                     - name=aaa
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Schema:
-
-            .. literalinclude:: ../files/InstanceBulk_get_ids_return.schema 
-        """
-        return self.call("GET", "/instance-bulk/ids", query=kwargs)
 
 
 class StatisticalCodeType(FolioApi):
@@ -4051,22 +4045,12 @@ class StatisticalCodeType(FolioApi):
         """
         return self.call("POST", "/statistical-code-types", data=statisticalCodeType)
 
-    def delete_statisticalCodeTypes(self, **kwargs):
-        """Delete all statistical code types
+    def delete_statisticalCodeTypes(self):
+        """
 
         ``DELETE /statistical-code-types``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
-
-        Raises:
-            OkapiFatalError: Server Error
         """
-        return self.call("DELETE", "/statistical-code-types", query=kwargs)
+        return self.call("DELETE", "/statistical-code-types")
 
     def get_statisticalCodeType(self, statisticalCodeTypeId: str):
         """Retrieve statisticalCodeType item with given {statisticalCodeTypeId}
@@ -4116,6 +4100,7 @@ class StatisticalCodeType(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -4250,6 +4235,7 @@ class InstanceType(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -4257,6 +4243,141 @@ class InstanceType(FolioApi):
             .. literalinclude:: ../files/InstanceType_modify_instanceType_request.schema
         """
         return self.call("PUT", f"/instance-types/{instanceTypeId}", data=instanceType)
+
+
+class BoundWithPart(FolioApi):
+    """Bound-With API
+
+    This documents the API calls that can be made to query and manage parts of bound-withs
+    """
+
+    def get_boundWithParts(self, **kwargs):
+        """Return a list of parts of bound-withs
+
+        ``GET /inventory-storage/bound-with-parts``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            query (str):  A query expressed as a CQL string
+                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
+                    using valid searchable fields.
+                    The first example below shows the general form of a full CQL query,
+                    but those fields might not be relevant in this context.
+                    
+                    with valid searchable fields
+                    
+                    
+                    Example:
+                    
+                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
+                    
+                     - itemId=aaa
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/BoundWithPart_get_boundWithParts_return.schema 
+        """
+        return self.call("GET", "/inventory-storage/bound-with-parts", query=kwargs)
+
+    def set_boundWithPart(self, boundWithPart: dict):
+        """Add a new part to a bound-with item
+
+        ``POST /inventory-storage/bound-with-parts``
+
+        Args:
+            boundWithPart (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Headers:
+            - **Location** - URI to the created boundWithPart item
+
+        Schema:
+
+            .. literalinclude:: ../files/BoundWithPart_set_boundWithPart_request.schema
+        """
+        return self.call("POST", "/inventory-storage/bound-with-parts", data=boundWithPart)
+
+    def get_boundWithPart(self, boundWithPartsId: str):
+        """Retrieve boundWithPart item with given {boundWithPartId}
+
+        ``GET /inventory-storage/bound-with-parts/{boundWithPartsId}``
+
+        Args:
+            boundWithPartsId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/BoundWithPart_get_boundWithPart_return.schema 
+        """
+        return self.call("GET", f"/inventory-storage/bound-with-parts/{boundWithPartsId}")
+
+    def delete_boundWithPart(self, boundWithPartsId: str):
+        """Delete boundWithPart item with given {boundWithPartId}
+
+        ``DELETE /inventory-storage/bound-with-parts/{boundWithPartsId}``
+
+        Args:
+            boundWithPartsId (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+        """
+        return self.call("DELETE", f"/inventory-storage/bound-with-parts/{boundWithPartsId}")
+
+    def modify_boundWithPart(self, boundWithPartsId: str, boundWithPart: dict):
+        """Update boundWithPart item with given {boundWithPartId}
+
+        ``PUT /inventory-storage/bound-with-parts/{boundWithPartsId}``
+
+        Args:
+            boundWithPartsId (str)
+            boundWithPart (dict): See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/BoundWithPart_modify_boundWithPart_request.schema
+        """
+        return self.call("PUT", f"/inventory-storage/bound-with-parts/{boundWithPartsId}", data=boundWithPart)
 
 
 class IdentifierType(FolioApi):
@@ -4384,6 +4505,7 @@ class IdentifierType(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -4391,6 +4513,65 @@ class IdentifierType(FolioApi):
             .. literalinclude:: ../files/IdentifierType_modify_identifierType_request.schema
         """
         return self.call("PUT", f"/identifier-types/{identifierTypeId}", data=identifierType)
+
+
+class InstanceReindex(FolioApi):
+    """Instance reindex
+
+    Reindex instances by generating domain events for them
+    """
+
+    def set_reindex(self):
+        """Submit a reindex job
+
+        ``POST /instance-storage/reindex``
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/InstanceReindex_set_reindex_return.schema 
+        """
+        return self.call("POST", "/instance-storage/reindex")
+
+    def get_reindex(self, reindexId: str):
+        """Get reindex job by id
+
+        ``GET /instance-storage/reindex/{reindexId}``
+
+        Args:
+            reindexId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/InstanceReindex_get_reindex_return.schema 
+        """
+        return self.call("GET", f"/instance-storage/reindex/{reindexId}")
+
+    def delete_reindex(self, reindexId: str):
+        """Cancell reindex job by id
+
+        ``DELETE /instance-storage/reindex/{reindexId}``
+
+        Args:
+            reindexId (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+        """
+        return self.call("DELETE", f"/instance-storage/reindex/{reindexId}")
 
 
 class LoanType(FolioApi):
@@ -4470,22 +4651,12 @@ class LoanType(FolioApi):
         """
         return self.call("POST", "/loan-types", data=loanType)
 
-    def delete_loanTypes(self, **kwargs):
-        """Delete all loan types
+    def delete_loanTypes(self):
+        """
 
         ``DELETE /loan-types``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
-
-        Raises:
-            OkapiFatalError: Server Error
         """
-        return self.call("DELETE", "/loan-types", query=kwargs)
+        return self.call("DELETE", "/loan-types")
 
     def get_loanType(self, loantypeId: str):
         """Retrieve loanType item with given {loanTypeId}
@@ -4535,6 +4706,7 @@ class LoanType(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -4550,20 +4722,10 @@ class InventoryHierarchy(FolioApi):
     This documents the streaming API for the data needed for Inventory Storage, RTAC and other modules
     """
 
-    def get_updatedInstanceIds(self, **kwargs):
+    def get_updatedInstanceIds(self):
         """Stream updated instances ids for Inventory
 
         ``GET /inventory-hierarchy/updated-instance-ids``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            startDate (str):  Lower bound for filtering instances by instances, items and holdings metadata update date
-            endDate (str):  Upper bound for filtering instances by instances, items and holdings metadata update date
-            deletedRecordSupport (bool): (default=True) return deleted records
-            skipSuppressedFromDiscoveryRecords (bool): (default=True) Configuration param which defines if discovery suppressed instance records should be skipped or not
-            onlyInstanceUpdateDate (bool): (default=True) Configuration param which defines if discovery suppressed instance records should be skipped or not
 
         Returns:
             dict: See Schema below
@@ -4579,7 +4741,7 @@ class InventoryHierarchy(FolioApi):
 
             .. literalinclude:: ../files/InventoryHierarchy_get_updatedInstanceIds_return.schema 
         """
-        return self.call("GET", "/inventory-hierarchy/updated-instance-ids", query=kwargs)
+        return self.call("GET", "/inventory-hierarchy/updated-instance-ids")
 
     def set_itemsAndHolding(self, itemsAndHolding: dict):
         """Stream instances view data for Inventory
@@ -4728,6 +4890,7 @@ class StatisticalCode(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -4862,6 +5025,7 @@ class InstanceRelationshipType(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -4996,6 +5160,7 @@ class AlternativeTitleType(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -5082,22 +5247,12 @@ class ServicePointsUser(FolioApi):
         """
         return self.call("POST", "/service-points-users", data=servicePointsUser)
 
-    def delete_servicePointsUsers(self, **kwargs):
-        """Delete all service points users
+    def delete_servicePointsUsers(self):
+        """
 
         ``DELETE /service-points-users``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
-
-        Raises:
-            OkapiFatalError: Server Error
         """
-        return self.call("DELETE", "/service-points-users", query=kwargs)
+        return self.call("DELETE", "/service-points-users")
 
     def get_servicePointsUser(self, servicePointsUserId: str):
         """Retrieve servicePointsUser item with given {servicePointsUserId}
@@ -5147,6 +5302,7 @@ class ServicePointsUser(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -5233,22 +5389,12 @@ class InstanceStatus(FolioApi):
         """
         return self.call("POST", "/instance-statuses", data=instanceStatus)
 
-    def delete_instanceStatuses(self, **kwargs):
-        """Delete all instance statuses
+    def delete_instanceStatuses(self):
+        """
 
         ``DELETE /instance-statuses``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
-
-        Raises:
-            OkapiFatalError: Server Error
         """
-        return self.call("DELETE", "/instance-statuses", query=kwargs)
+        return self.call("DELETE", "/instance-statuses")
 
     def get_instanceStatus(self, instanceStatusId: str):
         """Retrieve instanceStatus item with given {instanceStatusId}
@@ -5298,6 +5444,7 @@ class InstanceStatus(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -5384,22 +5531,12 @@ class MaterialType(FolioApi):
         """
         return self.call("POST", "/material-types", data=materialType)
 
-    def delete_materialTypes(self, **kwargs):
-        """Delete all material types
+    def delete_materialTypes(self):
+        """
 
         ``DELETE /material-types``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
-
-        Raises:
-            OkapiFatalError: Server Error
         """
-        return self.call("DELETE", "/material-types", query=kwargs)
+        return self.call("DELETE", "/material-types")
 
     def get_materialType(self, materialtypeId: str):
         """Retrieve materialType item with given {materialTypeId}
@@ -5449,6 +5586,7 @@ class MaterialType(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:
@@ -5464,19 +5602,10 @@ class OaiPmhView(FolioApi):
     This documents the streaming API for the data needed for OAI-PMH
     """
 
-    def get_instances(self, **kwargs):
+    def get_instances(self):
         """Stream data for oai-pmh
 
         ``GET /oai-pmh-view/instances``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            startDate (str):  Lower bound for filtering instances by instances, items and holdings metadata update date. Accepted format YYYY-MM-DD or YYYY-MM-DDThh:mm:ssZ
-            endDate (str):  Upper bound for filtering instances by instances, items and holdings metadata update date
-            deletedRecordSupport (bool): (default=True) Returns deleted records
-            skipSuppressedFromDiscoveryRecords (bool): (default=True) Configuration param which defines if discovery suppressed instance records should be skipped or not
 
         Returns:
             dict: See Schema below
@@ -5492,21 +5621,12 @@ class OaiPmhView(FolioApi):
 
             .. literalinclude:: ../files/OaiPmhView_get_instances_return.schema 
         """
-        return self.call("GET", "/oai-pmh-view/instances", query=kwargs)
+        return self.call("GET", "/oai-pmh-view/instances")
 
-    def get_updatedInstanceIds(self, **kwargs):
+    def get_updatedInstanceIds(self):
         """Stream updated instances ids for oai-pmh
 
         ``GET /oai-pmh-view/updatedInstanceIds``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            startDate (str):  Lower bound for filtering instances by instances, items and holdings metadata update date
-            endDate (str):  Upper bound for filtering instances by instances, items and holdings metadata update date
-            deletedRecordSupport (bool): (default=True) return deleted records
-            skipSuppressedFromDiscoveryRecords (bool): (default=True) Configuration param which defines if discovery suppressed instance records should be skipped or not
 
         Returns:
             dict: See Schema below
@@ -5522,7 +5642,7 @@ class OaiPmhView(FolioApi):
 
             .. literalinclude:: ../files/OaiPmhView_get_updatedInstanceIds_return.schema 
         """
-        return self.call("GET", "/oai-pmh-view/updatedInstanceIds", query=kwargs)
+        return self.call("GET", "/oai-pmh-view/updatedInstanceIds")
 
     def set_enrichedInstance(self, enrichedInstance: dict):
         """Stream instances view data for oai-pmh

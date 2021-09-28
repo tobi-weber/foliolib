@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Schema for records search requests",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "leaderSearchExpression": {
+      "id": "leaderSearchExpression",
+      "description": "Expression to search records by the marc leader",
+      "type": "string"
+    },
+    "fieldsSearchExpression": {
+      "id": "fieldsSearchExpression",
+      "description": "Expression to search records by the marc fields",
+      "type": "string"
+    },
+    "suppressFromDiscovery": {
+      "id": "suppressFromDiscovery",
+      "description": "Flag to search by the records that are suppressed from discovery",
+      "type": "boolean",
+      "default": false
+    },
+    "deleted": {
+      "id": "deleted",
+      "description": "Flag to search by deleted records",
+      "type": "boolean",
+      "default": false
+    },
+    "offset": {
+      "id": "offset",
+      "description": "Offset flag",
+      "type": "integer"
+    },
+    "limit": {
+      "id": "limit",
+      "description": "Limit flag",
+      "type": "integer"
+    }
+  }
+}

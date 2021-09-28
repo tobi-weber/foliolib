@@ -107,9 +107,9 @@
       "description": "Invoice line total amount which is sum of subTotal and adjustmentsTotal. This amount is always calculated by system.",
       "type": "number"
     },
-    "vendorRefNo": {
-      "description": "This is the number used to match POLs created by import to invoices created by import",
-      "type": "string"
+    "referenceNumbers": {
+      "description": "Reference number items array",
+      "$ref": "../../common/schemas/reference_numbers.json"
     },
     "metadata": {
       "type": "object",

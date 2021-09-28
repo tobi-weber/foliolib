@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-29
+# Generated at 2021-05-24
 
 import logging
 
@@ -78,16 +78,6 @@ class SourceRecordStorageSnapshots(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
-            status (str):  Snapshot status to filter by
-                    
-                    Example:
-                    
-                     - NEW
-            orderBy (list):  Sort Snapshots
-                    
-                    Example:
-                    
-                     - ['status,ASC', 'processingStartedDate,DESC']
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -182,9 +172,6 @@ class SourceRecordStorageSnapshots(FolioApi):
             jobExecutionId (str)
             snapshot (dict): See Schema below
 
-        Returns:
-            dict: See Schema below
-
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
@@ -196,6 +183,149 @@ class SourceRecordStorageSnapshots(FolioApi):
             .. literalinclude:: ../files/SourceRecordStorageSnapshots_modify_snapshot_request.schema
         """
         return self.call("PUT", f"/source-storage/snapshots/{jobExecutionId}", data=snapshot)
+
+
+class SourceRecordStorageStream(FolioApi):
+    """Source Record Storage Stream API
+
+    Streaming API for searching records
+    """
+
+    def get_records(self, **kwargs):
+        """Stream collection of records; including raw record, parsed record, and error record if applicable
+
+        ``GET /source-storage/stream/records``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            snapshotId (str):  Filter by Snapshot Id
+                    
+                    Example:
+                    
+                     - e5ddbbdc-90b3-498f-bb8f-49367ca4c142
+            recordType (str): (default=MARC) Filter by Record Type
+                    
+                    Example:
+                    
+                     - MARC
+            state (str):  Filter by State
+                    
+                    Example:
+                    
+                     - ACTUAL
+            orderBy (list):  Sort Records
+                    
+                    Example:
+                    
+                     - ['order,ASC']
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Raises:
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+        """
+        return self.call("GET", "/source-storage/stream/records", query=kwargs)
+
+    def get_sourceRecords(self, **kwargs):
+        """Stream collection of source records; including only latest generation and parsed record
+
+        ``GET /source-storage/stream/source-records``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            recordId (str):  Filter by Record Id
+                    
+                    Example:
+                    
+                     - 876270bc-fbb4-409d-b8b0-3f59b1cb61f2
+            snapshotId (str):  Filter by Snapshot Id
+                    
+                    Example:
+                    
+                     - 7a8fbd77-5b2a-496c-93e7-cd04478f4fcc
+            instanceId (str):  Filter by Instance Id
+                    
+                    Example:
+                    
+                     - 8b07da70-8ea7-4acd-83a0-44d83979c73b
+            instanceHrid (str):  Filter by Instance Hrid
+                    
+                    Example:
+                    
+                     - 12345
+            recordType (str): (default=MARC) Filter by Record Type
+                    
+                    Example:
+                    
+                     - MARC
+            suppressFromDiscovery (bool):  Filter by suppress from discovery
+                    
+                    Example:
+                    
+                     - True
+            deleted (bool): (default=False) Filter by records with state ACTUAL OR state DELETED OR leader 05 status d, s, or x
+                    
+                    Example:
+                    
+                     - True
+            leaderRecordStatus (str):  Filter by MARC leader 05 status
+                    
+                    Example:
+                    
+                     - n
+            updatedAfter (datetime):  Start date to filter after, inclusive
+            updatedBefore (datetime):  End date to filter before, inclusive
+            orderBy (list):  Sort records
+                    
+                    Example:
+                    
+                     - ['order,ASC']
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Raises:
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+        """
+        return self.call("GET", "/source-storage/stream/source-records", query=kwargs)
+
+    def set_marcRecordIdentifier(self, marcRecordIdentifier: dict):
+        """Get a list of Marc Record IDs using post method
+
+        ``POST /source-storage/stream/marc-record-identifiers``
+
+        Args:
+            marcRecordIdentifier (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/SourceRecordStorageStream_set_marcRecordIdentifier_request.schema
+        """
+        return self.call("POST", "/source-storage/stream/marc-record-identifiers", data=marcRecordIdentifier)
 
 
 class SourceRecordStorageTestRecords(FolioApi):
@@ -260,7 +390,7 @@ class SourceRecordStorageSourceRecords(FolioApi):
                     Example:
                     
                      - 12345
-            recordType (str):  Filter by Record Type
+            recordType (str): (default=MARC) Filter by Record Type
                     
                     Example:
                     
@@ -327,6 +457,11 @@ class SourceRecordStorageSourceRecords(FolioApi):
                     Example:
                     
                      - INSTANCE
+            recordType (str): (default=MARC) Filter by Record Type
+                    
+                    Example:
+                    
+                     - MARC
             deleted (bool): (default=False) Filter by records with state ACTUAL OR state DELETED OR leader 05 status d, s, or x
                     
                     Example:
@@ -379,41 +514,6 @@ class SourceRecordStorageSourceRecords(FolioApi):
         return self.call("GET", f"/source-storage/source-records/{sourceRecordsId}", query=kwargs)
 
 
-class SourceRecordStorageHandlers(FolioApi):
-    """Source Record Storage Event Handlers API
-
-    API for event handling
-    """
-
-    def set_dataImport(self, dataImport: dict):
-        """
-
-        ``POST /source-storage/handlers/data-import``
-
-        Args:
-            dataImport (dict): See Schema below
-
-        Schema:
-
-            .. literalinclude:: ../files/SourceRecordStorageHandlers_set_dataImport_request.schema
-        """
-        return self.call("POST", "/source-storage/handlers/data-import", data=dataImport)
-
-    def set_updatedRecord(self, updatedRecord: dict):
-        """
-
-        ``POST /source-storage/handlers/updated-record``
-
-        Args:
-            updatedRecord (dict): See Schema below
-
-        Schema:
-
-            .. literalinclude:: ../files/SourceRecordStorageHandlers_set_updatedRecord_request.schema
-        """
-        return self.call("POST", "/source-storage/handlers/updated-record", data=updatedRecord)
-
-
 class SourceRecordStorageRecords(FolioApi):
     """Source Record Storage Record API
 
@@ -429,21 +529,6 @@ class SourceRecordStorageRecords(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
-            snapshotId (str):  Filter by Snapshot Id
-                    
-                    Example:
-                    
-                     - e5ddbbdc-90b3-498f-bb8f-49367ca4c142
-            state (str):  Filter by State
-                    
-                    Example:
-                    
-                     - ACTUAL
-            orderBy (list):  Sort Records
-                    
-                    Example:
-                    
-                     - ['order,ASC']
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -537,9 +622,6 @@ class SourceRecordStorageRecords(FolioApi):
         Args:
             recordsId (str)
             record (dict): See Schema below
-
-        Returns:
-            dict: See Schema below
 
         Raises:
             OkapiRequestNotFound: Not Found

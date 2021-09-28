@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Ledger fiscal year rollover progress",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "Id of ledger fiscal year rollover progress",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "ledgerRolloverId": {
+      "description": "Ledger fiscal year rollover UUID",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "overallRolloverStatus": {
+      "description": "Progress of the rollover process : Not Started, In Progress, Error, Success",
+      "type": "object",
+      "$ref": "../../mod-finance/schemas/rollover_status.json"
+    },
+    "budgetsClosingRolloverStatus": {
+      "description": "Progress of budgets closing rollover process : Not Started, In Progress, Error, Success",
+      "type": "object",
+      "$ref": "../../mod-finance/schemas/rollover_status.json"
+    },
+    "financialRolloverStatus": {
+      "description": "Progress of new budgets and encumbrance creation rollover process : Not Started, In Progress, Error, Success",
+      "type": "object",
+      "$ref": "../../mod-finance/schemas/rollover_status.json"
+    },
+    "ordersRolloverStatus": {
+      "description": "Progress of orders rollover process : Not Started, In Progress, Error, Success",
+      "type": "object",
+      "$ref": "../../mod-finance/schemas/rollover_status.json"
+    },
+    "metadata": {
+      "$ref": "../../../raml-util/schemas/metadata.schema",
+      "readonly": true,
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "ledgerRolloverId"
+  ]
+}

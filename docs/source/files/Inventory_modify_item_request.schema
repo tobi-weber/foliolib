@@ -54,6 +54,11 @@
       "description": "Text, with input likely validated by the barcode scanner",
       "type": "string"
     },
+    "effectiveShelvingOrder": {
+      "type": "string",
+      "description": "A system generated normalization of the call number that allows for call number sorting in reports and search results",
+      "readonly": true
+    },
     "accessionNumber": {
       "type": "string",
       "description": "Accession number is also called inventar number. Accession number is a unique number assigned to an item in the order in which it is added to a library collection. Most libraries assign accession numbers in continous numerical sequece, but some use a code system to indicate type of material and/or year of accession in addition to order of accession"
@@ -233,22 +238,27 @@
           "description": "Name of the item state (e.g. Available, Checked out, In transit, Awaiting pickup, On order). Default value is set to: Available",
           "type": "string",
           "enum": [
+            "Aged to lost",
             "Available",
-            "Awaiting pickup",
             "Awaiting delivery",
+            "Awaiting pickup",
             "Checked out",
-            "In process",
-            "In transit",
-            "Missing",
-            "On order",
-            "Paged",
-            "Declared lost",
-            "Order closed",
             "Claimed returned",
-            "Unknown",
-            "Withdrawn",
+            "Declared lost",
             "Lost and paid",
-            "Aged to lost"
+            "Long missing",
+            "Missing",
+            "In process",
+            "In process (non-requestable)",
+            "In transit",
+            "Intellectual item",
+            "On order",
+            "Order closed",
+            "Paged",
+            "Restricted",
+            "Unavailable",
+            "Unknown",
+            "Withdrawn"
           ]
         },
         "date": {

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-29
+# Generated at 2021-05-24
 
 import logging
 
@@ -140,28 +140,15 @@ class Interface(FolioApi):
         """
         return self.call("PUT", f"/organizations-storage/interfaces/{interfacesId}", data=interface)
 
-    def set_interface_by_interfacesId(self, interfacesId: str, interface: dict):
-        """Create a new interface credential
+    def set_interface_by_interfacesId(self, interfacesId: str):
+        """
 
         ``POST /organizations-storage/interfaces/{interfacesId}``
 
         Args:
             interfacesId (str)
-            interface (dict): See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-
-        Headers:
-            - **Location** - URI to the created interface credential
-
-        Schema:
-
-            .. literalinclude:: ../files/Interface_set_interface_by_interfacesId_request.schema
         """
-        return self.call("POST", f"/organizations-storage/interfaces/{interfacesId}", data=interface)
+        return self.call("POST", f"/organizations-storage/interfaces/{interfacesId}")
 
     def get_credential(self, interfacesId: str):
         """Retrieve credential item with given {credentialId}
@@ -219,28 +206,15 @@ class Interface(FolioApi):
         """
         return self.call("PUT", f"/organizations-storage/interfaces/{interfacesId}/credentials", data=credential)
 
-    def set_credential(self, interfacesId: str, credential: dict):
-        """Create a new interface credential
+    def set_credential(self, interfacesId: str):
+        """
 
         ``POST /organizations-storage/interfaces/{interfacesId}/credentials``
 
         Args:
             interfacesId (str)
-            credential (dict): See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-
-        Headers:
-            - **Location** - URI to the created interface credential
-
-        Schema:
-
-            .. literalinclude:: ../files/Interface_set_credential_request.schema
         """
-        return self.call("POST", f"/organizations-storage/interfaces/{interfacesId}/credentials", data=credential)
+        return self.call("POST", f"/organizations-storage/interfaces/{interfacesId}/credentials")
 
 
 class Contact(FolioApi):

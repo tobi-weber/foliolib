@@ -13,8 +13,8 @@ import requests
 from foliolib.config import Config
 from foliolib.okapi import okapiModule
 from foliolib.okapi.exceptions import (OkapiException, OkapiFatalError,
-                                       OkapiMoved, OkapiRequestConflict,
-                                       OkapiRequestError,
+                                       OkapiMoved, OkapiNotReachable,
+                                       OkapiRequestConflict, OkapiRequestError,
                                        OkapiRequestForbidden,
                                        OkapiRequestNotAcceptable,
                                        OkapiRequestNotFound,
@@ -47,8 +47,6 @@ class OkapiClient:
     https://s3.amazonaws.com/foliodocs/api/okapi/p/okapi.html
     """
 
-    tenant_access_tokens = {}
-
     def __init__(self, host: str = None, port: str = None) -> None:
         """
         Args:
@@ -59,9 +57,8 @@ class OkapiClient:
         port = port or Config().okapicfg().get("Okapi", "port")
         self._host = f"http://{host}:{port}"
         self._client = requests.Session()
-
         self._access_token = Config().okapicfg().get(
-            "Okapi", "token") if Config().okapicfg().has_option("Okapi", "token") else None
+            "Tokens", "supertenant") if Config().okapicfg().has_option("Tokens", "supertenant") else None
         self.headers = None
         self.status_code = 0
 
@@ -87,6 +84,7 @@ class OkapiClient:
         Args:
             name (str): Name of the enviroment variable.
             value (str): Value of the enviroment variable.
+            description (str): Optional description for the enviroment variable.
 
         Returns:
             dict: Dict of the enviroment variable.
@@ -333,7 +331,9 @@ class OkapiClient:
         Returns:
             dict: Dict with a interface of a tenant.
         """
-        return self._request("GET", f"/_/proxy/tenants/{tenantId}/interfaces/{interfaceId}", query=kwargs)
+        kwargs["provide"] = interfaceId
+        return self._request("GET", f"/_/proxy/tenants/{tenantId}/modules", query=kwargs)
+        # return self._request("GET", f"/_/proxy/tenants/{tenantId}/interfaces/{interfaceId}", query=kwargs)
 
     def create_tenant(self, tenantId: str, name: str = "", description: str = ""):
         """Create a new tenant
@@ -358,7 +358,7 @@ class OkapiClient:
             name (str, optional): Name of the tenant. Defaults to "".
             description (str, optional): Description of the tenant. Defaults to "".
         """
-        self._request("PUT", "/_/proxy/tenants",
+        self._request("PUT", f"/_/proxy/tenants/{tenantId}",
                       {"id": tenantId, "name": name, "description": description})
 
     def remove_tenant(self, tenantId: str):
@@ -658,8 +658,8 @@ class OkapiClient:
             service = "/" + service
         headers = headers or {}
         headers["X-Okapi-Tenant"] = tenantId
-        if tenantId in OkapiClient.tenant_access_tokens:
-            headers["X-Okapi-Token"] = OkapiClient.tenant_access_tokens[tenantId]
+        if tenantId in Config().okapicfg()["Tokens"]:
+            headers["X-Okapi-Token"] = Config().okapicfg()["Tokens"][tenantId]
         else:
             headers["X-Okapi-Token"] = ""
         res = self._request(method.upper(), service,
@@ -667,7 +667,8 @@ class OkapiClient:
         if "x-okapi-token" in self.headers:
             log.debug("Token for %s: %s", tenantId,
                       self.headers["X-Okapi-Token"])
-            OkapiClient.tenant_access_tokens[tenantId] = self.headers["X-Okapi-Token"]
+            Config().set_okapicfg("Tokens", tenantId,
+                                  self.headers["X-Okapi-Token"])
         if self.status_code >= 200 or self.status_code < 300:
             return res
         else:
@@ -735,8 +736,9 @@ class OkapiClient:
         try:
             response = self._client.send(request)
         except requests.exceptions.ConnectionError:
-            print(f"Okapi server {self._host} is not reachable!")
-            sys.exit(1)
+            log.error("Okapi server %s is not reachable!" % self._host)
+            raise OkapiNotReachable(
+                f"Okapi server {self._host} is not reachable!")
 
         log.debug("%s %s %i", method, url, response.status_code)
         log.debug(headers)

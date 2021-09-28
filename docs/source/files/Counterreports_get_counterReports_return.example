@@ -7,7 +7,9 @@
     	"release": "4",
     	"reportName": "JR1",
     	"yearMonth": "2018-07",
-    	"report": {}
+    	"report": {},
+    	"reportEditedManually": false,
+      "editReason": ""
     },
     {
     	"id": "8c6b1c02-e153-4413-970b-1b1a3eca1330",
@@ -16,7 +18,9 @@
     	"release": "5",
     	"reportName": "TR_J1",
     	"yearMonth": "2018-07",
-    	"report": {}
+    	"report": {},
+    	"reportEditedManually": true,
+      "editReason": "reason for manually editing"
     }
   ],
   "totalRecords": 2

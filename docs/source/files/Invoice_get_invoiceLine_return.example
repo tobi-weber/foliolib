@@ -52,19 +52,25 @@
     }
   ],
   "invoiceId": "c0d08448-347b-418a-8c2f-5fb50248d67e",
-  "invoiceLineNumber": "123invoicenumber45-1",
+  "invoiceLineNumber": "1",
   "invoiceLineStatus": "Open",
   "poLineId": "e8971620-8ee4-4f3b-b5b5-93b864df16ed",
   "productId": "9780764354113",
   "productIdType": "8261054f-be78-422d-bd51-4ed9f33c3422",
   "quantity": 3,
+  "referenceNumbers": [
+    {
+      "refNumber": "refNumExample",
+      "refNumberType": "Vendor title number",
+      "vendorDetailsSource": "InvoiceLine"
+    }
+  ],
   "releaseEncumbrance": true,
   "subscriptionInfo": "Subscription information",
   "subscriptionStart": "2018-08-01T00:00:00.000+0000",
   "subscriptionEnd": "2019-01-01T00:00:00.000+0000",
   "subTotal": 25.00,
   "total": 33.50,
-  "vendorRefNo": "1",
   "tags": {
       "tagList": [
         "tag"

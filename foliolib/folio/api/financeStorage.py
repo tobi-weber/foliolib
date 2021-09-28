@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-29
+# Generated at 2021-05-24
 
 import logging
 
@@ -995,6 +995,139 @@ class FundType(FolioApi):
         return self.call("PUT", f"/finance-storage/fund-types/{fundTypesId}", data=fundType)
 
 
+class LedgerRolloverErrors(FolioApi):
+    """mod-finance-storage (Ledger Rollover Error Report)
+
+    **CRUD APIs used to manage ledger rollover errors.**
+    """
+
+    def get_ledgerRolloversErrors(self, **kwargs):
+        """Get list of rollovers errors
+
+        ``GET /finance-storage/ledger-rollovers-errors``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            query (str):  A query expressed as a CQL string
+                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
+                    using valid searchable fields.
+                    The first example below shows the general form of a full CQL query,
+                    but those fields might not be relevant in this context.
+                    
+                    with valid searchable fields: for example 'errorType'
+                    
+                    
+                    Example:
+                    
+                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
+                    
+                     - ["errorType", "Orders", "="]
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/LedgerRolloverErrors_get_ledgerRolloversErrors_return.schema 
+        """
+        return self.call("GET", "/finance-storage/ledger-rollovers-errors", query=kwargs)
+
+    def set_ledgerRolloversError(self, ledgerRolloversError: dict):
+        """Create a new ledgerRolloversError item.
+
+        ``POST /finance-storage/ledger-rollovers-errors``
+
+        Args:
+            ledgerRolloversError (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+
+        Headers:
+            - **Location** - URI to the created ledgerRolloversError item
+
+        Schema:
+
+            .. literalinclude:: ../files/LedgerRolloverErrors_set_ledgerRolloversError_request.schema
+        """
+        return self.call("POST", "/finance-storage/ledger-rollovers-errors", data=ledgerRolloversError)
+
+    def get_ledgerRolloversError(self, ledgerRolloversErrorsId: str):
+        """Retrieve ledgerRolloversError item with given {ledgerRolloversErrorId}
+
+        ``GET /finance-storage/ledger-rollovers-errors/{ledgerRolloversErrorsId}``
+
+        Args:
+            ledgerRolloversErrorsId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/LedgerRolloverErrors_get_ledgerRolloversError_return.schema 
+        """
+        return self.call("GET", f"/finance-storage/ledger-rollovers-errors/{ledgerRolloversErrorsId}")
+
+    def delete_ledgerRolloversError(self, ledgerRolloversErrorsId: str):
+        """Delete ledgerRolloversError item with given {ledgerRolloversErrorId}
+
+        ``DELETE /finance-storage/ledger-rollovers-errors/{ledgerRolloversErrorsId}``
+
+        Args:
+            ledgerRolloversErrorsId (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+        """
+        return self.call("DELETE", f"/finance-storage/ledger-rollovers-errors/{ledgerRolloversErrorsId}")
+
+    def modify_ledgerRolloversError(self, ledgerRolloversErrorsId: str, ledgerRolloversError: dict):
+        """Update ledgerRolloversError item with given {ledgerRolloversErrorId}
+
+        ``PUT /finance-storage/ledger-rollovers-errors/{ledgerRolloversErrorsId}``
+
+        Args:
+            ledgerRolloversErrorsId (str)
+            ledgerRolloversError (dict): See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/LedgerRolloverErrors_modify_ledgerRolloversError_request.schema
+        """
+        return self.call("PUT", f"/finance-storage/ledger-rollovers-errors/{ledgerRolloversErrorsId}", data=ledgerRolloversError)
+
+
 class Transaction(FolioApi):
     """mod-finance-storage (Transactions)
 
@@ -1557,3 +1690,269 @@ class Group(FolioApi):
             .. literalinclude:: ../files/Group_modify_group_request.schema
         """
         return self.call("PUT", f"/finance-storage/groups/{groupsId}", data=group)
+
+
+class LedgerRollover(FolioApi):
+    """mod-finance-storage (Ledger Rollover)
+
+    **CRUD APIs used to manage ledger rollover.**
+    """
+
+    def get_ledgerRollovers(self, **kwargs):
+        """Get list of rollovers
+
+        ``GET /finance-storage/ledger-rollovers``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            query (str):  A query expressed as a CQL string
+                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
+                    using valid searchable fields.
+                    The first example below shows the general form of a full CQL query,
+                    but those fields might not be relevant in this context.
+                    
+                    with valid searchable fields: for example code
+                    
+                    
+                    Example:
+                    
+                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
+                    
+                     - ["code", "MEDGRANT", "="]
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/LedgerRollover_get_ledgerRollovers_return.schema 
+        """
+        return self.call("GET", "/finance-storage/ledger-rollovers", query=kwargs)
+
+    def set_ledgerRollover(self, ledgerRollover: dict):
+        """Create a new ledgerRollover item.
+
+        ``POST /finance-storage/ledger-rollovers``
+
+        Args:
+            ledgerRollover (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+
+        Headers:
+            - **Location** - URI to the created ledgerRollover item
+
+        Schema:
+
+            .. literalinclude:: ../files/LedgerRollover_set_ledgerRollover_request.schema
+        """
+        return self.call("POST", "/finance-storage/ledger-rollovers", data=ledgerRollover)
+
+    def get_ledgerRollover(self, ledgerRolloversId: str):
+        """Retrieve ledgerRollover item with given {ledgerRolloverId}
+
+        ``GET /finance-storage/ledger-rollovers/{ledgerRolloversId}``
+
+        Args:
+            ledgerRolloversId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/LedgerRollover_get_ledgerRollover_return.schema 
+        """
+        return self.call("GET", f"/finance-storage/ledger-rollovers/{ledgerRolloversId}")
+
+    def delete_ledgerRollover(self, ledgerRolloversId: str):
+        """Delete ledgerRollover item with given {ledgerRolloverId}
+
+        ``DELETE /finance-storage/ledger-rollovers/{ledgerRolloversId}``
+
+        Args:
+            ledgerRolloversId (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+        """
+        return self.call("DELETE", f"/finance-storage/ledger-rollovers/{ledgerRolloversId}")
+
+    def modify_ledgerRollover(self, ledgerRolloversId: str, ledgerRollover: dict):
+        """Update ledgerRollover item with given {ledgerRolloverId}
+
+        ``PUT /finance-storage/ledger-rollovers/{ledgerRolloversId}``
+
+        Args:
+            ledgerRolloversId (str)
+            ledgerRollover (dict): See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/LedgerRollover_modify_ledgerRollover_request.schema
+        """
+        return self.call("PUT", f"/finance-storage/ledger-rollovers/{ledgerRolloversId}", data=ledgerRollover)
+
+
+class LedgerRolloverProgress(FolioApi):
+    """mod-finance-storage (Ledger Rollover Progress)
+
+    **CRUD APIs used to manage ledger rollover progress.**
+    """
+
+    def get_ledgerRolloversProgresses(self, **kwargs):
+        """Get list of rollovers progresses
+
+        ``GET /finance-storage/ledger-rollovers-progress``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            query (str):  A query expressed as a CQL string
+                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
+                    using valid searchable fields.
+                    The first example below shows the general form of a full CQL query,
+                    but those fields might not be relevant in this context.
+                    
+                    with valid searchable fields: for example code
+                    
+                    
+                    Example:
+                    
+                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
+                    
+                     - ["code", "MEDGRANT", "="]
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/LedgerRolloverProgress_get_ledgerRolloversProgresses_return.schema 
+        """
+        return self.call("GET", "/finance-storage/ledger-rollovers-progress", query=kwargs)
+
+    def set_ledgerRolloversProgress(self, ledgerRolloversProgress: dict):
+        """Create a new ledgerRolloversProgress item.
+
+        ``POST /finance-storage/ledger-rollovers-progress``
+
+        Args:
+            ledgerRolloversProgress (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+
+        Headers:
+            - **Location** - URI to the created ledgerRolloversProgress item
+
+        Schema:
+
+            .. literalinclude:: ../files/LedgerRolloverProgress_set_ledgerRolloversProgress_request.schema
+        """
+        return self.call("POST", "/finance-storage/ledger-rollovers-progress", data=ledgerRolloversProgress)
+
+    def get_ledgerRolloversProgress(self, ledgerRolloversProgressId: str):
+        """Retrieve ledgerRolloversProgress item with given {ledgerRolloversProgressId}
+
+        ``GET /finance-storage/ledger-rollovers-progress/{ledgerRolloversProgressId}``
+
+        Args:
+            ledgerRolloversProgressId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/LedgerRolloverProgress_get_ledgerRolloversProgress_return.schema 
+        """
+        return self.call("GET", f"/finance-storage/ledger-rollovers-progress/{ledgerRolloversProgressId}")
+
+    def delete_ledgerRolloversProgress(self, ledgerRolloversProgressId: str):
+        """Delete ledgerRolloversProgress item with given {ledgerRolloversProgressId}
+
+        ``DELETE /finance-storage/ledger-rollovers-progress/{ledgerRolloversProgressId}``
+
+        Args:
+            ledgerRolloversProgressId (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+        """
+        return self.call("DELETE", f"/finance-storage/ledger-rollovers-progress/{ledgerRolloversProgressId}")
+
+    def modify_ledgerRolloversProgress(self, ledgerRolloversProgressId: str, ledgerRolloversProgress: dict):
+        """Update ledgerRolloversProgress item with given {ledgerRolloversProgressId}
+
+        ``PUT /finance-storage/ledger-rollovers-progress/{ledgerRolloversProgressId}``
+
+        Args:
+            ledgerRolloversProgressId (str)
+            ledgerRolloversProgress (dict): See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/LedgerRolloverProgress_modify_ledgerRolloversProgress_request.schema
+        """
+        return self.call("PUT", f"/finance-storage/ledger-rollovers-progress/{ledgerRolloversProgressId}", data=ledgerRolloversProgress)

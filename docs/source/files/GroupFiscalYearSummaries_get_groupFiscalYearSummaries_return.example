@@ -3,16 +3,38 @@
     {
       "groupId": "f33ed99b-852a-4f90-9891-5efe0feab165",
       "fiscalYearId": "ac2164c7-ba3d-1bc2-a12c-e35ceccbfaf2",
-      "allocated": 100000.00,
-      "available": 60000.00,
-      "unavailable": 40000.00
+      "allocated": 24500,
+      "initialAllocation": 11000,
+      "allocationTo": 13500,
+      "allocationFrom": 0,
+      "available": 21990,
+      "netTransfers": 2500,
+      "unavailable": 10,
+      "expenditures": 10,
+      "encumbered": 0,
+      "awaitingPayment": 0,
+      "overEncumbrance": 0,
+      "overExpended": 0,
+      "totalFunding": 22000,
+      "cashBalance": 21990
     },
     {
       "groupId": "66f84ff8-68e1-4f10-8814-35bcd34c32a0",
       "fiscalYearId": "a4ee40d4-5176-4b76-aa46-2e17e9161795",
-      "allocated": 1000.00,
-      "available": 9.99,
-      "unavailable": 990.01
+      "allocated": 2450,
+      "initialAllocation": 1100,
+      "allocationTo": 1350,
+      "allocationFrom": 0,
+      "available": 2199,
+      "netTransfers": 250,
+      "unavailable": 1,
+      "expenditures": 1,
+      "encumbered": 0,
+      "awaitingPayment": 0,
+      "overEncumbrance": 0,
+      "overExpended": 0,
+      "totalFunding": 2200,
+      "cashBalance": 2199
     }
   ],
   "totalRecords": 2

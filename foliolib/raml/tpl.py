@@ -25,7 +25,7 @@ TYPES = {"string": "str",
          "datetime": "datetime",
          "UUID": "uuid",
          "currency_code": "currency_code",
-         "recordTypes": "recordTypes"}
+         "recordTypes": "recordTypes", }
 
 
 def get_module_code(name):
@@ -153,7 +153,7 @@ def get_doc(methodName: str, method: 'RamlMethod', methodSig: str, dataParam: st
         with open(os.path.join(FILESPATH, requestTypeFile), "w") as f:
             f.write(requestType)
         if "example" in requests:
-            if isinstance(requests["example"], dict):
+            if isinstance(requests["example"], dict) or isinstance(requests["example"], list):
                 requestExample = json.dumps(
                     requests["example"], indent=2)
             else:
@@ -244,12 +244,16 @@ def get_doc(methodName: str, method: 'RamlMethod', methodSig: str, dataParam: st
 def _get_query_args(queryData):
     args = []
     for k, v in queryData.items():
+        print(k, v)
         t = ""
         if "type" in v:
             if "type" == "enum":
                 t = "str: "+"|".join(v["enum"])
             else:
-                t = TYPES[v["type"]]
+                if v["type"] in TYPES:
+                    t = TYPES[v["type"]]
+                else:
+                    t = v["type"]
         elif "enum" in v:
             t = "str ({}):".format("|".join(v["enum"]))
         elif "pattern" in v:

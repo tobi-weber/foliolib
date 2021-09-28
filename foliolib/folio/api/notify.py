@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-29
+# Generated at 2021-05-24
 
 import logging
 
@@ -86,30 +86,12 @@ class Notify(FolioApi):
         """
         return self.call("POST", "/notify", data=notify)
 
-    def delete_notifies(self, **kwargs):
+    def delete_notifies(self):
         """
 
         ``DELETE /notify``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            olderthan (str):  Delete all seen notifications not modified since this timestamp
-                    
-                    Example:
-                    
-                     - 2017-12-25
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
         """
-        return self.call("DELETE", "/notify", query=kwargs)
+        return self.call("DELETE", "/notify")
 
     def set__username(self, username: str, _username: dict, **kwargs):
         """Send notification to the user by user name
@@ -213,30 +195,12 @@ class Notify(FolioApi):
         """
         return self.call("POST", "/notify/_self", data=_self)
 
-    def delete__selves(self, **kwargs):
+    def delete__selves(self):
         """
 
         ``DELETE /notify/_self``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            olderthan (str):  Delete all seen notifications not modified since this timestamp
-                    
-                    Example:
-                    
-                     - 2017-12-25
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
         """
-        return self.call("DELETE", "/notify/_self", query=kwargs)
+        return self.call("DELETE", "/notify/_self")
 
     def get_notify(self, notifyId: str):
         """Retrieve notify item with given {notifyId}

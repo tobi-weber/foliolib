@@ -38,15 +38,14 @@
   "exportToAccounting": true,
   "folioInvoiceNo": "123invoicenumber45",
   "invoiceDate": "2018-07-20T00:00:00.000+0000",
-  "lockTotal": true,
+  "lockTotal": 64.50,
   "note": "Some note",
   "paymentDue": "2018-08-29T00:00:00.000+0000",
+  "paymentDate": "2018-08-29T00:10:00.000+0000",
   "paymentTerms": "Payment in Advance",
   "paymentMethod": "EFT",
   "status": "Reviewed",
   "source": "User",
-  "subTotal": 50.00,
-  "total": 64.50,
   "vendorInvoiceNo": "YK75851",
   "disbursementNumber": "58",
   "voucherNumber": "478",
@@ -56,6 +55,7 @@
     "AB268758XYZ"
   ],
   "vendorId": "168f8a63-d612-406e-813f-c7527f241ac3",
+  "accountNo": "GOBI-HIST-12",
   "manualPayment": true,
   "tags": {
     "tagList": [

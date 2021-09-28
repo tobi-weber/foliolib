@@ -15,6 +15,7 @@
   "type": "Payment",
   "voucherDate": "2019-05-06T00:00:00.000+0000",
   "voucherNumber": "1000",
+  "vendorId": "168f8a63-d612-406e-813f-c7527f241ac3",
   "acqUnitIds": [
     "1895e539-8dac-441e-b1f5-aab62b3fde60",
     "47f504bd-0c1b-498e-a2ae-e2f0a0cea273"

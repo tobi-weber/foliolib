@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-29
+# Generated at 2021-05-24
 
 import logging
 
@@ -401,295 +401,124 @@ class Marccat(FolioApi):
         return self.call("PUT", "/marccat/authority-record", data=authorityRecord)
 
     def set_authorityRecord(self):
-        """Create authority record
+        """
 
         ``POST /marccat/authority-record``
+        """
+        return self.call("POST", "/marccat/authority-record")
+
+    def get_authorityRecord(self, idRecord: str):
+        """Retrieve a list of authorityRecord items.
+
+        ``GET /marccat/authority-record/{idRecord}``
+
+        Args:
+            idRecord (str)
+
+        Returns:
+            dict: See Schema below
 
         Raises:
             OkapiRequestError: Bad Request
             OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-        """
-        return self.call("POST", "/marccat/authority-record")
 
-    def get_fromTemplate(self, idTemplate: str, **kwargs):
-        """Return a list of marc authority records and search metadata
+        Schema:
+
+            .. literalinclude:: ../files/Marccat_get_authorityRecord_return.schema 
+        """
+        return self.call("GET", f"/marccat/authority-record/{idRecord}")
+
+    def set_authorityRecord_for_idRecord(self, idRecord: str):
+        """
+
+        ``POST /marccat/authority-record/{idRecord}``
+
+        Args:
+            idRecord (str)
+        """
+        return self.call("POST", f"/marccat/authority-record/{idRecord}")
+
+    def get_fromTemplate(self, idTemplate: str):
+        """Get authority record template
 
         ``GET /marccat/authority-record/from-template/{idTemplate}``
 
         Args:
             idTemplate (str)
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
-                    
-                    Example:
-                    
-                     - 0
-            limit (int): (default=10) Limit the number of elements returned in the response
-                    
-                    Example:
-                    
-                     - 10
-            query (str):  A query expressed as a CQL string
-                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
-                    using valid searchable fields.
-                    The first example below shows the general form of a full CQL query,
-                    but those fields might not be relevant in this context.
-                    
-                    using CCL query in q parameter
-                    
-                    
-                    Example:
-                    
-                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
-                    
-                     - q=na "giannini"
 
         Returns:
             dict: See Schema below
 
         Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
             OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
 
             .. literalinclude:: ../files/Marccat_get_fromTemplate_return.schema 
         """
-        return self.call("GET", f"/marccat/authority-record/from-template/{idTemplate}", query=kwargs)
-
-    def delete_fromTemplate(self, idTemplate: str):
-        """Delete fromTemplate item with given {fromTemplateId}
-
-        ``DELETE /marccat/authority-record/from-template/{idTemplate}``
-
-        Args:
-            idTemplate (str)
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-        """
-        return self.call("DELETE", f"/marccat/authority-record/from-template/{idTemplate}")
-
-    def modify_fromTemplate(self, idTemplate: str, fromTemplate: dict):
-        """Update fromTemplate item with given {fromTemplateId}
-
-        ``PUT /marccat/authority-record/from-template/{idTemplate}``
-
-        Args:
-            idTemplate (str)
-            fromTemplate (dict): See Schema below
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/Marccat_modify_fromTemplate_request.schema
-        """
-        return self.call("PUT", f"/marccat/authority-record/from-template/{idTemplate}", data=fromTemplate)
+        return self.call("GET", f"/marccat/authority-record/from-template/{idTemplate}")
 
     def set_fromTemplate(self, idTemplate: str):
-        """Get authority record template
+        """
 
         ``POST /marccat/authority-record/from-template/{idTemplate}``
 
         Args:
             idTemplate (str)
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
         """
         return self.call("POST", f"/marccat/authority-record/from-template/{idTemplate}")
 
-    def get_fixedFieldDisplayValues(self, **kwargs):
-        """Return a list of marc authority records and search metadata
+    def get_fixedFieldDisplayValues(self):
+        """Get authority record template
 
         ``GET /marccat/authority-record/fixed-field-display-value``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
-                    
-                    Example:
-                    
-                     - 0
-            limit (int): (default=10) Limit the number of elements returned in the response
-                    
-                    Example:
-                    
-                     - 10
-            query (str):  A query expressed as a CQL string
-                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
-                    using valid searchable fields.
-                    The first example below shows the general form of a full CQL query,
-                    but those fields might not be relevant in this context.
-                    
-                    using CCL query in q parameter
-                    
-                    
-                    Example:
-                    
-                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
-                    
-                     - q=na "giannini"
 
         Returns:
             dict: See Schema below
 
         Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
             OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
 
             .. literalinclude:: ../files/Marccat_get_fixedFieldDisplayValues_return.schema 
         """
-        return self.call("GET", "/marccat/authority-record/fixed-field-display-value", query=kwargs)
-
-    def delete_fixedFieldDisplayValues(self):
-        """Delete fixedFieldDisplayValue item with given {fixedFieldDisplayValueId}
-
-        ``DELETE /marccat/authority-record/fixed-field-display-value``
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-        """
-        return self.call("DELETE", "/marccat/authority-record/fixed-field-display-value")
-
-    def modify_fixedFieldDisplayValue(self, fixedFieldDisplayValue: dict):
-        """Update fixedFieldDisplayValue item with given {fixedFieldDisplayValueId}
-
-        ``PUT /marccat/authority-record/fixed-field-display-value``
-
-        Args:
-            fixedFieldDisplayValue (dict): See Schema below
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/Marccat_modify_fixedFieldDisplayValue_request.schema
-        """
-        return self.call("PUT", "/marccat/authority-record/fixed-field-display-value", data=fixedFieldDisplayValue)
+        return self.call("GET", "/marccat/authority-record/fixed-field-display-value")
 
     def set_fixedFieldDisplayValue(self):
-        """Change the display value for 008 tag
+        """
 
         ``POST /marccat/authority-record/fixed-field-display-value``
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
         """
         return self.call("POST", "/marccat/authority-record/fixed-field-display-value")
 
-    def get_authFixedFieldsCodeGroups(self, **kwargs):
-        """Return a list of marc authority records and search metadata
+    def get_authFixedFieldsCodeGroups(self):
+        """Get authority record template
 
         ``GET /marccat/auth-fixed-fields-code-groups``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
-                    
-                    Example:
-                    
-                     - 0
-            limit (int): (default=10) Limit the number of elements returned in the response
-                    
-                    Example:
-                    
-                     - 10
-            query (str):  A query expressed as a CQL string
-                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
-                    using valid searchable fields.
-                    The first example below shows the general form of a full CQL query,
-                    but those fields might not be relevant in this context.
-                    
-                    using CCL query in q parameter
-                    
-                    
-                    Example:
-                    
-                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
-                    
-                     - q=na "giannini"
 
         Returns:
             dict: See Schema below
 
         Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
             OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
 
             .. literalinclude:: ../files/Marccat_get_authFixedFieldsCodeGroups_return.schema 
         """
-        return self.call("GET", "/marccat/auth-fixed-fields-code-groups", query=kwargs)
-
-    def delete_authFixedFieldsCodeGroups(self):
-        """Delete authFixedFieldsCodeGroup item with given {authFixedFieldsCodeGroupId}
-
-        ``DELETE /marccat/auth-fixed-fields-code-groups``
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-        """
-        return self.call("DELETE", "/marccat/auth-fixed-fields-code-groups")
-
-    def modify_authFixedFieldsCodeGroup(self, authFixedFieldsCodeGroup: dict):
-        """Update authFixedFieldsCodeGroup item with given {authFixedFieldsCodeGroupId}
-
-        ``PUT /marccat/auth-fixed-fields-code-groups``
-
-        Args:
-            authFixedFieldsCodeGroup (dict): See Schema below
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/Marccat_modify_authFixedFieldsCodeGroup_request.schema
-        """
-        return self.call("PUT", "/marccat/auth-fixed-fields-code-groups", data=authFixedFieldsCodeGroup)
+        return self.call("GET", "/marccat/auth-fixed-fields-code-groups")
 
     def set_authFixedFieldsCodeGroup(self):
-        """Get authority control fields values
+        """
 
         ``POST /marccat/auth-fixed-fields-code-groups``
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
         """
         return self.call("POST", "/marccat/auth-fixed-fields-code-groups")
 
@@ -704,9 +533,17 @@ class Marccat(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
 
             .. literalinclude:: ../files/Marccat_get_authHeaderTypes_return.schema 
         """
         return self.call("GET", "/marccat/auth-header-types")
+
+    def set_authHeaderType(self):
+        """
+
+        ``POST /marccat/auth-header-types``
+        """
+        return self.call("POST", "/marccat/auth-header-types")

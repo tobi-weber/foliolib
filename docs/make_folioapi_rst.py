@@ -7,7 +7,7 @@ FOLIOAPI_RST = os.path.join("source", "foliolib.folio.api.rst")
 
 RST_TPL = """
 foliolib.folio.api package
-=========================
+==========================
 
 Modules
 -------

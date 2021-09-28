@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Ledger fiscal year rollover error",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "Id of ledger fiscal year rollover progress",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "ledgerRolloverId": {
+      "description": "Ledger fiscal year rollover UUID",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "errorType": {
+      "description": "Type of rollover error",
+      "type": "string",
+      "enum": [
+        "Fund",
+        "Order"
+      ]
+    },
+    "failedAction": {
+      "description": "An action that failed during rollover",
+      "type": "string"
+    },
+    "errorMessage": {
+      "description": "Rollover error message",
+      "type": "string"
+    },
+    "details": {
+      "description": "Additional details about the rollover error",
+      "existingJavaType": "java.util.Map<String, Object>",
+      "type": "object"
+    },
+    "metadata": {
+      "$ref": "../../../raml-util/schemas/metadata.schema",
+      "readonly": true,
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "details",
+    "errorType",
+    "errorMessage",
+    "failedAction",
+    "ledgerRolloverId"
+  ]
+}

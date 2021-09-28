@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-29
+# Generated at 2021-05-24
 
 import logging
 
@@ -23,19 +23,6 @@ class Calendar(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
-            servicePointId (str):  Filter for service point. In case of parameter absence all service point will be included in response.
-            startDate (str):  Filter for start date (ISO 8601 date format). The parameter is inclusive.
-                    
-                    Example:
-                    
-                     - 2018-05-01
-            endDate (str):  Filter for end date (ISO 8601 date format). The parameter is inclusive.
-                    
-                    Example:
-                    
-                     - 2018-05-31
-            includeClosedDays (bool): (default=True) In case of true all days will have value even if it is closing time or not
-            actualOpening (bool): (default=True) In case of true exceptional openings are overriding regular opening and in this case regular opening is not included in the response
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -61,19 +48,13 @@ class Calendar(FolioApi):
         """
         return self.call("GET", "/calendar/periods", query=kwargs)
 
-    def get_periods_for_servicePoint(self, servicePointId: str, **kwargs):
+    def get_periods_for_servicePoint(self, servicePointId: str):
         """List library hours period. The default response contains the period names and its dates.
 
         ``GET /calendar/periods/{servicePointId}/period``
 
         Args:
             servicePointId (str)
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            withOpeningDays (bool): (default=False) Include opening days in response.
-            showPast (bool): (default=False) Include past openings in response.
-            showExceptional (bool): (default=False) Filter for exceptional library hours periods.
 
         Returns:
             dict: See Schema below
@@ -88,7 +69,7 @@ class Calendar(FolioApi):
 
             .. literalinclude:: ../files/Calendar_get_periods_for_servicePoint_return.schema 
         """
-        return self.call("GET", f"/calendar/periods/{servicePointId}/period", query=kwargs)
+        return self.call("GET", f"/calendar/periods/{servicePointId}/period")
 
     def set_period(self, servicePointId: str, period: dict):
         """Saves the new library period

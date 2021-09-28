@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-29
+# Generated at 2021-05-24
 
 import logging
 
@@ -784,28 +784,15 @@ class BatchVoucherExportConfiguration(FolioApi):
         """
         return self.call("PUT", f"/batch-voucher-storage/export-configurations/{exportConfigurationsId}", data=exportConfiguration)
 
-    def set_exportConfiguration_by_exportConfigurationsId(self, exportConfigurationsId: str, exportConfiguration: dict):
-        """Create credentials for a batch voucher configuration
+    def set_exportConfiguration_by_exportConfigurationsId(self, exportConfigurationsId: str):
+        """
 
         ``POST /batch-voucher-storage/export-configurations/{exportConfigurationsId}``
 
         Args:
             exportConfigurationsId (str)
-            exportConfiguration (dict): See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-
-        Headers:
-            - **Location** - URI to the created credentials
-
-        Schema:
-
-            .. literalinclude:: ../files/BatchVoucherExportConfiguration_set_exportConfiguration_by_exportConfigurationsId_request.schema
         """
-        return self.call("POST", f"/batch-voucher-storage/export-configurations/{exportConfigurationsId}", data=exportConfiguration)
+        return self.call("POST", f"/batch-voucher-storage/export-configurations/{exportConfigurationsId}")
 
     def get_credential(self, exportConfigurationsId: str):
         """Retrieve credential item with given {credentialId}
@@ -863,28 +850,15 @@ class BatchVoucherExportConfiguration(FolioApi):
         """
         return self.call("PUT", f"/batch-voucher-storage/export-configurations/{exportConfigurationsId}/credentials", data=credential)
 
-    def set_credential(self, exportConfigurationsId: str, credential: dict):
-        """Create credentials for a batch voucher configuration
+    def set_credential(self, exportConfigurationsId: str):
+        """
 
         ``POST /batch-voucher-storage/export-configurations/{exportConfigurationsId}/credentials``
 
         Args:
             exportConfigurationsId (str)
-            credential (dict): See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-
-        Headers:
-            - **Location** - URI to the created credentials
-
-        Schema:
-
-            .. literalinclude:: ../files/BatchVoucherExportConfiguration_set_credential_request.schema
         """
-        return self.call("POST", f"/batch-voucher-storage/export-configurations/{exportConfigurationsId}/credentials", data=credential)
+        return self.call("POST", f"/batch-voucher-storage/export-configurations/{exportConfigurationsId}/credentials")
 
 
 class BatchVoucherExports(FolioApi):

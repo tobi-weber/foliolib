@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-29
+# Generated at 2021-05-24
 
 import logging
 
@@ -44,6 +44,52 @@ class RecordsEditor(FolioApi):
             .. literalinclude:: ../files/RecordsEditor_get_records_return.schema 
         """
         return self.call("GET", "/records-editor/records", query=kwargs)
+
+    def set_record(self, record: dict):
+        """Create a new MARC record.
+
+        ``POST /records-editor/records``
+
+        Args:
+            record (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+
+        Schema:
+
+            .. literalinclude:: ../files/RecordsEditor_set_record_request.schema
+        """
+        return self.call("POST", "/records-editor/records", data=record)
+
+    def get_statuses(self, **kwargs):
+        """
+
+        ``GET /records-editor/records/status``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            qmRecordId (uuid):  UUID of ParsedRecord to be created
+                    
+                    Example:
+                    
+                     - c56b70ce-4ef6-47ef-8bc3-c470bafa0b8c
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/RecordsEditor_get_statuses_return.schema 
+        """
+        return self.call("GET", "/records-editor/records/status", query=kwargs)
 
     def modify_record(self, recordsId: str, record: dict):
         """Edit MARC record

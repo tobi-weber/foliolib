@@ -35,9 +35,15 @@
       ],
       "poLineId": "e8971620-8ee4-4f3b-b5b5-93b864df16ed",
       "invoiceId": "c0d08448-347b-418a-8c2f-5fb50248d67e",
-      "invoiceLineNumber": "123invoicenumber45-1",
+      "invoiceLineNumber": "1",
       "invoiceLineStatus": "Open",
-      "vendorRefNo": "2019-184",
+      "referenceNumbers": [
+        {
+          "refNumber": "refNumExample",
+          "refNumberType": "Vendor title number",
+          "vendorDetailsSource": "InvoiceLine"
+        }
+      ],
       "productId": "9780764354113",
       "productIdType": "8261054f-be78-422d-bd51-4ed9f33c3422",
       "comment": "Sample invoice line",

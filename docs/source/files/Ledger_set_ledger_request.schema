@@ -43,7 +43,6 @@
       "readonly": true
     },
     "netTransfers": {
-      "default": 0,
       "description": "Summing all the transfers from/to this ledger. Amount can be negative",
       "type": "number",
       "readonly": true
@@ -77,6 +76,56 @@
     "metadata": {
       "type": "object",
       "$ref": "../../../raml-util/schemas/metadata.schema",
+      "readonly": true
+    },
+    "initialAllocation": {
+      "description": "Summary of all related to this ledger budgets initialAllocation",
+      "type": "number",
+      "readonly": true
+    },
+    "allocationTo": {
+      "description": "Summary of all related to this ledger budgets allocationTo",
+      "type": "number",
+      "readonly": true
+    },
+    "allocationFrom": {
+      "description": "Summary of all related to this ledger budgets allocationFrom",
+      "type": "number",
+      "readonly": true
+    },
+    "totalFunding": {
+      "description": "Summary of all related to this ledger budgets totalFunding",
+      "type": "number",
+      "readonly": true
+    },
+    "cashBalance": {
+      "description": "Summary of all related to this ledger budgets cashBalance",
+      "type": "number",
+      "readonly": true
+    },
+    "awaitingPayment": {
+      "description": "Summary of all related to this ledger budgets awaitingPayment",
+      "type": "number",
+      "readonly": true
+    },
+    "encumbered": {
+      "description": "Summary of all related to this ledger budgets encumbered",
+      "type": "number",
+      "readonly": true
+    },
+    "expenditures": {
+      "description": "Summary of all related to this ledger budgets expenditures",
+      "type": "number",
+      "readonly": true
+    },
+    "overEncumbrance": {
+      "description": "Summary of all related to this ledger budgets overEncumbrance",
+      "type": "number",
+      "readonly": true
+    },
+    "overExpended": {
+      "description": "Summary of all related to this ledger budgets overExpended",
+      "type": "number",
       "readonly": true
     }
   },

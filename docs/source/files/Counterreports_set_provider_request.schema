@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Document containing a base64 encoded counter report with additional metadata",
+  "type": "object",
+  "properties": {
+    "reportMetadata": {
+      "description": "Report metadata",
+      "type": "object",
+      "$ref": "report_metadata.json"
+    },
+    "contents": {
+      "description": "Base64 encoded report file",
+      "type": "object",
+      "$ref": "report_data.json"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "reportMetadata",
+    "contents"
+  ]
+}

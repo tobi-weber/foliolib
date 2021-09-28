@@ -86,6 +86,7 @@
         "Encumbrance",
         "Payment",
         "Pending payment",
+        "Rollover transfer",
         "Transfer"
       ],
       "type": "string"

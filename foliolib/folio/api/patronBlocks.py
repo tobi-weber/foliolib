@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-29
+# Generated at 2021-05-24
 
 import logging
 
@@ -254,6 +254,25 @@ class EventHandlers(FolioApi):
         """
         return self.call("POST", "/automated-patron-blocks/handlers/item-declared-lost", data=itemDeclaredLost)
 
+    def set_itemAgedToLost(self, itemAgedToLost: dict):
+        """
+
+        ``POST /automated-patron-blocks/handlers/item-aged-to-lost``
+
+        Args:
+            itemAgedToLost (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/EventHandlers_set_itemAgedToLost_request.schema
+        """
+        return self.call("POST", "/automated-patron-blocks/handlers/item-aged-to-lost", data=itemAgedToLost)
+
     def set_itemClaimedReturned(self, itemClaimedReturned: dict):
         """
 
@@ -370,31 +389,15 @@ class PatronBlockConditions(FolioApi):
         """
         return self.call("GET", f"/patron-block-conditions/{patronBlockConditionId}")
 
-    def modify_patronBlockCondition(self, patronBlockConditionId: str, patronBlockCondition: dict, **kwargs):
-        """Update patronBlockCondition item with given {patronBlockConditionId}
+    def modify_patronBlockCondition(self, patronBlockConditionId: str):
+        """
 
         ``PUT /patron-block-conditions/{patronBlockConditionId}``
 
         Args:
             patronBlockConditionId (str)
-            patronBlockCondition (dict)
-            **kwargs (properties): Keyword Arguments: See Schema below
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Schema:
-
-            .. literalinclude:: ../files/PatronBlockConditions_modify_patronBlockCondition_request.schema
         """
-        return self.call("PUT", f"/patron-block-conditions/{patronBlockConditionId}", data=patronBlockCondition, query=kwargs)
+        return self.call("PUT", f"/patron-block-conditions/{patronBlockConditionId}")
 
 
 class AutomatedPatronBlocks(FolioApi):

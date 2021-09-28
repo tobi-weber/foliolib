@@ -2,10 +2,128 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "A budget",
   "type": "object",
-  "extends": {
-    "$ref": "../../mod-finance/schemas/budget.json"
-  },
   "properties": {
+    "id": {
+      "description": "UUID of this budget",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "name": {
+      "description": "The name of the budget",
+      "type": "string"
+    },
+    "budgetStatus": {
+      "description": "The status of the budget",
+      "type": "string",
+      "enum": [
+        "Active",
+        "Frozen",
+        "Inactive",
+        "Planned",
+        "Closed"
+      ]
+    },
+    "allowableEncumbrance": {
+      "description": "The encumbrance percentage limit for this budget",
+      "type": "number"
+    },
+    "allowableExpenditure": {
+      "description": "The expenditure percentage limit for this budget",
+      "type": "number"
+    },
+    "allocated": {
+      "description": "The amount currently allocated to this budget",
+      "type": "number"
+    },
+    "awaitingPayment": {
+      "default": 0,
+      "description": "The amount currently awaiting payment for this budget",
+      "type": "number"
+    },
+    "available": {
+      "description": "The amount currently available for this budge",
+      "type": "number",
+      "readonly": true
+    },
+    "encumbered": {
+      "default": 0,
+      "description": "The amount currently encumbered for this budget",
+      "type": "number"
+    },
+    "expenditures": {
+      "default": 0,
+      "description": "The amount currently expended for this budget",
+      "type": "number"
+    },
+    "netTransfers": {
+      "default": 0,
+      "description": "Summing all the transfers on this budget",
+      "type": "number"
+    },
+    "unavailable": {
+      "description": "Unavailable amount for this budget",
+      "type": "number",
+      "readonly": true
+    },
+    "overEncumbrance": {
+      "description": "The amount currently over-encumbered for this budget",
+      "type": "number",
+      "readonly": true
+    },
+    "overExpended": {
+      "description": "Amount the budget is over expended.",
+      "type": "number",
+      "readonly": true
+    },
+    "fundId": {
+      "description": "UUID of fund",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "fiscalYearId": {
+      "description": "UUID of fiscal year",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "acqUnitIds": {
+      "description": "acquisition unit ids associated with this budget",
+      "type": "array",
+      "items": {
+        "$ref": "../../common/schemas/uuid.json"
+      }
+    },
+    "tags": {
+      "type": "object",
+      "description": "arbitrary tags associated with this budget",
+      "$ref": "../../../raml-util/schemas/tags.schema"
+    },
+    "metadata": {
+      "type": "object",
+      "$ref": "../../../raml-util/schemas/metadata.schema",
+      "readonly": true
+    },
+    "initialAllocation": {
+      "description": "The amount of the first allocation made to this budget",
+      "type": "number",
+      "readonly": true
+    },
+    "allocationTo": {
+      "description": "The sum of all allocation transaction amounts made TO this budget not including the Initial allocation",
+      "type": "number",
+      "readonly": true
+    },
+    "allocationFrom": {
+      "description": "The sum of all allocation transaction amounts made FROM this budget not including the Initial allocation",
+      "type": "number",
+      "readonly": true
+    },
+    "totalFunding": {
+      "description": "budget.allocated + budget.netTransfers",
+      "type": "number",
+      "readonly": true
+    },
+    "cashBalance": {
+      "description": "Total Funding minus Expended",
+      "type": "number",
+      "readonly": true
+    },
     "statusExpenseClasses": {
       "description": "Expense classes associated with this budget",
       "type": "array",
@@ -16,5 +134,8 @@
       }
     }
   },
-  "additionalProperties": false
+  "additionalProperties": false,
+  "required": [
+    "allocated"
+  ]
 }

@@ -34,6 +34,7 @@ RESPONSES = {202: Success,
              408: OkapiRequestTimeout,
              409: OkapiRequestConflict,
              413: OkapiRequestPayloadToLarge,
+             415: OkapiRequestError,  # TODO:
              422: OkapiRequestUnprocessableEntity,
              }
 
@@ -125,10 +126,12 @@ class RamlMethod:
                         traitData = json.dumps(traitData, indent=2)
                         traitParams = re.findall("<<(.+?)>>", traitData)
                         for traitParam in traitParams:
-                            param = params[traitParam].replace("\"",
-                                                               "\\\"")
-                            traitData = traitData.replace(f"<<{traitParam}>>",
-                                                          param)
+                            v = params[traitParam]
+                            if isinstance(v, str):
+                                param = v.replace("\"",
+                                                  "\\\"")
+                                traitData = traitData.replace(f"<<{traitParam}>>",
+                                                              param)
                         traitData = json.loads(traitData)
                     if "queryParameters" in traitData:
                         self._set_queryParameters(traitData["queryParameters"])
@@ -197,7 +200,7 @@ class RamlMethod:
                     "text/csv" in body or "text/json" in body or\
                     "text/html" in body or "text/xml" in body:
                 bodyData["pyType"] = "str"
-            elif "application/octet-stream" in body:
+            elif "application/octet-stream" in body or "binary/octet-stream" in body:
                 bodyData["pyType"] = "binary"
             else:
                 raise RamlUnknownDataType([*body][0])

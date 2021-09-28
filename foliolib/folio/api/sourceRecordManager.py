@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-29
+# Generated at 2021-05-24
 
 import logging
 
@@ -186,9 +186,6 @@ class ChangeManager(FolioApi):
         Args:
             jobExecutionsId (str)
             jobExecution (dict): See Schema below
-
-        Returns:
-            dict: See Schema below
 
         Raises:
             OkapiRequestNotFound: Not Found

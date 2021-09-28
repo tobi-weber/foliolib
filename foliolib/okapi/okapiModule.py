@@ -4,7 +4,7 @@
 import json
 import logging
 import os
-from typing import Union
+from typing import List, Union
 
 from foliolib.config import Config
 from foliolib.okapi import okapiClient
@@ -12,58 +12,22 @@ from foliolib.okapi import okapiClient
 log = logging.getLogger("foliolib.okapi.okapiModule")
 
 
-def create_okapiModule(name: str, version: str = None):
-    """Create a instance of OkapiModule
-
-    Args:
-        name (str): Name of the module
-        version (str, optional): Version of the okapi module. Defaults to None.
-
-    Returns:
-        [OkapiModule]: Instance of OkapiModule
-    """
-    log.info("Create Descriptor: %s - %s", name, version)
-    cache_dir = Config().foliolibcfg().get("Cache", "descriptors")
-    descriptor_fname = f"ModuleDescriptor-{name}-{version}.json"
-    fname_cache = os.path.join(cache_dir, descriptor_fname)
-    if os.path.exists(fname_cache):
-        log.info("Load descriptor from %s", fname_cache)
-        with open(fname_cache) as f:
-            descriptor = json.load(f)
-        module = OkapiModule(descriptor)
-    else:
-        module = OkapiModule(name, version=version)
-        log.debug("Create descriptor for %s", module.get_modId())
-        descriptor_fname = f"ModuleDescriptor-{module.get_modId()}.json"
-        fname_cache = os.path.join(cache_dir, descriptor_fname)
-        log.debug("Write descriptor to %s", fname_cache)
-        with open(fname_cache, "w") as f:
-            json.dump(module.get_descriptor(), f, indent=2)
-    log.debug("Docker Image: %s", module.get_docker_image())
-
-    return module
-
-
-def create_okapiModules(modlist: dict):
-    return [create_okapiModule(name, version=version)
-            for name, version in modlist.items()]
-
-
 class OkapiModule:
     """Defines an okapi module.
     """
 
-    def __init__(self, descriptor: Union[dict, str], version: str = None) -> None:
+    def __init__(self, module: Union[dict, str]) -> None:
         """
         Args:
-            descriptor (Union[dict, str]): ModuleDescriptor or Module name, e.g. mod-users
+            module (Union[dict, str]): ModuleDescriptor or Module name, e.g. mod-users
             version (str, optional): Optional module version if value of descriptor is a Module name. Defaults to None.
         """
-        if isinstance(descriptor, dict):
-            self._descriptor = descriptor
-        elif isinstance(descriptor, str):
-            self._descriptor = self.__get_descriptor(descriptor, version)
-        self.__remove_db_config()
+        if isinstance(module, dict):
+            self._descriptor = module
+        elif isinstance(module, str):
+            self._descriptor = self.__get_descriptor(module)
+        log.debug("OkapiModule %s", self.get_modId())
+        self.__clean_env()
         self.__set_modules_parameters()
 
     def get_modId(self):
@@ -104,6 +68,9 @@ class OkapiModule:
         else:
             return []
 
+    def has_requirement(self, require: str):
+        return require in self.get_provides()
+
     def get_docker_image(self):
         """ Get docker image name
 
@@ -115,21 +82,25 @@ class OkapiModule:
         else:
             return ""
 
-    def __get_descriptor(self, name: str, version: str = None):
+    def __get_descriptor(self, modId: str):
         host = Config().foliolibcfg().get("PullNode", "host")
         port = Config().foliolibcfg().get("PullNode", "port")
-        log.info("Pull descriptor for %s-%s from %s:%s",
-                 name, str(version), host, port)
+        log.info("Pull descriptor for %s from %s:%s",
+                 modId, host, port)
         client = okapiClient.OkapiClient(host=host, port=port)
-        if version is None:
-            log.info("Get version for %s from latest release", name)
-            version = okapiClient.request_release(name)["version"]
-            log.info("Version is %s", version)
-        modId = f"{name}-{version}"
         descriptor = client.get_module(modId)
         if "launchDescriptor" in descriptor:
             descriptor["launchDescriptor"]["dockerPull"] = True
         return descriptor
+
+    def __clean_env(self):
+        if "launchDescriptor" in self._descriptor:
+            if "env" in self._descriptor["launchDescriptor"]:
+                env = [item for item in self._descriptor["launchDescriptor"]["env"]
+                       if not item["name"].startswith("DB_")
+                       and not item["name"].startswith("KAFKA_")
+                       and not item["name"].startswith(("OKAPI_URL"))]
+                self._descriptor["launchDescriptor"]["env"] = env
 
     def __set_modules_parameters(self):
 
@@ -150,9 +121,59 @@ class OkapiModule:
                     remove_entry(env, k)
                     env.append({"name": k.upper(), "value": v})
 
-    def __remove_db_config(self):
-        if "launchDescriptor" in self._descriptor:
-            if "env" in self._descriptor["launchDescriptor"]:
-                env = [item for item in self._descriptor["launchDescriptor"]["env"]
-                       if not item["name"].startswith("DB_")]
-                self._descriptor["launchDescriptor"]["env"] = env
+
+def create_okapiModule(name: str):
+    """Create a instance of OkapiModule
+
+    Args:
+        name (str): Name of the module
+
+    Returns:
+        [OkapiModule]: Instance of OkapiModule
+    """
+    log.info("Create Descriptor: %s", name)
+    cache_dir = Config().foliolibcfg().get("Cache", "descriptors")
+    descriptor_fname = f"ModuleDescriptor-{name}.json"
+    fname_cache = os.path.join(cache_dir, descriptor_fname)
+    if os.path.exists(fname_cache):
+        log.info("Load descriptor from %s", fname_cache)
+        with open(fname_cache) as f:
+            descriptor = json.load(f)
+        module = OkapiModule(descriptor)
+    else:
+        module = OkapiModule(name)
+        log.debug("Create descriptor for %s", module.get_modId())
+        descriptor_fname = f"ModuleDescriptor-{module.get_modId()}.json"
+        fname_cache = os.path.join(cache_dir, descriptor_fname)
+        log.debug("Write descriptor to %s", fname_cache)
+        with open(fname_cache, "w") as f:
+            json.dump(module.get_descriptor(), f, indent=2)
+    log.debug("Docker Image: %s", module.get_docker_image())
+
+    return module
+
+
+def create_okapiModules(modIds: List[str]):
+    return [create_okapiModule(modId)
+            for modId in modIds]
+
+
+def sort_modules_by_requirements(modules: List[OkapiModule]):
+    _modules = []
+
+    def add_module(module):
+        if not module in _modules:
+            _modules.append(module)
+
+    def resolve_requirements(module):
+        for require in module.get_requires():
+            for module in modules:
+                if require in module.get_provides():
+                    resolve_requirements(module)
+                    add_module(module)
+
+    for module in modules:
+        resolve_requirements(module)
+        add_module(module)
+
+    return _modules

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-29
+# Generated at 2021-05-24
 
 import logging
 
@@ -131,9 +131,6 @@ class DataImport(FolioApi):
             uploadDefinitionId (str)
             uploadDefinition (dict): See Schema below
 
-        Returns:
-            dict: See Schema below
-
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
@@ -218,18 +215,14 @@ class DataImport(FolioApi):
         
         return self.call("POST", f"/data-import/uploadDefinitions/{uploadDefinitionId}/files/{fileId}", headers=headers, data=data)
 
-    def set_processFile(self, uploadDefinitionId: str, processFile: dict, **kwargs):
+    def set_processFile(self, uploadDefinitionId: str, processFile: dict):
         """Starts the file processing
 
         ``POST /data-import/uploadDefinitions/{uploadDefinitionId}/processFiles``
 
         Args:
             uploadDefinitionId (str)
-            processFile (dict)
-            **kwargs (properties): Keyword Arguments: See Schema below
-
-        Keyword Args:
-            defaultMapping (bool): (default=False) Boolean value which defines a mapping
+            processFile (dict): See Schema below
 
         Raises:
             OkapiRequestError: Bad Request
@@ -241,7 +234,7 @@ class DataImport(FolioApi):
 
             .. literalinclude:: ../files/DataImport_set_processFile_request.schema
         """
-        return self.call("POST", f"/data-import/uploadDefinitions/{uploadDefinitionId}/processFiles", data=processFile, query=kwargs)
+        return self.call("POST", f"/data-import/uploadDefinitions/{uploadDefinitionId}/processFiles", data=processFile)
 
     def get_fileExtensions(self, **kwargs):
         """Get a list of definitions
@@ -359,9 +352,6 @@ class DataImport(FolioApi):
         Args:
             fileExtensionsId (str)
             fileExtension (dict): See Schema below
-
-        Returns:
-            dict: See Schema below
 
         Raises:
             OkapiRequestNotFound: Not Found

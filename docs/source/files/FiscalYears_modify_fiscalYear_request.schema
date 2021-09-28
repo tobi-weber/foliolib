@@ -45,6 +45,10 @@
       "description": "The fiscal year series",
       "type": "string"
     },
+    "financialSummary": {
+      "description": "Includes Funding information and Financial activity",
+      "$ref": "fiscal_year_financial_summary.json"
+    },
     "metadata": {
       "type": "object",
       "$ref": "../../../raml-util/schemas/metadata.schema",

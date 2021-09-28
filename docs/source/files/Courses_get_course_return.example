@@ -3,5 +3,6 @@
   "name": "Underwater Basket Weaving 101",
   "description": "Introduction to Aquatic Wickercraft",
   "departmentId": "8b4c9708-49ed-4b99-8383-7a9a3eef01c9",
-  "courseListingId": "e5f71572-d9ef-4710-9fb0-25859845a12c"
+  "courseListingId": "e5f71572-d9ef-4710-9fb0-25859845a12c",
+  "numberOfStudents": 42
 }

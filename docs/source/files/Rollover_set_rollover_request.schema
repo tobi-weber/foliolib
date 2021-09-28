@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Ledger fiscal year rollover",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "id of ledger fiscal year rollover",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "ledgerId": {
+      "description": "Ledger UUID for which rollover was started",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "fromFiscalYearId": {
+      "description": "UUID of the fiscal year from which rollover will be happened",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "toFiscalYearId": {
+      "description": "UUID of the fiscal year to which rollover will be happened",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "restrictEncumbrance": {
+      "description": "Imposes restrictions on encumbrances",
+      "type": "boolean",
+      "default": false
+    },
+    "restrictExpenditures": {
+      "description": "Imposes restrictions on payments",
+      "type": "boolean",
+      "default": false
+    },
+    "needCloseBudgets": {
+      "description": "Control that all budget must be closed in rollover time",
+      "type": "boolean",
+      "default": true
+    },
+    "currencyFactor": {
+      "description": "Currency factor",
+      "type": "integer",
+      "readonly": true
+    },
+    "budgetsRollover": {
+      "description": "Budget rollover info",
+      "type": "array",
+      "id": "budgetsRollover",
+      "items": {
+        "type": "object",
+        "$ref": "budget_rollover.json"
+      }
+    },
+    "encumbrancesRollover": {
+      "description": "Encumbrances rollover info",
+      "id": "encumbrancesRollover",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "encumbrance_rollover.json"
+      }
+    },
+    "metadata": {
+      "$ref": "../../../raml-util/schemas/metadata.schema",
+      "readonly": true,
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "ledgerId",
+    "fromFiscalYearId",
+    "toFiscalYearId",
+    "budgetsRollover",
+    "encumbrancesRollover"
+  ]
+}

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-29
+# Generated at 2021-05-24
 
 import logging
 
@@ -178,33 +178,6 @@ class Circulation(FolioApi):
         """
         return self.call("POST", "/circulation/check-out-by-barcode", data=checkOutByBarcode, query=kwargs)
 
-    def set_overrideCheckOutByBarcode(self, overrideCheckOutByBarcode: dict, **kwargs):
-        """Creates a loan by checking out an item to a loanee
-
-        ``POST /circulation/override-check-out-by-barcode``
-
-        Args:
-            overrideCheckOutByBarcode (dict)
-            **kwargs (properties): Keyword Arguments: See Schema below
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Schema:
-
-            .. literalinclude:: ../files/Circulation_set_overrideCheckOutByBarcode_request.schema
-            .. literalinclude:: ../files/Circulation_set_overrideCheckOutByBarcode_return.schema 
-        """
-        return self.call("POST", "/circulation/override-check-out-by-barcode", data=overrideCheckOutByBarcode, query=kwargs)
-
     def set_renewByBarcode(self, renewByBarcode: dict, **kwargs):
         """Updates the due date of an existing loan
 
@@ -258,33 +231,6 @@ class Circulation(FolioApi):
             .. literalinclude:: ../files/Circulation_set_renewById_return.schema 
         """
         return self.call("POST", "/circulation/renew-by-id", data=renewById, query=kwargs)
-
-    def set_overrideRenewalByBarcode(self, overrideRenewalByBarcode: dict, **kwargs):
-        """Updates the due date of an existing loan
-
-        ``POST /circulation/override-renewal-by-barcode``
-
-        Args:
-            overrideRenewalByBarcode (dict)
-            **kwargs (properties): Keyword Arguments: See Schema below
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Schema:
-
-            .. literalinclude:: ../files/Circulation_set_overrideRenewalByBarcode_request.schema
-            .. literalinclude:: ../files/Circulation_set_overrideRenewalByBarcode_return.schema 
-        """
-        return self.call("POST", "/circulation/override-renewal-by-barcode", data=overrideRenewalByBarcode, query=kwargs)
 
     def set_checkInByBarcode(self, checkInByBarcode: dict, **kwargs):
         """Updates the status of an existing loan
@@ -388,9 +334,6 @@ class Circulation(FolioApi):
         """
 
         ``DELETE /circulation/loans``
-
-        Raises:
-            OkapiFatalError: Server Error
         """
         return self.call("DELETE", "/circulation/loans")
 
@@ -529,10 +472,6 @@ class Circulation(FolioApi):
         """
 
         ``DELETE /circulation/requests``
-
-        Raises:
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
         """
         return self.call("DELETE", "/circulation/requests")
 
@@ -643,7 +582,7 @@ class Circulation(FolioApi):
         return self.call("POST", f"/circulation/requests/queue/{itemId}/reorder", data=reorder)
 
     def set_instance(self, instance: dict, **kwargs):
-        """Creates a request for a specific item from the given instance ID
+        """Creates a request for any item from the given instance ID
 
         ``POST /circulation/requests/instances``
 
@@ -1064,6 +1003,33 @@ class EndPatronActionSession(FolioApi):
             .. literalinclude:: ../files/EndPatronActionSession_set_endPatronActionSession_request.schema
         """
         return self.call("POST", "/circulation/end-patron-action-session", data=endPatronActionSession)
+
+
+class AgeToLostBackgroundProcesses(FolioApi):
+    """Background processes for ageing borrowed items to lost
+
+    **Background processes for ageing borrowed items to lost**
+    """
+
+    def set_scheduledAgeToLost(self):
+        """
+
+        ``POST /circulation/scheduled-age-to-lost``
+
+        Raises:
+            OkapiFatalError: Server Error
+        """
+        return self.call("POST", "/circulation/scheduled-age-to-lost")
+
+    def set_scheduledAgeToLostFeeCharging(self):
+        """
+
+        ``POST /circulation/scheduled-age-to-lost-fee-charging``
+
+        Raises:
+            OkapiFatalError: Server Error
+        """
+        return self.call("POST", "/circulation/scheduled-age-to-lost-fee-charging")
 
 
 class RequestMove(FolioApi):

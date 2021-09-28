@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-29
+# Generated at 2021-05-24
 
 import logging
 
@@ -128,6 +128,26 @@ class FolioSet(FolioApi):
             .. literalinclude:: ../files/FolioSet_modify_set_request.schema
         """
         return self.call("PUT", f"/oai-pmh/sets/{setsId}", data=set)
+
+
+class CleanupJob(FolioApi):
+    """OAI-PMH Business Logic API
+
+    provides endpoint for triggering clean up process of expired instances from instances table.
+    """
+
+    def set_cleanUpInstance(self):
+        """
+
+        ``POST /oai-pmh/clean-up-instances``
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+        """
+        return self.call("POST", "/oai-pmh/clean-up-instances")
 
 
 class FolioSetFilteringConditions(FolioApi):

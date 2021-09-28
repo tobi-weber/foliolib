@@ -46,6 +46,14 @@
       "type": "object",
       "$ref": "../raml-util/schemas/metadata.schema",
       "readonly": true
+    },
+    "reportEditedManually": {
+      "description": "Report data has been edited manually",
+      "type": "boolean"
+    },
+    "editReason": {
+      "description": "Edit reason",
+      "type": "string"
     }
   },
   "required": [

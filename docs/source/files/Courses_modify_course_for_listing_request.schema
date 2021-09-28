@@ -45,6 +45,10 @@
       "type": "string",
       "description": "A text field denoting this course's section"
     },
+    "numberOfStudents": {
+      "type": "integer",
+      "description": "The number of students enrolled in this course"
+    },
     "metadata": {
       "type": "object",
       "$ref": "raml-util/schemas/metadata.schema"

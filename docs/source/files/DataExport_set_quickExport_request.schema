@@ -37,6 +37,10 @@
         "ITEM"
       ]
     },
+    "fileName": {
+      "description": "Name of the generated marc file",
+      "type": "string"
+    },
     "metadata": {
       "description": "Meta information ",
       "type": "object",

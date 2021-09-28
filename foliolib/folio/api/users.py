@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-29
+# Generated at 2021-05-24
 
 import logging
 
@@ -681,3 +681,14 @@ class Users(FolioApi):
             .. literalinclude:: ../files/Users_modify_user_request.schema
         """
         return self.call("PUT", f"/users/{userId}", data=user)
+
+    def set_timer(self):
+        """Expire timer (timer event)
+
+        ``POST /users/expire/timer``
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+        """
+        return self.call("POST", "/users/expire/timer")

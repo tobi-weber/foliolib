@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-29
+# Generated at 2021-05-24
 
 import logging
 
@@ -403,6 +403,61 @@ class GroupFundFiscalYear(FolioApi):
             OkapiRequestUnprocessableEntity: Unprocessable Entity
         """
         return self.call("DELETE", f"/finance/group-fund-fiscal-years/{groupFundFiscalYearsId}", query=kwargs)
+
+
+class LedgerRolloverErrors(FolioApi):
+    """Rollover errors business API
+
+    **API is used to manage rollover errors.**
+    """
+
+    def get_ledgerRolloversErrors(self, **kwargs):
+        """Get list of rollovers errors
+
+        ``GET /finance/ledger-rollovers-errors``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            query (str):  A query expressed as a CQL string
+                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
+                    using valid searchable fields.
+                    The first example below shows the general form of a full CQL query,
+                    but those fields might not be relevant in this context.
+                    
+                    with valid searchable fields: for example code
+                    
+                    
+                    Example:
+                    
+                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
+                    
+                     - ["code", "MEDGRANT", "="]
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+            OkapiRequestError: Bad Request
+
+        Schema:
+
+            .. literalinclude:: ../files/LedgerRolloverErrors_get_ledgerRolloversErrors_return.schema 
+        """
+        return self.call("GET", "/finance/ledger-rollovers-errors", query=kwargs)
 
 
 class Transaction(FolioApi):
@@ -917,17 +972,13 @@ class Groups(FolioApi):
         """
         return self.call("PUT", f"/finance/groups/{groupsId}", data=group)
 
-    def get_expenseClassesTotals(self, groupsId: str, **kwargs):
+    def get_expenseClassesTotals(self, groupsId: str):
         """Retrieve expenseClassesTotal item with given {expenseClassesTotalId}
 
         ``GET /finance/groups/{groupsId}/expense-classes-totals``
 
         Args:
             groupsId (str)
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            fiscalYearId (uuid):  The UUID of a fiscal year
 
         Returns:
             dict: See Schema below
@@ -942,7 +993,7 @@ class Groups(FolioApi):
 
             .. literalinclude:: ../files/Groups_get_expenseClassesTotals_return.schema 
         """
-        return self.call("GET", f"/finance/groups/{groupsId}/expense-classes-totals", query=kwargs)
+        return self.call("GET", f"/finance/groups/{groupsId}/expense-classes-totals")
 
 
 class Budgets(FolioApi):
@@ -1103,6 +1154,105 @@ class Budgets(FolioApi):
         return self.call("GET", f"/finance/budgets/{budgetsId}/expense-classes-totals")
 
 
+class LedgerRollover(FolioApi):
+    """Ledger Rollover API
+
+    **APIs used to manage ledger rollover.**
+    """
+
+    def get_ledgerRollovers(self, **kwargs):
+        """Get list of rollovers
+
+        ``GET /finance/ledger-rollovers``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            query (str):  A query expressed as a CQL string
+                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
+                    using valid searchable fields.
+                    The first example below shows the general form of a full CQL query,
+                    but those fields might not be relevant in this context.
+                    
+                    with valid searchable fields: for example code
+                    
+                    
+                    Example:
+                    
+                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
+                    
+                     - ["code", "MEDGRANT", "="]
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/LedgerRollover_get_ledgerRollovers_return.schema 
+        """
+        return self.call("GET", "/finance/ledger-rollovers", query=kwargs)
+
+    def set_ledgerRollover(self, ledgerRollover: dict):
+        """Create a new ledgerRollover item.
+
+        ``POST /finance/ledger-rollovers``
+
+        Args:
+            ledgerRollover (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+
+        Headers:
+            - **Location** - URI to the created ledgerRollover item
+
+        Schema:
+
+            .. literalinclude:: ../files/LedgerRollover_set_ledgerRollover_request.schema
+        """
+        return self.call("POST", "/finance/ledger-rollovers", data=ledgerRollover)
+
+    def get_ledgerRollover(self, ledgerRolloversId: str):
+        """Retrieve ledgerRollover item with given {ledgerRolloverId}
+
+        ``GET /finance/ledger-rollovers/{ledgerRolloversId}``
+
+        Args:
+            ledgerRolloversId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/LedgerRollover_get_ledgerRollover_return.schema 
+        """
+        return self.call("GET", f"/finance/ledger-rollovers/{ledgerRolloversId}")
+
+
 class ExchangeRate(FolioApi):
     """Exchange rate API
 
@@ -1144,6 +1294,115 @@ class ExchangeRate(FolioApi):
             .. literalinclude:: ../files/ExchangeRate_get_exchangeRates_return.schema 
         """
         return self.call("GET", "/finance/exchange-rate", query=kwargs)
+
+
+class LedgerRolloverProgress(FolioApi):
+    """mod-finance (Ledger Rollover Progress)
+
+    **APIs used to manage ledger rollover progress.**
+    """
+
+    def get_ledgerRolloversProgresses(self, **kwargs):
+        """Get list of rollovers progresses
+
+        ``GET /finance/ledger-rollovers-progress``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            query (str):  A query expressed as a CQL string
+                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
+                    using valid searchable fields.
+                    The first example below shows the general form of a full CQL query,
+                    but those fields might not be relevant in this context.
+                    
+                    with valid searchable fields: for example code
+                    
+                    
+                    Example:
+                    
+                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
+                    
+                     - ["code", "MEDGRANT", "="]
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/LedgerRolloverProgress_get_ledgerRolloversProgresses_return.schema 
+        """
+        return self.call("GET", "/finance/ledger-rollovers-progress", query=kwargs)
+
+    def set_ledgerRolloversProgress(self, ledgerRolloversProgress: dict):
+        """Create a new ledgerRolloversProgress item.
+
+        ``POST /finance/ledger-rollovers-progress``
+
+        Args:
+            ledgerRolloversProgress (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+
+        Headers:
+            - **Location** - URI to the created ledgerRolloversProgress item
+
+        Schema:
+
+            .. literalinclude:: ../files/LedgerRolloverProgress_set_ledgerRolloversProgress_request.schema
+        """
+        return self.call("POST", "/finance/ledger-rollovers-progress", data=ledgerRolloversProgress)
+
+    def get_ledgerRolloversProgress(self, ledgerRolloversProgressId: str):
+        """Retrieve ledgerRolloversProgress item with given {ledgerRolloversProgressId}
+
+        ``GET /finance/ledger-rollovers-progress/{ledgerRolloversProgressId}``
+
+        Args:
+            ledgerRolloversProgressId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/LedgerRolloverProgress_get_ledgerRolloversProgress_return.schema 
+        """
+        return self.call("GET", f"/finance/ledger-rollovers-progress/{ledgerRolloversProgressId}")
+
+    def modify_ledgerRolloversProgress(self, ledgerRolloversProgressId: str):
+        """
+
+        ``PUT /finance/ledger-rollovers-progress/{ledgerRolloversProgressId}``
+
+        Args:
+            ledgerRolloversProgressId (str)
+        """
+        return self.call("PUT", f"/finance/ledger-rollovers-progress/{ledgerRolloversProgressId}")
 
 
 class Funds(FolioApi):
@@ -1280,21 +1539,13 @@ class Funds(FolioApi):
         """
         return self.call("PUT", f"/finance/funds/{fundsId}", data=fund)
 
-    def get_expenseClasses(self, fundsId: str, **kwargs):
+    def get_expenseClasses(self, fundsId: str):
         """Retrieve expenseClass item with given {expenseClassId}
 
         ``GET /finance/funds/{fundsId}/expense-classes``
 
         Args:
             fundsId (str)
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            status (str):  Status of the expense classes
-                    
-                    Example:
-                    
-                     - Active
 
         Returns:
             dict: See Schema below
@@ -1309,23 +1560,15 @@ class Funds(FolioApi):
 
             .. literalinclude:: ../files/Funds_get_expenseClasses_return.schema 
         """
-        return self.call("GET", f"/finance/funds/{fundsId}/expense-classes", query=kwargs)
+        return self.call("GET", f"/finance/funds/{fundsId}/expense-classes")
 
-    def get_budget_by_fund(self, fundsId: str, **kwargs):
+    def get_budget_by_fund(self, fundsId: str):
         """Retrieve budget item with given {budgetId}
 
         ``GET /finance/funds/{fundsId}/budget``
 
         Args:
             fundsId (str)
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            status (str):  Status of the budget
-                    
-                    Example:
-                    
-                     - Active
 
         Returns:
             dict: See Schema below
@@ -1339,7 +1582,7 @@ class Funds(FolioApi):
 
             .. literalinclude:: ../files/Funds_get_budget_by_fund_return.schema 
         """
-        return self.call("GET", f"/finance/funds/{fundsId}/budget", query=kwargs)
+        return self.call("GET", f"/finance/funds/{fundsId}/budget")
 
 
 class Ledgers(FolioApi):
@@ -1357,11 +1600,6 @@ class Ledgers(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
-            fiscalYear (uuid):  Fiscal Year Id
-                    
-                    Example:
-                    
-                     - 3defdcde-3002-41d3-a31c-1fb88288f872
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -1424,17 +1662,13 @@ class Ledgers(FolioApi):
         """
         return self.call("POST", "/finance/ledgers", data=ledger)
 
-    def get_ledger(self, ledgersId: str, **kwargs):
+    def get_ledger(self, ledgersId: str):
         """Retrieve ledger item with given {ledgerId}
 
         ``GET /finance/ledgers/{ledgersId}``
 
         Args:
             ledgersId (str)
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            fiscalYear (uuid):  The UUID of a fiscal year
 
         Returns:
             dict: See Schema below
@@ -1447,7 +1681,7 @@ class Ledgers(FolioApi):
 
             .. literalinclude:: ../files/Ledgers_get_ledger_return.schema 
         """
-        return self.call("GET", f"/finance/ledgers/{ledgersId}", query=kwargs)
+        return self.call("GET", f"/finance/ledgers/{ledgersId}")
 
     def delete_ledger(self, ledgersId: str):
         """Delete ledger item with given {ledgerId}

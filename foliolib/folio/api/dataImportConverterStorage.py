@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-29
+# Generated at 2021-05-24
 
 import logging
 
@@ -23,16 +23,6 @@ class DataImportConverterStorage(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
-            showDeleted (bool): (default=False) selection condition of Job Profiles by field 'deleted'
-                    
-                    Example:
-                    
-                     - False
-            withRelations (bool): (default=False) Load profile with related child and parent profiles
-                    
-                    Example:
-                    
-                     - False
             query (str):  A query expressed as a CQL string
                     (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
                     using valid searchable fields.
@@ -96,21 +86,13 @@ class DataImportConverterStorage(FolioApi):
         """
         return self.call("POST", "/data-import-profiles/jobProfiles", data=jobProfile)
 
-    def get_jobProfile(self, jobProfilesId: str, **kwargs):
+    def get_jobProfile(self, jobProfilesId: str):
         """Retrieve jobProfile item with given {jobProfileId}
 
         ``GET /data-import-profiles/jobProfiles/{jobProfilesId}``
 
         Args:
             jobProfilesId (str)
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            withRelations (bool): (default=False) Load profile with related child and parent profiles
-                    
-                    Example:
-                    
-                     - False
 
         Returns:
             dict: See Schema below
@@ -123,7 +105,7 @@ class DataImportConverterStorage(FolioApi):
 
             .. literalinclude:: ../files/DataImportConverterStorage_get_jobProfile_return.schema 
         """
-        return self.call("GET", f"/data-import-profiles/jobProfiles/{jobProfilesId}", query=kwargs)
+        return self.call("GET", f"/data-import-profiles/jobProfiles/{jobProfilesId}")
 
     def delete_jobProfile(self, jobProfilesId: str):
         """Delete jobProfile item with given {jobProfileId}
@@ -150,9 +132,6 @@ class DataImportConverterStorage(FolioApi):
             jobProfilesId (str)
             jobProfile (dict): See Schema below
 
-        Returns:
-            dict: See Schema below
-
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
@@ -162,7 +141,6 @@ class DataImportConverterStorage(FolioApi):
         Schema:
 
             .. literalinclude:: ../files/DataImportConverterStorage_modify_jobProfile_request.schema
-            .. literalinclude:: ../files/DataImportConverterStorage_modify_jobProfile_return.schema 
         """
         return self.call("PUT", f"/data-import-profiles/jobProfiles/{jobProfilesId}", data=jobProfile)
 
@@ -175,16 +153,6 @@ class DataImportConverterStorage(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
-            showDeleted (bool): (default=False) selection condition of Match Profiles by field 'deleted'
-                    
-                    Example:
-                    
-                     - False
-            withRelations (bool): (default=False) Load profile with related child and parent profiles
-                    
-                    Example:
-                    
-                     - False
             query (str):  A query expressed as a CQL string
                     (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
                     using valid searchable fields.
@@ -248,21 +216,13 @@ class DataImportConverterStorage(FolioApi):
         """
         return self.call("POST", "/data-import-profiles/matchProfiles", data=matchProfile)
 
-    def get_matchProfile(self, matchProfilesId: str, **kwargs):
+    def get_matchProfile(self, matchProfilesId: str):
         """Retrieve matchProfile item with given {matchProfileId}
 
         ``GET /data-import-profiles/matchProfiles/{matchProfilesId}``
 
         Args:
             matchProfilesId (str)
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            withRelations (bool): (default=False) Load profile with related child and parent profiles
-                    
-                    Example:
-                    
-                     - False
 
         Returns:
             dict: See Schema below
@@ -275,7 +235,7 @@ class DataImportConverterStorage(FolioApi):
 
             .. literalinclude:: ../files/DataImportConverterStorage_get_matchProfile_return.schema 
         """
-        return self.call("GET", f"/data-import-profiles/matchProfiles/{matchProfilesId}", query=kwargs)
+        return self.call("GET", f"/data-import-profiles/matchProfiles/{matchProfilesId}")
 
     def delete_matchProfile(self, matchProfilesId: str):
         """Delete matchProfile item with given {matchProfileId}
@@ -302,9 +262,6 @@ class DataImportConverterStorage(FolioApi):
             matchProfilesId (str)
             matchProfile (dict): See Schema below
 
-        Returns:
-            dict: See Schema below
-
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
@@ -314,7 +271,6 @@ class DataImportConverterStorage(FolioApi):
         Schema:
 
             .. literalinclude:: ../files/DataImportConverterStorage_modify_matchProfile_request.schema
-            .. literalinclude:: ../files/DataImportConverterStorage_modify_matchProfile_return.schema 
         """
         return self.call("PUT", f"/data-import-profiles/matchProfiles/{matchProfilesId}", data=matchProfile)
 
@@ -327,16 +283,6 @@ class DataImportConverterStorage(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
-            showDeleted (bool): (default=False) selection condition of Mapping Profiles by field 'deleted'
-                    
-                    Example:
-                    
-                     - False
-            withRelations (bool): (default=False) Load profile with related child and parent profiles
-                    
-                    Example:
-                    
-                     - False
             query (str):  A query expressed as a CQL string
                     (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
                     using valid searchable fields.
@@ -400,21 +346,13 @@ class DataImportConverterStorage(FolioApi):
         """
         return self.call("POST", "/data-import-profiles/mappingProfiles", data=mappingProfile)
 
-    def get_mappingProfile(self, mappingProfilesId: str, **kwargs):
+    def get_mappingProfile(self, mappingProfilesId: str):
         """Retrieve mappingProfile item with given {mappingProfileId}
 
         ``GET /data-import-profiles/mappingProfiles/{mappingProfilesId}``
 
         Args:
             mappingProfilesId (str)
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            withRelations (bool): (default=False) Load profile with related child and parent profiles
-                    
-                    Example:
-                    
-                     - False
 
         Returns:
             dict: See Schema below
@@ -427,7 +365,7 @@ class DataImportConverterStorage(FolioApi):
 
             .. literalinclude:: ../files/DataImportConverterStorage_get_mappingProfile_return.schema 
         """
-        return self.call("GET", f"/data-import-profiles/mappingProfiles/{mappingProfilesId}", query=kwargs)
+        return self.call("GET", f"/data-import-profiles/mappingProfiles/{mappingProfilesId}")
 
     def delete_mappingProfile(self, mappingProfilesId: str):
         """Delete mappingProfile item with given {mappingProfileId}
@@ -454,9 +392,6 @@ class DataImportConverterStorage(FolioApi):
             mappingProfilesId (str)
             mappingProfile (dict): See Schema below
 
-        Returns:
-            dict: See Schema below
-
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
@@ -466,7 +401,6 @@ class DataImportConverterStorage(FolioApi):
         Schema:
 
             .. literalinclude:: ../files/DataImportConverterStorage_modify_mappingProfile_request.schema
-            .. literalinclude:: ../files/DataImportConverterStorage_modify_mappingProfile_return.schema 
         """
         return self.call("PUT", f"/data-import-profiles/mappingProfiles/{mappingProfilesId}", data=mappingProfile)
 
@@ -479,16 +413,6 @@ class DataImportConverterStorage(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
-            showDeleted (bool): (default=False) selection condition of Action Profiles by field 'deleted'
-                    
-                    Example:
-                    
-                     - False
-            withRelations (bool): (default=False) Load profile with related child and parent profiles
-                    
-                    Example:
-                    
-                     - False
             query (str):  A query expressed as a CQL string
                     (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
                     using valid searchable fields.
@@ -552,21 +476,13 @@ class DataImportConverterStorage(FolioApi):
         """
         return self.call("POST", "/data-import-profiles/actionProfiles", data=actionProfile)
 
-    def get_actionProfile(self, actionProfilesId: str, **kwargs):
+    def get_actionProfile(self, actionProfilesId: str):
         """Retrieve actionProfile item with given {actionProfileId}
 
         ``GET /data-import-profiles/actionProfiles/{actionProfilesId}``
 
         Args:
             actionProfilesId (str)
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            withRelations (bool): (default=False) Load profile with related child and parent profiles
-                    
-                    Example:
-                    
-                     - False
 
         Returns:
             dict: See Schema below
@@ -579,7 +495,7 @@ class DataImportConverterStorage(FolioApi):
 
             .. literalinclude:: ../files/DataImportConverterStorage_get_actionProfile_return.schema 
         """
-        return self.call("GET", f"/data-import-profiles/actionProfiles/{actionProfilesId}", query=kwargs)
+        return self.call("GET", f"/data-import-profiles/actionProfiles/{actionProfilesId}")
 
     def delete_actionProfile(self, actionProfilesId: str):
         """Delete actionProfile item with given {actionProfileId}
@@ -606,9 +522,6 @@ class DataImportConverterStorage(FolioApi):
             actionProfilesId (str)
             actionProfile (dict): See Schema below
 
-        Returns:
-            dict: See Schema below
-
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
@@ -618,39 +531,13 @@ class DataImportConverterStorage(FolioApi):
         Schema:
 
             .. literalinclude:: ../files/DataImportConverterStorage_modify_actionProfile_request.schema
-            .. literalinclude:: ../files/DataImportConverterStorage_modify_actionProfile_return.schema 
         """
         return self.call("PUT", f"/data-import-profiles/actionProfiles/{actionProfilesId}", data=actionProfile)
 
-    def get_profileAssociations(self, **kwargs):
+    def get_profileAssociations(self):
         """Retrieve a list of profileAssociation items.
 
         ``GET /data-import-profiles/profileAssociations``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            showDeleted (bool): (default=False) selection condition of Action Profiles by field 'deleted'
-                    
-                    Example:
-                    
-                     - False
-            withRelations (bool): (default=False) Load profile with related child and parent profiles
-                    
-                    Example:
-                    
-                     - False
-            master (str):  It needs to identify master profile type in association
-                    
-                    Example:
-                    
-                     - JOB_PROFILE, ACTION_PROFILE, MATCH_PROFILE
-            detail (str):  It needs to identify detail profile type in association
-                    
-                    Example:
-                    
-                     - ACTION_PROFILE, MAPPING_PROFILE, MATCH_PROFILE
 
         Returns:
             dict: See Schema below
@@ -665,28 +552,15 @@ class DataImportConverterStorage(FolioApi):
 
             .. literalinclude:: ../files/DataImportConverterStorage_get_profileAssociations_return.schema 
         """
-        return self.call("GET", "/data-import-profiles/profileAssociations", query=kwargs)
+        return self.call("GET", "/data-import-profiles/profileAssociations")
 
-    def set_profileAssociation(self, profileAssociation: dict, **kwargs):
+    def set_profileAssociation(self, profileAssociation: dict):
         """Create a new profileAssociation item.
 
         ``POST /data-import-profiles/profileAssociations``
 
         Args:
-            profileAssociation (dict)
-            **kwargs (properties): Keyword Arguments: See Schema below
-
-        Keyword Args:
-            master (str):  It needs to identify master profile type in association
-                    
-                    Example:
-                    
-                     - JOB_PROFILE, ACTION_PROFILE, MATCH_PROFILE
-            detail (str):  It needs to identify detail profile type in association
-                    
-                    Example:
-                    
-                     - ACTION_PROFILE, MAPPING_PROFILE, MATCH_PROFILE
+            profileAssociation (dict): See Schema below
 
         Raises:
             OkapiRequestError: Bad Request
@@ -701,33 +575,15 @@ class DataImportConverterStorage(FolioApi):
 
             .. literalinclude:: ../files/DataImportConverterStorage_set_profileAssociation_request.schema
         """
-        return self.call("POST", "/data-import-profiles/profileAssociations", data=profileAssociation, query=kwargs)
+        return self.call("POST", "/data-import-profiles/profileAssociations", data=profileAssociation)
 
-    def get_profileAssociation(self, profileAssociationsId: str, **kwargs):
+    def get_profileAssociation(self, profileAssociationsId: str):
         """Retrieve profileAssociation item with given {profileAssociationId}
 
         ``GET /data-import-profiles/profileAssociations/{profileAssociationsId}``
 
         Args:
             profileAssociationsId (str)
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            withRelations (bool): (default=False) Load profile with related child and parent profiles
-                    
-                    Example:
-                    
-                     - False
-            master (str):  It needs to identify master profile type in association
-                    
-                    Example:
-                    
-                     - JOB_PROFILE, ACTION_PROFILE, MATCH_PROFILE
-            detail (str):  It needs to identify detail profile type in association
-                    
-                    Example:
-                    
-                     - ACTION_PROFILE, MAPPING_PROFILE, MATCH_PROFILE
 
         Returns:
             dict: See Schema below
@@ -740,28 +596,15 @@ class DataImportConverterStorage(FolioApi):
 
             .. literalinclude:: ../files/DataImportConverterStorage_get_profileAssociation_return.schema 
         """
-        return self.call("GET", f"/data-import-profiles/profileAssociations/{profileAssociationsId}", query=kwargs)
+        return self.call("GET", f"/data-import-profiles/profileAssociations/{profileAssociationsId}")
 
-    def delete_profileAssociation(self, profileAssociationsId: str, **kwargs):
+    def delete_profileAssociation(self, profileAssociationsId: str):
         """Delete profileAssociation item with given {profileAssociationId}
 
         ``DELETE /data-import-profiles/profileAssociations/{profileAssociationsId}``
 
         Args:
             profileAssociationsId (str)
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            master (str):  It needs to identify master profile type in association
-                    
-                    Example:
-                    
-                     - JOB_PROFILE, ACTION_PROFILE, MAPPING_PROFILE, MATCH_PROFILE
-            detail (str):  It needs to identify detail profile type in association
-                    
-                    Example:
-                    
-                     - JOB_PROFILE, ACTION_PROFILE, MAPPING_PROFILE, MATCH_PROFILE
 
         Raises:
             OkapiRequestNotFound: Not Found
@@ -769,32 +612,16 @@ class DataImportConverterStorage(FolioApi):
             OkapiFatalError: Server Error
             OkapiRequestConflict: Conflict
         """
-        return self.call("DELETE", f"/data-import-profiles/profileAssociations/{profileAssociationsId}", query=kwargs)
+        return self.call("DELETE", f"/data-import-profiles/profileAssociations/{profileAssociationsId}")
 
-    def modify_profileAssociation(self, profileAssociationsId: str, profileAssociation: dict, **kwargs):
+    def modify_profileAssociation(self, profileAssociationsId: str, profileAssociation: dict):
         """Update profileAssociation item with given {profileAssociationId}
 
         ``PUT /data-import-profiles/profileAssociations/{profileAssociationsId}``
 
         Args:
             profileAssociationsId (str)
-            profileAssociation (dict)
-            **kwargs (properties): Keyword Arguments: See Schema below
-
-        Keyword Args:
-            master (str):  It needs to identify master profile type in association
-                    
-                    Example:
-                    
-                     - JOB_PROFILE, ACTION_PROFILE, MATCH_PROFILE
-            detail (str):  It needs to identify detail profile type in association
-                    
-                    Example:
-                    
-                     - ACTION_PROFILE, MAPPING_PROFILE, MATCH_PROFILE
-
-        Returns:
-            dict: See Schema below
+            profileAssociation (dict): See Schema below
 
         Raises:
             OkapiRequestNotFound: Not Found
@@ -805,9 +632,8 @@ class DataImportConverterStorage(FolioApi):
         Schema:
 
             .. literalinclude:: ../files/DataImportConverterStorage_modify_profileAssociation_request.schema
-            .. literalinclude:: ../files/DataImportConverterStorage_modify_profileAssociation_return.schema 
         """
-        return self.call("PUT", f"/data-import-profiles/profileAssociations/{profileAssociationsId}", data=profileAssociation, query=kwargs)
+        return self.call("PUT", f"/data-import-profiles/profileAssociations/{profileAssociationsId}", data=profileAssociation)
 
     def get_details_by_profileAssociation(self, profileAssociationsId: str, **kwargs):
         """
@@ -1102,9 +928,6 @@ class FormConfigsStorage(FolioApi):
             formName (str)
             config (dict): See Schema below
 
-        Returns:
-            dict: See Schema below
-
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
@@ -1240,9 +1063,6 @@ class FieldProtectionSettings(FolioApi):
         Args:
             marcId (str)
             marc (dict): See Schema below
-
-        Returns:
-            dict: See Schema below
 
         Raises:
             OkapiRequestNotFound: Not Found

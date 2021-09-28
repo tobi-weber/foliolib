@@ -1,5 +1,5 @@
 {
-  "funds": [
+  "fundTypes": [
     {
       "id": "c93373df-e7ec-4d31-b200-719736610d89",
       "name": "Fixed income"

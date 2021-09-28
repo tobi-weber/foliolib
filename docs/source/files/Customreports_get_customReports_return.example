@@ -5,6 +5,7 @@
       "year": 2019,
       "note": "This is a custom report for January 2019",
       "fileId": "d70d55be-06b4-42f7-8a2e-a4270686a062",
+      "fileName": "file.txt",
       "fileSize": 1024,
       "providerId": "4b659cb9-e4bb-493d-ae30-5f5690c54802"
     },
@@ -12,9 +13,8 @@
       "id": "1f1d53de-9224-4503-a047-ad3bd699c51e",
       "year": 2019,
       "note": "This is a custom report for February 2019",
-      "fileId": "e3db4107-d863-43e2-b4b6-0eade099738a",
-      "fileSize": 1098,
-      "providerId": "4b659cb9-e4bb-493d-ae30-5f5690c54802"
+      "providerId": "4b659cb9-e4bb-493d-ae30-5f5690c54802",
+      "linkUrl": "http://localhost/link"
     }
   ],
   "totalRecords": 2

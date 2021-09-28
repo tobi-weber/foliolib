@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-29
+# Generated at 2021-05-24
 
 import logging
 
@@ -222,6 +222,94 @@ class Inventory(FolioApi):
         """
         return self.call("POST", f"/inventory/items/{itemId}/mark-withdrawn")
 
+    def set_markInProcess(self, itemId: str):
+        """
+
+        ``POST /inventory/items/{itemId}/mark-in-process``
+
+        Args:
+            itemId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Inventory_set_markInProcess_return.schema 
+        """
+        return self.call("POST", f"/inventory/items/{itemId}/mark-in-process")
+
+    def set_markInProcessNonRequestable(self, itemId: str):
+        """
+
+        ``POST /inventory/items/{itemId}/mark-in-process-non-requestable``
+
+        Args:
+            itemId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Inventory_set_markInProcessNonRequestable_return.schema 
+        """
+        return self.call("POST", f"/inventory/items/{itemId}/mark-in-process-non-requestable")
+
+    def set_markIntellectualItem(self, itemId: str):
+        """
+
+        ``POST /inventory/items/{itemId}/mark-intellectual-item``
+
+        Args:
+            itemId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Inventory_set_markIntellectualItem_return.schema 
+        """
+        return self.call("POST", f"/inventory/items/{itemId}/mark-intellectual-item")
+
+    def set_markLongMissing(self, itemId: str):
+        """
+
+        ``POST /inventory/items/{itemId}/mark-long-missing``
+
+        Args:
+            itemId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Inventory_set_markLongMissing_return.schema 
+        """
+        return self.call("POST", f"/inventory/items/{itemId}/mark-long-missing")
+
     def set_markMissing(self, itemId: str):
         """
 
@@ -243,6 +331,72 @@ class Inventory(FolioApi):
             .. literalinclude:: ../files/Inventory_set_markMissing_return.schema 
         """
         return self.call("POST", f"/inventory/items/{itemId}/mark-missing")
+
+    def set_markRestricted(self, itemId: str):
+        """
+
+        ``POST /inventory/items/{itemId}/mark-restricted``
+
+        Args:
+            itemId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Inventory_set_markRestricted_return.schema 
+        """
+        return self.call("POST", f"/inventory/items/{itemId}/mark-restricted")
+
+    def set_markUnavailable(self, itemId: str):
+        """
+
+        ``POST /inventory/items/{itemId}/mark-unavailable``
+
+        Args:
+            itemId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Inventory_set_markUnavailable_return.schema 
+        """
+        return self.call("POST", f"/inventory/items/{itemId}/mark-unavailable")
+
+    def set_markUnknown(self, itemId: str):
+        """
+
+        ``POST /inventory/items/{itemId}/mark-unknown``
+
+        Args:
+            itemId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Inventory_set_markUnknown_return.schema 
+        """
+        return self.call("POST", f"/inventory/items/{itemId}/mark-unknown")
 
     def get_instances(self, **kwargs):
         """Retrieve a list of instance items.
@@ -580,16 +734,6 @@ class InventoryEventHandlers(FolioApi):
 
     **API for handling events**
     """
-
-    def set_dataImport(self):
-        """Handler for data-import events
-
-        ``POST /inventory/handlers/data-import``
-
-        Raises:
-            OkapiFatalError: Server Error
-        """
-        return self.call("POST", "/inventory/handlers/data-import")
 
     def set_instance(self):
         """Handler for Instance update events

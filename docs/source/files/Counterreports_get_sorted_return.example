@@ -116,7 +116,9 @@
               "release": "5",
               "reportName": "PR",
               "yearMonth": "2020-01",
-              "providerId": "5aac21f2-1791-4b21-8ae3-f6a9013f42dc"
+              "providerId": "5aac21f2-1791-4b21-8ae3-f6a9013f42dc",
+              "reportEditedManually": true,
+              "editReason": "reason for manually editing"
             }
           ]
         },
@@ -131,7 +133,9 @@
               "release": "5",
               "reportName": "IR",
               "yearMonth": "2020-01",
-              "providerId": "5aac21f2-1791-4b21-8ae3-f6a9013f42dc"
+              "providerId": "5aac21f2-1791-4b21-8ae3-f6a9013f42dc",
+              "reportEditedManually": false,
+              "editReason": ""
             }
           ]
         }

@@ -31,6 +31,10 @@
       "description": "Id of associated usage data provider",
       "type": "string"
     },
+    "linkUrl": {
+      "description": "Link to an external resource",
+      "type": "string"
+    },
     "metadata": {
       "description": "Metadata about creation and changes, provided by the server (client should not provide)",
       "type": "object",
@@ -40,9 +44,6 @@
   },
   "required": [
     "year",
-    "fileId",
-    "fileName",
-    "fileSize",
     "providerId"
   ],
   "additionalProperties": false

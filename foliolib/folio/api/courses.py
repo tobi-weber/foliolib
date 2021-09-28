@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-29
+# Generated at 2021-05-24
 
 import logging
 
@@ -23,7 +23,6 @@ class Courses(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
-            expand (str):  Whether or not to expand the id fields
             query (str):  A query expressed as a CQL string
                     (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
                     using valid searchable fields.
@@ -87,13 +86,9 @@ class Courses(FolioApi):
         return self.call("POST", "/coursereserves/courselistings", data=courselisting)
 
     def delete_courselistings(self):
-        """Delete all listings
+        """
 
         ``DELETE /coursereserves/courselistings``
-
-        Raises:
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
         """
         return self.call("DELETE", "/coursereserves/courselistings")
 
@@ -228,16 +223,12 @@ class Courses(FolioApi):
         return self.call("POST", f"/coursereserves/courselistings/{listing_id}/instructors", data=instructor)
 
     def delete_instructors(self, listing_id: str):
-        """Delete all instructors
+        """
 
         ``DELETE /coursereserves/courselistings/{listing_id}/instructors``
 
         Args:
             listing_id (str)
-
-        Raises:
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
         """
         return self.call("DELETE", f"/coursereserves/courselistings/{listing_id}/instructors")
 
@@ -310,7 +301,6 @@ class Courses(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
-            expand (str):  Whether or not to expand the id fields
             query (str):  A query expressed as a CQL string
                     (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
                     using valid searchable fields.
@@ -374,13 +364,9 @@ class Courses(FolioApi):
         return self.call("POST", "/coursereserves/roles", data=role)
 
     def delete_roles(self):
-        """Delete all roles
+        """
 
         ``DELETE /coursereserves/roles``
-
-        Raises:
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
         """
         return self.call("DELETE", "/coursereserves/roles")
 
@@ -450,7 +436,6 @@ class Courses(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
-            expand (str):  Whether or not to expand the id fields
             query (str):  A query expressed as a CQL string
                     (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
                     using valid searchable fields.
@@ -514,13 +499,9 @@ class Courses(FolioApi):
         return self.call("POST", "/coursereserves/terms", data=term)
 
     def delete_terms(self):
-        """Delete all terms
+        """
 
         ``DELETE /coursereserves/terms``
-
-        Raises:
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
         """
         return self.call("DELETE", "/coursereserves/terms")
 
@@ -590,7 +571,6 @@ class Courses(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
-            expand (str):  Whether or not to expand the id fields
             query (str):  A query expressed as a CQL string
                     (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
                     using valid searchable fields.
@@ -654,13 +634,9 @@ class Courses(FolioApi):
         return self.call("POST", "/coursereserves/coursetypes", data=coursetype)
 
     def delete_coursetypes(self):
-        """Delete all course types
+        """
 
         ``DELETE /coursereserves/coursetypes``
-
-        Raises:
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
         """
         return self.call("DELETE", "/coursereserves/coursetypes")
 
@@ -730,7 +706,6 @@ class Courses(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
-            expand (str):  Whether or not to expand the id fields
             query (str):  A query expressed as a CQL string
                     (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
                     using valid searchable fields.
@@ -794,13 +769,9 @@ class Courses(FolioApi):
         return self.call("POST", "/coursereserves/departments", data=department)
 
     def delete_departments(self):
-        """Delete all departments
+        """
 
         ``DELETE /coursereserves/departments``
-
-        Raises:
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
         """
         return self.call("DELETE", "/coursereserves/departments")
 
@@ -870,7 +841,6 @@ class Courses(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
-            expand (str):  Whether or not to expand the id fields
             query (str):  A query expressed as a CQL string
                     (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
                     using valid searchable fields.
@@ -934,13 +904,9 @@ class Courses(FolioApi):
         return self.call("POST", "/coursereserves/processingstatuses", data=processingstatus)
 
     def delete_processingstatuses(self):
-        """Delete all statuses
+        """
 
         ``DELETE /coursereserves/processingstatuses``
-
-        Raises:
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
         """
         return self.call("DELETE", "/coursereserves/processingstatuses")
 
@@ -1010,7 +976,6 @@ class Courses(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
-            expand (str):  Whether or not to expand the id fields
             query (str):  A query expressed as a CQL string
                     (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
                     using valid searchable fields.
@@ -1074,13 +1039,9 @@ class Courses(FolioApi):
         return self.call("POST", "/coursereserves/copyrightstatuses", data=copyrightstatus)
 
     def delete_copyrightstatuses(self):
-        """Delete all copyright statuses
+        """
 
         ``DELETE /coursereserves/copyrightstatuses``
-
-        Raises:
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
         """
         return self.call("DELETE", "/coursereserves/copyrightstatuses")
 
@@ -1199,7 +1160,6 @@ class Courses(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
-            expand (str):  Whether or not to expand the id fields
             query (str):  A query expressed as a CQL string
                     (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
                     using valid searchable fields.
@@ -1287,27 +1247,19 @@ class Courses(FolioApi):
         return self.call("POST", "/coursereserves/courses", data=course)
 
     def delete_courses_for_listing(self, listing_id: str):
-        """Delete all courses
+        """
 
         ``DELETE /coursereserves/courselistings/{listing_id}/courses``
 
         Args:
             listing_id (str)
-
-        Raises:
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
         """
         return self.call("DELETE", f"/coursereserves/courselistings/{listing_id}/courses")
 
     def delete_courses(self):
-        """Delete ALL courses
+        """
 
         ``DELETE /coursereserves/courses``
-
-        Raises:
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
         """
         return self.call("DELETE", "/coursereserves/courses")
 
@@ -1438,7 +1390,6 @@ class Courses(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
-            expand (str):  Whether or not to expand the id fields
             query (str):  A query expressed as a CQL string
                     (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
                     using valid searchable fields.
@@ -1487,7 +1438,6 @@ class Courses(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
-            expand (str):  What fields to expand
             query (str):  A query expressed as a CQL string
                     (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
                     using valid searchable fields.
@@ -1575,27 +1525,19 @@ class Courses(FolioApi):
         return self.call("POST", "/coursereserves/reserves", data=reserf)
 
     def delete_reserves_for_listing(self, listing_id: str):
-        """Delete all reserves
+        """
 
         ``DELETE /coursereserves/courselistings/{listing_id}/reserves``
 
         Args:
             listing_id (str)
-
-        Raises:
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
         """
         return self.call("DELETE", f"/coursereserves/courselistings/{listing_id}/reserves")
 
     def delete_reserves(self):
-        """Delete ALL reserves
+        """
 
         ``DELETE /coursereserves/reserves``
-
-        Raises:
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
         """
         return self.call("DELETE", "/coursereserves/reserves")
 

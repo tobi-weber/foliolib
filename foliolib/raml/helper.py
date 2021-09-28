@@ -8,6 +8,16 @@ PLURALIZE = {}
 
 
 def merge_dict(destination: dict, source: dict):
+    if not destination:
+        return source
+    if not isinstance(destination, dict):
+        print("ERROR destination is not type dict")
+        print(destination)
+        raise Exception()
+    if not isinstance(source, dict):
+        print("ERROR source is not type dict")
+        print(source)
+        raise Exception()
     for key, value in source.items():
         if value is None:
             continue
@@ -18,7 +28,14 @@ def merge_dict(destination: dict, source: dict):
                 continue
             merge_dict(node, value)
         else:
-            destination[key] = value
+            try:
+                print(1)
+                destination[key] = value
+            except:
+                print(2)
+                print(value)
+                print(destination)
+                raise
     return destination
 
 

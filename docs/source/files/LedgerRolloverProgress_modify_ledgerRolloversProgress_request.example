@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n  \"id\": \"e7ed4439-a5ea-4976-b7e6-264e495fbfe8\",\n  \"ledgerRolloverId\": \"e7ed4439-a5ea-4976-b7e6-264e495fbfe8\",\n  \"overallRolloverStatus\": \"In Progress\",\n  \"budgetsClosingRolloverStatus\": \"Success\",\n  \"financialRolloverStatus\": \"In Progress\",\n  \"ordersRolloverStatus\": \"Not Started\",\n  \"metadata\": {\n    \"createdDate\": \"2020-12-03T20:53:43.984+0000\",\n    \"createdByUserId\": \"28d0fb04-d137-11e8-a8d5-f2801f1b9fd1\",\n    \"updatedDate\": \"2020-12-03T20:53:43.984+0000\",\n    \"updatedByUserId\": \"28d0fb04-d137-11e8-a8d5-f2801f1b9fd1\"\n  }\n}\n"
+}

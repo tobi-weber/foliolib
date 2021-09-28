@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-29
+# Generated at 2021-05-24
 
 import logging
 
@@ -48,7 +48,7 @@ class Link(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
-            title (str):  Search string for note title. Note is returned only if it contains specified word or sequence of words anywhere in the title. Search is case-insensitive.
+            search (str):  Partial match case-insensitive search term for note title and note details.
                     
                     Example:
                     

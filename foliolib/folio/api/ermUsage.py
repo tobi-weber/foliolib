@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-29
+# Generated at 2021-05-24
 
 import logging
 
@@ -315,7 +315,6 @@ class Counterreports(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
-            tiny (bool): (default=False) 
             query (str):  A query expressed as a CQL string
                     (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
                     using valid searchable fields.
@@ -512,32 +511,30 @@ class Counterreports(FolioApi):
         """
         return self.call("GET", f"/counter-reports/export/provider/{providerId}/report/{name}/version/{aversion}/from/{begin}/to/{end}", query=kwargs)
 
-    def upload_provider(self, providerId: str, filePath: str, **kwargs):
+    def set_provider(self, providerId: str, provider: dict, **kwargs):
         """
 
         ``POST /counter-reports/upload/provider/{providerId}``
 
         Args:
             providerId (str)
-            **kwargs (properties): Keyword Arguments
+            provider (dict)
+            **kwargs (properties): Keyword Arguments: See Schema below
 
         Keyword Args:
             overwrite (bool): (default=False) Overwrite existing reports?
 
         Raises:
+            OkapiRequestError: Bad Request
             OkapiRequestNotFound: Not Found
             OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/Counterreports_set_provider_request.schema
         """
-        import os
-        headers = {}
-        headers["Content-Type"] = "application/octet-stream"
-        headers["Content-length"] = str(os.path.getsize(filePath))
-        headers["Content-Disposition"] = "attachment; filename=%s" % os.path.basename(
-            filePath)
-        with open(filePath, 'rb') as f:
-            data = f.read()
-        
-        return self.call("POST", f"/counter-reports/upload/provider/{providerId}", headers=headers, data=data, query=kwargs)
+        return self.call("POST", f"/counter-reports/upload/provider/{providerId}", data=provider, query=kwargs)
 
     def get_codes(self):
         """Get counter/sushi error codes existent in counter reports
@@ -555,6 +552,41 @@ class Counterreports(FolioApi):
             .. literalinclude:: ../files/Counterreports_get_codes_return.schema 
         """
         return self.call("GET", "/counter-reports/errors/codes")
+
+    def get_types(self):
+        """Get report types of available counter reports
+
+        ``GET /counter-reports/reports/types``
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Counterreports_get_types_return.schema 
+        """
+        return self.call("GET", "/counter-reports/reports/types")
+
+    def set_delete(self, delete: dict):
+        """Delete multiple counter reports
+
+        ``POST /counter-reports/reports/delete``
+
+        Args:
+            delete (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Counterreports_set_delete_request.schema
+        """
+        return self.call("POST", "/counter-reports/reports/delete", data=delete)
 
 
 class Customreports(FolioApi):

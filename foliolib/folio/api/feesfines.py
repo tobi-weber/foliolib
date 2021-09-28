@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-29
+# Generated at 2021-05-24
 
 import logging
 
@@ -999,6 +999,82 @@ class Manualblocks(FolioApi):
             .. literalinclude:: ../files/Manualblocks_modify_manualblock_request.schema
         """
         return self.call("PUT", f"/manualblocks/{manualblockId}", data=manualblock)
+
+
+class FeefineReports(FolioApi):
+    """Fee/fine reports API
+
+    This documents the API calls for loading fee/fine reports
+    """
+
+    def set_refund(self, refund: dict):
+        """Return data for a refund report
+
+        ``POST /feefine-reports/refund``
+
+        Args:
+            refund (dict): See Schema below
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/FeefineReports_set_refund_request.schema
+            .. literalinclude:: ../files/FeefineReports_set_refund_return.schema 
+        """
+        return self.call("POST", "/feefine-reports/refund", data=refund)
+
+    def set_cashDrawerReconciliation(self, cashDrawerReconciliation: dict):
+        """Return data for a refund cash drawer reconciliation report
+
+        ``POST /feefine-reports/cash-drawer-reconciliation``
+
+        Args:
+            cashDrawerReconciliation (dict): See Schema below
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/FeefineReports_set_cashDrawerReconciliation_request.schema
+            .. literalinclude:: ../files/FeefineReports_set_cashDrawerReconciliation_return.schema 
+        """
+        return self.call("POST", "/feefine-reports/cash-drawer-reconciliation", data=cashDrawerReconciliation)
+
+    def set_source(self, source: dict):
+        """Return list of sources for a refund cash drawer reconciliation report
+
+        ``POST /feefine-reports/cash-drawer-reconciliation/sources``
+
+        Args:
+            source (dict): See Schema below
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/FeefineReports_set_source_request.schema
+            .. literalinclude:: ../files/FeefineReports_set_source_return.schema 
+        """
+        return self.call("POST", "/feefine-reports/cash-drawer-reconciliation/sources", data=source)
 
 
 class Transfers(FolioApi):

@@ -5,5 +5,6 @@
   "fileId": "d70d55be-06b4-42f7-8a2e-a4270686a062",
   "fileName": "filename.txt",
   "fileSize": 1024,
-  "providerId": "4b659cb9-e4bb-493d-ae30-5f5690c54802"
+  "providerId": "4b659cb9-e4bb-493d-ae30-5f5690c54802",
+  "linkUrl": "http://localhost/link"
 }

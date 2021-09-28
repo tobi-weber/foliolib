@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-29
+# Generated at 2021-05-24
 
 import logging
 
@@ -194,17 +194,13 @@ class Providers(FolioApi):
                     
                      - ABC-CLIO
             filter[tags] (list):  Filter to narrow down results based on assigned tags. Contains list of required tags.
-            sort (str): (default=relevance) Option by which results are sorted. Defaults to relevance if query or name if no query. Possible values are name, relevance.
-                    
-                    Example:
-                    
-                     - name
-            page (int): (default=1) Page offset to retrieve results from Ebsco KB
+            sort (str): (default=relevance) Option by which results are sorted. Possible values are name, relevance.
+            page (int): (default=1) Page number
                     
                     Example:
                     
                      - 1
-            count (int): (default=25) Count of number of results to retrieve from Ebsco KB
+            count (int): (default=<<defaultCountValue>>) Page size
                     
                     Example:
                     
@@ -317,17 +313,13 @@ class Providers(FolioApi):
                     Example:
                     
                      - ebook
-            sort (str): (default=relevance) Option by which results are sorted. Defaults to relevance if query or name if no query. Possible values are name, relevance.
-                    
-                    Example:
-                    
-                     - name
-            page (int): (default=1) Page offset to retrieve results from Ebsco KB
+            sort (str): (default=relevance) Option by which results are sorted. Possible values are name, relevance.
+            page (int): (default=1) Page number
                     
                     Example:
                     
                      - 1
-            count (int): (default=25) Count of number of results to retrieve from Ebsco KB
+            count (int): (default=<<defaultCountValue>>) Page size
                     
                     Example:
                     
@@ -345,6 +337,36 @@ class Providers(FolioApi):
             .. literalinclude:: ../files/Providers_get_packages_by_provider_return.schema 
         """
         return self.call("GET", f"/eholdings/providers/{providerId}/packages", query=kwargs)
+
+
+class Export(FolioApi):
+    """mod-kb-ebsco-java
+
+    Implements the eholdings interface using EBSCO KB as backend.
+    """
+
+    def get_export_by_package(self, packageId: str, **kwargs):
+        """Endpoint provides a cost-per-use information about the titles included into the package in csv format.
+
+        ``GET /eholdings/packages/{packageId}/resources/costperuse/export``
+
+        Args:
+            packageId (str)
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            platform (str):  Include publisher, non-publisher or all platforms
+                    Possible values are
+                     - publisher
+                     - nonPublisher
+                     - all
+                    
+            fiscalYear (str):  Fiscal year of cost-per-use data
+
+        Raises:
+            OkapiFatalError: Server Error
+        """
+        return self.call("GET", f"/eholdings/packages/{packageId}/resources/costperuse/export", query=kwargs)
 
 
 class Resources(FolioApi):
@@ -710,6 +732,134 @@ class AccessTypes(FolioApi):
         return self.call("DELETE", f"/eholdings/kb-credentials/{kbCredentialsId}/access-types/{accessTypeId}")
 
 
+class Uc(FolioApi):
+    """mod-kb-ebsco-java
+
+    Implements the eholdings interface using EBSCO KB as backend.
+    """
+
+    def get_uc_by_kbCredential(self, kbCredentialsId: str, **kwargs):
+        """Retrieve a Usage Consolidation settings.
+
+        ``GET /eholdings/kb-credentials/{kbCredentialsId}/uc``
+
+        Args:
+            kbCredentialsId (str)
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            metrictype (bool): (default=False) Indicates that metric type should be included
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+
+        Schema:
+
+            .. literalinclude:: ../files/Uc_get_uc_by_kbCredential_return.schema 
+        """
+        return self.call("GET", f"/eholdings/kb-credentials/{kbCredentialsId}/uc", query=kwargs)
+
+    def set_uc(self, kbCredentialsId: str, uc: dict):
+        """Create a new Usage Consolidation Settings
+
+        ``POST /eholdings/kb-credentials/{kbCredentialsId}/uc``
+
+        Args:
+            kbCredentialsId (str)
+            uc (dict): See Schema below
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/Uc_set_uc_request.schema
+            .. literalinclude:: ../files/Uc_set_uc_return.schema 
+        """
+        return self.call("POST", f"/eholdings/kb-credentials/{kbCredentialsId}/uc", data=uc)
+
+    def get_key_by_kbCredential(self, kbCredentialsId: str):
+        """Retrieve a Usage Consolidation settings customer key.
+
+        ``GET /eholdings/kb-credentials/{kbCredentialsId}/uc/key``
+
+        Args:
+            kbCredentialsId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+
+        Schema:
+
+            .. literalinclude:: ../files/Uc_get_key_by_kbCredential_return.schema 
+        """
+        return self.call("GET", f"/eholdings/kb-credentials/{kbCredentialsId}/uc/key")
+
+    def get_ucs(self, **kwargs):
+        """Retrieve a Usage Consolidation settings.
+
+        ``GET /eholdings/uc``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            metrictype (bool): (default=False) Indicates that metric type should be included
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+
+        Schema:
+
+            .. literalinclude:: ../files/Uc_get_ucs_return.schema 
+        """
+        return self.call("GET", "/eholdings/uc", query=kwargs)
+
+    def get_ucCredentials(self):
+        """Check if Usage Consolidation credentials exists.
+
+        ``GET /eholdings/uc-credentials``
+
+        Returns:
+            dict: See Schema below
+
+        Schema:
+
+            .. literalinclude:: ../files/Uc_get_ucCredentials_return.schema 
+        """
+        return self.call("GET", "/eholdings/uc-credentials")
+
+    def modify_ucCredential(self, ucCredential: dict):
+        """Update Usage Consolidation credentials
+
+        ``PUT /eholdings/uc-credentials``
+
+        Args:
+            ucCredential (dict): See Schema below
+
+        Raises:
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/Uc_modify_ucCredential_request.schema
+        """
+        return self.call("PUT", "/eholdings/uc-credentials", data=ucCredential)
+
+
 class Tags(FolioApi):
     """mod-kb-ebsco-java
 
@@ -771,6 +921,149 @@ class Tags(FolioApi):
         return self.call("GET", "/eholdings/tags/summary", query=kwargs)
 
 
+class Costperuse(FolioApi):
+    """mod-kb-ebsco-java
+
+    Implements the eholdings interface using EBSCO KB as backend.
+    """
+
+    def get_costperuse_by_resource(self, resourceId: str, **kwargs):
+        """Retrieve cost-per-use information for a particular resource
+
+        ``GET /eholdings/resources/{resourceId}/costperuse``
+
+        Args:
+            resourceId (str)
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            platform (str):  Include publisher, non-publisher or all platforms
+                    Possible values are
+                     - publisher
+                     - nonPublisher
+                     - all
+                    
+            fiscalYear (str):  Fiscal year of cost-per-use data
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/Costperuse_get_costperuse_by_resource_return.schema 
+        """
+        return self.call("GET", f"/eholdings/resources/{resourceId}/costperuse", query=kwargs)
+
+    def get_costperuse_by_title(self, titleId: str, **kwargs):
+        """Retrieve cost-per-use information for a particular title
+
+        ``GET /eholdings/titles/{titleId}/costperuse``
+
+        Args:
+            titleId (str)
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            platform (str):  Include publisher, non-publisher or all platforms
+                    Possible values are
+                     - publisher
+                     - nonPublisher
+                     - all
+                    
+            fiscalYear (str):  Fiscal year of cost-per-use data
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/Costperuse_get_costperuse_by_title_return.schema 
+        """
+        return self.call("GET", f"/eholdings/titles/{titleId}/costperuse", query=kwargs)
+
+    def get_costperuse_by_package_by_packageId(self, packageId: str, **kwargs):
+        """Retrieve cost-per-use information for a particular package
+
+        ``GET /eholdings/packages/{packageId}/costperuse``
+
+        Args:
+            packageId (str)
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            platform (str):  Include publisher, non-publisher or all platforms
+                    Possible values are
+                     - publisher
+                     - nonPublisher
+                     - all
+                    
+            fiscalYear (str):  Fiscal year of cost-per-use data
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/Costperuse_get_costperuse_by_package_by_packageId_return.schema 
+        """
+        return self.call("GET", f"/eholdings/packages/{packageId}/costperuse", query=kwargs)
+
+    def get_costperuse_by_package(self, packageId: str, **kwargs):
+        """Retrieve cost-per-use information for package resources
+
+        ``GET /eholdings/packages/{packageId}/resources/costperuse``
+
+        Args:
+            packageId (str)
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            platform (str):  Include publisher, non-publisher or all platforms
+                    Possible values are
+                     - publisher
+                     - nonPublisher
+                     - all
+                    
+            fiscalYear (str):  Fiscal year of cost-per-use data
+            order (order): (default=asc) Order
+            sort (str): (default=name) Option by which results are sorted. Possible values are name, type, cost, usage, costperuse, percent.
+            page (int): (default=1) Page number
+                    
+                    Example:
+                    
+                     - 1
+            count (int): (default=<<defaultCountValue>>) Page size
+                    
+                    Example:
+                    
+                     - 100
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/Costperuse_get_costperuse_by_package_return.schema 
+        """
+        return self.call("GET", f"/eholdings/packages/{packageId}/resources/costperuse", query=kwargs)
+
+
 class Packages(FolioApi):
     """mod-kb-ebsco-java
 
@@ -813,17 +1106,13 @@ class Packages(FolioApi):
                      - ebook
             filter[tags] (list):  Filter to narrow down results based on assigned tags. Contains list of required tags.
             filter[access-type] (list):  Filter to narrow down results based on assigned access type.
-            sort (str): (default=relevance) Option by which results are sorted. Defaults to relevance if query or name if no query. Possible values are name, relevance.
-                    
-                    Example:
-                    
-                     - name
-            page (int): (default=1) Page offset to retrieve results from Ebsco KB
+            sort (str): (default=relevance) Option by which results are sorted. Possible values are name, relevance.
+            page (int): (default=1) Page number
                     
                     Example:
                     
                      - 1
-            count (int): (default=25) Count of number of results to retrieve from Ebsco KB
+            count (int): (default=<<defaultCountValue>>) Page size
                     
                     Example:
                     
@@ -946,11 +1235,6 @@ class Packages(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
-            sort (str): (default=relevance) Option by which results are sorted. Defaults to relevance if query or name if no query. Possible values are name, relevance.
-                    
-                    Example:
-                    
-                     - name
             filter[tags] (list):  Filter to narrow down results based on assigned tags. Contains list of required tags.
             filter[access-type] (list):  Filter to narrow down results based on assigned access type.
             filter[selected] (str):  Filter to narrow down results based on selection status. Defaults to all. Possible values are all, true, false, ebsco.
@@ -981,12 +1265,13 @@ class Packages(FolioApi):
                     Example:
                     
                      - academic
-            page (int): (default=1) Page offset to retrieve results from Ebsco KB
+            sort (str): (default=relevance) Option by which results are sorted. Possible values are name, relevance.
+            page (int): (default=1) Page number
                     
                     Example:
                     
                      - 1
-            count (int): (default=25) Count of number of results to retrieve from Ebsco KB
+            count (int): (default=<<defaultCountValue>>) Page size
                     
                     Example:
                     
@@ -1094,21 +1379,6 @@ class Titles(FolioApi):
                     Example:
                     
                      - academic
-            sort (str): (default=relevance) Option by which results are sorted. Defaults to relevance if query or name if no query. Possible values are name, relevance.
-                    
-                    Example:
-                    
-                     - name
-            page (int): (default=1) Page offset to retrieve results from Ebsco KB
-                    
-                    Example:
-                    
-                     - 1
-            count (int): (default=25) Count of number of results to retrieve from Ebsco KB
-                    
-                    Example:
-                    
-                     - 100
             include (str):  Include related resource objects, each representing a partnering of this title with a package.
                     Any bogus value, like `include=deciduousTrees`, will be silently ignored.
                     
@@ -1116,6 +1386,17 @@ class Titles(FolioApi):
                     Example:
                     
                      - resources
+            sort (str): (default=relevance) Option by which results are sorted. Possible values are name, relevance.
+            page (int): (default=1) Page number
+                    
+                    Example:
+                    
+                     - 1
+            count (int): (default=<<defaultCountValue>>) Page size
+                    
+                    Example:
+                    
+                     - 100
 
         Returns:
             dict: See Schema below
@@ -1199,6 +1480,27 @@ class Titles(FolioApi):
             .. literalinclude:: ../files/Titles_modify_title_return.schema 
         """
         return self.call("PUT", f"/eholdings/titles/{titleId}", data=title)
+
+
+class Currencies(FolioApi):
+    """mod-kb-ebsco-java
+
+    Implements the eholdings interface using EBSCO KB as backend.
+    """
+
+    def get_currencies(self):
+        """Retrieve a collection of currencies.
+
+        ``GET /eholdings/currencies``
+
+        Returns:
+            dict: See Schema below
+
+        Schema:
+
+            .. literalinclude:: ../files/Currencies_get_currencies_return.schema 
+        """
+        return self.call("GET", "/eholdings/currencies")
 
 
 class Proxies(FolioApi):
@@ -1405,6 +1707,27 @@ class KbCredentials(FolioApi):
             OkapiFatalError: Server Error
         """
         return self.call("DELETE", f"/eholdings/kb-credentials/{kbCredentialsId}")
+
+    def get_key_by_kbCredential(self, kbCredentialsId: str):
+        """Get a specific KB credentials key by id.
+
+        ``GET /eholdings/kb-credentials/{kbCredentialsId}/key``
+
+        Args:
+            kbCredentialsId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestNotFound: Not Found
+
+        Schema:
+
+            .. literalinclude:: ../files/KbCredentials_get_key_by_kbCredential_return.schema 
+        """
+        return self.call("GET", f"/eholdings/kb-credentials/{kbCredentialsId}/key")
 
     def get_userKbCredentials(self):
         """Retrieve KB credentials by given assigned user

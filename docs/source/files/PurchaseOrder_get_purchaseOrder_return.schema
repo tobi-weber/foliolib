@@ -106,12 +106,7 @@
     "workflowStatus": {
       "description": "the workflow status for this purchase order",
       "type": "string",
-      "enum": [
-        "Pending",
-        "Open",
-        "Closed"
-      ],
-      "default": "Pending"
+      "$ref": "workflow_status.json"
     },
     "acqUnitIds": {
       "description": "acquisition unit ids associated with this purchase order",

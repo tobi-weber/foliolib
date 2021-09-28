@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-29
+# Generated at 2021-05-24
 
 import logging
 
@@ -365,6 +365,24 @@ class Permissions(FolioApi):
             OkapiFatalError: Server Error
         """
         return self.call("DELETE", f"/perms/permissions/{permissionsId}")
+
+    def set_purgeDeprecated(self):
+        """purge deprecated permissions
+
+        ``POST /perms/purge-deprecated``
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Permissions_set_purgeDeprecated_return.schema 
+        """
+        return self.call("POST", "/perms/purge-deprecated")
 
 
 class TenantPermissions(FolioApi):

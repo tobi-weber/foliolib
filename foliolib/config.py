@@ -10,6 +10,10 @@ import pathlib
 log = logging.getLogger("foliolib.config")
 
 
+class NoServerConfigFound(Exception):
+    pass
+
+
 class Config:
     """Config class is a singleton.
     This class defines the handling of the config files.
@@ -59,7 +63,6 @@ class Config:
             if os.path.splitext(f)[0] in modId:
                 conf_file = os.path.join(modules_dir, f)
         config = configparser.ConfigParser()
-        config.optionxform = lambda option: option
         if conf_file is not None:
             config.read(conf_file)
             return config
@@ -77,7 +80,7 @@ class Config:
             with open(fname) as f:
                 return f.read()
         else:
-            return self.set_server("default")
+            raise NoServerConfigFound()
 
     def get_servers(self):
         """Get all available server configs.
@@ -101,7 +104,6 @@ class Config:
         with open(fname, "w") as f:
             f.write(name)
             return name
-        self.load_okapi_conf()
 
     def set_okapicfg(self, section: str, option: str, value):
         """Set a value in okapi.conf
@@ -114,6 +116,8 @@ class Config:
         fname = os.path.join(self.get_confdir(),
                              self.get_server(),
                              "okapi.conf")
+        if not section in self.__okapicfg:
+            self.__okapicfg[section] = {}
         self.__okapicfg.set(section, option, value)
         with open(fname, "w") as f:
             self.__okapicfg.write(f)
@@ -128,9 +132,26 @@ class Config:
         """
         fname = os.path.join(self.get_confdir(),
                              "foliolib.conf")
-        self.__okapicfg.set(section, option, value)
+        if not section in self.__okapicfg:
+            self.__foliolibcfg[section] = {}
+        self.__foliolibcfg.set(section, option, value)
         with open(fname, "w") as f:
-            self.__okapicfg.write(f)
+            self.__foliolibcfg.write(f)
+
+    def get_token(self, tenantid: str):
+        """Get token for a tenant
+
+        Args:
+            tenantid (str): tenant id
+        """
+
+    def set_token(self, tenantid: str, token: str):
+        """Set token for a tenant
+
+        Args:
+            tenantid (str): tenant id
+            token (str): token
+        """
 
     def get_confdir(self):
         """Get the configuration directory
@@ -149,6 +170,7 @@ class Config:
     def load_foliolib_config(self):
         """Read the foliolib.conf
         """
+        log.debug("Load foliolib.conf")
         fname = os.path.join(self.get_confdir(), "foliolib.conf")
         if not os.path.exists(fname):
             self.create_foliolib_conf()
@@ -162,6 +184,7 @@ class Config:
     def load_okapi_conf(self):
         """Read the okapi.conf
         """
+        log.debug("Load okapi.conf")
         sdir = os.path.join(self.get_confdir(), self.get_server())
         fname = os.path.join(sdir, "okapi.conf")
         if not os.path.exists(sdir):
@@ -215,29 +238,8 @@ class Config:
         self.__okapicfg["Postgres"]["port"] = db_port
         self.__okapicfg["Postgres"]["user"] = db_user
         self.__okapicfg["Postgres"]["password"] = db_password
+        self.__okapicfg["Tokens"] = {}
         with open(fname, "w") as f:
             self.__okapicfg.write(f)
         if not os.path.exists(os.path.join(sdir, "modules")):
             os.mkdir(os.path.join(sdir, "modules"))
-        fname = os.path.join(sdir, "modules", "mod-pubsub.conf")
-        with open(fname, "w") as f:
-            f.write(f"""
-[Env]
-KAFKA_HOST = {okapi_host}
-KAFKA_PORT = 9092
-OKAPI_URL = http://{okapi_host}:9130
-    """)
-        fname = os.path.join(sdir, "modules", "mod-inventory-storage.conf")
-        with open(fname, "w") as f:
-            f.write(f"""
-[Env]
-KAFKA_HOST = {okapi_host}
-KAFKA_PORT = 9092
-    """)
-        fname = os.path.join(sdir, "modules", "mod-source-record-manager.conf")
-        with open(fname, "w") as f:
-            f.write(f"""
-[Env]
-KAFKA_HOST = {okapi_host}
-KAFKA_PORT = 9092
-    """)

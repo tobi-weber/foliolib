@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-29
+# Generated at 2021-05-24
 
 import logging
 
@@ -317,6 +317,9 @@ class DataExport(FolioApi):
         Args:
             quickExport (dict): See Schema below
 
+        Returns:
+            dict: See Schema below
+
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnprocessableEntity: Unprocessable Entity
@@ -326,6 +329,7 @@ class DataExport(FolioApi):
         Schema:
 
             .. literalinclude:: ../files/DataExport_set_quickExport_request.schema
+            .. literalinclude:: ../files/DataExport_set_quickExport_return.schema 
         """
         return self.call("POST", "/data-export/quick-export", data=quickExport)
 

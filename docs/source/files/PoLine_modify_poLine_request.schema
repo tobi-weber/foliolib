@@ -140,15 +140,7 @@
     "paymentStatus": {
       "description": "The purchase order line payment status",
       "type": "string",
-      "enum": [
-        "Awaiting Payment",
-        "Cancelled",
-        "Fully Paid",
-        "Partially Paid",
-        "Payment Not Required",
-        "Pending"
-      ],
-      "default": "Pending"
+      "$ref": "payment_status.json"
     },
     "physical": {
       "description": "UUID of the physical (details) record",
@@ -236,6 +228,13 @@
       "type": "object",
       "$ref": "../../../raml-util/schemas/metadata.schema",
       "readonly": true
+    }
+  },
+  "holdingIds": {
+    "description": "Holding ids associated with this purchase order",
+    "type": "array",
+    "items": {
+      "$ref": "../../common/schemas/uuid.json"
     }
   },
   "additionalProperties": false,

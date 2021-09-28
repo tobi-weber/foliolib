@@ -163,6 +163,14 @@
         "type": "string"
       }
     },
+    "reportTypes": {
+      "description": "Counter report types of existent reports associated with this UDP",
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "type": "string"
+      }
+    },
     "harvestingDate": {
       "description": "Date and time of the last harvesting attempt",
       "type": "string",

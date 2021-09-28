@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A collection of ledger fiscal year rollovers progress",
+  "type": "object",
+  "properties": {
+    "ledgerFiscalYearRolloverProgresses": {
+      "description": "The list of ledger fiscal year rollovers progress",
+      "type": "array",
+      "items": {
+        "$ref": "ledger_fiscal_year_rollover_progress.json"
+      }
+    },
+    "totalRecords": {
+      "description": "The number of records contained in this collection",
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "ledgerFiscalYearRolloverProgresses",
+    "totalRecords"
+  ]
+}

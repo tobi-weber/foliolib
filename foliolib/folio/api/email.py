@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-29
+# Generated at 2021-05-24
 
 import logging
 
@@ -62,23 +62,12 @@ class Email(FolioApi):
         """
         return self.call("GET", "/email", query=kwargs)
 
-    def set_email(self, email: dict):
-        """Send email notifications
+    def set_email(self):
+        """
 
         ``POST /email``
-
-        Args:
-            email (dict): See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/Email_set_email_request.schema
         """
-        return self.call("POST", "/email", data=email)
+        return self.call("POST", "/email")
 
 
 class DelayedTasks(FolioApi):

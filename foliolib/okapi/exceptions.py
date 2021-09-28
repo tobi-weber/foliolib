@@ -6,6 +6,12 @@ class OkapiException(Exception):
     description = ""
 
 
+class OkapiNotReachable(OkapiException):
+    """
+    Okapi server is not reachable
+    """
+
+
 class OkapiRedirect(OkapiException):
     description = "Moved temporarily"
     """

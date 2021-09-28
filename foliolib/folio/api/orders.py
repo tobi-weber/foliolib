@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2020-11-29
+# Generated at 2021-05-24
 
 import logging
 
@@ -271,6 +271,170 @@ class AcquisitionsUnits(FolioApi):
         return self.call("PUT", f"/acquisitions-units/memberships/{membershipsId}", data=membership)
 
 
+class CheckIn(FolioApi):
+    """Orders Business Logic API
+
+    **API for checking-in pieces**
+    """
+
+    def set_checkIn(self, checkIn: dict):
+        """Check-in items spanning one or more po_lines in this order
+
+        ``POST /orders/check-in``
+
+        Args:
+            checkIn (dict): See Schema below
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/CheckIn_set_checkIn_request.schema
+            .. literalinclude:: ../files/CheckIn_set_checkIn_return.schema 
+        """
+        return self.call("POST", "/orders/check-in", data=checkIn)
+
+
+class OrderTemplates(FolioApi):
+    """Orders Business Logic API
+
+    **API for managing order templates**
+    """
+
+    def get_orderTemplates(self, **kwargs):
+        """Get list of order templates
+
+        ``GET /orders/order-templates``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            query (str):  A query expressed as a CQL string
+                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
+                    using valid searchable fields.
+                    The first example below shows the general form of a full CQL query,
+                    but those fields might not be relevant in this context.
+                    
+                    with valid searchable fields: for example templateCode
+                    
+                    
+                    Example:
+                    
+                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
+                    
+                     - ["templateCode", "Amazon", "="]
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/OrderTemplates_get_orderTemplates_return.schema 
+        """
+        return self.call("GET", "/orders/order-templates", query=kwargs)
+
+    def set_orderTemplate(self, orderTemplate: dict):
+        """Create new order template
+
+        ``POST /orders/order-templates``
+
+        Args:
+            orderTemplate (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Headers:
+            - **Location** - URI to the created orderTemplate item
+
+        Schema:
+
+            .. literalinclude:: ../files/OrderTemplates_set_orderTemplate_request.schema
+        """
+        return self.call("POST", "/orders/order-templates", data=orderTemplate)
+
+    def get_orderTemplate(self, orderTemplatesId: str):
+        """Retrieve orderTemplate item with given {orderTemplateId}
+
+        ``GET /orders/order-templates/{orderTemplatesId}``
+
+        Args:
+            orderTemplatesId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/OrderTemplates_get_orderTemplate_return.schema 
+        """
+        return self.call("GET", f"/orders/order-templates/{orderTemplatesId}")
+
+    def delete_orderTemplate(self, orderTemplatesId: str):
+        """Delete orderTemplate item with given {orderTemplateId}
+
+        ``DELETE /orders/order-templates/{orderTemplatesId}``
+
+        Args:
+            orderTemplatesId (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+        """
+        return self.call("DELETE", f"/orders/order-templates/{orderTemplatesId}")
+
+    def modify_orderTemplate(self, orderTemplatesId: str, orderTemplate: dict):
+        """Update order template
+
+        ``PUT /orders/order-templates/{orderTemplatesId}``
+
+        Args:
+            orderTemplatesId (str)
+            orderTemplate (dict): See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/OrderTemplates_modify_orderTemplate_request.schema
+        """
+        return self.call("PUT", f"/orders/order-templates/{orderTemplatesId}", data=orderTemplate)
+
+
 class Order(FolioApi):
     """Orders Business Logic API
 
@@ -405,223 +569,27 @@ class Order(FolioApi):
         """
         return self.call("PUT", f"/orders/composite-orders/{compositeOrdersId}", data=compositeOrder)
 
-    def get_orderLines(self, **kwargs):
-        """Retrieve a list of orderLine items.
+    def set_reEncumber(self, compositeOrdersId: str):
+        """
 
-        ``GET /orders/order-lines``
+        ``POST /orders/composite-orders/{compositeOrdersId}/re-encumber``
 
         Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
-                    
-                    Example:
-                    
-                     - 0
-            limit (int): (default=10) Limit the number of elements returned in the response
-                    
-                    Example:
-                    
-                     - 10
-            query (str):  A query expressed as a CQL string
-                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
-                    using valid searchable fields.
-                    The first example below shows the general form of a full CQL query,
-                    but those fields might not be relevant in this context.
-                    
-                    using CQL (indexes for PO lines)
-                    
-                    
-                    Example:
-                    
-                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
-                    
-                     - payment_status=="Cancelled"
-
-        Returns:
-            dict: See Schema below
+            compositeOrdersId (str)
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/Order_get_orderLines_return.schema 
-        """
-        return self.call("GET", "/orders/order-lines", query=kwargs)
-
-    def set_orderLine(self, orderLine: dict):
-        """Post a PO lines to corresponding PO
-
-        ``POST /orders/order-lines``
-
-        Args:
-            orderLine (dict): See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-
-        Headers:
-            - **Location** - URI to the created orderLine item
-
-        Schema:
-
-            .. literalinclude:: ../files/Order_set_orderLine_request.schema
-        """
-        return self.call("POST", "/orders/order-lines", data=orderLine)
-
-    def get_orderLine(self, orderLinesId: str):
-        """Return a purchase order line with given {id}
-
-        ``GET /orders/order-lines/{orderLinesId}``
-
-        Args:
-            orderLinesId (str)
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
             OkapiRequestNotFound: Not Found
             OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/Order_get_orderLine_return.schema 
         """
-        return self.call("GET", f"/orders/order-lines/{orderLinesId}")
+        return self.call("POST", f"/orders/composite-orders/{compositeOrdersId}/re-encumber")
 
-    def delete_orderLine(self, orderLinesId: str):
-        """Delete a purchase order line with given {id}
 
-        ``DELETE /orders/order-lines/{orderLinesId}``
+class ReceivingHistory(FolioApi):
+    """Orders Business Logic API
 
-        Args:
-            orderLinesId (str)
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-        """
-        return self.call("DELETE", f"/orders/order-lines/{orderLinesId}")
-
-    def modify_orderLine(self, orderLinesId: str, orderLine: dict):
-        """Update a purchase order line with given {id}
-
-        ``PUT /orders/order-lines/{orderLinesId}``
-
-        Args:
-            orderLinesId (str)
-            orderLine (dict): See Schema below
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/Order_modify_orderLine_request.schema
-        """
-        return self.call("PUT", f"/orders/order-lines/{orderLinesId}", data=orderLine)
-
-    def get_poNumbers(self, **kwargs):
-        """Get generated PO number
-
-        ``GET /orders/po-number``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Schema:
-
-            .. literalinclude:: ../files/Order_get_poNumbers_return.schema 
-        """
-        return self.call("GET", "/orders/po-number", query=kwargs)
-
-    def set_validate(self, validate: dict, **kwargs):
-        """validate if the PO Number is unique and matches the pattern specified
-
-        ``POST /orders/po-number/validate``
-
-        Args:
-            validate (dict)
-            **kwargs (properties): Keyword Arguments: See Schema below
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Schema:
-
-            .. literalinclude:: ../files/Order_set_validate_request.schema
-        """
-        return self.call("POST", "/orders/po-number/validate", data=validate, query=kwargs)
-
-    def set_receive(self, receive: dict):
-        """Receive items spanning one or more PO lines
-
-        ``POST /orders/receive``
-
-        Args:
-            receive (dict): See Schema below
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/Order_set_receive_request.schema
-            .. literalinclude:: ../files/Order_set_receive_return.schema 
-        """
-        return self.call("POST", "/orders/receive", data=receive)
-
-    def set_checkIn(self, checkIn: dict):
-        """Check-in items spanning one or more po_lines in this order
-
-        ``POST /orders/check-in``
-
-        Args:
-            checkIn (dict): See Schema below
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/Order_set_checkIn_request.schema
-            .. literalinclude:: ../files/Order_set_checkIn_return.schema 
-        """
-        return self.call("POST", "/orders/check-in", data=checkIn)
+    **API for retriving receiving history**
+    """
 
     def get_receivingHistories(self, **kwargs):
         """Get receiving history matching the provided criteria
@@ -669,17 +637,49 @@ class Order(FolioApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Order_get_receivingHistories_return.schema 
+            .. literalinclude:: ../files/ReceivingHistory_get_receivingHistories_return.schema 
         """
         return self.call("GET", "/orders/receiving-history", query=kwargs)
 
-    def set_piece(self, piece: dict):
-        """Create piece record
 
-        ``POST /orders/pieces``
+class Rollover(FolioApi):
+    """Orders Business Logic API
+
+    **API for running Orders rollover**
+    """
+
+    def set_rollover(self, rollover: dict):
+        """
+
+        ``POST /orders/rollover``
 
         Args:
-            piece (dict): See Schema below
+            rollover (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Rollover_set_rollover_request.schema
+        """
+        return self.call("POST", "/orders/rollover", data=rollover)
+
+
+class Receive(FolioApi):
+    """Orders Business Logic API
+
+    **API for receiving pieces**
+    """
+
+    def set_receive(self, receive: dict):
+        """Receive items spanning one or more PO lines
+
+        ``POST /orders/receive``
+
+        Args:
+            receive (dict): See Schema below
 
         Returns:
             dict: See Schema below
@@ -690,172 +690,10 @@ class Order(FolioApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Order_set_piece_request.schema
+            .. literalinclude:: ../files/Receive_set_receive_request.schema
+            .. literalinclude:: ../files/Receive_set_receive_return.schema 
         """
-        return self.call("POST", "/orders/pieces", data=piece)
-
-    def modify_piece(self, piecesId: str, piece: dict):
-        """Update a piece record with given {id}
-
-        ``PUT /orders/pieces/{piecesId}``
-
-        Args:
-            piecesId (str)
-            piece (dict): See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/Order_modify_piece_request.schema
-        """
-        return self.call("PUT", f"/orders/pieces/{piecesId}", data=piece)
-
-    def delete_piece(self, piecesId: str):
-        """Delete a piece with given {id}
-
-        ``DELETE /orders/pieces/{piecesId}``
-
-        Args:
-            piecesId (str)
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-        """
-        return self.call("DELETE", f"/orders/pieces/{piecesId}")
-
-    def get_orderTemplates(self, **kwargs):
-        """Get list of order templates
-
-        ``GET /orders/order-templates``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            query (str):  A query expressed as a CQL string
-                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
-                    using valid searchable fields.
-                    The first example below shows the general form of a full CQL query,
-                    but those fields might not be relevant in this context.
-                    
-                    with valid searchable fields: for example templateCode
-                    
-                    
-                    Example:
-                    
-                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
-                    
-                     - ["templateCode", "Amazon", "="]
-            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
-                    
-                    Example:
-                    
-                     - 0
-            limit (int): (default=10) Limit the number of elements returned in the response
-                    
-                    Example:
-                    
-                     - 10
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/Order_get_orderTemplates_return.schema 
-        """
-        return self.call("GET", "/orders/order-templates", query=kwargs)
-
-    def set_orderTemplate(self, orderTemplate: dict):
-        """Create new order template
-
-        ``POST /orders/order-templates``
-
-        Args:
-            orderTemplate (dict): See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Headers:
-            - **Location** - URI to the created orderTemplate item
-
-        Schema:
-
-            .. literalinclude:: ../files/Order_set_orderTemplate_request.schema
-        """
-        return self.call("POST", "/orders/order-templates", data=orderTemplate)
-
-    def get_orderTemplate(self, orderTemplatesId: str):
-        """Return a purchase order line with given {id}
-
-        ``GET /orders/order-templates/{orderTemplatesId}``
-
-        Args:
-            orderTemplatesId (str)
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/Order_get_orderTemplate_return.schema 
-        """
-        return self.call("GET", f"/orders/order-templates/{orderTemplatesId}")
-
-    def delete_orderTemplate(self, orderTemplatesId: str):
-        """Delete a purchase order line with given {id}
-
-        ``DELETE /orders/order-templates/{orderTemplatesId}``
-
-        Args:
-            orderTemplatesId (str)
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-        """
-        return self.call("DELETE", f"/orders/order-templates/{orderTemplatesId}")
-
-    def modify_orderTemplate(self, orderTemplatesId: str, orderTemplate: dict):
-        """Update order template
-
-        ``PUT /orders/order-templates/{orderTemplatesId}``
-
-        Args:
-            orderTemplatesId (str)
-            orderTemplate (dict): See Schema below
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Schema:
-
-            .. literalinclude:: ../files/Order_modify_orderTemplate_request.schema
-        """
-        return self.call("PUT", f"/orders/order-templates/{orderTemplatesId}", data=orderTemplate)
+        return self.call("POST", "/orders/receive", data=receive)
 
 
 class Configuration(FolioApi):
@@ -1249,6 +1087,139 @@ class Configuration(FolioApi):
         return self.call("PUT", f"/orders/configuration/suffixes/{suffixesId}", data=suffix)
 
 
+class OrderLines(FolioApi):
+    """Orders Business Logic API
+
+    **API for managing purchase orders**
+    """
+
+    def get_orderLines(self, **kwargs):
+        """Retrieve a list of orderLine items.
+
+        ``GET /orders/order-lines``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+            query (str):  A query expressed as a CQL string
+                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
+                    using valid searchable fields.
+                    The first example below shows the general form of a full CQL query,
+                    but those fields might not be relevant in this context.
+                    
+                    using CQL (indexes for PO lines)
+                    
+                    
+                    Example:
+                    
+                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
+                    
+                     - payment_status=="Cancelled"
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/OrderLines_get_orderLines_return.schema 
+        """
+        return self.call("GET", "/orders/order-lines", query=kwargs)
+
+    def set_orderLine(self, orderLine: dict):
+        """Post a PO lines to corresponding PO
+
+        ``POST /orders/order-lines``
+
+        Args:
+            orderLine (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+
+        Headers:
+            - **Location** - URI to the created orderLine item
+
+        Schema:
+
+            .. literalinclude:: ../files/OrderLines_set_orderLine_request.schema
+        """
+        return self.call("POST", "/orders/order-lines", data=orderLine)
+
+    def get_orderLine(self, orderLinesId: str):
+        """Return a purchase order line with given {id}
+
+        ``GET /orders/order-lines/{orderLinesId}``
+
+        Args:
+            orderLinesId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/OrderLines_get_orderLine_return.schema 
+        """
+        return self.call("GET", f"/orders/order-lines/{orderLinesId}")
+
+    def delete_orderLine(self, orderLinesId: str):
+        """Delete a purchase order line with given {id}
+
+        ``DELETE /orders/order-lines/{orderLinesId}``
+
+        Args:
+            orderLinesId (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+        """
+        return self.call("DELETE", f"/orders/order-lines/{orderLinesId}")
+
+    def modify_orderLine(self, orderLinesId: str, orderLine: dict):
+        """Update a purchase order line with given {id}
+
+        ``PUT /orders/order-lines/{orderLinesId}``
+
+        Args:
+            orderLinesId (str)
+            orderLine (dict): See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/OrderLines_modify_orderLine_request.schema
+        """
+        return self.call("PUT", f"/orders/order-lines/{orderLinesId}", data=orderLine)
+
+
 class Titles(FolioApi):
     """Titles
 
@@ -1380,3 +1351,121 @@ class Titles(FolioApi):
             .. literalinclude:: ../files/Titles_modify_title_request.schema
         """
         return self.call("PUT", f"/orders/titles/{titlesId}", data=title)
+
+
+class Pieces(FolioApi):
+    """Orders Business Logic API
+
+    **API for managing pieces**
+    """
+
+    def set_piece(self, piece: dict):
+        """Create piece record
+
+        ``POST /orders/pieces``
+
+        Args:
+            piece (dict): See Schema below
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Pieces_set_piece_request.schema
+        """
+        return self.call("POST", "/orders/pieces", data=piece)
+
+    def modify_piece(self, piecesId: str, piece: dict):
+        """Update a piece record with given {id}
+
+        ``PUT /orders/pieces/{piecesId}``
+
+        Args:
+            piecesId (str)
+            piece (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Pieces_modify_piece_request.schema
+        """
+        return self.call("PUT", f"/orders/pieces/{piecesId}", data=piece)
+
+    def delete_piece(self, piecesId: str):
+        """Delete a piece with given {id}
+
+        ``DELETE /orders/pieces/{piecesId}``
+
+        Args:
+            piecesId (str)
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+        """
+        return self.call("DELETE", f"/orders/pieces/{piecesId}")
+
+
+class PoNumber(FolioApi):
+    """Orders Business Logic API
+
+    **API for managing PO numbers**
+    """
+
+    def get_poNumbers(self, **kwargs):
+        """Get generated PO number
+
+        ``GET /orders/po-number``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            lang (str): (default=en) Requested language. Optional. [lang=en]
+                    
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/PoNumber_get_poNumbers_return.schema 
+        """
+        return self.call("GET", "/orders/po-number", query=kwargs)
+
+    def set_validate(self, validate: dict, **kwargs):
+        """validate if the PO Number is unique and matches the pattern specified
+
+        ``POST /orders/po-number/validate``
+
+        Args:
+            validate (dict)
+            **kwargs (properties): Keyword Arguments: See Schema below
+
+        Keyword Args:
+            lang (str): (default=en) Requested language. Optional. [lang=en]
+                    
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/PoNumber_set_validate_request.schema
+        """
+        return self.call("POST", "/orders/po-number/validate", data=validate, query=kwargs)

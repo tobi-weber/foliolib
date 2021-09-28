@@ -10,6 +10,21 @@
   "periodStart": "2020-01-01T00:00:00Z",
   "periodEnd": "2020-12-30T23:59:59Z",
   "series": "FY",
+  "financialSummary": {
+    "initialAllocation": 1090230.80,
+    "allocationTo": 1090230.80,
+    "allocationFrom": 0,
+    "allocated": 2180461.6,
+    "available": 2180377.6,
+    "totalFunding": 2180377.6,
+    "cashBalance": 2180377.6,
+    "encumbered": 0,
+    "awaitingPayment": 0,
+    "expenditures": 84,
+    "unavailable": 84,
+    "overEncumbrance": 0,
+    "overExpended": 0
+  },
   "metadata": {
     "createdDate": "2019-06-17T14:12:42.497+0000",
     "createdByUserId": "498492aa-f909-42f6-b154-5bf66e6486ba",
