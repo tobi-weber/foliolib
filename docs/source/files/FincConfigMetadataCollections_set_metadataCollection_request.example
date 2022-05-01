@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n  \"id\": \"6dd325f8-b1d5-4568-a0d7-aecf6b8d6123\",\n  \"label\": \"21st Century COE rogram\",\n  \"description\": \"This is a test metadata collection\",\n  \"mdSource\": {\n    \"id\": \"6dd325f8-b1d5-4568-a0d7-aecf6b8d6697\",\n    \"name\": \"Cambridge University Press Journals\"\n  },\n  \"metadataAvailable\": \"yes\",\n  \"usageRestricted\": \"no\",\n  \"permittedFor\": [\n    \"DE-14\"\n  ],\n  \"freeContent\": \"undetermined\",\n  \"lod\": {\n    \"publication\": \"yes\",\n    \"note\": \"Note for test publication\"\n  },\n  \"collectionId\": \"coe-123\",\n  \"solrMegaCollections\": [\n    \"21st Century COE Program\"\n  ],\n  \"selectedBy\": [ \"DE-15\", \"DE-14\" ]\n}\n"
+}

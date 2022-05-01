@@ -6,11 +6,11 @@
   "properties": {
     "id": {
       "description": "UUID",
-      "$ref": "../common/uuid.json"
+      "$ref": "../../raml-util/schemas/uuid.schema"
     },
     "metaJobExecutionId": {
       "description": "Link to the metajob execution",
-      "$ref": "../common/uuid.json"
+      "$ref": "../../raml-util/schemas/uuid.schema"
     },
     "status": {
       "description": "Status of upload",

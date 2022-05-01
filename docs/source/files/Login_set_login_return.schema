@@ -1,19 +1,18 @@
 {
-  "title": "Login Credentials Schema",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Object returned on successful login",
   "type": "object",
-  "description": "An entity that describes the basic credentials for a user to log on to the system",
   "properties": {
-    "username": {
-      "description": "Username in the system",
+    "okapiToken": {
+      "description": "session token (X-Okapi-Token format)",
       "type": "string"
     },
-    "userId": {
-      "description": "Unique user id",
-      "type": "string"
-    },
-    "password": {
-      "description": "User password",
+    "refreshToken": {
+      "description": "refresh token",
       "type": "string"
     }
-  }
+  },
+  "required": [
+    "okapiToken"
+  ]
 }

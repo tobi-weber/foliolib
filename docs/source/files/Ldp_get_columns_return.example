@@ -1,0 +1,79 @@
+[
+  {
+    "columnName": "id",
+    "data_type": "character varying",
+    "ordinalPosition": "1",
+    "tableSchema": "public",
+    "tableName": "user_users"
+  },
+  {
+    "columnName": "active",
+    "data_type": "boolean",
+    "ordinalPosition": "2",
+    "tableSchema": "public",
+    "tableName": "user_users"
+  },
+  {
+    "columnName": "barcode",
+    "data_type": "character varying",
+    "ordinalPosition": "3",
+    "tableSchema": "public",
+    "tableName": "user_users"
+  },
+  {
+    "columnName": "created_date",
+    "data_type": "timestamp with time zone",
+    "ordinalPosition": "4",
+    "tableSchema": "public",
+    "tableName": "user_users"
+  },
+  {
+    "columnName": "enrollment_date",
+    "data_type": "timestamp with time zone",
+    "ordinalPosition": "5",
+    "tableSchema": "public",
+    "tableName": "user_users"
+  },
+  {
+    "columnName": "expiration_date",
+    "data_type": "timestamp with time zone",
+    "ordinalPosition": "6",
+    "tableSchema": "public",
+    "tableName": "user_users"
+  },
+  {
+    "columnName": "external_system_id",
+    "data_type": "character varying",
+    "ordinalPosition": "7",
+    "tableSchema": "public",
+    "tableName": "user_users"
+  },
+  {
+    "columnName": "patron_group",
+    "data_type": "character varying",
+    "ordinalPosition": "8",
+    "tableSchema": "public",
+    "tableName": "user_users"
+  },
+  {
+    "columnName": "type",
+    "data_type": "character varying",
+    "ordinalPosition": "9",
+    "tableSchema": "public",
+    "tableName": "user_users"
+  },
+  {
+    "columnName": "updated_date",
+    "data_type": "timestamp with time zone",
+    "ordinalPosition": "10",
+    "tableSchema": "public",
+    "tableName": "user_users"
+  },
+  {
+    "columnName": "username",
+    "data_type": "character varying",
+    "ordinalPosition": "11",
+    "tableSchema": "public",
+    "tableName": "user_users"
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A configuration entry for mod-ldp",
+  "type": "object",
+  "properties": {
+    "key": {
+      "type": "string",
+      "description": "The key to the configuration value"
+    },
+    "value": {
+      "type": "string",
+      "description": "The value of the configuration"
+    }
+  },
+  "additionalProperties": true,
+  "required": [
+    "key",
+    "value"
+  ]
+}

@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n  \"id\": \"084befb6-a264-4dd0-ade9-1aaae390c483\",\n  \"label\": \"Holdings 1\",\n  \"type\": \"Whitelist\",\n  \"filterFiles\": [\n    {\n      \"label\": \"Holdings\",\n      \"criteria\": \"Column: ISSN\",\n      \"filename\": \"filterFile.txt\",\n      \"fileId\": \"aa9202b7-754a-414a-8bf6-378df78e5985\"\n    }\n  ],\n  \"isil\": \"DE-15\"\n}\n"
+}

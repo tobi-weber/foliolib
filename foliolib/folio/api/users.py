@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-# Generated at 2021-05-24
+# Generated at 2022-04-28
 
 import logging
 
-from foliolib.folio import FolioApi
+from foliolib.folio import FolioApi, FolioAdminApi
 
-log = logging.getLogger("foliolib.folio.api.users")
+log = logging.getLogger("oliolib.folio.api.users")
 
 
 class ProxiesFor(FolioApi):
@@ -277,6 +277,162 @@ class Departments(FolioApi):
         return self.call("PUT", f"/departments/{departmentId}", data=department)
 
 
+class Users(FolioApi):
+    """mod-users API
+
+    This documents the API calls that can be made to query and manage users of the system
+    """
+
+    def get_users(self, **kwargs):
+        """Return a list of users
+
+        ``GET /users``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            query (str):  A query expressed as a CQL string
+                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
+                    using valid searchable fields.
+                    The first example below shows the general form of a full CQL query,
+                    but those fields might not be relevant in this context.
+                    
+                    
+                    
+                    
+                    Example:
+                    
+                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
+                    
+                     - active=true sortBy username
+            orderBy (str):  Order by field: field A, field B
+                    
+            order (str (desc|asc):): (default=desc) Order
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+            facets (list):  facets to return in the collection result set, can be suffixed by a count of facet values to return, for example, patronGroup:10 default to top 5 facet values
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Users_get_users_return.schema 
+        """
+        return self.call("GET", "/users", query=kwargs)
+
+    def set_user(self, user: dict):
+        """Create a user
+
+        ``POST /users``
+
+        Args:
+            user (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Headers:
+            - **Location** - URI to the created user item
+
+        Schema:
+
+            .. literalinclude:: ../files/Users_set_user_request.schema
+        """
+        return self.call("POST", "/users", data=user)
+
+    def delete_users(self):
+        """
+
+        ``DELETE /users``
+        """
+        return self.call("DELETE", "/users")
+
+    def get_user(self, userId: str):
+        """Get a single user
+
+        ``GET /users/{userId}``
+
+        Args:
+            userId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Users_get_user_return.schema 
+        """
+        return self.call("GET", f"/users/{userId}")
+
+    def delete_user(self, userId: str):
+        """Delete user item with given {userId}
+
+        ``DELETE /users/{userId}``
+
+        Args:
+            userId (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+        """
+        return self.call("DELETE", f"/users/{userId}")
+
+    def modify_user(self, userId: str, user: dict):
+        """Update user item with given {userId}
+
+        ``PUT /users/{userId}``
+
+        Args:
+            userId (str)
+            user (dict): See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Users_modify_user_request.schema
+        """
+        return self.call("PUT", f"/users/{userId}", data=user)
+
+    def set_timer(self):
+        """Expire timer (timer event)
+
+        ``POST /users/expire/timer``
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+        """
+        return self.call("POST", "/users/expire/timer")
+
+
 class AddressTypes(FolioApi):
     """mod-users Address Types API
 
@@ -543,152 +699,3 @@ class Groups(FolioApi):
             .. literalinclude:: ../files/Groups_modify_group_request.schema
         """
         return self.call("PUT", f"/groups/{groupId}", data=group)
-
-
-class Users(FolioApi):
-    """mod-users API
-
-    This documents the API calls that can be made to query and manage users of the system
-    """
-
-    def get_users(self, **kwargs):
-        """Return a list of users
-
-        ``GET /users``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            query (str):  A query expressed as a CQL string
-                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
-                    using valid searchable fields.
-                    The first example below shows the general form of a full CQL query,
-                    but those fields might not be relevant in this context.
-                    
-                    
-                    
-                    
-                    Example:
-                    
-                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
-                    
-                     - active=true sortBy username
-            orderBy (str):  Order by field: field A, field B
-                    
-            order (str (desc|asc):): (default=desc) Order
-            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
-                    
-                    Example:
-                    
-                     - 0
-            limit (int): (default=10) Limit the number of elements returned in the response
-                    
-                    Example:
-                    
-                     - 10
-            facets (list):  facets to return in the collection result set, can be suffixed by a count of facet values to return, for example, patronGroup:10 default to top 5 facet values
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/Users_get_users_return.schema 
-        """
-        return self.call("GET", "/users", query=kwargs)
-
-    def set_user(self, user: dict):
-        """Create a user
-
-        ``POST /users``
-
-        Args:
-            user (dict): See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Headers:
-            - **Location** - URI to the created user item
-
-        Schema:
-
-            .. literalinclude:: ../files/Users_set_user_request.schema
-        """
-        return self.call("POST", "/users", data=user)
-
-    def get_user(self, userId: str):
-        """Get a single user
-
-        ``GET /users/{userId}``
-
-        Args:
-            userId (str)
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/Users_get_user_return.schema 
-        """
-        return self.call("GET", f"/users/{userId}")
-
-    def delete_user(self, userId: str):
-        """Delete user item with given {userId}
-
-        ``DELETE /users/{userId}``
-
-        Args:
-            userId (str)
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-        """
-        return self.call("DELETE", f"/users/{userId}")
-
-    def modify_user(self, userId: str, user: dict):
-        """Update user item with given {userId}
-
-        ``PUT /users/{userId}``
-
-        Args:
-            userId (str)
-            user (dict): See Schema below
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/Users_modify_user_request.schema
-        """
-        return self.call("PUT", f"/users/{userId}", data=user)
-
-    def set_timer(self):
-        """Expire timer (timer event)
-
-        ``POST /users/expire/timer``
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-        """
-        return self.call("POST", "/users/expire/timer")

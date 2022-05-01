@@ -1,7 +1,12 @@
+# -*- coding: utf-8 -*-
+# Copyright (C) 2021 Tobias Weber <tobi-weber@gmx.de>
+
+import json
 
 import click
 from foliolib.helper.tenant import uninstall_tenant
 from foliolib.okapi.okapiClient import OkapiClient
+from tabulate import tabulate
 
 from .orderedGroup import OrderedGroup
 
@@ -17,11 +22,9 @@ def lst():
     """List tenants.
     """
     tenants = OkapiClient().get_tenants()
-    for e in tenants:
-        k = e["id"].ljust(15)
-        n = e["name"].ljust(20)
-        d = e["description"]
-        print(f"{k}\t{n}\t{d}")
+    headers = ["id", "Name", "Description"]
+    body = [[e["id"], e["name"], e["description"]] for e in tenants]
+    print(tabulate(body, headers=headers))
 
 
 @tenant.command()
@@ -193,7 +196,8 @@ def upgrade(**kwargs):
         _kwargs["npmSnapshot"] = False
     if kwargs["no_prerelease"]:
         _kwargs["preRelease"] = False
-    OkapiClient().upgrade_modules(kwargs["tenantid"], **_kwargs)
+    msg = OkapiClient().upgrade_modules(kwargs["tenantid"], **_kwargs)
+    print(json.dumps(msg, indent=2))
 
 
 @tenant.command()
@@ -211,8 +215,7 @@ def modules(**kwargs):
     mods = OkapiClient().get_tenant_modules(kwargs["tenantid"],
                                             **_kwargs)
     for e in mods:
-        k = e["id"]
-        print(f"{k}")
+        print(e["id"])
 
 
 @tenant.command()
@@ -220,7 +223,7 @@ def modules(**kwargs):
 @click.option("-i", "--interface")
 @click.option("-f", "--full", is_flag=True,
               help="Full MD should be returned")
-def interface(**kwargs):
+def interfaces(**kwargs):
     """List interface(s).
 
     TENANTID\tThe tenant id.
@@ -228,8 +231,8 @@ def interface(**kwargs):
     if kwargs["interface"]:
         inf = OkapiClient().get_tenant_interface(kwargs["interface"],
                                                  kwargs["tenantid"])
-        print(inf[0]["id"])
-        print(inf)
+        print("Interface is in module %s" % inf[0]["id"])
+        # print(inf)
     else:
         _kwargs = {}
         if kwargs["full"]:
@@ -256,9 +259,35 @@ def interface(**kwargs):
 
 @tenant.command()
 @click.argument("tenantid")
+@click.option("--async", is_flag=True,
+              help="Uninstall in the background")
+@click.option("--undeploy", is_flag=True,
+              help="Undeploy modules")
+@click.option("--ignoreErrors", is_flag=True,
+              help="Ignore errors during the uninstall operation")
+@click.option("--no-invoke", is_flag=True,
+              help="Do not invoke for tenant init/permissions/purge")
+@click.option("--purge", is_flag=True,
+              help="Modules will also be purged.")
+@click.option("--simulate", is_flag=True,
+              help="Simulate the installation")
 def uninstall(**kwargs):
-    """Disable all modules of a tenant
+    """Disable all modules of a tenant.
 
     TENANTID\ttenant id
     """
-    uninstall_tenant(kwargs["tenantid"])
+    _kwargs = {}
+    if kwargs["async"]:
+        _kwargs["async"] = True
+    if kwargs["undeploy"]:
+        _kwargs["deploy"] = True
+    if kwargs["ignoreerrors"]:
+        _kwargs["ignoreErrors"] = True
+    if kwargs["purge"]:
+        _kwargs["purge"] = True
+    if kwargs["simulate"]:
+        _kwargs["simulate"] = True
+    if kwargs["no_invoke"]:
+        _kwargs["invoke"] = False
+    print("Disable all modules for tenant %s" % kwargs["tenantid"])
+    uninstall_tenant(kwargs["tenantid"], **_kwargs)

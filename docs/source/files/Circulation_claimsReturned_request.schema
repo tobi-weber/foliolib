@@ -1,0 +1,20 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "allOf": [
+        {
+            "$ref": "baseCircRequestDTO.json"
+        }
+    ],
+    "description": "D2IR Borrower claims item returned",
+    "type": "object",
+    "properties": {
+        "claimsReturnedDate": {
+            "description": "Claims returned date (date of -1 indicates date unknown)",
+            "type": "integer"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "claimsReturnedDate"
+    ]
+}

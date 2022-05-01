@@ -1,0 +1,19 @@
+{
+    "description": "Transaction hold cancellation request",
+    "type": "object",
+    "properties": {
+        "cancellationReasonId": {
+            "description": "Cancellation reason id",
+            "type": "string",
+            "format": "UUID"
+        },
+        "cancellationAdditionalInformation": {
+            "description": "Additional information about cancellation",
+            "type": "string"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "cancellationReasonId"
+    ]
+}

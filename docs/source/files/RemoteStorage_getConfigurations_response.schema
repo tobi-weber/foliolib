@@ -1,0 +1,21 @@
+{
+    "allOf": [
+        {
+            "$ref": "schemas/baseCollection.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "configurations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/components/schemas/storageConfiguration"
+                    }
+                }
+            },
+            "required": [
+                "configurations"
+            ]
+        }
+    ]
+}

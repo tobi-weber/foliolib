@@ -1,0 +1,31 @@
+{
+    "description": "Visible Patron Field Configuration",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "Visible Patron Field Configuration id",
+            "type": "string",
+            "format": "UUID"
+        },
+        "fields": {
+            "description": "An array of Visible Patron Fields",
+            "type": "array",
+            "items": {
+                "$ref": "visiblePatronFieldEnum.json"
+            }
+        },
+        "userCustomFields": {
+            "description": "An array of User Custom Fields refIds",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "metadata": {
+            "description": "Entity metadata",
+            "type": "object",
+            "$ref": "metadata.json"
+        }
+    },
+    "additionalProperties": false
+}

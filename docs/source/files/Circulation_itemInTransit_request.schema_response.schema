@@ -1,0 +1,28 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "D2IR response",
+    "type": "object",
+    "properties": {
+        "status": {
+            "description": "Status",
+            "type": "string"
+        },
+        "reason": {
+            "description": "Reason",
+            "type": "string"
+        },
+        "errors": {
+            "description": "Errors",
+            "type": "array",
+            "items": {
+                "$ref": "innReachError.json"
+            }
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "status",
+        "reason",
+        "errors"
+    ]
+}

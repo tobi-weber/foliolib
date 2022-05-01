@@ -1,12 +1,13 @@
+# -*- coding: utf-8 -*-
+# Copyright (C) 2021 Tobias Weber <tobi-weber@gmx.de>
 
 import click
 from foliolib.config import Config
-from foliolib.helper.okapi import (clean_okapi, login_supertenant,
-                                   secure_supertenant, set_env_db,
+from foliolib.helper.okapi import (clean_okapi, secure_supertenant, set_env_db,
                                    set_env_elastic, set_env_kafka,
                                    unsecure_supertenant)
-from foliolib.okapi import database
 from foliolib.okapi.okapiClient import OkapiClient
+from tabulate import tabulate
 
 from.orderedGroup import OrderedGroup
 
@@ -15,19 +16,6 @@ from.orderedGroup import OrderedGroup
 def okapi():
     """Commands to manage Okapi.
     """
-
-
-@okapi.command()
-# @click.argument("user", required=True)
-@click.argument("user", default="okapi_admin")
-@click.argument("password", default="admin")
-def login(**kwargs):
-    """Log in to Okapi with user and password.
-
-    USER\tUsername of supertenant. (default: okapi_admin)
-    PASSWORD\tPassword of supertenant user. (default: admin)
-    """
-    login_supertenant(kwargs["user"], kwargs["password"])
 
 
 @okapi.command()
@@ -46,25 +34,25 @@ def health(**kwargs):
     res = OkapiClient().health(kwargs["serviceid"], kwargs["instanceid"])
     if isinstance(res, dict):
         res = [res]
-    print("Service ID\t\t\t\t\tMessage\t\tInstall ID\t\t\t\tStatus")
-    for e in res:
-        print("%s\t%s\t\t%s\t%s" % (e["srvcId"].ljust(
-            40), e["healthMessage"], e["instId"], e["healthStatus"]))
+
+    headers = ["Service ID", "Message", "Install ID", "Status"]
+    body = [[e["srvcId"], e["healthMessage"], e["instId"], e["healthStatus"]]
+            for e in sorted(res, key=lambda x: x["srvcId"])]
+    print(tabulate(body, headers=headers))
 
 
 @okapi.command()
 def nodes():
     """List Nodes.
     """
+    headers = ["Node id", "URL"]
+    body = []
     for e in OkapiClient().get_nodes():
-        s = ""
-        s += e["nodeId"]
-        s += "\t"
-        s += e["url"].ljust(25)
+        l = [e["nodeId"], e["url"]]
         if "nodeName" in e:
-            s += "\t"
-            s += e["nodeName"]
-        print(s)
+            l.append(e["nodeName"])
+        body.append(l)
+    print(tabulate(body, headers=headers))
 
 
 @okapi.command()
@@ -74,14 +62,16 @@ def env():
     ev = OkapiClient().get_env()
     if not ev:
         print("No entries in okapi enviroment!")
+    headers = ["Name", "Value", "Description"]
+    body = []
     for e in ev:
-        k = e["name"].ljust(20)
-        v = e["value"].ljust(30)
+        l = [e["name"], e["value"]]
         if "description" in e:
-            d = e["description"]
+            l.append(e["description"])
         else:
-            d = ""
-        print(f"{k}\t{v}\t{d}")
+            l.append("")
+        body.append(l)
+    print(tabulate(body, headers=headers))
 
 
 @okapi.command()
@@ -145,8 +135,6 @@ def set_kafkaenv(**kwargs):
               show_default=True)
 @click.option("-l", "--language", multiple=True,
               help="Elasticsearch initial language. Can be repeated. (default: eng)", show_default=True)
-@click.option("-s", "--syspass", default="Mod-search-1-0-0",
-              help="Systemuser password", show_default=True)
 def set_elasticenv(**kwargs):
     """Set global Elasticsearch settings to Okapi.
     """
@@ -159,10 +147,8 @@ def set_elasticenv(**kwargs):
     print(f"\telasticsearch user: \t{kwargs['user']}")
     print(f"\telasticsearch password: \t{kwargs['password']}")
     print("\tinitial languages: \t%s" % (",".join(langs)))
-    print(f"\tsystem user password: \t{kwargs['syspass']}")
     set_env_elastic(kwargs["host"], elastic_port=kwargs["port"], elastic_user=kwargs["user"],
-                    elastic_password=kwargs["password"], languages=langs,
-                    syspass=kwargs["syspass"])
+                    elastic_password=kwargs["password"], languages=langs)
 
 
 @okapi.command()
@@ -181,34 +167,6 @@ def unsecure():
     """
     print("Remove supertenant user")
     unsecure_supertenant()
-
-
-@okapi.command()
-@click.option("-u", "--user", default="okapi", help=" ", show_default=True)
-@click.option("-p", "--password",
-              default="okapi25", help=" ", show_default=True)
-@click.option("-d", "--database", default="okapi", help=" ", show_default=True)
-def initdb(**kwargs):
-    """Initialize Okapi database.
-    """
-    database.create_okapi_db(user=kwargs["user"],
-                             password=kwargs["password"],
-                             database=kwargs["database"])
-
-
-@okapi.command()
-@click.option(
-    "-u", "--user", default="folio_admin", help=" ", show_default=True)
-@click.option("-p", "--password",
-              default="folio_admin", help=" ", show_default=True)
-@click.option("-d", "--database",
-              default="okapi_modules", help=" ", show_default=True)
-def initmoduledb(**kwargs):
-    """Initialize Module database.
-    """
-    database.create_modules_db(user=kwargs["user"],
-                               password=kwargs["password"],
-                               database=kwargs["database"])
 
 
 @okapi.command()

@@ -1,0 +1,90 @@
+{
+    "id": "ebsconet_order_line",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "Ebsconet order line integration schema",
+    "type": "object",
+    "properties": {
+        "vendor": {
+            "description": "Vendor code",
+            "type": "string",
+            "pattern": "[\\S ]+",
+            "maxLength": 55,
+            "readOnly": true
+        },
+        "cancellationRestriction": {
+            "description": "Whether or not there are cancellation restrictions for this purchase order line",
+            "type": "boolean",
+            "readOnly": false
+        },
+        "cancellationRestrictionNote": {
+            "description": "Free-form notes related to cancellation restrictions",
+            "type": "string",
+            "readOnly": false
+        },
+        "unitPrice": {
+            "description": "The per-item list price for physical or resources of 'Other' order format",
+            "type": "number",
+            "readOnly": false
+        },
+        "currency": {
+            "description": "An ISO currency code",
+            "type": "string",
+            "readOnly": false
+        },
+        "vendorReferenceNumbers": {
+            "description": "Reference number items array",
+            "type": "array",
+            "items": {
+                "$ref": "../mod-orders/reference_number_item.json"
+            }
+        },
+        "poLineNumber": {
+            "description": "A human readable number assigned to this PO line",
+            "$ref": "../mod-orders/order_line_number.json",
+            "readOnly": true
+        },
+        "subscriptionToDate": {
+            "description": "the end date of the subscription",
+            "type": "string",
+            "format": "date-time",
+            "readOnly": false,
+            "nullable": true
+        },
+        "subscriptionFromDate": {
+            "description": "the start date of the subscription",
+            "type": "string",
+            "format": "date-time",
+            "readOnly": false,
+            "nullable": true
+        },
+        "quantity": {
+            "description": "Quantity of physical items or resources of 'Other' order format in this purchase order line",
+            "type": "integer",
+            "readOnly": false
+        },
+        "fundCode": {
+            "description": "Fund distribution code",
+            "type": "string",
+            "readOnly": false
+        },
+        "publisherName": {
+            "description": "Publisher of the material",
+            "type": "string",
+            "readOnly": false
+        },
+        "vendorAccountNumber": {
+            "description": "Account number on the vendor's end associated with this purchase order line",
+            "type": "string",
+            "readOnly": false
+        },
+        "workflowStatus": {
+            "description": "the workflow status for the purchase order",
+            "$ref": "../mod-orders/workflow_status.json",
+            "readOnly": true
+        }
+    },
+    "required": [
+        "currency",
+        "poLineNumber"
+    ]
+}

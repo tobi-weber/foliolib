@@ -26,10 +26,31 @@ class FolioApi:
     def headers(self):
         return self._okapi.headers
 
-    def call(self, method: str, service: str, data: dict = None,
+    def call(self, method: str, path: str, data: dict = None,
              query: dict = None, headers: dict = None, files: dict = None):
-        return self._okapi.call_tenant_service(method, service, self._tenant, data=data,
+        return self._okapi.call_tenant_service(method, path, self._tenant, data=data,
                                                query=query, headers=headers, files=files)
+
+
+class FolioAdminApi:
+
+    def __init__(self, okapi: OkapiClient = None):
+        """
+        Args:
+            okapi (OkapiClient, optional): Instance of OkapiClient. Defaults to None.
+        """
+        self._okapi = okapi or OkapiClient()
+
+    def get_okapiClient(self):
+        return self._okapi
+
+    def headers(self):
+        return self._okapi.headers
+
+    def call(self, method: str, path: str, data: dict = None,
+             query: dict = None, headers: dict = None, files: dict = None):
+        return self._okapi.request()(method, path, data=data,
+                                     query=query, headers=headers, files=files)
 
 
 class FolioService:

@@ -7,8 +7,8 @@ rm -rf build/ MANIFEST dist/ *.egg-info
 find . -name '*.pyc' -delete
 find . -name '*.pyo' -delete
 find . -name '__pycache__' -delete
-cd docs
-make clean
-echo "Remove generated docs"
-rm -f source/generated/*
-cd ..
+#cd docs
+#make clean
+#echo "Remove generated docs"
+#rm -f source/generated/*
+#cd ..

@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": " Request Cancelation Schema",
+  "type": "object",
+  "description": "Request cancelation schema for patron portal integration",
+  "additionalProperties": false,
+  "properties": {
+    "holdId": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$",
+      "description": "The UUID of the request"
+    },
+    "canceledDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date when the request was made"
+    },
+    "cancellationReasonId": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$",
+      "description": "The UUID of the request cancelation reason"
+    },
+    "canceledByUserId": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$",
+      "description": "The UUID of the patron who cancels the request"
+    },
+    "cancellationAdditionalInformation": {
+      "description": "Additional information about a cancelation",
+      "type": "string"
+    }
+  },
+  "required": [
+    "cancellationReasonId",
+    "canceledByUserId",
+    "holdId"
+  ]
+}

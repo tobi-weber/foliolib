@@ -1,0 +1,22 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "Patron type mapping collection",
+    "type": "object",
+    "properties": {
+        "patronTypeMappings": {
+            "description": "List of patron type mappings",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "$ref": "patronTypeMappingDTO.json"
+            }
+        },
+        "totalRecords": {
+            "type": "integer"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "patronTypeMappings"
+    ]
+}

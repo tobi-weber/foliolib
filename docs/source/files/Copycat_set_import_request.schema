@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "tags",
+  "description": "copycat import request/response",
+  "type": "object",
+  "properties": {
+    "externalIdentifier": {
+      "description": "external identifier for the record (for Z39.50 retrieval)",
+      "type": "string"
+    },
+    "internalIdentifier": {
+      "description": "FOLIO instance identifier for the record; specify when a record should be updated",
+      "type": "string"
+    },
+    "profileId": {
+      "description": "profile to be used for importing",
+      "type": "string"
+    },
+    "record": {
+      "description": "local record",
+      "type": "object",
+      "properties": {
+        "json": {
+          "description": "JSON MARC record object within json property",
+          "type": "string"
+        },
+        "marc": {
+          "description": "base64 encoded ISO2709 MARC",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "profileId"
+  ]
+}

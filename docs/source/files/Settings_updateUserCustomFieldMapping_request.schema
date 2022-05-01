@@ -1,0 +1,44 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "User custom field mapping",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "Mapping id",
+            "type": "string",
+            "format": "uuid"
+        },
+        "customFieldId": {
+            "description": "Custom field refId",
+            "type": "string"
+        },
+        "configuredOptions": {
+            "type": "object",
+            "description": "Map of the option ids for the custom field and local agency codes",
+            "additionalProperties": {
+                "type": "string",
+                "properties": {
+                    "agencyCode": {
+                        "description": "Agency code",
+                        "type": "string",
+                        "maxLength": 5
+                    },
+                    "customFieldValue": {
+                        "description": "Custom field option id",
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "metadata": {
+            "description": "Entity metadata",
+            "type": "object",
+            "$ref": "metadata.json"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "customFieldId",
+        "configuredOptions"
+    ]
+}

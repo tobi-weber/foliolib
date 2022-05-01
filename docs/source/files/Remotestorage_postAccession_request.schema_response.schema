@@ -1,0 +1,113 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "description": "Accession queue",
+    "properties": {
+        "id": {
+            "description": "Accession queue id",
+            "$ref": "uuid.json"
+        },
+        "itemBarcode": {
+            "description": "Accession queue name",
+            "type": "string"
+        },
+        "createdDateTime": {
+            "description": "Created Date",
+            "type": "string",
+            "format": "date-time"
+        },
+        "accessionedDateTime": {
+            "description": "Accessioned Date",
+            "type": "string",
+            "format": "date-time"
+        },
+        "remoteStorageId": {
+            "description": "Remote storage id",
+            "$ref": "uuid.json"
+        },
+        "callNumber": {
+            "description": "Call number",
+            "type": "string"
+        },
+        "instanceTitle": {
+            "description": "Instance title",
+            "type": "string"
+        },
+        "instanceAuthor": {
+            "description": "Instance author",
+            "type": "string"
+        },
+        "instanceContributors": {
+            "description": "Instance contributors",
+            "type": "string"
+        },
+        "publisher": {
+            "description": "Instance publisher",
+            "type": "string"
+        },
+        "publishYear": {
+            "description": "Year of publication",
+            "type": "string"
+        },
+        "publishPlace": {
+            "description": "Place of publication",
+            "type": "string"
+        },
+        "volume": {
+            "description": "Volume",
+            "type": "string"
+        },
+        "enumeration": {
+            "description": "Enumeration",
+            "type": "string"
+        },
+        "chronology": {
+            "description": "Chronology",
+            "type": "string"
+        },
+        "issn": {
+            "description": "ISSN identifier",
+            "type": "string"
+        },
+        "isbn": {
+            "description": "ISBN identifier",
+            "type": "string"
+        },
+        "oclc": {
+            "description": "OCLC identifier",
+            "type": "string"
+        },
+        "physicalDescription": {
+            "description": "Physical description",
+            "type": "string"
+        },
+        "materialType": {
+            "description": "Material type",
+            "type": "string"
+        },
+        "copyNumber": {
+            "description": "Copy number",
+            "type": "string"
+        },
+        "permanentLocationId": {
+            "description": "Permanent location id",
+            "$ref": "uuid.json"
+        },
+        "notes": {
+            "description": "Accession queue notes",
+            "type": "array",
+            "items": {
+                "description": "Accession queue note",
+                "type": "object",
+                "$ref": "accessionQueueNote.json"
+            }
+        },
+        "metadata": {
+            "description": "Entity metadata",
+            "type": "object",
+            "$ref": "metadata.json"
+        }
+    },
+    "additionalProperties": false,
+    "required": []
+}

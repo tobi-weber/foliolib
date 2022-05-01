@@ -1,0 +1,77 @@
+{
+    "description": "Central server",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "Central server id",
+            "type": "string",
+            "format": "UUID"
+        },
+        "name": {
+            "description": "Central server name",
+            "type": "string"
+        },
+        "description": {
+            "description": "Central server description",
+            "type": "string"
+        },
+        "localServerCode": {
+            "description": "Server code",
+            "type": "string",
+            "maxLength": 5
+        },
+        "centralServerCode": {
+            "description": "Central server code",
+            "type": "string",
+            "maxLength": 5
+        },
+        "centralServerAddress": {
+            "description": "Central server http address",
+            "type": "string"
+        },
+        "loanTypeId": {
+            "description": "Loan type id",
+            "type": "string",
+            "format": "UUID"
+        },
+        "localAgencies": {
+            "description": "Local agencies",
+            "type": "array",
+            "items": {
+                "$ref": "localAgencyDTO.json"
+            }
+        },
+        "centralServerKey": {
+            "description": "Central server key",
+            "type": "string"
+        },
+        "centralServerSecret": {
+            "description": "Central server secret",
+            "type": "string"
+        },
+        "localServerKey": {
+            "description": "Local server key",
+            "type": "string"
+        },
+        "localServerSecret": {
+            "description": "Local server secret",
+            "type": "string"
+        },
+        "metadata": {
+            "description": "Entity metadata",
+            "type": "object",
+            "$ref": "metadata.json"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "name",
+        "localServerCode",
+        "centralServerCode",
+        "centralServerAddress",
+        "loanTypeId",
+        "localAgencies",
+        "centralServerKey",
+        "centralServerSecret"
+    ]
+}

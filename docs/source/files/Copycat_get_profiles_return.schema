@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "CopyCat Profiles Response",
+  "description": "CopyCat Profiles",
+  "type": "object",
+  "properties": {
+    "profiles": {
+      "description": "List of CopyCat profiles",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "copycatprofile.json"
+      }
+    },
+    "totalRecords": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "profiles",
+    "totalRecords"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "INN-Reach contribution history of job execution status tracking and basic statistics",
+    "type": "object",
+    "properties": {
+        "totalRecords": {
+            "description": "Total records",
+            "type": "integer"
+        },
+        "contributionHistory": {
+            "description": "List of INN-Reach contribution job execution status tracking and basic statistics",
+            "type": "array",
+            "items": {
+                "$ref": "contributionDTO.json"
+            }
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "contributions"
+    ]
+}

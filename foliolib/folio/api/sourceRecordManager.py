@@ -1,11 +1,74 @@
 # -*- coding: utf-8 -*-
-# Generated at 2021-05-24
+# Generated at 2022-04-28
 
 import logging
 
-from foliolib.folio import FolioApi
+from foliolib.folio import FolioApi, FolioAdminApi
 
-log = logging.getLogger("foliolib.folio.api.sourceRecordManager")
+log = logging.getLogger("oliolib.folio.api.sourceRecordManager")
+
+
+class ChangeManagerHandlers(FolioApi):
+    """Source Record Manager event handlers API
+
+    API for event handling
+    """
+
+    def set_createdInventoryInstance(self, createdInventoryInstance: dict):
+        """
+
+        ``POST /change-manager/handlers/created-inventory-instance``
+
+        Args:
+            createdInventoryInstance (dict): See Schema below
+
+        Schema:
+
+            .. literalinclude:: ../files/ChangeManagerHandlers_set_createdInventoryInstance_request.schema
+        """
+        return self.call("POST", "/change-manager/handlers/created-inventory-instance", data=createdInventoryInstance)
+
+    def set_processingResult(self, processingResult: dict):
+        """
+
+        ``POST /change-manager/handlers/processing-result``
+
+        Args:
+            processingResult (dict): See Schema below
+
+        Schema:
+
+            .. literalinclude:: ../files/ChangeManagerHandlers_set_processingResult_request.schema
+        """
+        return self.call("POST", "/change-manager/handlers/processing-result", data=processingResult)
+
+    def set_qmCompleted(self, qmCompleted: dict):
+        """
+
+        ``POST /change-manager/handlers/qm-completed``
+
+        Args:
+            qmCompleted (dict): See Schema below
+
+        Schema:
+
+            .. literalinclude:: ../files/ChangeManagerHandlers_set_qmCompleted_request.schema
+        """
+        return self.call("POST", "/change-manager/handlers/qm-completed", data=qmCompleted)
+
+    def set_qmError(self, qmError: dict):
+        """
+
+        ``POST /change-manager/handlers/qm-error``
+
+        Args:
+            qmError (dict): See Schema below
+
+        Schema:
+
+            .. literalinclude:: ../files/ChangeManagerHandlers_set_qmError_request.schema
+        """
+        return self.call("POST", "/change-manager/handlers/qm-error", data=qmError)
 
 
 class MetadataProvider(FolioApi):
@@ -381,69 +444,6 @@ class ChangeManager(FolioApi):
             .. literalinclude:: ../files/ChangeManager_modify_parsedRecord_request.schema
         """
         return self.call("PUT", f"/change-manager/parsedRecords/{parsedRecordsId}", data=parsedRecord)
-
-
-class ChangeManagerHandlers(FolioApi):
-    """Source Record Manager event handlers API
-
-    API for event handling
-    """
-
-    def set_createdInventoryInstance(self, createdInventoryInstance: dict):
-        """
-
-        ``POST /change-manager/handlers/created-inventory-instance``
-
-        Args:
-            createdInventoryInstance (dict): See Schema below
-
-        Schema:
-
-            .. literalinclude:: ../files/ChangeManagerHandlers_set_createdInventoryInstance_request.schema
-        """
-        return self.call("POST", "/change-manager/handlers/created-inventory-instance", data=createdInventoryInstance)
-
-    def set_processingResult(self, processingResult: dict):
-        """
-
-        ``POST /change-manager/handlers/processing-result``
-
-        Args:
-            processingResult (dict): See Schema below
-
-        Schema:
-
-            .. literalinclude:: ../files/ChangeManagerHandlers_set_processingResult_request.schema
-        """
-        return self.call("POST", "/change-manager/handlers/processing-result", data=processingResult)
-
-    def set_qmCompleted(self, qmCompleted: dict):
-        """
-
-        ``POST /change-manager/handlers/qm-completed``
-
-        Args:
-            qmCompleted (dict): See Schema below
-
-        Schema:
-
-            .. literalinclude:: ../files/ChangeManagerHandlers_set_qmCompleted_request.schema
-        """
-        return self.call("POST", "/change-manager/handlers/qm-completed", data=qmCompleted)
-
-    def set_qmError(self, qmError: dict):
-        """
-
-        ``POST /change-manager/handlers/qm-error``
-
-        Args:
-            qmError (dict): See Schema below
-
-        Schema:
-
-            .. literalinclude:: ../files/ChangeManagerHandlers_set_qmError_request.schema
-        """
-        return self.call("POST", "/change-manager/handlers/qm-error", data=qmError)
 
 
 class MappingRulesProvider(FolioApi):

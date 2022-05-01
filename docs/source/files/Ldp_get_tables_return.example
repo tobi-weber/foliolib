@@ -1,0 +1,670 @@
+[
+  {
+    "tableName": "instance_identifiers",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "po_lines_cost",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "invoice_adjustments_ext",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "po_lines_details_subscription",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "po_lines_eresource",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "finance_transaction_invoices",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "holdings_notes",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "po_lines_er_mat_type",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "invoice_lines_adjustments",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "instance_languages",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "instance_alternative_titles",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "po_lines_locations",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "invoice_lines_fund_distributions",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "holdings_electronic_access",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "po_lines_physical",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "item_effective_callno_components",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "po_lines_phys_mat_type",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "instance_nature_content",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "po_lines_tags",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "po_ongoing",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "holdings_statements_indexes",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "po_organization",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "item_electronic_access",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "instance_notes",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "instance_contributors",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "instance_publication",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "requests_items",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "holdings_statements",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "users_addresses",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "users_departments_unpacked",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "item_ext",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "instance_relationships_ext",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "users_groups",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "instance_editions",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "po_prod_ids",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "item_notes",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "instance_series",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "loans_renewal_dates",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "items_holdings_instances",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "locations_service_points",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "feesfines_accounts_actions",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "instance_electronic_access",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "instance_statistical_codes",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "item_statistical_codes",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "finance_transaction_purchase_order",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "holdings_ext",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "loans_renewal_count",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "instance_subjects",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "locations_libraries",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "instance_ext",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "holdings_statements_supplements",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "loans_items",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "po_acq_unit_ids",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "instance_formats",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "po_instance",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "holdings_statistical_codes",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "invoice_adjustments_in_addition_to",
+    "tableSchema": "folio_reporting"
+  },
+  {
+    "tableName": "invoice_lines",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "feesfines_refunds",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "feesfines_transfer_criterias",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "invoice_voucher_lines",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "organization_urls",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "feesfines_transfers",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "invoice_vouchers",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "feesfines_waives",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "finance_budgets",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "notes",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "finance_expense_classes",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "finance_fiscal_years",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "acquisitions_memberships",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "user_addresstypes",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "finance_fund_types",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "finance_funds",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "acquisitions_units",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "finance_group_fund_fiscal_years",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "po_alerts",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "user_departments",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "finance_groups",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "po_lines",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "finance_ledgers",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "finance_transactions",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_alternative_title_types",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_call_number_types",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "po_order_invoice_relns",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "user_groups",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_campuses",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "po_order_templates",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_classification_types",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_contributor_name_types",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_contributor_types",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_electronic_access_relationships",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "po_pieces",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_holdings",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "po_purchase_orders",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_holdings_note_types",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_holdings_types",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_identifier_types",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "po_receiving_history",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "user_proxiesfor",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_ill_policies",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_instance_formats",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_instance_note_types",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "po_reporting_codes",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_instance_relationship_types",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_instance_relationships",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_instance_statuses",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "organization_addresses",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_instance_types",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "organization_categories",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "audit_circulation_logs",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_instances",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "circulation_patron_notice_policies",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "circulation_cancellation_reasons",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_item_damaged_statuses",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "circulation_check_ins",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "circulation_fixed_due_date_schedules",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "circulation_loan_history",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_item_note_types",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "organization_contacts",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "circulation_loan_policies",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "circulation_loans",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "circulation_patron_action_sessions",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_items",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "circulation_request_policies",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "circulation_request_preference",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "circulation_requests",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_institutions",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "user_users",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "circulation_scheduled_notices",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_libraries",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "circulation_staff_slips",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_loan_types",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "configuration_entries",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "organization_emails",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "course_copyrightstatuses",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_locations",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "course_courselistings",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "course_courses",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "course_coursetypes",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_material_types",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "course_departments",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "organization_interfaces",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "course_processingstatuses",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "course_reserves",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_modes_of_issuance",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "course_roles",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "course_terms",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_nature_of_content_terms",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "srs_marc",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "email_email",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "srs_records",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "feesfines_accounts",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_service_points",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "organization_organizations",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "feesfines_comments",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "feesfines_feefineactions",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_service_points_users",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "feesfines_feefines",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_statistical_code_types",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "feesfines_lost_item_fees_policies",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "feesfines_manualblocks",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "inventory_statistical_codes",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "feesfines_overdue_fines_policies",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "feesfines_owners",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "invoice_invoices",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "organization_phone_numbers",
+    "tableSchema": "public"
+  },
+  {
+    "tableName": "feesfines_payments",
+    "tableSchema": "public"
+  }
+]

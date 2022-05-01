@@ -39,6 +39,7 @@ pyjwt==1.7.1              # via pygithub
 python-magic==0.4.18      # via foliolib (setup.py)
 pyyaml==5.3.1             # via foliolib (setup.py)
 wrapt==1.12.1             # via deprecated
+click==7.1.2
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools

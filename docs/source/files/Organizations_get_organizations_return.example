@@ -7,6 +7,9 @@
       "description": "This is Yankee Book Peddler.",
       "exportToAccounting" : true,
       "status": "Active",
+      "organizationTypes": [
+        "f04c7277-0019-43cf-84b3-02d894a9d81a"
+      ],
       "language": "en-us",
       "isVendor": true,
       "aliases": [

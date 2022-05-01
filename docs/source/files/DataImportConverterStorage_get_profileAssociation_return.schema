@@ -6,15 +6,15 @@
   "properties": {
     "id": {
       "description": "Unique identifier",
-      "$ref": "../common/uuid.json"
+      "$ref": "../../raml-util/schemas/uuid.schema"
     },
     "masterProfileId": {
       "description": "Unique identifier of the 'master' profile",
-      "$ref": "../common/uuid.json"
+      "$ref": "../../raml-util/schemas/uuid.schema"
     },
     "detailProfileId": {
       "description": "Unique identifier of the 'detail' profile",
-      "$ref": "../common/uuid.json"
+      "$ref": "../../raml-util/schemas/uuid.schema"
     },
     "order": {
       "description": "The execution order of the 'detail' profile. Job, Action and Matching profiles have an execution order, but this field is always 0 for Mapping profiles because of o2o relationship",
@@ -32,7 +32,7 @@
     "triggered": {
       "description": "Boolean flag identifies if the 'detail' profile has triggered by the 'master' profile",
       "type": "boolean",
-      "default": "false"
+      "default": false
     },
     "masterProfileType": {
       "description": "Type of master profile",
@@ -56,7 +56,7 @@
     },
     "jobProfileId": {
       "description": "Unique identifier of the job profile, it is used to distinguish associations when building a snapshot tree for particular job profile",
-      "$ref": "../common/uuid.json"
+      "$ref": "../../raml-util/schemas/uuid.schema"
     }
   },
   "required": [

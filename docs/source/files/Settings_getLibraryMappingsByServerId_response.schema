@@ -1,0 +1,22 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "Library mapping collection",
+    "type": "object",
+    "properties": {
+        "libraryMappings": {
+            "description": "List of library mappings",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "$ref": "libraryMappingDTO.json"
+            }
+        },
+        "totalRecords": {
+            "type": "integer"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "libraryMappings"
+    ]
+}

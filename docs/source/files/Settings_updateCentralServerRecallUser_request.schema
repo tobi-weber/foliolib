@@ -1,0 +1,15 @@
+{
+    "description": "InnReach recall user",
+    "type": "object",
+    "properties": {
+        "userId": {
+            "description": "User id",
+            "type": "string",
+            "format": "uuid"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "userId"
+    ]
+}

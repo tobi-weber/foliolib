@@ -18,3 +18,4 @@ pyyaml==5.3.1             # via foliolib (setup.py)
 requests==2.24.0          # via pygithub, foliolib (setup.py)
 urllib3==1.25.11          # via requests
 wrapt==1.12.1             # via deprecated
+click==7.1.2

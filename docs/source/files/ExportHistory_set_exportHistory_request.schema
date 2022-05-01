@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Export orders or order lines history",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "UUID of this history record",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "exportJobId": {
+      "description": "UUID of the export Job",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "exportType": {
+      "description": "Export type",
+      "type": "string"
+    },
+    "exportDate": {
+      "description": "Export date",
+      "type": "string",
+      "format": "date-time"
+    },
+    "exportedPoLineIds": {
+      "description": "References the purchase order lines associated to the export",
+      "id": "exportedPoLineIds",
+      "type": "array",
+      "items": {
+        "description": "UUID of the purchase order line",
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "exportType",
+    "exportJobId",
+    "exportDate"
+  ]
+}

@@ -1,0 +1,98 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "INN-Reach contribution job execution status tracking and basic statistics",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "Contribution id",
+            "type": "string",
+            "format": "uuid"
+        },
+        "jobId": {
+            "description": "Instance iteration job id",
+            "type": "string",
+            "format": "uuid"
+        },
+        "itemTypeMappingStatus": {
+            "description": "Material type mapping validation status",
+            "type": "object",
+            "$ref": "mappingValidationStatusDTO.json",
+            "default": "Invalid"
+        },
+        "locationsMappingStatus": {
+            "description": "Location mapping validation status",
+            "type": "object",
+            "$ref": "mappingValidationStatusDTO.json",
+            "default": "Invalid"
+        },
+        "status": {
+            "description": "Status",
+            "type": "string",
+            "enum": [
+                "In Progress",
+                "Complete",
+                "Not started",
+                "Cancelled"
+            ],
+            "default": "Not started"
+        },
+        "contributionStarted": {
+            "description": "Date and time when the contribution has started",
+            "type": "string",
+            "format": "date-time"
+        },
+        "contributionStartedBy": {
+            "description": "Username of the user who started the contribution",
+            "type": "string"
+        },
+        "contributionComplete": {
+            "description": "Date and time when the contribution has completed",
+            "type": "string",
+            "format": "date-time"
+        },
+        "recordsTotal": {
+            "description": "Total number of FOLIO instance records",
+            "type": "integer",
+            "format": "int64"
+        },
+        "recordsProcessed": {
+            "description": "Total number of Processed records",
+            "type": "integer",
+            "format": "int64"
+        },
+        "recordsContributed": {
+            "description": "Total number of Contributed records",
+            "type": "integer",
+            "format": "int64"
+        },
+        "recordsUpdated": {
+            "description": "Total number of Updated records",
+            "type": "integer",
+            "format": "int64"
+        },
+        "recordsDecontributed": {
+            "description": "Total number of De-contributed records",
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+        },
+        "errors": {
+            "description": "List of errors occurred",
+            "type": "array",
+            "items": {
+                "$ref": "contributionErrorDTO.json"
+            }
+        },
+        "metadata": {
+            "description": "Entity metadata",
+            "type": "object",
+            "$ref": "metadata.json"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "status",
+        "itemTypeMappingStatus",
+        "locationsMappingStatus"
+    ]
+}

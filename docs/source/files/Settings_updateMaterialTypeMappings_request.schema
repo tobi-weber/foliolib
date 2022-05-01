@@ -1,0 +1,22 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "Material type mapping collection",
+    "type": "object",
+    "properties": {
+        "materialTypeMappings": {
+            "description": "List of material type mappings",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "$ref": "materialTypeMappingDTO.json"
+            }
+        },
+        "totalRecords": {
+            "type": "integer"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "materialTypeMappings"
+    ]
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of Source record DTO",
+  "javaType": "org.folio.rest.jaxrs.model.MarcBibCollection",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "invalidMarcBibIds": {
+      "description": "List of marc bib records ids, which doesn't exists in the database",
+      "type": "array",
+      "id": "invalidMarcBibIds",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "invalidMarcBibIds"
+  ]
+}

@@ -10,7 +10,7 @@
   "exportToAccounting": false,
   "invoiceCurrency": "EUR",
   "invoiceId": "c0d08448-347b-418a-8c2f-5fb50248d67e",
-  "status": "Awaiting payment",
+  "status": "Cancelled",
   "systemCurrency": "USD",
   "type": "Payment",
   "voucherDate": "2019-05-06T00:00:00.000+0000",

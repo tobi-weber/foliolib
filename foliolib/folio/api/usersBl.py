@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-# Generated at 2021-05-24
+# Generated at 2022-04-28
 
 import logging
 
-from foliolib.folio import FolioApi
+from foliolib.folio import FolioApi, FolioAdminApi
 
-log = logging.getLogger("foliolib.folio.api.usersBl")
+log = logging.getLogger("oliolib.folio.api.usersBl")
 
 
 class ModUsersBl(FolioApi):
@@ -94,6 +94,38 @@ class ModUsersBl(FolioApi):
         """
         return self.call("GET", f"/bl-users/by-id/{byId}", query=kwargs)
 
+    def delete_byId(self, byId: str):
+        """
+
+        ``DELETE /bl-users/by-id/{byId}``
+
+        Args:
+            byId (str)
+        """
+        return self.call("DELETE", f"/bl-users/by-id/{byId}")
+
+    def get_openTransactions_by_by(self, byId: str):
+        """Check if user has any open transactions, and if so, how many. Identify user by "id"
+
+        ``GET /bl-users/by-id/{byId}/open-transactions``
+
+        Args:
+            byId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/ModUsersBl_get_openTransactions_by_by_return.schema 
+        """
+        return self.call("GET", f"/bl-users/by-id/{byId}/open-transactions")
+
     def get_byUsername(self, username: str, **kwargs):
         """Get a user by "username"
 
@@ -124,6 +156,38 @@ class ModUsersBl(FolioApi):
         """
         return self.call("GET", f"/bl-users/by-username/{username}", query=kwargs)
 
+    def delete_byUsername(self, username: str):
+        """
+
+        ``DELETE /bl-users/by-username/{username}``
+
+        Args:
+            username (str)
+        """
+        return self.call("DELETE", f"/bl-users/by-username/{username}")
+
+    def get_openTransactions_by_username(self, username: str):
+        """Check if user has any open transactions, and if so, how many. Identify user by "username"
+
+        ``GET /bl-users/by-username/{username}/open-transactions``
+
+        Args:
+            username (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/ModUsersBl_get_openTransactions_by_username_return.schema 
+        """
+        return self.call("GET", f"/bl-users/by-username/{username}/open-transactions")
+
     def get__selves(self, **kwargs):
         """Get a user by "self reference"
 
@@ -152,6 +216,13 @@ class ModUsersBl(FolioApi):
             .. literalinclude:: ../files/ModUsersBl_get__selves_return.schema 
         """
         return self.call("GET", "/bl-users/_self", query=kwargs)
+
+    def delete__selves(self):
+        """
+
+        ``DELETE /bl-users/_self``
+        """
+        return self.call("DELETE", "/bl-users/_self")
 
     def set_login(self, login: dict, **kwargs):
         """Allow a new user to login and return an authtoken, along with a composite user record

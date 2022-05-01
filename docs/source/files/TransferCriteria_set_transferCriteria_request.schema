@@ -14,6 +14,7 @@
     },
     "value": {
       "description": "Not implemented yet",
+      "javaType": "org.folio.rest.domain.MonetaryValue",
       "type": "number"
     },
     "interval": {
@@ -22,7 +23,7 @@
     },
     "id": {
       "description": "Transfer criteria id, UUID",
-      "type": "string"
+      "$ref": "raml-util/schemas/uuid.schema"
     }
   },
   "additionalProperties": false

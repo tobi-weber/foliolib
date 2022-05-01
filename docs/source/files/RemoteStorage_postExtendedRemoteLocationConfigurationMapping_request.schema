@@ -1,0 +1,25 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "Mapping between remote and Folio locations with original location",
+    "type": "object",
+    "properties": {
+        "finalLocationId": {
+            "description": "Final location id",
+            "$ref": "uuid.json"
+        },
+        "remoteConfigurationId": {
+            "description": "Remote storage configuration id",
+            "$ref": "uuid.json"
+        },
+        "originalLocationId": {
+            "description": "Original location id",
+            "$ref": "uuid.json"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "finalLocationId",
+        "remoteConfigurationId",
+        "originalLocationId"
+    ]
+}

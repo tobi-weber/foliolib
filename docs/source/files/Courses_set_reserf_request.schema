@@ -154,6 +154,10 @@
           "type": "string",
           "description": "The HRID of the associated instance record"
         },
+        "instanceDiscoverySuppress": {
+          "type": "boolean",
+          "description": "Whether the associated instance record has been marked as suppressed from discovery"
+        },
         "holdingsId": {
           "type": "string",
           "description": "The id of the associated holdings record"

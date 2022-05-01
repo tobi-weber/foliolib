@@ -6,7 +6,7 @@
   "properties": {
     "id": {
       "description": "UUID",
-      "$ref": "../common/uuid.json"
+      "$ref": "../../raml-util/schemas/uuid.schema"
     },
     "sourcePath": {
       "description": "The path to the file location",
@@ -29,11 +29,11 @@
     },
     "jobExecutionId": {
       "description": "Link to JobExecution entity",
-      "$ref": "../common/uuid.json"
+      "$ref": "../../raml-util/schemas/uuid.schema"
     },
     "uploadDefinitionId": {
       "description": "Link to UploadDefinition entity",
-      "$ref": "../common/uuid.json"
+      "$ref": "../../raml-util/schemas/uuid.schema"
     },
     "createDate": {
       "description": "Date and time when the file definition was created",

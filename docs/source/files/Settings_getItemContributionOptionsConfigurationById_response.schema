@@ -1,0 +1,48 @@
+{
+    "description": "Item Contribution Options",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "Item Contribution Options Configuration id",
+            "type": "string",
+            "format": "UUID"
+        },
+        "notAvailableItemStatuses": {
+            "description": "A list of FOLIO item states that should be considered \"Not available\"",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "nonLendableLoanTypes": {
+            "description": "A list of FOLIO loan types that should be considered non-lendable",
+            "type": "array",
+            "items": {
+                "type": "string",
+                "format": "UUID"
+            }
+        },
+        "nonLendableLocations": {
+            "description": "A list of FOLIO locations whose items should be considered non-lendable",
+            "type": "array",
+            "items": {
+                "type": "string",
+                "format": "UUID"
+            }
+        },
+        "nonLendableMaterialTypes": {
+            "description": "A list of FOLIO material types that should be considered non-lendable",
+            "type": "array",
+            "items": {
+                "type": "string",
+                "format": "UUID"
+            }
+        },
+        "metadata": {
+            "description": "Entity metadata",
+            "type": "object",
+            "$ref": "metadata.json"
+        }
+    },
+    "additionalProperties": false
+}

@@ -1,0 +1,26 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "allOf": [
+        {
+            "$ref": "innReachResponseDTO.json"
+        }
+    ],
+    "description": "D2IR Patron info response",
+    "type": "object",
+    "properties": {
+        "patronInfo": {
+            "description": "D2IR Patron info",
+            "type": "object",
+            "$ref": "patronInfo.json"
+        },
+        "requestAllowed": {
+            "type": "boolean",
+            "description": "If the value is false, the patron cannot place a central request (they will be locally blocked)"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "patronInfo",
+        "requestAllowed"
+    ]
+}

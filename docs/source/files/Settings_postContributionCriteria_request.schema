@@ -1,0 +1,41 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "Contribution Criteria Configuration",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "Contribution criteria id",
+            "type": "string",
+            "format": "UUID"
+        },
+        "locationIds": {
+            "description": "Locations excluded from contribution process",
+            "type": "array",
+            "items": {
+                "type": "string",
+                "format": "UUID"
+            }
+        },
+        "contributeButSuppressId": {
+            "description": "Contribute but suppress statistical code id",
+            "type": "string",
+            "format": "UUID"
+        },
+        "doNotContributeId": {
+            "description": "Do not contribute statistical code id",
+            "type": "string",
+            "format": "UUID"
+        },
+        "contributeAsSystemOwnedId": {
+            "description": "Contribute as system owner statistical code id",
+            "type": "string",
+            "format": "UUID"
+        },
+        "metadata": {
+            "description": "Entity metadata",
+            "type": "object",
+            "$ref": "metadata.json"
+        }
+    },
+    "additionalProperties": false
+}

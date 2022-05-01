@@ -1,0 +1,18 @@
+{
+    "allOf": [
+        {
+            "$ref": "schemas/baseCollection.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "accessions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/components/schemas/accessionQueue"
+                    }
+                }
+            }
+        }
+    ]
+}

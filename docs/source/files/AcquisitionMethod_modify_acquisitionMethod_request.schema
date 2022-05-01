@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "An acquisition method",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "The unique id of this acquisition method",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "value": {
+      "description": "The value of this acquisition method",
+      "type": "string"
+    },
+    "source": {
+      "description": "Source of acquisition method",
+      "type": "string",
+      "enum": [
+        "User",
+        "System"
+      ],
+      "default": "User"
+    },
+    "metadata": {
+      "type": "object",
+      "$ref": "../../../raml-util/schemas/metadata.schema",
+      "readonly": true
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "value",
+    "source"
+  ]
+}

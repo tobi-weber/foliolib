@@ -1,0 +1,22 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "allOf": [
+        {
+            "$ref": "baseCircRequestDTO.json"
+        }
+    ],
+    "description": "INN-Reach Return Circulation Message Put Request Data",
+    "type": "object",
+    "properties": {
+        "title": {
+            "description": "Item title",
+            "type": "string",
+            "maxLength": 256
+        },
+        "author": {
+            "description": "Author",
+            "type": "string"
+        }
+    },
+    "additionalProperties": false
+}

@@ -1,0 +1,66 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "allOf": [
+        {
+            "$ref": "baseCircRequestDTO.json"
+        }
+    ],
+    "description": "D2IR Patron hold",
+    "type": "object",
+    "properties": {
+        "pickupLocation": {
+            "description": "Pickup location",
+            "type": "string"
+        },
+        "centralItemType": {
+            "description": "Central item type",
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 255
+        },
+        "centralPatronType": {
+            "description": "Central patron type",
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 255
+        },
+        "patronName": {
+            "description": "Patron name",
+            "type": "string"
+        },
+        "patronHomeLibrary": {
+            "description": "Patron home library",
+            "type": "string"
+        },
+        "patronPhone": {
+            "description": "Patron phone",
+            "type": "string"
+        },
+        "title": {
+            "description": "Item title",
+            "type": "string",
+            "maxLength": 256
+        },
+        "author": {
+            "description": "Author",
+            "type": "string",
+            "maxLength": 256
+        },
+        "callNumber": {
+            "description": "Call number",
+            "type": "string",
+            "maxLength": 256
+        },
+        "needBefore": {
+            "description": "Need before time",
+            "type": "integer"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "pickupLocation",
+        "centralItemType",
+        "centralPatronType",
+        "patronName"
+    ]
+}

@@ -39,6 +39,7 @@
     },
     "lostItemProcessingFee": {
       "description": "Lost item processing fee, must be = 0 or > 0",
+      "javaType": "org.folio.rest.domain.MonetaryValue",
       "type": "number"
     },
     "chargeAmountItemPatron": {
@@ -64,6 +65,7 @@
     },
     "replacementProcessingFee": {
       "description": "Amount for replacement process fee",
+      "javaType": "org.folio.rest.domain.MonetaryValue",
       "type": "number"
     },
     "replacementAllowed": {
@@ -86,7 +88,7 @@
     },
     "id": {
       "description": "Lost item fee policy id, UUID",
-      "type": "string"
+      "$ref": "raml-util/schemas/uuid.schema"
     }
   },
   "additionalProperties": false,

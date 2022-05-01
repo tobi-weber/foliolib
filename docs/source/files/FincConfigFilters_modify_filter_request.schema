@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Finc Select Filter Schema",
+  "description": "Filter of a metadata collection in finc select",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "label": {
+      "type": "string",
+      "description": "A unique name for this filter"
+    },
+    "type": {
+      "type": "string",
+      "description": "The type of this filter",
+      "enum": [
+        "Whitelist",
+        "Blacklist"
+      ]
+    },
+    "filterFiles": {
+      "type": "array",
+      "id": "filterFiles",
+      "description": "List of filter files associated with this filter",
+      "items": {
+        "type": "object",
+        "$ref": "fincSelectFilterFile.json"
+      }
+    },
+    "isil": {
+      "type": "string",
+      "description": "Isil of library using this filter"
+    },
+    "metadata": {
+      "description": "Metadata about creation and changes, provided by the server (client should not provide)",
+      "type": "object",
+      "$ref": "../raml-util/schemas/metadata.schema"
+    }
+  },
+  "required": [
+    "label",
+    "type"
+  ],
+  "additionalProperties": false
+}

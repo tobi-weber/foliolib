@@ -1,0 +1,15 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "description": "Value of item's barcode to check in an item at service points",
+    "properties": {
+        "itemBarcode": {
+            "description": "Barcode of the item to be checked in",
+            "type": "string"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "itemBarcode"
+    ]
+}

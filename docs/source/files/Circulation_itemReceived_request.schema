@@ -1,0 +1,48 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "allOf": [
+        {
+            "$ref": "baseCircRequestDTO.json"
+        }
+    ],
+    "description": "D2IR Item received",
+    "type": "object",
+    "properties": {
+        "centralItemType": {
+            "description": "Central item type",
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 255
+        },
+        "title": {
+            "description": "Item title",
+            "type": "string",
+            "maxLength": 256
+        },
+        "author": {
+            "description": "Author",
+            "type": "string",
+            "maxLength": 256
+        },
+        "itemBarcode": {
+            "description": "Item barcode",
+            "type": "string"
+        },
+        "callNumber": {
+            "description": "Call number",
+            "type": "string",
+            "maxLength": 256
+        },
+        "centralPatronType": {
+            "description": "Central patron type",
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 255
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "centralItemType",
+        "centralPatronType"
+    ]
+}

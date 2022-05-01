@@ -6,10 +6,12 @@
   "properties": {
     "amount": {
       "description": "Amount of the fine/fee",
+      "javaType": "org.folio.rest.domain.MonetaryValue",
       "type": "number"
     },
     "remaining": {
       "description": "Remaining of the fine/fee",
+      "javaType": "org.folio.rest.domain.MonetaryValue",
       "type": "number"
     },
     "dateCreated": {
@@ -40,7 +42,25 @@
       "type": "object",
       "properties": {
         "name": {
-          "description": "Name of the status (values used are Outstanding, Paid partially, Paid fully, Waived partially, Waived fully, Transferred partially, Transferred fully, Refunded partially, Refunded fully, Cancelled as error)",
+          "description": "Name of the status",
+          "enum": [
+            "Outstanding",
+            "Paid partially",
+            "Paid fully",
+            "Waived partially",
+            "Waived fully",
+            "Transferred partially",
+            "Transferred fully",
+            "Refunded partially",
+            "Refunded fully",
+            "Credited fully",
+            "Credited partially",
+            "Cancelled item returned",
+            "Cancelled item renewed",
+            "Cancelled item declared lost",
+            "Cancelled as error",
+            "Suspended claim returned"
+          ],
           "type": "string"
         }
       },
@@ -141,12 +161,31 @@
       "description": "Holdings record field: holdingsRecord.instanceId",
       "$ref": "raml-util/schemas/uuid.schema",
       "readonly": true
+    },
+    "contributors": {
+      "type": "array",
+      "description": "List of contributors",
+      "minItems": 0,
+      "items": {
+        "javaType": "org.folio.rest.jaxrs.model.ContributorData",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Personal name, corporate name, meeting name"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "name"
+        ]
+      }
     }
   },
   "additionalProperties": false,
   "required": [
     "amount",
     "remaining",
+    "paymentStatus",
     "userId",
     "feeFineId",
     "ownerId",

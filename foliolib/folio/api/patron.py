@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-# Generated at 2021-05-24
+# Generated at 2022-04-28
 
 import logging
 
-from foliolib.folio import FolioApi
+from foliolib.folio import FolioApi, FolioAdminApi
 
-log = logging.getLogger("foliolib.folio.api.patron")
+log = logging.getLogger("oliolib.folio.api.patron")
 
 
 class Patron(FolioApi):
@@ -34,6 +34,22 @@ class Patron(FolioApi):
             includeHolds (bool): (default=False) Indicates whether or not to include the holds array in
                     the response
                     
+            sortBy (str):  Part of CQL query, indicates the order of records within the lists of holds, charges, loans
+                    
+                    
+                    Example:
+                    
+                     - item.title/sort.ascending
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=2147483647) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
 
         Returns:
             dict: See Schema below
@@ -68,6 +84,7 @@ class Patron(FolioApi):
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestNotFound: Not Found
             OkapiRequestForbidden: Forbidden
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
@@ -95,6 +112,7 @@ class Patron(FolioApi):
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestNotFound: Not Found
             OkapiRequestForbidden: Forbidden
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
@@ -122,6 +140,7 @@ class Patron(FolioApi):
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestNotFound: Not Found
             OkapiRequestForbidden: Forbidden
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
@@ -149,6 +168,7 @@ class Patron(FolioApi):
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestForbidden: Forbidden
             OkapiRequestNotFound: Not Found
+            OkapiRequestConflict: Conflict
             OkapiRequestUnprocessableEntity: Unprocessable Entity
             OkapiFatalError: Server Error
 

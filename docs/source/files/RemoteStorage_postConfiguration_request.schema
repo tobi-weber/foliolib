@@ -1,0 +1,61 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "Remote storage configuration",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "configuration id",
+            "$ref": "uuid.json"
+        },
+        "name": {
+            "description": "configuration name",
+            "type": "string"
+        },
+        "apiKey": {
+            "description": "remote storage apiKey",
+            "type": "string"
+        },
+        "providerName": {
+            "description": "remote storage provider name",
+            "type": "string"
+        },
+        "url": {
+            "description": "remote storage url",
+            "type": "string"
+        },
+        "statusUrl": {
+            "description": "remote storage url",
+            "type": "string"
+        },
+        "accessionDelay": {
+            "description": "accession schedule delay",
+            "type": "integer",
+            "minimum": 1
+        },
+        "accessionTimeUnit": {
+            "description": "accession schedule time unit",
+            "type": "object",
+            "$ref": "timeUnits.json"
+        },
+        "accessionWorkflowDetails": {
+            "description": "accession workflow details",
+            "type": "object",
+            "$ref": "accessionWorkflowDetails.json"
+        },
+        "returningWorkflowDetails": {
+            "description": "return workflow details",
+            "type": "object",
+            "$ref": "returningWorkflowDetails.json"
+        },
+        "metadata": {
+            "description": "Entity metadata",
+            "type": "object",
+            "$ref": "metadata.json"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "name",
+        "providerName"
+    ]
+}

@@ -18,8 +18,19 @@
       "enum": [
         "INSTANCE",
         "HOLDINGS",
-        "ITEM"
+        "ITEM",
+        "AUTHORITY"
       ]
+    },
+    "idType": {
+      "description": "Type of provided uuids",
+      "type": "string",
+      "enum": [
+        "instance",
+        "holding",
+        "authority"
+      ],
+      "default": "instance"
     },
     "metadata": {
       "description": "Meta information ",
@@ -29,6 +40,7 @@
   },
   "required": [
     "fileDefinitionId",
-    "jobProfileId"
+    "jobProfileId",
+    "idType"
   ]
 }

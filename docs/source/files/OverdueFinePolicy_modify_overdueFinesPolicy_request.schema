@@ -23,6 +23,7 @@
     },
     "maxOverdueFine": {
       "description": "Maximum overdue fine",
+      "javaType": "org.folio.rest.domain.MonetaryValue",
       "type": "number"
     },
     "forgiveOverdueFine": {
@@ -40,6 +41,7 @@
     },
     "maxOverdueRecallFine": {
       "description": "Maximum overdue recall fine",
+      "javaType": "org.folio.rest.domain.MonetaryValue",
       "type": "number"
     },
     "metadata": {
@@ -49,7 +51,7 @@
     },
     "id": {
       "description": "Overdue fine policy id, UUID",
-      "type": "string"
+      "$ref": "raml-util/schemas/uuid.schema"
     }
   },
   "additionalProperties": false,

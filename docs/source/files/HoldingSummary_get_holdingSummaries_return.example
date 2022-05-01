@@ -1,0 +1,17 @@
+{
+  "holdingSummaries": [
+    {
+      "poLineId": "c0d08448-347b-418a-8c2f-5fb50248d67e",
+      "poLineNumber": "12545-1",
+      "polReceiptStatus": "Awaiting Receipt",
+      "orderType": "One-Time",
+      "orderStatus": "Open",
+      "orderSentDate": "2018-10-11T00:00:00.000Z",
+      "orderCloseReason": {
+        "reason": "Complete",
+        "note": "EE"
+      }
+    }
+  ],
+  "totalRecords": 1
+}

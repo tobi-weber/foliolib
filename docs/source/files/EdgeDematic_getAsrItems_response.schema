@@ -1,0 +1,18 @@
+{
+    "type": "object",
+    "properties": {
+        "asrItems": {
+            "type": "array",
+            "items": {
+                "$ref": "#/components/schemas/asrItem"
+            },
+            "xml": {
+                "name": "asrItem",
+                "wrapped": true
+            }
+        }
+    },
+    "xml": {
+        "name": "asrItems"
+    }
+}

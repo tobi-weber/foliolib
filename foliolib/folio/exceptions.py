@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 # Copyright (C) 2020 Tobias Weber <tobi-weber@gmx.de>
 
+from foliolib.exceptions import FoliolibError
 
-class FolioException(BaseException):
+
+class FolioException(FoliolibError):
     pass
 
 

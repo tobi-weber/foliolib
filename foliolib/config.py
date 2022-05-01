@@ -7,11 +7,9 @@ import logging
 import os
 import pathlib
 
+from foliolib.exceptions import ServerConfigNotFound
+
 log = logging.getLogger("foliolib.config")
-
-
-class NoServerConfigFound(Exception):
-    pass
 
 
 class Config:
@@ -22,6 +20,7 @@ class Config:
     def __new__(cls, *dt, **mp):
         if not hasattr(cls, "_inst"):
             cls._inst = super(Config, cls).__new__(cls)
+
         else:
             def init_pass(self, *dt, **mp):
                 pass
@@ -30,13 +29,36 @@ class Config:
         return cls._inst
 
     def __init__(self):
+        self._server = None
         self.__foliolibcfg = configparser.ConfigParser()
         self.__okapicfg = configparser.ConfigParser()
-        self.load_foliolib_config()
-        self.load_okapi_conf()
+
+    def get_server(self):
+        """Get current server name.
+
+        Returns:
+            str: Current server name.
+        """
+        return self._server
+
+    def set_server(self, name):
+        """Set current server name.
+
+        Args:
+            name (str): Server name
+
+        Raises:
+            ServerConfigNotFound: Server config not found.
+        """
+        if name in self.get_servers():
+            self._server = name
+            self.__load()
+        else:
+            raise ServerConfigNotFound(name, self.get_servers())
 
     def foliolibcfg(self):
         """Get foliolib.conf ConfigParser object.
+
         Returns:
             ConfigParser: ConfigParser object of foliolib.conf
         """
@@ -44,6 +66,7 @@ class Config:
 
     def okapicfg(self):
         """Get okapi.conf ConfigParser object.
+
         Returns:
             ConfigParser: ConfigParser object of okapi.conf of the current server setted.
         """
@@ -69,18 +92,14 @@ class Config:
         else:
             return None
 
-    def get_server(self):
-        """Get current server name.
+    def is_kubernetes(self):
+        """Is Kubernets enabled?
 
         Returns:
-            str: Current server name.
+            bool: Wether kubernets is enabled.
         """
-        fname = os.path.join(self.get_confdir(), ".server")
-        if os.path.exists(fname):
-            with open(fname) as f:
-                return f.read()
-        else:
-            raise NoServerConfigFound()
+        #print(self.__okapicfg.get("Kubernetes", "enable", fallback=False))
+        return self.__okapicfg.get("Kubernetes", "enable", fallback=False)
 
     def get_servers(self):
         """Get all available server configs.
@@ -94,16 +113,20 @@ class Config:
                 servers.append(f)
         return servers
 
-    def set_server(self, name: str):
-        """Switch to a server.
+    def get_url(self):
+        host = self.okapicfg().get("Okapi", "host")
+        port = self.okapicfg().get("Okapi", "port")
 
-        Args:
-            name (str): Server name
-        """
-        fname = os.path.join(self.get_confdir(), ".server")
-        with open(fname, "w") as f:
-            f.write(name)
-            return name
+        try:
+            ssl = self.okapicfg().get("Okapi", "ssl")
+        except configparser.NoOptionError:
+            ssl = False
+        if ssl:
+            url = f"https://{host}:{port}"
+        else:
+            url = f"http://{host}:{port}"
+
+        return url
 
     def set_okapicfg(self, section: str, option: str, value):
         """Set a value in okapi.conf
@@ -167,48 +190,26 @@ class Config:
             os.mkdir(confdir)
         return confdir
 
-    def load_foliolib_config(self):
-        """Read the foliolib.conf
-        """
-        log.debug("Load foliolib.conf")
-        fname = os.path.join(self.get_confdir(), "foliolib.conf")
-        if not os.path.exists(fname):
-            self.create_foliolib_conf()
-        else:
-            log.debug("Load config from %s", fname)
-            self.__foliolibcfg.read(fname)
-        if not os.path.exists(self.__foliolibcfg["Cache"]["descriptors"]):
-            os.makedirs(self.__foliolibcfg["Cache"]
-                        ["descriptors"], exist_ok=True)
-
-    def load_okapi_conf(self):
-        """Read the okapi.conf
-        """
-        log.debug("Load okapi.conf")
-        sdir = os.path.join(self.get_confdir(), self.get_server())
-        fname = os.path.join(sdir, "okapi.conf")
-        if not os.path.exists(sdir):
-            self.create_okapi_conf(self.get_server())
-        else:
-            log.debug("Load config from %s", fname)
-            self.__okapicfg.read(fname)
-
     def create_foliolib_conf(self):
         """Create foliolib.conf
         """
-        fname = os.path.join(self.get_confdir(), "foliolib.conf")
-        log.debug("Write new config %s", fname)
-        self.__foliolibcfg["PullNode"] = {}
-        self.__foliolibcfg["PullNode"]["host"] = "folio-registry.aws.indexdata.com"
-        self.__foliolibcfg["PullNode"]["port"] = "80"
-        self.__foliolibcfg["Cache"] = {}
-        self.__foliolibcfg["Cache"]["descriptors"] = os.path.join(self.get_confdir(),
-                                                                  "cache",
-                                                                  "descriptors")
-        self.__foliolibcfg["GitHub"] = {}
-        self.__foliolibcfg["GitHub"]["access-token"] = ""
-        with open(fname, "w") as f:
-            self.__foliolibcfg.write(f)
+        fpath = os.path.join(self.get_confdir(), "foliolib.conf")
+        if not os.path.exists(fpath):
+            log.debug("Write new config %s", fpath)
+            self.__foliolibcfg["PullNode"] = {}
+            self.__foliolibcfg["PullNode"]["host"] = "folio-registry.dev.folio.org"
+            self.__foliolibcfg["PullNode"]["port"] = "443"
+            self.__foliolibcfg["PullNode"]["ssl"] = True
+            self.__foliolibcfg["Cache"] = {}
+            self.__foliolibcfg["Cache"]["descriptors"] = os.path.join(self.get_confdir(),
+                                                                      "cache",
+                                                                      "descriptors")
+            self.__foliolibcfg["GitHub"] = {}
+            self.__foliolibcfg["GitHub"]["access-token"] = ""
+            with open(fpath, "w") as f:
+                self.__foliolibcfg.write(f)
+        else:
+            log.debug("%s already exists.", fpath)
 
     def create_okapi_conf(self, name: str, okapi_host: str = "localhost", okapi_port: str = "9130",
                           db_host: str = "localhost", db_port: str = "5432",
@@ -224,22 +225,45 @@ class Config:
             db_user (str, optional): Postgres user. Defaults to "postgres".
             db_password (str, optional): Postgres password. Defaults to "postgres".
         """
-        self.set_server(name)
-        sdir = os.path.join(self.get_confdir(), self.get_server())
-        fname = os.path.join(sdir, "okapi.conf")
-        os.mkdir(sdir)
-        os.mkdir(os.path.join(sdir, "modules"))
-        log.debug("Write new config %s", fname)
-        self.__okapicfg["Okapi"] = {}
-        self.__okapicfg["Okapi"]["host"] = okapi_host
-        self.__okapicfg["Okapi"]["port"] = okapi_port
-        self.__okapicfg["Postgres"] = {}
-        self.__okapicfg["Postgres"]["host"] = db_host
-        self.__okapicfg["Postgres"]["port"] = db_port
-        self.__okapicfg["Postgres"]["user"] = db_user
-        self.__okapicfg["Postgres"]["password"] = db_password
-        self.__okapicfg["Tokens"] = {}
-        with open(fname, "w") as f:
-            self.__okapicfg.write(f)
-        if not os.path.exists(os.path.join(sdir, "modules")):
+        sdir = os.path.join(self.get_confdir(), name)
+        fpath = os.path.join(sdir, "okapi.conf")
+        if not os.path.exists(fpath):
+            os.mkdir(sdir)
             os.mkdir(os.path.join(sdir, "modules"))
+            log.debug("Write new config %s", fpath)
+            self.__okapicfg["Okapi"] = {}
+            self.__okapicfg["Okapi"]["host"] = okapi_host
+            self.__okapicfg["Okapi"]["port"] = okapi_port
+            self.__okapicfg["Postgres"] = {}
+            self.__okapicfg["Postgres"]["host"] = db_host
+            self.__okapicfg["Postgres"]["port"] = db_port
+            self.__okapicfg["Postgres"]["user"] = db_user
+            self.__okapicfg["Postgres"]["password"] = db_password
+            self.__okapicfg["Tokens"] = {}
+            with open(fpath, "w") as f:
+                self.__okapicfg.write(f)
+            if not os.path.exists(os.path.join(sdir, "modules")):
+                os.mkdir(os.path.join(sdir, "modules"))
+        else:
+            log.debug("%s already exists.", fpath)
+
+    def __load(self):
+        # Load foliolib.conf
+        fpath = os.path.join(self.get_confdir(), "foliolib.conf")
+        log.debug("Load config from %s", fpath)
+        self.__foliolibcfg.read(fpath)
+        if not os.path.exists(self.__foliolibcfg["Cache"]["descriptors"]):
+            os.makedirs(self.__foliolibcfg["Cache"]
+                        ["descriptors"], exist_ok=True)
+        # Load okapi.conf
+        sdir = os.path.join(self.get_confdir(), self.get_server())
+        fpath = os.path.join(sdir, "okapi.conf")
+        log.debug("Load config from %s", fpath)
+        self.__okapicfg.read(fpath)
+
+
+def server(name, logging_level="INFO"):
+    from foliolib import set_logging
+    set_logging(level=logging_level)
+    Config().set_server(name)
+    print("Server is %s" % name)

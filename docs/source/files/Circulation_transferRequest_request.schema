@@ -1,0 +1,21 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "allOf": [
+        {
+            "$ref": "baseCircRequestDTO.json"
+        }
+    ],
+    "description": "D2IR Transfer request",
+    "type": "object",
+    "properties": {
+        "newItemId": {
+            "description": "New item id",
+            "type": "string",
+            "pattern": "[a-z,0-9]{1,32}"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "newItemId"
+    ]
+}

@@ -1,0 +1,105 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A query to send to the LDP",
+  "type": "object",
+  "properties": {
+    "tables": {
+      "type": "array",
+      "description": "A currently redundant wrapper",
+      "items": {
+        "type": "object",
+        "properties": {
+          "schema": {
+            "type": "string",
+            "description": "The LDP schema containing the table to query"
+          },
+          "tableName": {
+            "type": "string",
+            "description": "The table to query"
+          },
+          "columnFilters": {
+            "type": "array",
+            "description": "A set of conditions which result rows must satisfy",
+            "items": {
+              "type": "object",
+              "description": "A single condition which result rows must satisfy",
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "description": "The name of a column within the specified table"
+                },
+                "value": {
+                  "type": "string",
+                  "description": "The value that the specified column must match"
+                }
+              },
+              "additionalProperties": false,
+              "required": [
+                "key",
+                "value"
+              ]
+            }
+          },
+          "showColumns": {
+            "type": "array",
+            "description": "An ordered list of column to include in the results",
+            "items": {
+              "type": "string",
+              "description": "The name of a column within the specified table"
+            }
+          },
+          "orderBy": {
+            "type": "array",
+            "description": "An ordered list of criteria to sort be",
+            "items": {
+              "type": "object",
+              "description": "A single sorting criterion",
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "description": "The name of a column within the specified table"
+                },
+                "direction": {
+                  "type": "string",
+                  "enum": [
+                    "asc",
+                    "desc"
+                  ],
+                  "description": "Indication of which direction to sort this column [default: 'asc']"
+                },
+                "nulls": {
+                  "type": "string",
+                  "enum": [
+                    "start",
+                    "end"
+                  ],
+                  "description": "Indication of where null values should sort [default: 'end']"
+                }
+              },
+              "additionalProperties": false,
+              "required": [
+                "key"
+              ]
+            }
+          },
+          "limit": {
+            "type": [
+              "integer",
+              "string"
+            ],
+            "description": "The maximum number of rows to return"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "schema",
+          "tableName"
+        ]
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "tables"
+  ]
+}

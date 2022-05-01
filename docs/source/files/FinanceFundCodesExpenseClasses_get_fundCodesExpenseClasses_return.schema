@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "List of combinations of Fund Code and Expense class code.",
+  "type": "object",
+  "properties": {
+    "delimiter": {
+      "description": "Special character to separate Fund Code and Expense class code.",
+      "type": "string"
+    },
+    "fundCodeVsExpClassesTypes": {
+      "description": "Pairs of the fund code and expense classes.",
+      "type": "array",
+      "items": {
+        "$ref": "fund_code_vs_expense_classes_type.json"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "delimiter",
+    "fundCodeVsExpClassesTypes"
+  ]
+}

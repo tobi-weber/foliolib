@@ -2,7 +2,10 @@
 # Copyright (C) 2020 Tobias Weber <tobi-weber@gmx.de>
 
 
-class OkapiException(Exception):
+from foliolib.exceptions import FoliolibError
+
+
+class OkapiException(FoliolibError):
     description = ""
 
 

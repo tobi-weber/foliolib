@@ -17,6 +17,7 @@
   },
   "fiscalYearId": "4438bc3b-4b4a-4e5e-9886-5f69b48a7a32",
   "fromFundId": "27f27438-3197-4281-a353-511829421d6e",
+  "invoiceCancelled": false,
   "paymentEncumbranceId": "80c28fb4-c34e-48d6-b8c2-de6660c3e0aa",
   "source": "Invoice",
   "sourceFiscalYearId": "684b5dc5-92f6-4db7-b996-b549d88f5e4e",

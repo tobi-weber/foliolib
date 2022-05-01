@@ -1,11 +1,252 @@
 # -*- coding: utf-8 -*-
-# Generated at 2021-05-24
+# Generated at 2022-04-28
 
 import logging
 
-from foliolib.folio import FolioApi
+from foliolib.folio import FolioApi, FolioAdminApi
 
-log = logging.getLogger("foliolib.folio.api.dataImportConverterStorage")
+log = logging.getLogger("oliolib.folio.api.dataImportConverterStorage")
+
+
+class FieldProtectionSettings(FolioApi):
+    """Field Protection Settings API
+
+    API for managing field protection settings
+    """
+
+    def get_marcs(self, **kwargs):
+        """Retrieve a list of marc items.
+
+        ``GET /field-protection-settings/marc``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            query (str):  A query expressed as a CQL string
+                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
+                    using valid searchable fields.
+                    The first example below shows the general form of a full CQL query,
+                    but those fields might not be relevant in this context.
+                    
+                    with valid searchable fields: for example source=SYSTEM
+                    
+                    
+                    Example:
+                    
+                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
+                    
+                     - source=SYSTEM
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/FieldProtectionSettings_get_marcs_return.schema 
+        """
+        return self.call("GET", "/field-protection-settings/marc", query=kwargs)
+
+    def set_marc(self, marc: dict):
+        """Create a new marc item.
+
+        ``POST /field-protection-settings/marc``
+
+        Args:
+            marc (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Headers:
+            - **Location** - URI to the created marc item
+
+        Schema:
+
+            .. literalinclude:: ../files/FieldProtectionSettings_set_marc_request.schema
+        """
+        return self.call("POST", "/field-protection-settings/marc", data=marc)
+
+    def get_marc(self, marcId: str):
+        """Retrieve marc item with given {marcId}
+
+        ``GET /field-protection-settings/marc/{marcId}``
+
+        Args:
+            marcId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/FieldProtectionSettings_get_marc_return.schema 
+        """
+        return self.call("GET", f"/field-protection-settings/marc/{marcId}")
+
+    def delete_marc(self, marcId: str):
+        """Delete marc item with given {marcId}
+
+        ``DELETE /field-protection-settings/marc/{marcId}``
+
+        Args:
+            marcId (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+        """
+        return self.call("DELETE", f"/field-protection-settings/marc/{marcId}")
+
+    def modify_marc(self, marcId: str, marc: dict):
+        """Update marc item with given {marcId}
+
+        ``PUT /field-protection-settings/marc/{marcId}``
+
+        Args:
+            marcId (str)
+            marc (dict): See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/FieldProtectionSettings_modify_marc_request.schema
+        """
+        return self.call("PUT", f"/field-protection-settings/marc/{marcId}", data=marc)
+
+
+class FormConfigsStorage(FolioApi):
+    """Forms Configs Storage API
+
+    API for accessing flexible forms configs
+    """
+
+    def get_configs(self):
+        """Retrieve a list of config items.
+
+        ``GET /converter-storage/forms/configs``
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/FormConfigsStorage_get_configs_return.schema 
+        """
+        return self.call("GET", "/converter-storage/forms/configs")
+
+    def set_config(self, config: dict):
+        """Create new form config
+
+        ``POST /converter-storage/forms/configs``
+
+        Args:
+            config (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+
+        Headers:
+            - **Location** - URI to the created config item
+
+        Schema:
+
+            .. literalinclude:: ../files/FormConfigsStorage_set_config_request.schema
+        """
+        return self.call("POST", "/converter-storage/forms/configs", data=config)
+
+    def get_config(self, formName: str):
+        """Retrieve config item with given {configId}
+
+        ``GET /converter-storage/forms/configs/{formName}``
+
+        Args:
+            formName (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/FormConfigsStorage_get_config_return.schema 
+        """
+        return self.call("GET", f"/converter-storage/forms/configs/{formName}")
+
+    def delete_config(self, formName: str):
+        """Delete config item with given {configId}
+
+        ``DELETE /converter-storage/forms/configs/{formName}``
+
+        Args:
+            formName (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+        """
+        return self.call("DELETE", f"/converter-storage/forms/configs/{formName}")
+
+    def modify_config(self, formName: str, config: dict):
+        """Update config item with given {configId}
+
+        ``PUT /converter-storage/forms/configs/{formName}``
+
+        Args:
+            formName (str)
+            config (dict): See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/FormConfigsStorage_modify_config_request.schema
+        """
+        return self.call("PUT", f"/converter-storage/forms/configs/{formName}", data=config)
 
 
 class DataImportConverterStorage(FolioApi):
@@ -834,244 +1075,3 @@ class DataImportConverterStorage(FolioApi):
             .. literalinclude:: ../files/DataImportConverterStorage_get_profileSnapshot_return.schema 
         """
         return self.call("GET", f"/data-import-profiles/profileSnapshots/{profileId}", query=kwargs)
-
-
-class FormConfigsStorage(FolioApi):
-    """Forms Configs Storage API
-
-    API for accessing flexible forms configs
-    """
-
-    def get_configs(self):
-        """Retrieve a list of config items.
-
-        ``GET /converter-storage/forms/configs``
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/FormConfigsStorage_get_configs_return.schema 
-        """
-        return self.call("GET", "/converter-storage/forms/configs")
-
-    def set_config(self, config: dict):
-        """Create new form config
-
-        ``POST /converter-storage/forms/configs``
-
-        Args:
-            config (dict): See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-
-        Headers:
-            - **Location** - URI to the created config item
-
-        Schema:
-
-            .. literalinclude:: ../files/FormConfigsStorage_set_config_request.schema
-        """
-        return self.call("POST", "/converter-storage/forms/configs", data=config)
-
-    def get_config(self, formName: str):
-        """Retrieve config item with given {configId}
-
-        ``GET /converter-storage/forms/configs/{formName}``
-
-        Args:
-            formName (str)
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/FormConfigsStorage_get_config_return.schema 
-        """
-        return self.call("GET", f"/converter-storage/forms/configs/{formName}")
-
-    def delete_config(self, formName: str):
-        """Delete config item with given {configId}
-
-        ``DELETE /converter-storage/forms/configs/{formName}``
-
-        Args:
-            formName (str)
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-        """
-        return self.call("DELETE", f"/converter-storage/forms/configs/{formName}")
-
-    def modify_config(self, formName: str, config: dict):
-        """Update config item with given {configId}
-
-        ``PUT /converter-storage/forms/configs/{formName}``
-
-        Args:
-            formName (str)
-            config (dict): See Schema below
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Schema:
-
-            .. literalinclude:: ../files/FormConfigsStorage_modify_config_request.schema
-        """
-        return self.call("PUT", f"/converter-storage/forms/configs/{formName}", data=config)
-
-
-class FieldProtectionSettings(FolioApi):
-    """Field Protection Settings API
-
-    API for managing field protection settings
-    """
-
-    def get_marcs(self, **kwargs):
-        """Retrieve a list of marc items.
-
-        ``GET /field-protection-settings/marc``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            query (str):  A query expressed as a CQL string
-                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
-                    using valid searchable fields.
-                    The first example below shows the general form of a full CQL query,
-                    but those fields might not be relevant in this context.
-                    
-                    with valid searchable fields: for example source=SYSTEM
-                    
-                    
-                    Example:
-                    
-                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
-                    
-                     - source=SYSTEM
-            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
-                    
-                    Example:
-                    
-                     - 0
-            limit (int): (default=10) Limit the number of elements returned in the response
-                    
-                    Example:
-                    
-                     - 10
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Schema:
-
-            .. literalinclude:: ../files/FieldProtectionSettings_get_marcs_return.schema 
-        """
-        return self.call("GET", "/field-protection-settings/marc", query=kwargs)
-
-    def set_marc(self, marc: dict):
-        """Create a new marc item.
-
-        ``POST /field-protection-settings/marc``
-
-        Args:
-            marc (dict): See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Headers:
-            - **Location** - URI to the created marc item
-
-        Schema:
-
-            .. literalinclude:: ../files/FieldProtectionSettings_set_marc_request.schema
-        """
-        return self.call("POST", "/field-protection-settings/marc", data=marc)
-
-    def get_marc(self, marcId: str):
-        """Retrieve marc item with given {marcId}
-
-        ``GET /field-protection-settings/marc/{marcId}``
-
-        Args:
-            marcId (str)
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/FieldProtectionSettings_get_marc_return.schema 
-        """
-        return self.call("GET", f"/field-protection-settings/marc/{marcId}")
-
-    def delete_marc(self, marcId: str):
-        """Delete marc item with given {marcId}
-
-        ``DELETE /field-protection-settings/marc/{marcId}``
-
-        Args:
-            marcId (str)
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-        """
-        return self.call("DELETE", f"/field-protection-settings/marc/{marcId}")
-
-    def modify_marc(self, marcId: str, marc: dict):
-        """Update marc item with given {marcId}
-
-        ``PUT /field-protection-settings/marc/{marcId}``
-
-        Args:
-            marcId (str)
-            marc (dict): See Schema below
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Schema:
-
-            .. literalinclude:: ../files/FieldProtectionSettings_modify_marc_request.schema
-        """
-        return self.call("PUT", f"/field-protection-settings/marc/{marcId}", data=marc)

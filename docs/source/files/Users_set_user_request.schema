@@ -13,27 +13,28 @@
       "type": "string"
     },
     "externalSystemId": {
-      "description": "An ID that corresponds to an external authority",
+      "description": "A unique ID that corresponds to an external authority",
       "type": "string"
     },
     "barcode": {
-      "description": "The library barcode for this user",
+      "description": "The unique library barcode for this user",
       "type": "string"
     },
     "active": {
-      "description": "A flag to determine if a user can log in, take out loans, etc.",
+      "description": "A flag to determine if the user's account is effective and not expired. The tenant configuration can require the user to be active for login. Active is different from the loan patron block",
       "type": "boolean"
     },
     "type": {
-      "description": "The class of user",
+      "description": "The class of user like staff or patron; this is different from patronGroup",
       "type": "string"
     },
     "patronGroup": {
-      "description": "A UUID corresponding to the group the user belongs to",
-      "type": "string"
+      "description": "A UUID corresponding to the group the user belongs to, see /groups API, example groups are undergraduate and faculty; loan rules, patron blocks, fees/fines and expiration days can use the patron group",
+      "type": "string",
+      "$ref": "raml-util/schemas/uuid.schema"
     },
     "departments": {
-      "description": "A UUIDs corresponding to the departments the user belongs to",
+      "description": "A list of UUIDs corresponding to the departments the user belongs to, see /departments API",
       "type": "array",
       "uniqueItems": true,
       "items": {
@@ -126,7 +127,8 @@
               },
               "addressTypeId": {
                 "description": "A UUID that corresponds with an address type object",
-                "type": "string"
+                "type": "string",
+                "$ref": "raml-util/schemas/uuid.schema"
               },
               "primaryAddress": {
                 "description": "Is this the user's primary address?",
@@ -137,7 +139,7 @@
           }
         },
         "preferredContactTypeId": {
-          "description": "Id of user's preferred contact type",
+          "description": "Id of user's preferred contact type like Email, Mail or Text Message, see /addresstypes API",
           "type": "string"
         }
       },

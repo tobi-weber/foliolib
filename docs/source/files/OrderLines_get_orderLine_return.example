@@ -5,7 +5,8 @@
   "instanceId": "8343e5a0-fed8-11e8-8eb2-f2801f1b9fd1",
   "isPackage": false,
   "agreementId": "bdc75fea-fed8-11e8-8eb2-f2801f1b9fd1",
-  "acquisitionMethod": "Purchase At Vendor System",
+  "acquisitionMethod": "73d14bc5-d131-48c6-b380-f8e62f63c8f3",
+  "automaticExport": true,
   "alerts": [
     {
       "alert": "Receipt overdue",
@@ -98,6 +99,7 @@
       "quantityPhysical": 2
     }
   ],
+  "lastEDIExportDate": "2018-10-05T00:00:00.000Z",
   "orderFormat": "P/E Mix",
   "paymentStatus": "Awaiting Payment",
   "physical": {

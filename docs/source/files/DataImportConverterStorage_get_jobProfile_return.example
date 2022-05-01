@@ -24,7 +24,7 @@
               "name":"Load vendor order records",
               "description":"Ordered on vendor site; load MARC to create bib, holdings, item, and order; keep MARC",
               "dataTypes":[
-                 "MARC"
+                 "MARC_BIB"
               ],
               "tags":{
                  "tagList":[
@@ -45,7 +45,7 @@
               "name":"Load vendor order records",
               "description":"Ordered on vendor site; load MARC to create bib, holdings, item, and order; keep MARC",
               "dataTypes":[
-                 "MARC"
+                 "MARC_BIB"
               ],
               "tags":{
                  "tagList":[

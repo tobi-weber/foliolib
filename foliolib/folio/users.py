@@ -7,7 +7,7 @@ from foliolib.folio import FolioService
 from foliolib.folio.api.inventoryStorage import ServicePoint, ServicePointsUser
 from foliolib.folio.api.login import Login
 from foliolib.folio.api.permissions import Permissions
-from foliolib.folio.api.users import Users
+from foliolib.folio.api.users import Users as UsersApi
 from foliolib.folio.exceptions import (PermissionUserNotFound,
                                        ServicePointsUserNotFound, UserNotFound)
 from foliolib.okapi.exceptions import OkapiRequestNotFound
@@ -15,7 +15,7 @@ from foliolib.okapi.exceptions import OkapiRequestNotFound
 log = logging.getLogger("foliolib.folio.users")
 
 
-class UserService(FolioService):
+class Users(FolioService):
     """
     Requirements:
 
@@ -30,7 +30,7 @@ class UserService(FolioService):
             tenant (str): Tenant id
         """
         super().__init__(tenant)
-        self._users = Users(tenant)
+        self._users = UsersApi(tenant)
         self._permissions = Permissions(tenant)
         self._login = Login(tenant)
         self._servicePoint = ServicePoint(tenant)
@@ -53,7 +53,7 @@ class UserService(FolioService):
             return headers["x-okapi-token"]
         return None
 
-    def get_users(self):
+    def get_users(self, query=None):
         """Get all users
 
         Returns:
@@ -155,7 +155,16 @@ class UserService(FolioService):
         except IndexError:
             log.error("User has no PermissionUser instance")
             raise PermissionUserNotFound(username)
-        return self._permissions.get_permissions_for_user(permUserId)
+        return self._permissions.get_permissions_for_user(permUserId)["permissionNames"]
+
+    def set_permission(self,  username: str, permissionName: str):
+        """Set permission for a user
+
+        Args:
+            username (str): Username
+            permissionName (str): Permission name.
+        """
+        self.set_permissions(username, [permissionName])
 
     def set_permissions(self,  username: str, permissionNames: list):
         """Set permissions for a user
@@ -171,7 +180,7 @@ class UserService(FolioService):
         except IndexError:
             log.error("User has no PermissionUser instance")
             raise PermissionUserNotFound(username)
-        perms = self.get_permissions(username)["permissionNames"]
+        perms = self.get_permissions(username)
         for permissionName in permissionNames:
             if not permissionName in perms:
                 self._permissions.set_permission_for_user(permUserId,
@@ -186,7 +195,16 @@ class UserService(FolioService):
 
         Args:
             username (str): Username
-            permissionName (str): Permission name
+            permissionName (str): Permission name.
+        """
+        self.delete_permissions(username, [permissionName])
+
+    def delete_permissions(self, username: str, permissionNames: list):
+        """Delete a permissions for a user
+
+        Args:
+            username (str): Username
+            permissionNames (list): List with permissions.
         """
         userId = self.get_user(username)["id"]
         try:
@@ -195,9 +213,10 @@ class UserService(FolioService):
         except IndexError:
             log.error("User has no PermissionUser instance")
             raise PermissionUserNotFound(username)
-        self._permissions.delete_permission_for_user(
-            permUserId, permissionName)
-        log.debug("%s for %s deleted", permissionName, username)
+        for permissionName in permissionNames:
+            self._permissions.delete_permission_for_user(
+                permUserId, permissionName)
+            log.debug("%s for %s deleted", permissionName, username)
 
     def get_servicePoints(self):
         """Get all available service points
@@ -233,7 +252,7 @@ class UserService(FolioService):
         Returns:
             [type]: [description]
         """
-        user = UserService(self._tenant).get_user(username)
+        user = Users(self._tenant).get_user(username)
         log.debug(user)
         log.debug(servicePointsIds)
         sp_user = {

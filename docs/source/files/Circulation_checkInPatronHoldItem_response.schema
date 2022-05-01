@@ -1,0 +1,20 @@
+{
+    "description": "Receive Item for Patron Hold Transaction",
+    "type": "object",
+    "properties": {
+        "transaction": {
+            "description": "updated INN-Reach transaction record",
+            "$ref": "innReachTransactionDTO.json"
+        },
+        "folioCheckIn": {
+            "description": "the FOLIO check-in response",
+            "$ref": "circulation/checkInResponseDTO.json"
+        },
+        "barcodeAugmented": {
+            "description": "indicates if the FOLIO item's barcode was augmented to avoid duplicate barcode collision (item agency code appended)",
+            "type": "boolean"
+        }
+    },
+    "additionalProperties": false,
+    "required": []
+}

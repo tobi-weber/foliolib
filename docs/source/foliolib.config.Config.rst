@@ -38,10 +38,13 @@
             ~Config.get_servers
         
         
-            ~Config.load_foliolib_config
+            ~Config.get_token
         
         
-            ~Config.load_okapi_conf
+            ~Config.get_url
+        
+        
+            ~Config.is_kubernetes
         
         
             ~Config.modulescfg
@@ -57,6 +60,9 @@
         
         
             ~Config.set_server
+        
+        
+            ~Config.set_token
         
     
     

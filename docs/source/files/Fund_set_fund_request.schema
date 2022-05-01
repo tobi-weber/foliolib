@@ -25,7 +25,7 @@
     },
     "code": {
       "description": "A unique code associated with the fund",
-      "type": "string"
+      "$ref": "../../common/schemas/fund_code.json"
     },
     "description": {
       "description": "The description of this fund",

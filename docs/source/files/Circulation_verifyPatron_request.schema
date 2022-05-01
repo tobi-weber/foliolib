@@ -1,0 +1,28 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "Request parameters for patron verify",
+    "type": "object",
+    "properties": {
+        "patronName": {
+            "description": "Patron name",
+            "type": "string",
+            "maxLength": 128
+        },
+        "patronAgencyCode": {
+            "description": "Patron agency code",
+            "type": "string",
+            "maxLength": 128
+        },
+        "visiblePatronId": {
+            "description": "User attribute configured by the system to act as their publicId (externalSystemId or barcode)",
+            "type": "string",
+            "maxLength": 32
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "visiblePatronId",
+        "patronAgencyCode",
+        "patronName"
+    ]
+}

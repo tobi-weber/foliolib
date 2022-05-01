@@ -34,6 +34,15 @@
         "Pending"
       ]
     },
+    "organizationTypes": {
+      "description": "A list of organization types assigned to this organization",
+      "type": "array",
+      "items": {
+        "description": "UUID of an organization type record",
+        "$ref": "../../common/schemas/uuid.json"
+      },
+      "uniqueItems": true
+    },
     "language": {
       "description": "The language for this organization",
       "type": "string"

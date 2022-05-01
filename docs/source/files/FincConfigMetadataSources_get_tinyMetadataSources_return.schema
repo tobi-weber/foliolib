@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Collection of tiny metadata sources in finc app",
+  "properties": {
+    "tinyMetadataSources": {
+      "type": "array",
+      "description": "List of tiny metadata sources",
+      "id": "tinyMetadataSourcesData",
+      "items": {
+        "type": "object",
+        "$ref": "tinyMetadataSource.json"
+      }
+    },
+    "totalRecords": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "sources",
+    "totalRecords"
+  ]
+}

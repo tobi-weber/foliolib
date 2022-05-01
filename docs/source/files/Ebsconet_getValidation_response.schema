@@ -1,0 +1,17 @@
+{
+    "id": "validation_response",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "Validation response",
+    "type": "object",
+    "properties": {
+        "status": {
+            "type": "string",
+            "description": "Validation status",
+            "enum": [
+                "Success",
+                "Failed"
+            ],
+            "default": "Success"
+        }
+    }
+}

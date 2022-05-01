@@ -1,0 +1,21 @@
+{
+    "description": "MARC Transformation Options Settings collection",
+    "type": "object",
+    "properties": {
+        "totalRecords": {
+            "description": "Total records",
+            "type": "integer"
+        },
+        "MARCTransformOptSetList": {
+            "description": "List of MARC Transformation Options Settings",
+            "type": "array",
+            "items": {
+                "$ref": "MARCTransformationOptionsSettingsDTO.json"
+            }
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "MARCTransformOptSetList"
+    ]
+}

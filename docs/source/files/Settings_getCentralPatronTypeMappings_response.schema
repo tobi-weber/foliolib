@@ -1,0 +1,22 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "Central patron type mapping collection",
+    "type": "object",
+    "properties": {
+        "centralPatronTypeMappings": {
+            "description": "List of central patron type mappings",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "$ref": "centralPatronTypeMappingDTO.json"
+            }
+        },
+        "totalRecords": {
+            "type": "integer"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "centralPatronTypeMappings"
+    ]
+}

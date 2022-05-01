@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 # Copyright (C) 2020 Tobias Weber <tobi-weber@gmx.de>
 
-
 import json
 import logging
-import sys
+import os
 from distutils.version import LooseVersion
 from typing import Union
 from urllib.parse import urlencode, urljoin
 
 import requests
+import urllib3
 from foliolib.config import Config
-from foliolib.okapi import okapiModule
+from foliolib.okapi import misc, okapiModule
 from foliolib.okapi.exceptions import (OkapiException, OkapiFatalError,
                                        OkapiMoved, OkapiNotReachable,
                                        OkapiRequestConflict, OkapiRequestError,
@@ -25,6 +25,7 @@ from foliolib.okapi.exceptions import (OkapiException, OkapiFatalError,
 from github import Github
 from lxml import etree
 
+urllib3.disable_warnings()
 log = logging.getLogger("foliolib.okapi.okapiClient")
 
 
@@ -47,7 +48,7 @@ class OkapiClient:
     https://s3.amazonaws.com/foliodocs/api/okapi/p/okapi.html
     """
 
-    def __init__(self, host: str = None, port: str = None) -> None:
+    def __init__(self, host: str = None, port: str = None, path: str = None, ssl: bool = False) -> None:
         """
         Args:
             host (str, optional): IP or Hostame of the Okapi server. Defaults from foliolib.conf.
@@ -55,7 +56,16 @@ class OkapiClient:
         """
         host = host or Config().okapicfg().get("Okapi", "host")
         port = port or Config().okapicfg().get("Okapi", "port")
-        self._host = f"http://{host}:{port}"
+        self._okapi_path = path or Config().okapicfg().get("Okapi", "path", fallback=None)
+        ssl = ssl or Config().okapicfg().getboolean("Okapi", "ssl", fallback=False)
+        self._verify_ssl = Config().okapicfg().getboolean(
+            "Okapi", "verify_ssl", fallback=True)
+
+        if ssl:
+            self._host = f"https://{host}:{port}"
+        else:
+            self._host = f"http://{host}:{port}"
+
         self._client = requests.Session()
         self._access_token = Config().okapicfg().get(
             "Tokens", "supertenant") if Config().okapicfg().has_option("Tokens", "supertenant") else None
@@ -68,7 +78,7 @@ class OkapiClient:
         Returns:
             str: Okapi version
         """
-        return self._request("GET", "/_/version")
+        return self.request("GET", "/_/version")
 
     def get_env(self):
         """Get enviroment variables.
@@ -76,7 +86,7 @@ class OkapiClient:
         Returns:
             dict: Enviroment variables
         """
-        return self._request("GET", "/_/env")
+        return self.request("GET", "/_/env")
 
     def set_env(self, name: str, value: str, description: str = ""):
         """Set an enviroment variable.
@@ -94,7 +104,7 @@ class OkapiClient:
 
 
         """
-        return self._request("POST", "/_/env", {"name": name, "value": value, "description": description})
+        return self.request("POST", "/_/env", {"name": name, "value": value, "description": description})
 
     def health(self, serviceID: str = None, instanceId: str = None):
         """Check health of modules
@@ -111,7 +121,7 @@ class OkapiClient:
             url += "/" + serviceID
             if instanceId is not None:
                 url += "/" + instanceId
-        return self._request("GET", url)
+        return self.request("GET", url)
 
     def get_nodes(self):
         """Get list of all nodes
@@ -119,7 +129,7 @@ class OkapiClient:
         Returns:
             dict: Dict with node items.
         """
-        return self._request("GET", "/_/discovery/nodes")
+        return self.request("GET", "/_/discovery/nodes")
 
     def get_module(self, modId: str):
         """Retrieve descriptor for a particular module
@@ -130,7 +140,7 @@ class OkapiClient:
         Returns:
             dict: Module descriptor
         """
-        return self._request("GET", f"/_/proxy/modules/{modId}")
+        return self.request("GET", f"/_/proxy/modules/{modId}")
 
     def get_modules(self, **kwargs):
         """List all or subset of modules for proxy
@@ -158,7 +168,7 @@ class OkapiClient:
         Returns:
             dict: Dict with modules
         """
-        return self._request("GET", "/_/proxy/modules", query=kwargs)
+        return self.request("GET", "/_/proxy/modules", query=kwargs)
 
     def add_module(self, module: Union[str, okapiModule.OkapiModule], **kwargs):
         """Add a module
@@ -182,8 +192,8 @@ class OkapiClient:
             descriptor = module.get_descriptor()
         else:
             descriptor = module
-        return self._request("POST", "/_/proxy/modules",
-                             descriptor, query=kwargs)
+        return self.request("POST", "/_/proxy/modules",
+                            descriptor, query=kwargs)
 
     def remove_module(self, modId: str):
         """Remove module descriptor for a particular module,
@@ -192,7 +202,29 @@ class OkapiClient:
         Args:
             modId (str): Module id
         """
-        return self._request("DELETE", f"/_/proxy/modules/{modId}")
+        return self.request("DELETE", f"/_/proxy/modules/{modId}")
+
+    def is_module_added(self, module: Union[str, okapiModule.OkapiModule]):
+        """Is module added?
+
+        Args:
+            module (Union[str, okapiModule.OkapiModule]): Module ID or instance of OkapiModule
+
+        Returns:
+            bool: wether module is added.
+        """
+        if isinstance(module, okapiModule.OkapiModule):
+            modId = module.get_id()
+        else:
+            modId = module
+
+        modules = self.get_modules(filter=modId)
+
+        for mod in modules:
+            if mod["id"] == modId:
+                return True
+
+        return False
 
     def get_deployed_module(self, modId, instanceId=None):
         """Get deployed module
@@ -207,7 +239,7 @@ class OkapiClient:
         url = f"/_/discovery/modules/{modId}"
         if instanceId is not None:
             url += "/" + instanceId
-        return self._request("GET", url)
+        return self.request("GET", url)
 
     def get_deployed_modules(self):
         """Get all deployed modules.
@@ -215,7 +247,7 @@ class OkapiClient:
         Returns:
             dict: Dict with deployment descriptors.
         """
-        return self._request("GET", "/_/discovery/modules")
+        return self.request("GET", "/_/discovery/modules")
 
     def deploy_module(self, modId: str, node: str):
         """Deploy a module.
@@ -225,31 +257,51 @@ class OkapiClient:
             node (str):
 
         Returns:
-            dict: Deployment descriptor
+            dict: Deployment descriptor.
         """
-        modules = self.get_deployed_modules()
-        for module in modules:
-            if module["srvcId"] == modId:
-                return False
-        return self._request("POST", "/_/discovery/modules",
-                             {"srvcId": modId, "nodeId": node})
+        descriptor = self.get_module(modId)
+        if "launchDescriptor" in descriptor:
+            modules = self.get_deployed_modules()
+            for module in modules:
+                if module["srvcId"] == modId:
+                    return False
+            return self.request("POST", "/_/discovery/modules",
+                                {"srvcId": modId, "nodeId": node})
+        else:
+            log.error("%s has no launchDescriptor", modId)
 
     def undeploy_module(self, modId: str, instanceId=None):
-        """Remove registration for a given instance
+        """Remove registration for a given instance.
 
         Args:
-            modId (str): Module id
+            modId (str): Module id.
             instanceId (str, optional): Instance id. Defaults to None.
         """
         url = f"/_/discovery/modules/{modId}"
         if instanceId is not None:
             url += "/" + instanceId
-        return self._request("DELETE", url)
+        return self.request("DELETE", url)
 
     def undeploy_modules(self):
         """Remove registration for all instances
         """
-        return self._request("DELETE", "/_/discovery/modules")
+        return self.request("DELETE", "/_/discovery/modules")
+
+    def is_module_deployed(self, modId: str):
+        """Is module deployed.
+
+        Args:
+            modId (str): Module id.
+
+        Returns:
+            bool: wether module is deployed.
+        """
+        mods = self.get_deployed_modules()
+        for mod in mods:
+            if mod["srvcId"] == modId:
+                return True
+
+        return False
 
     def get_tenants(self):
         """Get a list of all tenants
@@ -257,22 +309,22 @@ class OkapiClient:
         Returns:
             dict: Dict with all tenants
         """
-        return self._request("GET", "/_/proxy/tenants")
+        return self.request("GET", "/_/proxy/tenants")
 
     def get_tenant_module(self, modId: str, tenantId: str):
-        """Get a list of all modules of a tenant
+        """Get a module of a tenant
 
         Args:
-            modId (str): Module id
-            tenantId (str): Tenant id
+            modId (str): Module id.
+            tenantId (str): Tenant id.
 
         Returns:
-            dict: Dict with modules
+            dict: Dict with module data.
         """
-        return self._request("GET", f"/_/proxy/tenants/{tenantId}/modules{modId}")
+        return self.request("GET", f"/_/proxy/tenants/{tenantId}/modules{modId}")
 
     def get_tenant_modules(self, tenantId: str, **kwargs):
-        """[summary]
+        """Get a list of all modules of a tenant.
 
         Args:
             tenantId (str): Tenant id.
@@ -296,9 +348,9 @@ class OkapiClient:
             scope (string): Limit to interface scope (only useful with provide and require)
 
         Returns:
-            dict: Modules registered at this tenant
+            dict: Modules registered at a tenant
         """
-        return self._request("GET", f"/_/proxy/tenants/{tenantId}/modules", query=kwargs)
+        return self.request("GET", f"/_/proxy/tenants/{tenantId}/modules", query=kwargs)
 
     def get_tenant_interfaces(self, tenantId: str, **kwargs):
         """Get all interfaces of a tenant
@@ -315,7 +367,7 @@ class OkapiClient:
         Returns:
             dict: Dict with interfaces of a tenant.
         """
-        return self._request("GET", f"/_/proxy/tenants/{tenantId}/interfaces", query=kwargs)
+        return self.request("GET", f"/_/proxy/tenants/{tenantId}/interfaces", query=kwargs)
 
     def get_tenant_interface(self,  interfaceId: str, tenantId: str, **kwargs):
         """Get interface for a tenant.
@@ -332,7 +384,7 @@ class OkapiClient:
             dict: Dict with a interface of a tenant.
         """
         kwargs["provide"] = interfaceId
-        return self._request("GET", f"/_/proxy/tenants/{tenantId}/modules", query=kwargs)
+        return self.request("GET", f"/_/proxy/tenants/{tenantId}/modules", query=kwargs)
         # return self._request("GET", f"/_/proxy/tenants/{tenantId}/interfaces/{interfaceId}", query=kwargs)
 
     def create_tenant(self, tenantId: str, name: str = "", description: str = ""):
@@ -345,9 +397,10 @@ class OkapiClient:
         """
         name = name or tenantId
         description = description or f"{name} library"
-        self._request("POST", "/_/proxy/tenants",
-                      {"id": tenantId, "name": name, "description": description})
-        self._request(
+        self.request("POST", "/_/proxy/tenants",
+                     {"id": tenantId, "name": name, "description": description})
+        # Enable okapi module for the tenant.
+        self.request(
             "POST", f"/_/proxy/tenants/{tenantId}/modules", {"id": "okapi"})
 
     def modify_tenant(self, tenantId: str, name: str = "", description: str = ""):
@@ -358,8 +411,8 @@ class OkapiClient:
             name (str, optional): Name of the tenant. Defaults to "".
             description (str, optional): Description of the tenant. Defaults to "".
         """
-        self._request("PUT", f"/_/proxy/tenants/{tenantId}",
-                      {"id": tenantId, "name": name, "description": description})
+        self.request("PUT", f"/_/proxy/tenants/{tenantId}",
+                     {"id": tenantId, "name": name, "description": description})
 
     def remove_tenant(self, tenantId: str):
         """Remove a tenant
@@ -368,7 +421,7 @@ class OkapiClient:
             tenantId (str): Tenant id
 
         """
-        return self._request("DELETE", f"/_/proxy/tenants/{tenantId}")
+        return self.request("DELETE", f"/_/proxy/tenants/{tenantId}")
 
     def enable_module(self, modId: str, tenantId: str, loadSample: bool = False,
                       loadReference: bool = False, upgrade=False, **kwargs):
@@ -559,8 +612,8 @@ class OkapiClient:
             tenantParameters.append("loadReference=true")
         if tenantParameters:
             kwargs["tenantParameters"] = ",".join(tenantParameters)
-        return self._request("POST", f"/_/proxy/tenants/{tenantId}/install",
-                             tenantModuleDescriptorList, query=kwargs)
+        return self.request("POST", f"/_/proxy/tenants/{tenantId}/install",
+                            tenantModuleDescriptorList, query=kwargs)
 
     def disable_all_modules(self, tenantId: str, **kwargs):
         """Disable all modules of a tenant
@@ -576,7 +629,7 @@ class OkapiClient:
                             Disabled modules will also be purged.
             tenantParameters (string): Parameters for Tenant init
         """
-        return self._request("POST", f"/ _/proxy/tenants/{tenantId}/modules", query=kwargs)
+        return self.request("POST", f"/ _/proxy/tenants/{tenantId}/modules", query=kwargs)
 
     def upgrade_modules(self, tenantId: str, **kwargs):
         """[summary]
@@ -609,7 +662,7 @@ class OkapiClient:
         Returns:
             dict: Tenant module descriptors
         """
-        return self._request("POST", f"/_/proxy/tenants/{tenantId}/upgrade", query=kwargs)
+        return self.request("POST", f"/_/proxy/tenants/{tenantId}/upgrade", query=kwargs)
 
     def get_install_jobs(self, tenantId: str, install_id: str = None):
         """Get install jobs for a tenant
@@ -624,27 +677,31 @@ class OkapiClient:
         url = f"/ _/proxy/tenants/{tenantId}/install"
         if install_id is not None:
             url += "/" + install_id
-        return self._request("Get", url)
+        return self.request("Get", url)
 
-    def is_module_enabled(self, modName: str, tenantId: str):
-        """Check if a module is enabled
+    def is_module_enabled(self, modId: str, tenantId: str):
+        """Check if a module is enabled.
 
         Args:
-            modName (str): Modulename
+            modId (str): Modulename
             tenantId (str): Tenant id
 
         Returns:
-            bool: True if enabled else False
+            bool: Wether module is enabled.
         """
-        return modName in [i["id"] for i in self.get_tenant_interfaces(tenantId)]
+        modules = self.get_tenant_modules(tenantId, filter=modId)
+        for mod in modules:
+            if modId == mod["id"]:
+                return True
+        return False
 
-    def call_tenant_service(self, method: str, service: str, tenantId: str, data: dict = None,
+    def call_tenant_service(self, method: str, path: str, tenantId: str, data: dict = None,
                             query: dict = None, headers: dict = None, files: dict = None):
         """Call a tenant service
 
         Args:
             method (str): HTML method (GET, POST, PUT, DELETE ...)
-            service (str): Path of the service
+            path (str): Path of the service
             tenantId (str): Tenant id
             data (dict, optional): Post data to call the service. Defaults to None.
             query (dict, optional): Query data to call the service. Defaults to None.
@@ -654,16 +711,16 @@ class OkapiClient:
         Returns:
             any: Return data of the service
         """
-        if not service.startswith(("/")):
-            service = "/" + service
+        if not path.startswith(("/")):
+            path = "/" + path
         headers = headers or {}
         headers["X-Okapi-Tenant"] = tenantId
-        if tenantId in Config().okapicfg()["Tokens"]:
+        if not path.endswith("login") and tenantId in Config().okapicfg()["Tokens"]:
             headers["X-Okapi-Token"] = Config().okapicfg()["Tokens"][tenantId]
         else:
             headers["X-Okapi-Token"] = ""
-        res = self._request(method.upper(), service,
-                            data=data, query=query, headers=headers, files=files)
+        res = self.request(method.upper(), path,
+                           data=data, query=query, headers=headers, files=files)
         if "x-okapi-token" in self.headers:
             log.debug("Token for %s: %s", tenantId,
                       self.headers["X-Okapi-Token"])
@@ -673,11 +730,11 @@ class OkapiClient:
             return res
         else:
             log.error("%i - %s: %s", self.status_code,
-                      service, str(res))
+                      path, str(res))
             return None
 
-    def _request(self, method: str, path: str, data: dict = None,
-                 query: dict = None, headers: dict = None, files: dict = None):
+    def request(self, method: str, path: str, data: dict = None,
+                query: dict = None, headers: dict = None, files: dict = None):
         """Make a request
 
         Args:
@@ -704,17 +761,26 @@ class OkapiClient:
         Returns:
             any: return the response of the request
         """
+        if self._okapi_path is not None:
+            if self._okapi_path.endswith("/"):
+                self._okapi_path.pop()
+            if not path.startswith("/"):
+                path += "/" + path
+            path = self._okapi_path + path
         url = urljoin(self._host, path)
+
         if query:
             query = urlencode(query)
             query = query.replace("True", "true").replace("False", "false")
             url += "?" + query
+        log.debug("%s %s", method, url)
+
         headers = headers or {}
         headers = requests.structures.CaseInsensitiveDict(data=headers)
         headers["Accept"] = 'application/json, text/plain'
         if "X-Okapi-Token" not in headers:
             if self._access_token is not None:
-                log.debug("Token for supertenant: %s", self._access_token)
+                #log.debug("Token for supertenant: %s", self._access_token)
                 headers["X-Okapi-Token"] = self._access_token
         if method == "GET" or method == "DELETE":
             request = self._client.prepare_request(
@@ -729,19 +795,25 @@ class OkapiClient:
                     method, url, data=data, headers=headers))
         else:
             headers["content-type"] = "application/json"
+            if data is not None:
+                data = json.dumps(data)
             request = self._client.prepare_request(
                 requests.Request(
-                    method, url, data=json.dumps(data), headers=headers))
+                    method, url, data=data, headers=headers))
 
         try:
-            response = self._client.send(request)
-        except requests.exceptions.ConnectionError:
-            log.error("Okapi server %s is not reachable!" % self._host)
+            response = self._client.send(request, verify=self._verify_ssl)
+        except requests.exceptions.ConnectionError as err:
+            log.error("Okapi server %s is not reachable!", self._host)
+            log.error(err)
             raise OkapiNotReachable(
-                f"Okapi server {self._host} is not reachable!")
+                f"Okapi server {self._host} is not reachable!") from err
 
-        log.debug("%s %s %i", method, url, response.status_code)
-        log.debug(headers)
+        log.debug(response.status_code)
+        if "FOLIOLIB_CURL" in os.environ:
+            misc.print_curl(url, method, headers, data=data)
+        # log.debug(data)
+        # log.debug(headers)
         self.headers = response.headers
         self.status_code = response.status_code
         if response.status_code == 200 or response.status_code == 201:

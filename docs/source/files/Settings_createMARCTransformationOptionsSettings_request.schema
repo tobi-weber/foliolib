@@ -1,0 +1,35 @@
+{
+    "description": "MARC Transformation Options Settings",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "MARC Transformation Options Settings id",
+            "type": "string",
+            "format": "UUID"
+        },
+        "configIsActive": {
+            "description": "A Boolean indicating whether the configuration is active",
+            "type": "boolean"
+        },
+        "modifiedFieldsForContributedRecords": {
+            "description": "An ordered array of field configurations",
+            "type": "array",
+            "items": {
+                "$ref": "fieldConfigurationDTO.json"
+            }
+        },
+        "excludedMARCFields": {
+            "description": "An array of MARC fields/subfields to exclude from transformed MARC records",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "metadata": {
+            "description": "Entity metadata",
+            "type": "object",
+            "$ref": "metadata.json"
+        }
+    },
+    "additionalProperties": false
+}

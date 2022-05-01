@@ -1,0 +1,22 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "A collection of item records",
+    "ItemCollection": {
+        "type": "object",
+        "properties": {
+            "items": {
+                "description": "List of item records",
+                "type": "array",
+                "items": {
+                    "$ref": "item.json#/Item"
+                }
+            },
+            "totalRecords": {
+                "type": "integer"
+            },
+            "resultInfo": {
+                "$ref": "../common/resultInfo.json#/ResultInfo"
+            }
+        }
+    }
+}

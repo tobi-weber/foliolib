@@ -1,0 +1,33 @@
+{
+  "tables": [
+    {
+      "schema": "public",
+      "tableName": "user_users",
+      "columnFilters": [
+        {
+          "key": "active",
+          "value": "true"
+        }
+      ],
+      "showColumns": [
+        "active",
+        "barcode",
+        "type",
+        "username"
+      ],
+      "orderBy": [
+        {
+          "key": "username",
+          "direction": "asc",
+          "nulls": "end"
+        },
+        {
+          "key": "barcode",
+          "direction": "desc",
+          "nulls": "start"
+        }
+      ],
+      "limit": "1000"
+    }
+  ]
+}

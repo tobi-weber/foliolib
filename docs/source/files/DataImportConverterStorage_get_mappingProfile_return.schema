@@ -6,7 +6,7 @@
   "properties": {
     "id": {
       "description": "Unique identifier",
-      "$ref": "../common/uuid.json"
+      "$ref": "../../raml-util/schemas/uuid.schema"
     },
     "name": {
       "description": "Mapping Profile name",
@@ -68,6 +68,11 @@
     "mappingDetails": {
       "description": "Mapping details with mapping rules",
       "$ref": "mapping-profile-detail/mappingDetail.json"
+    },
+    "hidden": {
+      "description": "Flag indicates that the Mapping Profile will be hidden on UI",
+      "type": "boolean",
+      "default": false
     },
     "metadata": {
       "description": "Metadata provided by the server",

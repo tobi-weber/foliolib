@@ -1,111 +1,130 @@
 # -*- coding: utf-8 -*-
-# Generated at 2021-05-24
+# Generated at 2022-04-28
 
 import logging
 
-from foliolib.folio import FolioApi
+from foliolib.folio import FolioApi, FolioAdminApi
 
 log = logging.getLogger("foliolib.folio.api.quickMarc")
 
 
-class RecordsEditor(FolioApi):
-    """quickMARC record API
 
-    This documents the API calls that can be made to work with MARC records
+class RecordseditorAdmin(FolioAdminApi):
+    """quickMARC Record Editor
+    Administration
+
+    
     """
 
-    def get_records(self, **kwargs):
-        """Get MARC record by instanceId
+    def getRecordByExternalId(self, **kwargs):
+        """Get MARC record by externalId
 
         ``GET /records-editor/records``
 
-        Args:
-            **kwargs (properties): Keyword Arguments
-
         Keyword Args:
-            instanceId (uuid):  UUID of the instance that is related to the MARC record
-                    
-                    Example:
-                    
-                     - f6c574b5-b1d5-4e5e-a28b-161b7e03e81a
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
+            externalId (str): UUID of the external that is related to the MARC record (format: uuid)
+            lang (str): Requested language. Optional. [lang=en] (pattern: [a-zA-Z]{2}, default: en)
 
         Returns:
-            dict: See Schema below
+            dict: See Schema below.
 
         Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestError: Bad request, e.g. malformed request body or query parameter. Details of the error (e.g. name of the parameter or line/character number with malformed data) provided in the response.
+            OkapiRequestNotFound: MARC record with a given ID not found
+            OkapiFatalError: Internal server error, e.g. due to misconfiguration
 
         Schema:
 
-            .. literalinclude:: ../files/RecordsEditor_get_records_return.schema 
+            .. literalinclude:: ../files/Recordseditor_getRecordByExternalId_response.schema
         """
         return self.call("GET", "/records-editor/records", query=kwargs)
 
-    def set_record(self, record: dict):
-        """Create a new MARC record.
+		
+    def records(self, quickMarc):
+        """
 
         ``POST /records-editor/records``
 
         Args:
-            record (dict): See Schema below
+            quickMarc (dict): See Schema below.
+
+        Returns:
+            dict: See Schema below.
 
         Raises:
             OkapiRequestError: Bad Request
+            OkapiFatalError: Internal server error, e.g. due to misconfiguration
 
         Schema:
 
-            .. literalinclude:: ../files/RecordsEditor_set_record_request.schema
+            .. literalinclude:: ../files/Recordseditor_records_request.schema
+            .. literalinclude:: ../files/Recordseditor_records_request.schema_response.schema
         """
-        return self.call("POST", "/records-editor/records", data=record)
+        return self.call("POST", "/records-editor/records", quickMarc)
 
-    def get_statuses(self, **kwargs):
-        """
+    def getRecordCreationStatus(self, **kwargs):
+        """Get status of MARC bibliographic record creation
 
         ``GET /records-editor/records/status``
 
-        Args:
-            **kwargs (properties): Keyword Arguments
-
         Keyword Args:
-            qmRecordId (uuid):  UUID of ParsedRecord to be created
-                    
-                    Example:
-                    
-                     - c56b70ce-4ef6-47ef-8bc3-c470bafa0b8c
+            qmRecordId (str): UUID of ParsedRecord to be created (format: uuid)
 
         Returns:
-            dict: See Schema below
+            dict: See Schema below.
 
         Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestError: Bad request, e.g. malformed request body or query parameter. Details of the error (e.g. name of the parameter or line/character number with malformed data) provided in the response.
+            OkapiRequestNotFound: MARC record with a given ID not found
+            OkapiFatalError: Internal server error, e.g. due to misconfiguration
 
         Schema:
 
-            .. literalinclude:: ../files/RecordsEditor_get_statuses_return.schema 
+            .. literalinclude:: ../files/Recordseditor_getRecordCreationStatus_response.schema
         """
         return self.call("GET", "/records-editor/records/status", query=kwargs)
 
-    def modify_record(self, recordsId: str, record: dict):
+
+
+class RecordseditorasyncAdmin(FolioAdminApi):
+    """quickMARC Record Editor
+    Administration
+
+    
+    """
+
+    def putRecord(self, id_, quickMarc):
         """Edit MARC record
 
-        ``PUT /records-editor/records/{recordsId}``
+        ``PUT /records-editor/records/{id}``
 
         Args:
-            recordsId (str)
-            record (dict): See Schema below
+            id_ (str): The UUID of a record (format: uuid)
+            quickMarc (dict): See Schema below.
 
         Raises:
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestError: Bad request, e.g. malformed request body or query parameter. Details of the error (e.g. name of the parameter or line/character number with malformed data) provided in the response.
+            OkapiRequestConflict: Update failed due to optimistic locking
+            OkapiFatalError: Internal server error, e.g. due to misconfiguration
 
         Schema:
 
-            .. literalinclude:: ../files/RecordsEditor_modify_record_request.schema
+            .. literalinclude:: ../files/Recordseditorasync_putRecord_request.schema
         """
-        return self.call("PUT", f"/records-editor/records/{recordsId}", data=record)
+        return self.call("PUT", "/records-editor/records/{id}", id_, quickMarc)
+
+		
+    def deleteRecordByExternalId(self, id_):
+        """Delete MARC record by externalId
+
+        ``DELETE /records-editor/records/{id}``
+
+        Args:
+            id_ (str): UUID of the external that is related to the MARC record (format: uuid)
+
+        Raises:
+            OkapiRequestError: Bad request, e.g. malformed request body or query parameter. Details of the error (e.g. name of the parameter or line/character number with malformed data) provided in the response.
+            OkapiRequestNotFound: MARC record with a given ID not found
+            OkapiFatalError: Internal server error, e.g. due to misconfiguration
+        """
+        return self.call("DELETE", "/records-editor/records/{id}", id_)

@@ -1,40 +1,11 @@
 # -*- coding: utf-8 -*-
-# Generated at 2021-05-24
+# Generated at 2022-04-28
 
 import logging
 
-from foliolib.folio import FolioApi
+from foliolib.folio import FolioApi, FolioAdminApi
 
-log = logging.getLogger("foliolib.folio.api.patronBlocks")
-
-
-class UserSummary(FolioApi):
-    """Diagnostic API for retreiving internal UserSummary objects
-
-    **User summary API**
-    """
-
-    def get_userSummary(self, userId: str):
-        """
-
-        ``GET /user-summary/{userId}``
-
-        Args:
-            userId (str)
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/UserSummary_get_userSummary_return.schema 
-        """
-        return self.call("GET", f"/user-summary/{userId}")
+log = logging.getLogger("oliolib.folio.api.patronBlocks")
 
 
 class PatronBlockLimits(FolioApi):
@@ -310,6 +281,54 @@ class EventHandlers(FolioApi):
             .. literalinclude:: ../files/EventHandlers_set_loanDueDateChanged_request.schema
         """
         return self.call("POST", "/automated-patron-blocks/handlers/loan-due-date-changed", data=loanDueDateChanged)
+
+    def set_loanClosed(self, loanClosed: dict):
+        """
+
+        ``POST /automated-patron-blocks/handlers/loan-closed``
+
+        Args:
+            loanClosed (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/EventHandlers_set_loanClosed_request.schema
+        """
+        return self.call("POST", "/automated-patron-blocks/handlers/loan-closed", data=loanClosed)
+
+
+class UserSummary(FolioApi):
+    """Diagnostic API for retreiving internal UserSummary objects
+
+    **User summary API**
+    """
+
+    def get_userSummary(self, userId: str):
+        """
+
+        ``GET /user-summary/{userId}``
+
+        Args:
+            userId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/UserSummary_get_userSummary_return.schema 
+        """
+        return self.call("GET", f"/user-summary/{userId}")
 
 
 class PatronBlockConditions(FolioApi):

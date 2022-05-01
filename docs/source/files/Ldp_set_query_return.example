@@ -1,0 +1,224 @@
+[
+  {
+    "active": true,
+    "barcode": null,
+    "type": null,
+    "username": "diku"
+  },
+  {
+    "active": true,
+    "barcode": "16206277239167908",
+    "type": "patron",
+    "username": "checkin-all"
+  },
+  {
+    "active": true,
+    "barcode": "1620627726218367299",
+    "type": "patron",
+    "username": "quick-marc-all"
+  },
+  {
+    "active": true,
+    "barcode": null,
+    "type": null,
+    "username": "pubsub-user"
+  },
+  {
+    "active": true,
+    "barcode": null,
+    "type": null,
+    "username": "diku_admin"
+  },
+  {
+    "active": true,
+    "barcode": "1620627723443114217",
+    "type": "patron",
+    "username": "acq-staff"
+  },
+  {
+    "active": true,
+    "barcode": "123",
+    "type": null,
+    "username": "rick"
+  },
+  {
+    "active": true,
+    "barcode": "1620627724015303580",
+    "type": "patron",
+    "username": "checkout-all"
+  },
+  {
+    "active": true,
+    "barcode": "1620627724777536415",
+    "type": "patron",
+    "username": "circ-student"
+  },
+  {
+    "active": true,
+    "barcode": "1620627723258340654",
+    "type": "patron",
+    "username": "acq-observer"
+  },
+  {
+    "active": true,
+    "barcode": "1620627726059114352",
+    "type": "patron",
+    "username": "metadata-admin"
+  },
+  {
+    "active": true,
+    "barcode": "1620627724501189635",
+    "type": "patron",
+    "username": "circ-observer"
+  },
+  {
+    "active": true,
+    "barcode": "1620627724613411811",
+    "type": "patron",
+    "username": "circ-staff"
+  },
+  {
+    "active": true,
+    "barcode": "20210101",
+    "type": null,
+    "username": "GTB-BIBLIOTECA"
+  },
+  {
+    "active": true,
+    "barcode": "1620627725930464595",
+    "type": "patron",
+    "username": "erm-staff"
+  },
+  {
+    "active": true,
+    "barcode": "1620627725656676560",
+    "type": "patron",
+    "username": "erm-manager"
+  },
+  {
+    "active": true,
+    "barcode": "1620627726469650965",
+    "type": "patron",
+    "username": "user-basic-view"
+  },
+  {
+    "active": true,
+    "barcode": "1620627722922523126",
+    "type": "patron",
+    "username": "acq-manager"
+  },
+  {
+    "active": true,
+    "barcode": "1620627725062599536",
+    "type": "patron",
+    "username": "data-export-admin"
+  },
+  {
+    "active": true,
+    "barcode": "1620627724930650147",
+    "type": "patron",
+    "username": "copy-cataloger"
+  },
+  {
+    "active": true,
+    "barcode": null,
+    "type": null,
+    "username": "mod-search"
+  },
+  {
+    "active": true,
+    "barcode": "1620627725258463052",
+    "type": "patron",
+    "username": "data-import"
+  },
+  {
+    "active": true,
+    "barcode": "1620627724123869414",
+    "type": "patron",
+    "username": "circ-admin"
+  },
+  {
+    "active": true,
+    "barcode": "1620627722235578722",
+    "type": "patron",
+    "username": "acq-admin"
+  },
+  {
+    "active": true,
+    "barcode": "1620627725817298392",
+    "type": "patron",
+    "username": "erm-observer"
+  },
+  {
+    "active": true,
+    "barcode": "789",
+    "type": null,
+    "username": "sheldon"
+  },
+  {
+    "active": true,
+    "barcode": "456",
+    "type": null,
+    "username": "morty"
+  },
+  {
+    "active": true,
+    "barcode": "1620627724328691779",
+    "type": "patron",
+    "username": "circ-manager"
+  },
+  {
+    "active": true,
+    "barcode": "1620627726312429916",
+    "type": "patron",
+    "username": "technical-service-staff"
+  },
+  {
+    "active": true,
+    "barcode": null,
+    "type": null,
+    "username": "data-export-system-user"
+  },
+  {
+    "active": true,
+    "barcode": "1620627723752242178",
+    "type": "patron",
+    "username": "cataloger"
+  },
+  {
+    "active": true,
+    "barcode": "01012015",
+    "type": null,
+    "username": "GTB-USU-PI"
+  },
+  {
+    "active": true,
+    "barcode": "1620627725385562486",
+    "type": "patron",
+    "username": "erm-admin"
+  },
+  {
+    "active": true,
+    "barcode": "16081963",
+    "type": null,
+    "username": "GTB-JM"
+  },
+  {
+    "active": true,
+    "barcode": "16121978",
+    "type": null,
+    "username": "GTB-SERGI"
+  },
+  {
+    "active": true,
+    "barcode": null,
+    "type": null,
+    "username": "system-user"
+  },
+  {
+    "active": true,
+    "barcode": "1620627725164426328",
+    "type": "patron",
+    "username": "data-export"
+  }
+]

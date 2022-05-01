@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+# Copyright (C) 2021 Tobias Weber <tobi-weber@gmx.de>
+
 import click
 from foliolib.helper import get_node
 from foliolib.helper.platform import install_platform, upgrade_platform
@@ -16,6 +19,8 @@ def platform():
 @click.argument("tenantid")
 @click.option("-n", "--node", default=get_node(),
               help="node id", show_default=True)
+@click.option("-e", "--edgemodule", multiple=True,
+              help="Exclude edge module to deploy, e.g. edge-oai-pmh. Can be repeated")
 @click.option("--loadSample",  help="", is_flag=True)
 @click.option("--loadReference",  help="", is_flag=True)
 @click.option(
@@ -46,6 +51,7 @@ def install(**kwargs):
     if kwargs["no_prerelease"]:
         _kwargs["preRelease"] = False
     install_platform(kwargs["platform"], kwargs["node"], kwargs["tenantid"],
+                     list(kwargs["edgemodule"]),
                      loadSample=kwargs["loadsample"],
                      loadReference=kwargs["loadreference"],
                      **_kwargs)
@@ -56,6 +62,8 @@ def install(**kwargs):
 @click.argument("tenantid")
 @click.option("-n", "--node", default=get_node(),
               help="node id", show_default=True)
+@click.option("-e", "--edgemodule", multiple=True,
+              help="Exclude edge module to deploy, e.g. edge-oai-pmh . Can be repeated")
 @click.option(
     "--ignoreErrors", is_flag=True, help="Ignore errors during the install operation")
 @click.option(
@@ -67,7 +75,7 @@ def install(**kwargs):
 @click.option(
     "--simulate", is_flag=True, help="Simulate the installation")
 def upgrade(**kwargs):
-    """Upgrade a folio platform
+    """Upgrade a folio platform.
 
     PLATFORM\tpath to folio platform.
     TENANTID\ttenant id.
@@ -84,4 +92,5 @@ def upgrade(**kwargs):
     if kwargs["no_prerelease"]:
         _kwargs["preRelease"] = False
     upgrade_platform(kwargs["platform"], kwargs["node"], kwargs["tenantid"],
+                     list(kwargs["edgemodule"]),
                      **_kwargs)

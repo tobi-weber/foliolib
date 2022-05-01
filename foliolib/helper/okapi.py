@@ -1,9 +1,11 @@
+# -*- coding: utf-8 -*-
+# Copyright (C) 2021 Tobias Weber <tobi-weber@gmx.de>
 
 import logging
 import pprint
 
 from foliolib.config import Config
-from foliolib.folio.users import UserService
+from foliolib.folio.users import Users
 from foliolib.okapi.okapiClient import OkapiClient
 from foliolib.okapi.okapiModule import (create_okapiModules,
                                         sort_modules_by_requirements)
@@ -50,7 +52,7 @@ def set_env_kafka(kafka_host: str, kafka_port: str = "9092"):
 
 def set_env_elastic(elastic_host: str, elastic_port: str = "9200",
                     elastic_user: str = "elastic", elastic_password: str = "",
-                    languages: tuple = ("eng",), syspass: str = "Mod-search-1-0-0"):
+                    languages: tuple = ("eng",)):
     """Set elasticsearch enviroment
 
     Args:
@@ -59,7 +61,6 @@ def set_env_elastic(elastic_host: str, elastic_port: str = "9200",
         elastic_user (str, optional): elasticsearch username. Defaults to "elastic".
         elastic_password (str, optional): elasticsearch password. Defaults to "".
         languages (tuple, optional): elasticsearch  initial languages. Defaults to ("eng",).
-        syspass (str, optional): Systemuser password. Defaults to "Mod-search-1-0-0".
     """
     okapi = OkapiClient()
     okapi_host = Config().okapicfg().get("Okapi", "host")
@@ -69,7 +70,6 @@ def set_env_elastic(elastic_host: str, elastic_port: str = "9200",
     okapi.set_env("ELASTICSEARCH_USERNAME", elastic_user)
     okapi.set_env("ELASTICSEARCH_PASSWORD", elastic_password)
     okapi.set_env("INITIAL_LANGUAGES", ",".join(languages))
-    okapi.set_env("SYSTEM_USER_PASSWORD", syspass)
     okapi.set_env("ELASTICSEARCH_URL", f"http://{elastic_host}:{elastic_port}")
     okapi.set_env("OKAPI_URL", f"http://{okapi_host}:{okapi_port}")
 
@@ -82,7 +82,7 @@ def login_supertenant(username: str, password: str):
         password (str): password supertenant.
     """
     print("Logging in supertenant")
-    userService = UserService("supertenant")
+    userService = Users("supertenant")
     token = userService.login(username, password)
     if token is None:
         print("Login failed")
@@ -110,7 +110,7 @@ def secure_supertenant(username: str = "okapi_admin", password: str = "admin"):
     res = o.enable_modules(modules, tenant)
     # print(res)
 
-    userServices = UserService(tenant)
+    userServices = Users(tenant)
 
     log.info("Create user record.")
     user = userServices.create_user(
@@ -151,6 +151,7 @@ def clean_okapi():
     enabledModules = []
     modsToRemove = []
     deployedModules = []
+    okapiModule = None
 
     for tenant in tenants:
         for mod in okapi.get_tenant_modules(tenant["id"]):
@@ -160,7 +161,10 @@ def clean_okapi():
         deployedModules.append(mod["srvcId"])
     for mod in okapi.get_modules():
         if not mod["id"] in enabledModules:
-            modsToRemove.append(mod["id"])
+            if mod["id"].startswith("okapi-"):
+                okapiModule = mod["id"]
+            else:
+                modsToRemove.append(mod["id"])
 
     # print(enabledModules)
     modsToRemove = sort_modules_by_requirements(
@@ -168,14 +172,18 @@ def clean_okapi():
     modsToRemove.reverse()
 
     for mod in modsToRemove:
-        modId = mod.get_modId()
+        modId = mod.get_id()
         if modId in deployedModules:
             log.info("Undeploy %s", modId)
             okapi.undeploy_module(modId)
     for mod in modsToRemove:
-        modId = mod.get_modId()
+        modId = mod.get_id()
         log.info("Remove %s", modId)
         okapi.remove_module(modId)
+
+    if okapiModule is not None:
+        log.info("Remove %s", okapiModule)
+        okapi.remove_module(okapiModule)
 
 
 def print_okapi_all():

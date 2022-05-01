@@ -1,0 +1,10 @@
+[
+  {
+    "key": "foo",
+    "value": "bar"
+  },
+  {
+    "key": "ping",
+    "value": "pong"
+  }
+]

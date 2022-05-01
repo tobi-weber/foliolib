@@ -1,0 +1,14 @@
+{
+    "type": "object",
+    "properties": {
+        "itemBarcode": {
+            "type": "string"
+        },
+        "itemStatus": {
+            "type": "string"
+        },
+        "operatorId": {
+            "type": "string"
+        }
+    }
+}

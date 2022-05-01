@@ -5,6 +5,7 @@
   "description": "PO_Line: History of Incas",
   "fiscalYearId": "684b5dc5-92f6-4db7-b996-b549d88f5e4e",
   "fromFundId": "7fbd5d84-62d1-44c6-9c45-6cb173998bbd",
+  "invoiceCancelled": false,
   "paymentEncumbranceId": "cb0b0c16-59a0-4ece-8e43-8d2310c9883c",
   "source": "Invoice",
   "sourceFiscalYearId": "684b5dc5-92f6-4db7-b996-b549d88f5e4e",

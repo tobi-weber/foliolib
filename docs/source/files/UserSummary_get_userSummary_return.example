@@ -1,6 +1,7 @@
 {
   "id": "4879f476-2b5c-4b8d-9a1b-48d200e61517",
   "userId": "16b5c87a-5fd6-41d5-b154-2e408f69a8ee",
+  "_version": 1,
   "openLoans": [
     {
       "loanId": "c929faa8-f34b-4086-a193-45a25cbafa95",

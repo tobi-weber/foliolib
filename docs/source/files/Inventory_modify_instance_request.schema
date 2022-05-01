@@ -11,6 +11,10 @@
       "type": "string",
       "description": "The system assigned unique ID of the instance record"
     },
+    "_version": {
+      "type": "integer",
+      "description": "Record version for optimistic locking"
+    },
     "hrid": {
       "type": "string",
       "description": "The human readable ID, also called eye readable ID. A system-assigned sequential ID which maps to the Instance ID"
@@ -247,6 +251,21 @@
       },
       "uniqueItems": true
     },
+    "publicationPeriod": {
+      "type": "object",
+      "description": "Publication period",
+      "properties": {
+        "start": {
+          "type": "integer",
+          "description": "Publication start year"
+        },
+        "end": {
+          "type": "integer",
+          "description": "Publication end year"
+        }
+      },
+      "additionalProperties": false
+    },
     "electronicAccess": {
       "type": "array",
       "description": "List of electronic access items",
@@ -328,6 +347,14 @@
         }
       }
     },
+    "administrativeNotes": {
+      "type": "array",
+      "description": "Administrative notes",
+      "minItems": 0,
+      "items": {
+        "type": "string"
+      }
+    },
     "modeOfIssuanceId": {
       "type": "string",
       "description": "RDA mode of issuance is a categorization reflecting whether a resource is issued in one or more parts, the way it is updated, and whether its termination is predetermined or not (e.g. monograph,  sequential monograph, serial; integrating Resource, other)"
@@ -404,6 +431,12 @@
         "description": "Single UUID for the Instance nature of content",
         "$ref": "uuid.json"
       }
+    },
+    "isBoundWith": {
+      "description": "Indicates if this Instance is included in a bound-with",
+      "type": "boolean",
+      "default": false,
+      "readonly": true
     },
     "precedingTitles": {
       "description": "Array of preceding titles",

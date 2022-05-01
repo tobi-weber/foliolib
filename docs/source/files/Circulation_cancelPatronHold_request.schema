@@ -1,0 +1,24 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "allOf": [
+        {
+            "$ref": "baseCircRequestDTO.json"
+        }
+    ],
+    "description": "D2IR Cancel request",
+    "type": "object",
+    "properties": {
+        "reason": {
+            "description": "Cancellation reason",
+            "type": "string"
+        },
+        "reasonCode": {
+            "description": "Cancellation reason code (always 7)",
+            "type": "integer"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "reasonCode"
+    ]
+}

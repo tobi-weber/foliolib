@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Collection of item requests",
+  "description": "Collection of item requests",
+  "type": "object",
+  "properties": {
+    "requests": {
+      "description": "Paged collection of item requests",
+      "id": "requests",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "request.json"
+      }
+    },
+    "totalRecords": {
+      "description": "Total number of item requests",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "requests",
+    "totalRecords"
+  ]
+}

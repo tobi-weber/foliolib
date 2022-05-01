@@ -6,7 +6,7 @@
   "properties": {
     "id": {
       "description": "Unique identifier",
-      "$ref": "../common/uuid.json"
+      "$ref": "../../raml-util/schemas/uuid.schema"
     },
     "name": {
       "description": "Job Profile name",
@@ -59,6 +59,11 @@
         "type": "object",
         "$ref": "./profileSnapshotWrapper.json"
       }
+    },
+    "hidden": {
+      "description": "Flag indicates that the Job Profile will be hidden on UI",
+      "type": "boolean",
+      "default": false
     },
     "metadata": {
       "description": "Metadata provided by the server",

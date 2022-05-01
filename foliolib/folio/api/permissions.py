@@ -1,11 +1,40 @@
 # -*- coding: utf-8 -*-
-# Generated at 2021-05-24
+# Generated at 2022-04-28
 
 import logging
 
-from foliolib.folio import FolioApi
+from foliolib.folio import FolioApi, FolioAdminApi
 
-log = logging.getLogger("foliolib.folio.api.permissions")
+log = logging.getLogger("oliolib.folio.api.permissions")
+
+
+class TenantPermissions(FolioApi):
+    """tenant permissions API implementation
+
+    This API provides a callback point for Okapi when new permission sets are added to the tenant
+    """
+
+    def set_tenantpermission(self, tenantpermission: dict):
+        """Load new permissionSets into the permission module when a module gets enabled for a tenant
+
+        ``POST /_/tenantpermissions``
+
+        Args:
+            tenantpermission (dict): See Schema below
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/TenantPermissions_set_tenantpermission_request.schema
+        """
+        return self.call("POST", "/_/tenantpermissions", data=tenantpermission)
 
 
 class Permissions(FolioApi):
@@ -23,12 +52,22 @@ class Permissions(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
-            length (int): (default=10) The maximum number of results to return.
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
                     
                     Example:
                     
                      - 10
-            start (int): (default=1) The starting index in a list of results (starts at one).
+            length (int): (default=10) The maximum number of results to return. Deprecated: use limit
+                    
+                    Example:
+                    
+                     - 10
+            start (int): (default=1) The starting index in a list of results starting from 1. Deprecated: use offset
             sortBy (str):  A comma-separated list of fieldnames to sort by
             query (str):  A query string to filter users based on matching criteria in fields.
             hasPermissions (str):  A list of permissions that any returned users must possess.
@@ -60,6 +99,7 @@ class Permissions(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
+            OkapiRequestForbidden: Forbidden
             OkapiFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
@@ -114,6 +154,7 @@ class Permissions(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
+            OkapiRequestForbidden: Forbidden
             OkapiRequestNotFound: Not Found
             OkapiFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
@@ -204,12 +245,22 @@ class Permissions(FolioApi):
                     Example:
                     
                      - true
-            length (int): (default=10) The maximum number of results to return.
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
                     
                     Example:
                     
                      - 10
-            start (int): (default=1) The starting index in a list of results (starts at one).
+            length (int): (default=10) The maximum number of results to return. Deprecated: use limit
+                    
+                    Example:
+                    
+                     - 10
+            start (int): (default=1) The starting index in a list of results starting from 1. Deprecated: use offset
             sortBy (str):  A comma-separated list of fieldnames to sort by
             query (str):  A query string to filter users based on matching criteria in fields.
             memberOf (str):  A list of permission names that any returned permission must be a sub-permission of.
@@ -250,6 +301,7 @@ class Permissions(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
+            OkapiRequestForbidden: Forbidden
             OkapiFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
@@ -317,6 +369,7 @@ class Permissions(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
+            OkapiRequestForbidden: Forbidden
             OkapiRequestNotFound: Not Found
             OkapiFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
@@ -383,32 +436,3 @@ class Permissions(FolioApi):
             .. literalinclude:: ../files/Permissions_set_purgeDeprecated_return.schema 
         """
         return self.call("POST", "/perms/purge-deprecated")
-
-
-class TenantPermissions(FolioApi):
-    """tenant permissions API implementation
-
-    This API provides a callback point for Okapi when new permission sets are added to the tenant
-    """
-
-    def set_tenantpermission(self, tenantpermission: dict):
-        """Load new permissionSets into the permission module when a module gets enabled for a tenant
-
-        ``POST /_/tenantpermissions``
-
-        Args:
-            tenantpermission (dict): See Schema below
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Schema:
-
-            .. literalinclude:: ../files/TenantPermissions_set_tenantpermission_request.schema
-        """
-        return self.call("POST", "/_/tenantpermissions", data=tenantpermission)

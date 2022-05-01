@@ -1,0 +1,18 @@
+{
+    "allOf": [
+        {
+            "$ref": "schemas/baseCollection.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "retrievals": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/components/schemas/retrievalQueue"
+                    }
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "description": "Check out to borrowing site for Item Hold Transaction",
+    "type": "object",
+    "properties": {
+        "transaction": {
+            "description": "updated INN-Reach transaction record",
+            "$ref": "innReachTransactionDTO.json"
+        },
+        "folioCheckOut": {
+            "description": "the FOLIO check-out response",
+            "$ref": "circulation/loanDTO.json"
+        }
+    },
+    "additionalProperties": false,
+    "required": []
+}

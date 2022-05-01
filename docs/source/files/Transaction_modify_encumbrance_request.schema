@@ -44,6 +44,10 @@
       "$ref": "../../common/schemas/uuid.json",
       "description": "UUID of the fund money is moving from"
     },
+    "invoiceCancelled": {
+      "description": "Indicates that related invoice was cancelled",
+      "type": "boolean"
+    },
     "paymentEncumbranceId": {
       "$ref": "../../common/schemas/uuid.json",
       "description": "UUID of the encumbrance associated with this payment/credit taking place."
@@ -90,6 +94,10 @@
         "Transfer"
       ],
       "type": "string"
+    },
+    "voidedAmount": {
+      "description": "Voided amount, not to be counted in budget totals",
+      "type": "number"
     },
     "metadata": {
       "$ref": "../../../raml-util/schemas/metadata.schema",

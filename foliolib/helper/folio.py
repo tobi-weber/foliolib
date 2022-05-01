@@ -1,9 +1,12 @@
+# -*- coding: utf-8 -*-
+# Copyright (C) 2021 Tobias Weber <tobi-weber@gmx.de>
 
 import logging
 from distutils.version import StrictVersion
 
 from foliolib.folio.api.permissions import Permissions
-from foliolib.folio.users import UserService
+from foliolib.folio.users import Users
+from foliolib.okapi.exceptions import OkapiRequestForbidden
 from foliolib.okapi.okapiClient import OkapiClient
 
 log = logging.getLogger("foliolib.helper.okapi")
@@ -30,22 +33,27 @@ def create_superuser(tenant: str, username: str = "admin",
     except:
         disabled_mods = None
 
-    userService = UserService(tenant)
+    userService = Users(tenant)
 
-    log.info("Create user record.")
-    user = userService.create_user(
-        username, password,
-        permissions=["perms.all",
-                     "users.collection.get"],
-        personal={"lastName": "Superuser"})
+    try:
+        log.info("Create user record.")
+        user = userService.create_user(
+            username, password,
+            permissions=["perms.all",
+                         "users.collection.get"],
+            personal={"lastName": "Superuser"})
 
-    log.info("Create service points for user record.")
-    servicepoints = userService.get_servicePoints()
-    servicepointsIds = [sp["id"] for sp in servicepoints["servicepoints"]]
-    if servicepointsIds:
-        log.debug(servicepoints)
-        userService.set_servicePoints(username, servicepointsIds,
-                                      servicepointsIds[0])
+        log.info("Create service points for user record.")
+        servicepoints = userService.get_servicePoints()
+        servicepointsIds = [sp["id"] for sp in servicepoints["servicepoints"]]
+        if servicepointsIds:
+            log.debug(servicepoints)
+            userService.set_servicePoints(username, servicepointsIds,
+                                          servicepointsIds[0])
+    except:
+        log.info("Enable mod-authtoken.")
+        okapi.enable_modules([m["id"] for m in disabled_mods], tenant)
+        raise
 
     log.info("Enable mod-authtoken.")
     okapi.enable_modules([m["id"] for m in disabled_mods], tenant)
@@ -71,7 +79,14 @@ def create_superuser(tenant: str, username: str = "admin",
     #     "codex-mux.instances.collection.get"])
     if StrictVersion(okapi.version()) >= StrictVersion("4.0"):
         topLevelPermissions.extend(["okapi.proxy.modules.get"])
-    userService.set_permissions(username, topLevelPermissions)
+
+    for perm in topLevelPermissions:
+        try:
+            userService.set_permission(username, perm)
+            log.info("%s assigned" % perm)
+        except:
+            log.error("Cannot assign %s" % perm)
+            pass
 
     log.info("Superuser %s created.", username)
 

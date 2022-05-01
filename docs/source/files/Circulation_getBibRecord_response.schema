@@ -1,0 +1,21 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "allOf": [
+        {
+            "$ref": "innReachResponseDTO.json"
+        }
+    ],
+    "description": "D2IR Bib info response",
+    "type": "object",
+    "properties": {
+        "bibInfo": {
+            "description": "D2IR Bib info",
+            "type": "object",
+            "$ref": "bibInfo.json"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "bibInfo"
+    ]
+}

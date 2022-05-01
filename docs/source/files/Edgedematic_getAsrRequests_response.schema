@@ -1,0 +1,18 @@
+{
+    "type": "object",
+    "properties": {
+        "asrRequests": {
+            "type": "array",
+            "items": {
+                "$ref": "#/components/schemas/asrRequest"
+            },
+            "xml": {
+                "name": "asrRequest",
+                "wrapped": true
+            }
+        }
+    },
+    "xml": {
+        "name": "asrRequests"
+    }
+}

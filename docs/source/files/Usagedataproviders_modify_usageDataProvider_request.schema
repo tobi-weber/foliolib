@@ -98,11 +98,7 @@
         }
       },
       "required": [
-        "harvestingStatus",
-        "useAggregator",
-        "reportRelease",
-        "requestedReports",
-        "harvestingStart"
+        "harvestingStatus"
       ]
     },
     "sushiCredentials": {
@@ -133,10 +129,7 @@
           "description": "Requestor mail",
           "type": "string"
         }
-      },
-      "required": [
-        "customerId"
-      ]
+      }
     },
     "latestReport": {
       "description": "Newest report available for provider",

@@ -1,0 +1,22 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "Item types collection from all configured central servers",
+    "type": "object",
+    "properties": {
+        "centralServerItemTypes": {
+            "description": "List of item types per central server",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "$ref": "itemTypesPerCentralServerDTO.json"
+            }
+        },
+        "totalRecords": {
+            "type": "integer"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "centralServerItemTypes"
+    ]
+}

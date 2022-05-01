@@ -1,0 +1,155 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Metadata Source Schema",
+  "description": "Metadata source in finc config",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "label": {
+      "type": "string",
+      "description": "A unique name for this metadata source"
+    },
+    "description": {
+      "type": "string",
+      "description": "A globally unique (UUID) identifier"
+    },
+    "status": {
+      "type": "string",
+      "description": "Current status of metadata source",
+      "enum": [
+        "active",
+        "closed",
+        "impossible",
+        "implementation",
+        "request"
+      ]
+    },
+    "organization": {
+      "type": "object",
+      "description": "The organization delivering content of this metadata source",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Id of the the sources content\u2019s organization, linked via uuid from organizations app."
+        },
+        "name": {
+          "type": "string",
+          "description": "Organization's name. If not given, it will be determined by backend module."
+        }
+      }
+    },
+    "contacts": {
+      "type": "array",
+      "description": "List of contacts",
+      "minItems": 0,
+      "items": {
+        "type": "object",
+        "$ref": "contact.json"
+      }
+    },
+    "indexingLevel": {
+      "type": "string",
+      "description": "Level used for indexing (e.g. bibliographic)"
+    },
+    "generalNotes": {
+      "type": "string",
+      "description": "General notes not fitting into the other fields"
+    },
+    "lastProcessed": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date of last processing"
+    },
+    "tickets": {
+      "type": "array",
+      "description": "Links to internal tickets corresponding to this metadata source",
+      "minItems": 0,
+      "items": {
+        "type": "string"
+      }
+    },
+    "accessUrl": {
+      "type": "string",
+      "description": "URL to access metadata source"
+    },
+    "sourceId": {
+      "type": "integer",
+      "description": "The source id"
+    },
+    "solrShard": {
+      "type": "string",
+      "description": "Used solr shard",
+      "enum": [
+        "SLUB DBoD",
+        "SLUB dswarm",
+        "UBL ai",
+        "UBL DNB",
+        "UBL main"
+      ]
+    },
+    "deliveryMethods": {
+      "type": "array",
+      "description": "Available delivery methods (e.g. API download)",
+      "minItems": 0,
+      "items": {
+        "type": "string"
+      }
+    },
+    "formats": {
+      "type": "array",
+      "description": "Available formats (e.g. MARC)",
+      "minItems": 0,
+      "items": {
+        "type": "string"
+      }
+    },
+    "updateRhythm": {
+      "type": "string",
+      "description": "Metadata source's update rhythm"
+    },
+    "inferiorTo": {
+      "type": "array",
+      "description": "Link to other metadata sources",
+      "minItems": 0,
+      "items": {
+        "type": "string"
+      }
+    },
+    "selectedBy": {
+      "type": "array",
+      "description": "List of tenants/libraries which selected this metadata source",
+      "minItems": 0,
+      "items": {
+        "type": "object",
+        "properties": {
+          "isil": {
+            "type": "string",
+            "description": "Isil of library/tenant which selected this metadata source"
+          },
+          "selected": {
+            "description": "Indicator if the tenant/library has selected this metadata source",
+            "enum": [
+              "all",
+              "some",
+              "none"
+            ]
+          }
+        }
+      }
+    },
+    "metadata": {
+      "description": "Metadata about creation and changes, provided by the server (client should not provide)",
+      "type": "object",
+      "$ref": "../raml-util/schemas/metadata.schema"
+    }
+  },
+  "required": [
+    "id",
+    "label",
+    "status",
+    "sourceId"
+  ],
+  "additionalProperties": false
+}

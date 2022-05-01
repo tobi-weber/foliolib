@@ -1,0 +1,21 @@
+{
+    "description": "INN-Reach Transactions collection",
+    "type": "object",
+    "properties": {
+        "totalRecords": {
+            "description": "Total records",
+            "type": "integer"
+        },
+        "transactions": {
+            "description": "List of INN-Reach Transactions",
+            "type": "array",
+            "items": {
+                "$ref": "innReachTransactionDTO.json"
+            }
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "transactions"
+    ]
+}

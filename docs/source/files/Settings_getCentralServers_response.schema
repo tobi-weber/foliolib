@@ -1,0 +1,21 @@
+{
+    "description": "Central servers collection",
+    "type": "object",
+    "properties": {
+        "totalRecords": {
+            "description": "Total records",
+            "type": "integer"
+        },
+        "centralServers": {
+            "description": "List of INN-Reach Central servers",
+            "type": "array",
+            "items": {
+                "$ref": "centralServerDTO.json"
+            }
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "centralServers"
+    ]
+}

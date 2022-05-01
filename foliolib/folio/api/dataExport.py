@@ -1,68 +1,11 @@
 # -*- coding: utf-8 -*-
-# Generated at 2021-05-24
+# Generated at 2022-04-28
 
 import logging
 
-from foliolib.folio import FolioApi
+from foliolib.folio import FolioApi, FolioAdminApi
 
-log = logging.getLogger("foliolib.folio.api.dataExport")
-
-
-class DataExportLogs(FolioApi):
-    """Data export Error Logs API
-
-    APIs for managing Error Logs
-    """
-
-    def get_logs(self, **kwargs):
-        """Retrieve log item with given {logId}
-
-        ``GET /data-export/logs``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
-                    
-                    Example:
-                    
-                     - 0
-            limit (int): (default=10) Limit the number of elements returned in the response
-                    
-                    Example:
-                    
-                     - 10
-            query (str):  A query expressed as a CQL string
-                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
-                    using valid searchable fields.
-                    The first example below shows the general form of a full CQL query,
-                    but those fields might not be relevant in this context.
-                    
-                    with valid searchable fields
-                    
-                    
-                    Example:
-                    
-                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
-                    
-                     - jobExecutionId=67dfac11-1caf-4470-9ad1-d533f6360bdd
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Schema:
-
-            .. literalinclude:: ../files/DataExportLogs_get_logs_return.schema 
-        """
-        return self.call("GET", "/data-export/logs", query=kwargs)
+log = logging.getLogger("oliolib.folio.api.dataExport")
 
 
 class DataExportFileDefinition(FolioApi):
@@ -84,6 +27,7 @@ class DataExportFileDefinition(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
+            OkapiRequestPayloadToLarge: Payload Too Large
             OkapiRequestUnprocessableEntity: Unprocessable Entity
             OkapiFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
@@ -447,6 +391,90 @@ class DataExport(FolioApi):
         return self.call("POST", "/data-export/clean-up-files")
 
 
+class DataExportLogs(FolioApi):
+    """Data export Error Logs API
+
+    APIs for managing Error Logs
+    """
+
+    def get_logs(self, **kwargs):
+        """Retrieve log item with given {logId}
+
+        ``GET /data-export/logs``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+            query (str):  A query expressed as a CQL string
+                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
+                    using valid searchable fields.
+                    The first example below shows the general form of a full CQL query,
+                    but those fields might not be relevant in this context.
+                    
+                    with valid searchable fields
+                    
+                    
+                    Example:
+                    
+                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
+                    
+                     - jobExecutionId=67dfac11-1caf-4470-9ad1-d533f6360bdd
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/DataExportLogs_get_logs_return.schema 
+        """
+        return self.call("GET", "/data-export/logs", query=kwargs)
+
+
+class DataExportTransformationFields(FolioApi):
+    """Data export transformation fields API
+
+    API for getting transformation fields
+    """
+
+    def get_transformationFields(self):
+        """Retrieve transformationField item with given {transformationFieldId}
+
+        ``GET /data-export/transformation-fields``
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/DataExportTransformationFields_get_transformationFields_return.schema 
+        """
+        return self.call("GET", "/data-export/transformation-fields")
+
+
 class DataExportJobProfile(FolioApi):
     """Data export Job Profile API
 
@@ -580,30 +608,3 @@ class DataExportJobProfile(FolioApi):
             .. literalinclude:: ../files/DataExportJobProfile_modify_jobProfile_request.schema
         """
         return self.call("PUT", f"/data-export/job-profiles/{jobProfilesId}", data=jobProfile)
-
-
-class DataExportTransformationFields(FolioApi):
-    """Data export transformation fields API
-
-    API for getting transformation fields
-    """
-
-    def get_transformationFields(self):
-        """Retrieve transformationField item with given {transformationFieldId}
-
-        ``GET /data-export/transformation-fields``
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/DataExportTransformationFields_get_transformationFields_return.schema 
-        """
-        return self.call("GET", "/data-export/transformation-fields")

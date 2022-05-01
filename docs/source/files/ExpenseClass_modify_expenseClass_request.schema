@@ -13,7 +13,8 @@
     },
     "code": {
       "description": "The code of the expense class",
-      "type": "string"
+      "type": "string",
+      "pattern": "^[^:]+$"
     },
     "externalAccountNumberExt": {
       "description": "An external account number extension",
@@ -31,6 +32,7 @@
   },
   "additionalProperties": false,
   "required": [
-    "name"
+    "name",
+    "code"
   ]
 }

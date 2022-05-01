@@ -19,6 +19,7 @@
       },
       "fiscalYearId": "4438bc3b-4b4a-4e5e-9886-5f69b48a7a32",
       "fromFundId": "27f27438-3197-4281-a353-511829421d6e",
+      "invoiceCancelled": false,
       "paymentEncumbranceId": "80c28fb4-c34e-48d6-b8c2-de6660c3e0aa",
       "source": "Invoice",
       "sourceFiscalYearId": "01705ce5-3c3d-4c30-b23d-a36feec28259",
@@ -30,6 +31,7 @@
       },
       "toFundId": "2e51c019-97f3-4523-87e9-59250e3b48bc",
       "transactionType": "Encumbrance",
+      "voidedAmount" : 15,
       "metadata": {
         "createdDate": "2018-07-19T00:00:00.000+0000",
         "createdByUserId": "28d1057c-d137-11e8-a8d5-f2801f1b9fd1"
@@ -53,7 +55,8 @@
         ]
       },
       "toFundId": "69640328-788e-43fc-9c3c-af39e243f3b7",
-      "transactionType": "Payment"
+      "transactionType": "Payment",
+      "voidedAmount" : 0
     }
   ],
   "totalRecords": 2

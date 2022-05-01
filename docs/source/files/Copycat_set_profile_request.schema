@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "copycat profile",
+  "description": "copycat import profile",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "unique identifier and primary key"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name"
+    },
+    "url": {
+      "type": "string",
+      "description": "Location of remote service to obtain records from"
+    },
+    "authentication": {
+      "type": "string",
+      "description": "Authentication credentials to use for the remote service"
+    },
+    "externalIdQueryMap": {
+      "type": "string",
+      "description": "Specifies which field at the remote service should be searched with the value of `externalIdentifier` when an import request is POSTed. Could be specified as a YAZ prefix-query string, e.g. '@attr 1=12 $identifier'"
+    },
+    "internalIdEmbedPath": {
+      "type": "string",
+      "description": "Specifies where the internalIdentifier is to be embedded in the MARC record, e.g. '999__$i' to place it in field 999, indicator double space (absent) and subfield i; this field only has effect when internalIdentifier is present"
+    },
+    "createJobProfileId": {
+      "type": "string",
+      "description": "Job profile to use for create"
+    },
+    "updateJobProfileId": {
+      "type": "string",
+      "description": "Job profile to use for update"
+    },
+    "targetOptions": {
+      "type": "object",
+      "description": "A 1-level Json Object containing ZOOM options. The most important ones being preferredRecordSyntax, charset, marcencoding (encoding for retrieved MARC records - default is marc-8). See https://software.indexdata.com/yaz/doc/zoom.html#zoom-connections and https://software.indexdata.com/yaz/doc/zoom.resultsets.html#zoom.resultset.options"
+    },
+    "externalIdentifierType": {
+      "type": "string",
+      "description": "UUID of an identifier-type defined by the inventory module",
+      "$ref": "raml-util/schemas/uuid.schema"
+    },
+    "enabled": {
+      "type": "boolean",
+      "description": "Whether this profile should be presented to users importing records"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "name"
+  ]
+}

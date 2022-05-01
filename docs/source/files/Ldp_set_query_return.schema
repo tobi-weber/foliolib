@@ -1,0 +1,10 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A set of results from an LDP query",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": true
+  }
+}

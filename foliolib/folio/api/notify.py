@@ -1,11 +1,41 @@
 # -*- coding: utf-8 -*-
-# Generated at 2021-05-24
+# Generated at 2022-04-28
 
 import logging
 
-from foliolib.folio import FolioApi
+from foliolib.folio import FolioApi, FolioAdminApi
 
-log = logging.getLogger("foliolib.folio.api.notify")
+log = logging.getLogger("oliolib.folio.api.notify")
+
+
+class PatronNotice(FolioApi):
+    """mod-notify API
+
+    This documents the API calls that can be made to post patron notices for users
+    """
+
+    def set_patronNotice(self, patronNotice: dict, **kwargs):
+        """Send patron notice
+
+        ``POST /patron-notice``
+
+        Args:
+            patronNotice (dict)
+            **kwargs (properties): Keyword Arguments: See Schema below
+
+        Keyword Args:
+            lang (str): (default=en) Requested language. Optional. [lang=en]
+                    
+
+        Raises:
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/PatronNotice_set_patronNotice_request.schema
+        """
+        return self.call("POST", "/patron-notice", data=patronNotice, query=kwargs)
 
 
 class Notify(FolioApi):
@@ -127,7 +157,7 @@ class Notify(FolioApi):
     def get__selves(self, **kwargs):
         """Retrieve a list of _self items.
 
-        ``GET /notify/_self``
+        ``GET /notify/user/_self``
 
         Args:
             **kwargs (properties): Keyword Arguments
@@ -171,12 +201,12 @@ class Notify(FolioApi):
 
             .. literalinclude:: ../files/Notify_get__selves_return.schema 
         """
-        return self.call("GET", "/notify/_self", query=kwargs)
+        return self.call("GET", "/notify/user/_self", query=kwargs)
 
     def set__self(self, _self: dict):
         """Create a new _self item.
 
-        ``POST /notify/_self``
+        ``POST /notify/user/_self``
 
         Args:
             _self (dict): See Schema below
@@ -193,14 +223,14 @@ class Notify(FolioApi):
 
             .. literalinclude:: ../files/Notify_set__self_request.schema
         """
-        return self.call("POST", "/notify/_self", data=_self)
+        return self.call("POST", "/notify/user/_self", data=_self)
 
     def delete__selves(self):
         """
 
-        ``DELETE /notify/_self``
+        ``DELETE /notify/user/_self``
         """
-        return self.call("DELETE", "/notify/_self")
+        return self.call("DELETE", "/notify/user/_self")
 
     def get_notify(self, notifyId: str):
         """Retrieve notify item with given {notifyId}
@@ -258,33 +288,3 @@ class Notify(FolioApi):
             .. literalinclude:: ../files/Notify_modify_notify_request.schema
         """
         return self.call("PUT", f"/notify/{notifyId}", data=notify)
-
-
-class PatronNotice(FolioApi):
-    """mod-notify API
-
-    This documents the API calls that can be made to post patron notices for users
-    """
-
-    def set_patronNotice(self, patronNotice: dict, **kwargs):
-        """Send patron notice
-
-        ``POST /patron-notice``
-
-        Args:
-            patronNotice (dict)
-            **kwargs (properties): Keyword Arguments: See Schema below
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
-
-        Raises:
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/PatronNotice_set_patronNotice_request.schema
-        """
-        return self.call("POST", "/patron-notice", data=patronNotice, query=kwargs)

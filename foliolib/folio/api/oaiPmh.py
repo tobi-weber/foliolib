@@ -1,11 +1,74 @@
 # -*- coding: utf-8 -*-
-# Generated at 2021-05-24
+# Generated at 2022-04-28
 
 import logging
 
-from foliolib.folio import FolioApi
+from foliolib.folio import FolioApi, FolioAdminApi
 
-log = logging.getLogger("foliolib.folio.api.oaiPmh")
+log = logging.getLogger("oliolib.folio.api.oaiPmh")
+
+
+class OaiPmh(FolioApi):
+    """OAI-PMH Business Logic API
+
+    The Open Archives Initiative Protocol for Metadata Harvesting (OAI-PMH) provides
+		an application-independent interoperability framework based on metadata harvesting.
+		This module supports the OAI-PMH as a means of exposing FOLIO metadata.
+    """
+
+    def get_records(self, **kwargs):
+        """
+
+        ``GET /oai/records``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            verb (str):  verb that specifies oai-pmh request type
+            identifier (str):  parameter that is used for GetRecord and ListMetadataFormats requests
+            resumptionToken (str):  flow control token returned by a ListIdentifiers request that issued an incomplete list
+            from (str):  UTC datetime value, which specifies a lower bound for datestamp-based selective harvesting
+                    
+                    Example:
+                    
+                     - 2018-10-15 15:16:17+00:00
+            until (str):  UTC datetime value, which specifies a upper bound for datestamp-based selective harvesting
+                    
+                    Example:
+                    
+                     - 2018-10-22 23:22:21+00:00
+            set (str):  setSpec value, which specifies set criteria for selective harvesting
+            metadataPrefix (str):  metadata prefix of the format that should be included in the metadata part of the returned record
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestNotFound: Not Found
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiFatalError: Server Error
+            OkapiFatalError: Server Error
+        """
+        return self.call("GET", "/oai/records", query=kwargs)
+
+
+class CleanupJob(FolioApi):
+    """OAI-PMH Business Logic API
+
+    provides endpoint for triggering clean up process of expired instances from instances table.
+    """
+
+    def set_cleanUpInstance(self):
+        """
+
+        ``POST /oai-pmh/clean-up-instances``
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+        """
+        return self.call("POST", "/oai-pmh/clean-up-instances")
 
 
 class FolioSet(FolioApi):
@@ -130,26 +193,6 @@ class FolioSet(FolioApi):
         return self.call("PUT", f"/oai-pmh/sets/{setsId}", data=set)
 
 
-class CleanupJob(FolioApi):
-    """OAI-PMH Business Logic API
-
-    provides endpoint for triggering clean up process of expired instances from instances table.
-    """
-
-    def set_cleanUpInstance(self):
-        """
-
-        ``POST /oai-pmh/clean-up-instances``
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-        """
-        return self.call("POST", "/oai-pmh/clean-up-instances")
-
-
 class FolioSetFilteringConditions(FolioApi):
     """Set API
 
@@ -173,46 +216,3 @@ class FolioSetFilteringConditions(FolioApi):
             .. literalinclude:: ../files/FolioSetFilteringConditions_get_filteringConditions_return.schema 
         """
         return self.call("GET", "/oai-pmh/filtering-conditions")
-
-
-class OaiPmh(FolioApi):
-    """OAI-PMH Business Logic API
-
-    The Open Archives Initiative Protocol for Metadata Harvesting (OAI-PMH) provides
-		an application-independent interoperability framework based on metadata harvesting.
-		This module supports the OAI-PMH as a means of exposing FOLIO metadata.
-    """
-
-    def get_records(self, **kwargs):
-        """
-
-        ``GET /oai/records``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            verb (str):  verb that specifies oai-pmh request type
-            identifier (str):  parameter that is used for GetRecord and ListMetadataFormats requests
-            resumptionToken (str):  flow control token returned by a ListIdentifiers request that issued an incomplete list
-            from (str):  UTC datetime value, which specifies a lower bound for datestamp-based selective harvesting
-                    
-                    Example:
-                    
-                     - 2018-10-15 15:16:17+00:00
-            until (str):  UTC datetime value, which specifies a upper bound for datestamp-based selective harvesting
-                    
-                    Example:
-                    
-                     - 2018-10-22 23:22:21+00:00
-            set (str):  setSpec value, which specifies set criteria for selective harvesting
-            metadataPrefix (str):  metadata prefix of the format that should be included in the metadata part of the returned record
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestNotFound: Not Found
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
-        """
-        return self.call("GET", "/oai/records", query=kwargs)

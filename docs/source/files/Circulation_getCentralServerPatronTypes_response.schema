@@ -1,0 +1,22 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "Patron types collection from all configured central servers",
+    "type": "object",
+    "properties": {
+        "centralServerPatronTypes": {
+            "description": "List of patron types per central server",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "$ref": "patronTypesPerCentralServerDTO.json"
+            }
+        },
+        "totalRecords": {
+            "type": "integer"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "centralServerPatronTypes"
+    ]
+}

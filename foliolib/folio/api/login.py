@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-# Generated at 2021-05-24
+# Generated at 2022-04-28
 
 import logging
 
-from foliolib.folio import FolioApi
+from foliolib.folio import FolioApi, FolioAdminApi
 
-log = logging.getLogger("foliolib.folio.api.login")
+log = logging.getLogger("oliolib.folio.api.login")
 
 
 class Login(FolioApi):
@@ -57,6 +57,7 @@ class Login(FolioApi):
         Schema:
 
             .. literalinclude:: ../files/Login_set_login_request.schema
+            .. literalinclude:: ../files/Login_set_login_return.schema 
         """
         return self.call("POST", "/authn/login", data=login)
 

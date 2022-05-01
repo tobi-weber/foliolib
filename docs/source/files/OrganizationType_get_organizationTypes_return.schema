@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of organization type records",
+  "type": "object",
+  "properties": {
+    "organizationTypes": {
+      "description": "The list of organization types in this collection",
+      "type": "array",
+      "id": "organizationTypes",
+      "items": {
+        "type": "object",
+        "$ref": "organization_type.json"
+      }
+    },
+    "totalRecords": {
+      "description": "The number of organization type records returned in this collection",
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "organizationTypes",
+    "totalRecords"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "allOf": [
+        {
+            "$ref": "baseCircRequestDTO.json"
+        }
+    ],
+    "description": "D2IR Renew loan request",
+    "type": "object",
+    "properties": {
+        "dueDateTime": {
+            "description": "Due date time",
+            "type": "integer"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "dueDateTime"
+    ]
+}

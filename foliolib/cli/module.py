@@ -1,9 +1,14 @@
+# -*- coding: utf-8 -*-
+# Copyright (C) 2021 Tobias Weber <tobi-weber@gmx.de>
+
 import json
 
 import click
+from foliolib.config import Config
 from foliolib.helper import get_node
 from foliolib.okapi.okapiClient import OkapiClient
 from foliolib.okapi.okapiModule import create_okapiModules
+from tabulate import tabulate
 
 from.orderedGroup import OrderedGroup
 
@@ -21,19 +26,19 @@ def lst(**kwargs):
     """List all modules
     """
     mods = OkapiClient().get_modules(**kwargs)
-    for e in mods:
-        if kwargs["full"]:
+    if kwargs["full"]:
+        for e in mods:
             print(json.dumps(e, indent=2)+"\n")
-        else:
-            k = e["id"].ljust(40)
-            v = e["name"]
-            print(f"{k}\t{v}")
+    else:
+        headers = ["id", "name"]
+        body = [[e["id"], e["name"]] for e in mods]
+        print(tabulate(body, headers=headers))
 
 
 @module.command()
 @click.argument("moduleid", required=True)
 def get(**kwargs):
-    """Get ModulDescriptor, e.g. mod-users-17.1.0
+    """Get ModulDescriptor. e.g. mod-users-17.1.0
 
     MODULEID\tmodule id.
     """
@@ -42,17 +47,23 @@ def get(**kwargs):
 
 
 @module.command()
-@click.option("-m", "--moduleid", multiple=True, required=True)
-@click.option("-f", "--file", multiple=True, type=click.File('r'),
-              help="Path to ModulDescriptor")
+@click.argument("moduleid", required=True, nargs=-1)
 def add(**kwargs):
-    """Add module(s) by name or add a ModulDescriptor(s)
+    """Add module(s) by id. e.g. mod-users-17.1.0
+
+    MODULEID\tmodule id. Can be repeated.
     """
-    print(kwargs)
     for m in create_okapiModules(kwargs["moduleid"]):
-        print(f"Add module {m.get_modId()}")
+        print(f"Add module {m.get_id()}")
         OkapiClient().add_module(m)
 
+
+@module.command()
+@click.option("-f", "--file", multiple=True, type=click.File('r'),
+              help="Path to ModulDescriptor")
+def addMD(**kwargs):
+    """Add ModulDescriptor(s)
+    """
     for f in kwargs["file"]:
         d = json.load(f)
         print("Add module descriptor %s" % d["id"])
@@ -61,11 +72,10 @@ def add(**kwargs):
 @module.command()
 @click.argument("moduleid", required=True, nargs=-1)
 def remove(**kwargs):
-    """Remove module(s) by id, e.g. mod-users-17.1.0
+    """Remove module(s), e.g. mod-users-17.1.0
 
     MODULEID\tmodule id. Can be repeated.
     """
-    print(kwargs)
     for m in kwargs["moduleid"]:
         print(f"Remove module {m}")
         OkapiClient().remove_module(m)
@@ -83,27 +93,35 @@ def deployed(**kwargs):
             print()
             print(json.dumps(mod, indent=2))
     else:
-        print("Mod-id\t\t\t\tNode\t\tDocker-URL\t\t\tDocker-Image")
-        for e in mods:
-            m = e["srvcId"].ljust(30)
-            n = e["nodeId"]
-            u = e["url"]
-            if "dockerImage" in e["descriptor"]:
-                d = e["descriptor"]["dockerImage"]
-            else:
-                d = ""
-            print(f"{m}\t{n}\t{u}\t{d}")
+        okapi_mods = [m for m in mods if "descriptor" in m]
+        kube_mods = [m for m in mods if m["instId"].startswith("kube_")]
+        if okapi_mods:
+            headers = ["Module id", "Node id", "Docker URL", "Docker Image"]
+            body = []
+            for e in mods:
+                l = [e["srvcId"], e["nodeId"], e["url"]]
+                if "dockerImage" in e["descriptor"]:
+                    l.append(e["descriptor"]["dockerImage"])
+                else:
+                    l.append("")
+                body.append(l)
+            print(tabulate(body, headers=headers))
+        if okapi_mods and kube_mods:
+            print("")
+        if kube_mods:
+            headers = ["Module id", "tKubernetes URL"]
+            body = [[e["srvcId"], e["url"]] for e in mods]
+            print(tabulate(body, headers=headers))
 
 
 @module.command()
 @click.argument("moduleid", required=True, nargs=-1)
 @click.option("-n", "--node", default=get_node(), help="Node", show_default=True)
 def deploy(**kwargs):
-    """Deploy module(s) for a node
+    """Deploy module(s) for a node.
 
     MODULEID\tmodule id. Can be repeated.
     """
-    print(kwargs)
     for m in kwargs["moduleid"]:
         n = kwargs["node"]
         print(f"Deploy module {m} on node {n}")
@@ -113,11 +131,10 @@ def deploy(**kwargs):
 @module.command()
 @click.argument("moduleid", required=True, nargs=-1)
 def undeploy(**kwargs):
-    """Undeploy module(s)
+    """Undeploy module(s).
 
     MODULEID\tmodule id. Can be repeated.
     """
-    print(kwargs)
     for m in kwargs["moduleid"]:
         print(f"Undeploy module {m}")
         OkapiClient().undeploy_module(m)

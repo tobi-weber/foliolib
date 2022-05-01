@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A list of columns in an LDP table",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "columnName": {
+        "type": "string",
+        "description": "The name of a column within the specified table"
+      },
+      "data_type": {
+        "type": "string",
+        "description": "The type of the column",
+        "example": "boolean, character varying, timestamp with time zone"
+      },
+      "ordinalPosition": {
+        "type": "string",
+        "description": "a small integer specifying ordinal position (though encoded as a string)"
+      },
+      "tableSchema": {
+        "type": "string",
+        "description": "The schema containing the table containing this column"
+      },
+      "tableName": {
+        "type": "string",
+        "description": "The table, within its schema, containing this column"
+      }
+    },
+    "additionalProperties": false,
+    "required": [
+      "tableName",
+      "tableSchema"
+    ]
+  }
+}

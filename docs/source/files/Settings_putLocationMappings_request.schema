@@ -1,0 +1,22 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "Location mapping collection",
+    "type": "object",
+    "properties": {
+        "locationMappings": {
+            "description": "List of location mappings",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "$ref": "locationMappingDTO.json"
+            }
+        },
+        "totalRecords": {
+            "type": "integer"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "locationMappings"
+    ]
+}

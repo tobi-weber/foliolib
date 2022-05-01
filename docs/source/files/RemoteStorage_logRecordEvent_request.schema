@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "Event data model",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "logEventType": {
+            "description": "A payload for the log record event",
+            "type": "string"
+        },
+        "payload": {
+            "description": "A payload for the log record event",
+            "type": "object"
+        },
+        "itemBarcode": {
+            "description": "An item barcode (for check in log record event)",
+            "type": "string"
+        }
+    },
+    "required": [
+        "logEventType"
+    ]
+}

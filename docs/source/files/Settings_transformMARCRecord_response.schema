@@ -1,0 +1,25 @@
+{
+    "description": "SRS MARC record",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "MARC record id",
+            "type": "string",
+            "format": "UUID"
+        },
+        "content": {
+            "description": "Formatted content",
+            "type": "string"
+        },
+        "base64rawContent": {
+            "description": "Base64 encoded raw content",
+            "type": "string"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "id",
+        "content",
+        "base64rawContent"
+    ]
+}

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-# Generated at 2021-05-24
+# Generated at 2022-04-28
 
 import logging
 
-from foliolib.folio import FolioApi
+from foliolib.folio import FolioApi, FolioAdminApi
 
-log = logging.getLogger("foliolib.folio.api.loginSaml")
+log = logging.getLogger("oliolib.folio.api.loginSaml")
 
 
 class SamlLogin(FolioApi):
@@ -146,6 +146,7 @@ class SamlLogin(FolioApi):
             dict: See Schema below
 
         Raises:
+            OkapiRequestError: Bad Request
             OkapiFatalError: Server Error
 
         Schema:

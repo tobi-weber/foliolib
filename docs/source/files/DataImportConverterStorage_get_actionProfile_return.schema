@@ -6,7 +6,7 @@
   "properties": {
     "id": {
       "description": "Unique identifier",
-      "$ref": "../common/uuid.json"
+      "$ref": "../../raml-util/schemas/uuid.schema"
     },
     "name": {
       "description": "Action Profile name",
@@ -45,6 +45,7 @@
       "enum": [
         "INSTANCE",
         "HOLDINGS",
+        "AUTHORITY",
         "ITEM",
         "ORDER",
         "INVOICE",
@@ -78,6 +79,11 @@
         "type": "object",
         "$ref": "./profileSnapshotWrapper.json"
       }
+    },
+    "hidden": {
+      "description": "Flag indicates that the Action Profile will be hidden on UI",
+      "type": "boolean",
+      "default": false
     },
     "metadata": {
       "description": "Metadata provided by the server",

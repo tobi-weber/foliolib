@@ -1,46 +1,11 @@
 # -*- coding: utf-8 -*-
-# Generated at 2021-05-24
+# Generated at 2022-04-28
 
 import logging
 
-from foliolib.folio import FolioApi
+from foliolib.folio import FolioApi, FolioAdminApi
 
-log = logging.getLogger("foliolib.folio.api.ermUsageHarvester")
-
-
-class Periodic(FolioApi):
-    """mod-erm-usage-harvester periodic API
-
-    This documents the API calls that can be made to mod-erm-usage-harvester periodic API
-    """
-
-    def get_periodics(self):
-        """
-
-        ``GET /erm-usage-harvester/periodic``
-
-        Returns:
-            dict: See Schema below
-
-        Schema:
-
-            .. literalinclude:: ../files/Periodic_get_periodics_return.schema 
-        """
-        return self.call("GET", "/erm-usage-harvester/periodic")
-
-    def set_periodic(self, periodic: dict):
-        """
-
-        ``POST /erm-usage-harvester/periodic``
-
-        Args:
-            periodic (dict): See Schema below
-
-        Schema:
-
-            .. literalinclude:: ../files/Periodic_set_periodic_request.schema
-        """
-        return self.call("POST", "/erm-usage-harvester/periodic", data=periodic)
+log = logging.getLogger("oliolib.folio.api.ermUsageHarvester")
 
 
 class Harvester(FolioApi):
@@ -80,15 +45,36 @@ class Harvester(FolioApi):
         return self.call("GET", "/erm-usage-harvester/impl", query=kwargs)
 
 
-class Start(FolioApi):
+class Periodic(FolioApi):
+    """mod-erm-usage-harvester periodic API
+
+    This documents the API calls that can be made to mod-erm-usage-harvester periodic API
     """
 
-    
-    """
-
-    def get_starts(self):
-        """Start harvesting for all tenants
-
-        ``GET /_/start``
+    def get_periodics(self):
         """
-        return self.call("GET", "/_/start")
+
+        ``GET /erm-usage-harvester/periodic``
+
+        Returns:
+            dict: See Schema below
+
+        Schema:
+
+            .. literalinclude:: ../files/Periodic_get_periodics_return.schema 
+        """
+        return self.call("GET", "/erm-usage-harvester/periodic")
+
+    def set_periodic(self, periodic: dict):
+        """
+
+        ``POST /erm-usage-harvester/periodic``
+
+        Args:
+            periodic (dict): See Schema below
+
+        Schema:
+
+            .. literalinclude:: ../files/Periodic_set_periodic_request.schema
+        """
+        return self.call("POST", "/erm-usage-harvester/periodic", data=periodic)

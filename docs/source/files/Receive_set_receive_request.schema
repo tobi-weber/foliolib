@@ -51,6 +51,27 @@
                   "type": "string",
                   "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
                 },
+                "holdingId": {
+                  "description": "UUID of the holding record",
+                  "$ref": "../../common/schemas/uuid.json"
+                },
+                "displayOnHolding": {
+                  "description": "Whether or not receiving history should be displayed in holding record view",
+                  "type": "boolean",
+                  "default": "false"
+                },
+                "enumeration": {
+                  "type": "string",
+                  "description": "Enumeration is the descriptive information for the numbering scheme of a serial. Synchronized with inventory item."
+                },
+                "chronology": {
+                  "type": "string",
+                  "description": "Chronology is the descriptive information for the dating scheme of a serial. Synchronized with inventory item."
+                },
+                "copyNumber": {
+                  "type": "string",
+                  "description": "Copy number of the piece"
+                },
                 "pieceId": {
                   "description": "UUID of this piece record",
                   "type": "string",

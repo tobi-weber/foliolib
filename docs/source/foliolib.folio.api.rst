@@ -10,14 +10,26 @@ Modules
 	:template: module2.rst
 	:recursive:
 
+	foliolib.folio.api.authtoken
 	foliolib.folio.api.calendar
 	foliolib.folio.api.circulation
 	foliolib.folio.api.circulationStorage
 	foliolib.folio.api.configuration
+	foliolib.folio.api.copycat
 	foliolib.folio.api.courses
 	foliolib.folio.api.dataExport
+	foliolib.folio.api.dataExportSpring
+	foliolib.folio.api.dataExportWorker
 	foliolib.folio.api.dataImport
 	foliolib.folio.api.dataImportConverterStorage
+	foliolib.folio.api.ebsconet
+	foliolib.folio.api.edgeCaiasoft
+	foliolib.folio.api.edgeDematic
+	foliolib.folio.api.edgeLtiCourses
+	foliolib.folio.api.edgeOaiPmh
+	foliolib.folio.api.edgeOrders
+	foliolib.folio.api.edgePatron
+	foliolib.folio.api.edgeRtac
 	foliolib.folio.api.email
 	foliolib.folio.api.ermUsage
 	foliolib.folio.api.ermUsageHarvester
@@ -25,12 +37,16 @@ Modules
 	foliolib.folio.api.feesfines
 	foliolib.folio.api.finance
 	foliolib.folio.api.financeStorage
+	foliolib.folio.api.fincConfig
 	foliolib.folio.api.gobi
+	foliolib.folio.api.innReach
 	foliolib.folio.api.inventory
 	foliolib.folio.api.inventoryStorage
+	foliolib.folio.api.inventoryUpdate
 	foliolib.folio.api.invoice
 	foliolib.folio.api.invoiceStorage
 	foliolib.folio.api.kbEbscoJava
+	foliolib.folio.api.ldp
 	foliolib.folio.api.licenses
 	foliolib.folio.api.login
 	foliolib.folio.api.loginSaml
@@ -48,8 +64,11 @@ Modules
 	foliolib.folio.api.permissions
 	foliolib.folio.api.pubsub
 	foliolib.folio.api.quickMarc
+	foliolib.folio.api.remoteStorage
 	foliolib.folio.api.rtac
+	foliolib.folio.api.search
 	foliolib.folio.api.sender
+	foliolib.folio.api.sharedIndex
 	foliolib.folio.api.sourceRecordManager
 	foliolib.folio.api.sourceRecordStorage
 	foliolib.folio.api.tags

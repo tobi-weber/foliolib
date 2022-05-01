@@ -1,0 +1,20 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "description": "Accession request body",
+    "properties": {
+        "itemBarcode": {
+            "description": "Barcode of the item to be accessioned",
+            "type": "string"
+        },
+        "remoteStorageId": {
+            "description": "Remote storage id",
+            "$ref": "uuid.json"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "itemBarcode",
+        "remoteStorageId"
+    ]
+}

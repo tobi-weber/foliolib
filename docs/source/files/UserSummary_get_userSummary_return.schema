@@ -8,6 +8,10 @@
       "type": "string",
       "$ref": "raml-util/schemas/uuid.schema"
     },
+    "_version": {
+      "type": "integer",
+      "description": "Record version for optimistic locking"
+    },
     "userId": {
       "description": "Unique ID of the user",
       "type": "string",
@@ -44,6 +48,10 @@
             "description": "Indicates if the item associated with the loan is in status 'Claimed returned'",
             "type": "boolean",
             "default": false
+          },
+          "gracePeriod": {
+            "description": "The time after the due date during which penalties are deferred.",
+            "$ref": "period.json"
           }
         },
         "additionalProperties": false,

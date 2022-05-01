@@ -1,0 +1,22 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "Item type mapping collection",
+    "type": "object",
+    "properties": {
+        "itemTypeMappings": {
+            "description": "List of item type mappings",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "$ref": "itemTypeMappingDTO.json"
+            }
+        },
+        "totalRecords": {
+            "type": "integer"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "itemTypeMappings"
+    ]
+}

@@ -1,148 +1,64 @@
 # -*- coding: utf-8 -*-
-# Generated at 2021-05-24
+# Generated at 2022-04-28
 
 import logging
 
-from foliolib.folio import FolioApi
+from foliolib.folio import FolioApi, FolioAdminApi
 
-log = logging.getLogger("foliolib.folio.api.circulation")
+log = logging.getLogger("oliolib.folio.api.circulation")
 
 
-class ChangeDueDate(FolioApi):
-    """API for changing due date for loans
+class EndPatronActionSession(FolioApi):
+    """End Patron Action Session API
 
-    **Change loan due date API**
+    **End patron action session**
     """
 
-    def set_changeDueDate(self, loansId: str, changeDueDate: dict):
+    def set_endPatronActionSession(self, endPatronActionSession: dict):
         """
 
-        ``POST /circulation/loans/{loansId}/change-due-date``
+        ``POST /circulation/end-patron-action-session``
 
         Args:
-            loansId (str)
-            changeDueDate (dict): See Schema below
+            endPatronActionSession (dict): See Schema below
 
         Raises:
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiRequestNotFound: Not Found
             OkapiFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
 
-            .. literalinclude:: ../files/ChangeDueDate_set_changeDueDate_request.schema
+            .. literalinclude:: ../files/EndPatronActionSession_set_endPatronActionSession_request.schema
         """
-        return self.call("POST", f"/circulation/loans/{loansId}/change-due-date", data=changeDueDate)
+        return self.call("POST", "/circulation/end-patron-action-session", data=endPatronActionSession)
 
 
-class RequestsReports(FolioApi):
-    """Circulation Business Logic API
+class LoanAnonymization(FolioApi):
+    """Loan Anonymization API
 
-    **API for report generation**
+    **Loan Anonymization API**
     """
 
-    def get_holdShelfClearances(self, servicePointId: str):
-        """Retrieve holdShelfClearance item with given {holdShelfClearanceId}
+    def set_byUser(self, userId: str):
+        """
 
-        ``GET /circulation/requests-reports/hold-shelf-clearance/{servicePointId}``
+        ``POST /loan-anonymization/by-user/{userId}``
 
         Args:
-            servicePointId (str)
+            userId (str)
 
         Returns:
             dict: See Schema below
 
         Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/RequestsReports_get_holdShelfClearances_return.schema 
-        """
-        return self.call("GET", f"/circulation/requests-reports/hold-shelf-clearance/{servicePointId}")
-
-
-class DeclareItemLost(FolioApi):
-    """API for declaring loaned item lost
-
-    **Declare item lost API**
-    """
-
-    def set_declareItemLost(self, loansId: str, declareItemLost: dict):
-        """
-
-        ``POST /circulation/loans/{loansId}/declare-item-lost``
-
-        Args:
-            loansId (str)
-            declareItemLost (dict): See Schema below
-
-        Raises:
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiRequestNotFound: Not Found
             OkapiFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
 
-            .. literalinclude:: ../files/DeclareItemLost_set_declareItemLost_request.schema
+            .. literalinclude:: ../files/LoanAnonymization_set_byUser_return.schema 
         """
-        return self.call("POST", f"/circulation/loans/{loansId}/declare-item-lost", data=declareItemLost)
-
-
-class PickSlips(FolioApi):
-    """API for fetching current pick slips
-
-    **API for pick slips generation**
-    """
-
-    def get_pickSlips(self, servicePointId: str):
-        """Retrieve pickSlip item with given {pickSlipId}
-
-        ``GET /circulation/pick-slips/{servicePointId}``
-
-        Args:
-            servicePointId (str)
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/PickSlips_get_pickSlips_return.schema 
-        """
-        return self.call("GET", f"/circulation/pick-slips/{servicePointId}")
-
-
-class CirculationEventHandlers(FolioApi):
-    """Circulation Event Handlers Endpoints
-
-    **API to handle events**
-    """
-
-    def set_loanRelatedFeeFineClosed(self, loanRelatedFeeFineClosed: dict):
-        """Handle fee/fine record with loan closed event
-
-        ``POST /circulation/handlers/loan-related-fee-fine-closed``
-
-        Args:
-            loanRelatedFeeFineClosed (dict): See Schema below
-
-        Schema:
-
-            .. literalinclude:: ../files/CirculationEventHandlers_set_loanRelatedFeeFineClosed_request.schema
-        """
-        return self.call("POST", "/circulation/handlers/loan-related-fee-fine-closed", data=loanRelatedFeeFineClosed)
+        return self.call("POST", f"/loan-anonymization/by-user/{userId}")
 
 
 class Circulation(FolioApi):
@@ -534,10 +450,33 @@ class Circulation(FolioApi):
         """
         return self.call("PUT", f"/circulation/requests/{requestId}", data=request)
 
-    def get_queues(self, itemId: str):
-        """Retrieve queue item with given {queueId}
+    def get_instances(self, instanceId: str):
+        """Retrieve instance item with given {instanceId}
 
-        ``GET /circulation/requests/queue/{itemId}``
+        ``GET /circulation/requests/queue/instance/{instanceId}``
+
+        Args:
+            instanceId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Circulation_get_instances_return.schema 
+        """
+        return self.call("GET", f"/circulation/requests/queue/instance/{instanceId}")
+
+    def get_items(self, itemId: str):
+        """Retrieve item item with given {itemId}
+
+        ``GET /circulation/requests/queue/item/{itemId}``
 
         Args:
             itemId (str)
@@ -553,14 +492,38 @@ class Circulation(FolioApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_get_queues_return.schema 
+            .. literalinclude:: ../files/Circulation_get_items_return.schema 
         """
-        return self.call("GET", f"/circulation/requests/queue/{itemId}")
+        return self.call("GET", f"/circulation/requests/queue/item/{itemId}")
+
+    def set_reorder_for_instance(self, instanceId: str, reorder: dict):
+        """Reorder requests in the instance queue
+
+        ``POST /circulation/requests/queue/instance/{instanceId}/reorder``
+
+        Args:
+            instanceId (str)
+            reorder (dict): See Schema below
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Circulation_set_reorder_for_instance_request.schema
+            .. literalinclude:: ../files/Circulation_set_reorder_for_instance_return.schema 
+        """
+        return self.call("POST", f"/circulation/requests/queue/instance/{instanceId}/reorder", data=reorder)
 
     def set_reorder(self, itemId: str, reorder: dict):
         """Reorder requests in the item queue
 
-        ``POST /circulation/requests/queue/{itemId}/reorder``
+        ``POST /circulation/requests/queue/item/{itemId}/reorder``
 
         Args:
             itemId (str)
@@ -579,7 +542,7 @@ class Circulation(FolioApi):
             .. literalinclude:: ../files/Circulation_set_reorder_request.schema
             .. literalinclude:: ../files/Circulation_set_reorder_return.schema 
         """
-        return self.call("POST", f"/circulation/requests/queue/{itemId}/reorder", data=reorder)
+        return self.call("POST", f"/circulation/requests/queue/item/{itemId}/reorder", data=reorder)
 
     def set_instance(self, instance: dict, **kwargs):
         """Creates a request for any item from the given instance ID
@@ -607,6 +570,122 @@ class Circulation(FolioApi):
             .. literalinclude:: ../files/Circulation_set_instance_return.schema 
         """
         return self.call("POST", "/circulation/requests/instances", data=instance, query=kwargs)
+
+
+class RequestMove(FolioApi):
+    """Circulation Business Logic API
+
+    **API for moving request from one Item to another**
+    """
+
+    def set_move(self, requestId: str, move: dict):
+        """Move Request to specified Item
+
+        ``POST /circulation/requests/{requestId}/move``
+
+        Args:
+            requestId (str)
+            move (dict): See Schema below
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/RequestMove_set_move_request.schema
+            .. literalinclude:: ../files/RequestMove_set_move_return.schema 
+        """
+        return self.call("POST", f"/circulation/requests/{requestId}/move", data=move)
+
+
+class AgeToLostBackgroundProcesses(FolioApi):
+    """Background processes for ageing borrowed items to lost
+
+    **Background processes for ageing borrowed items to lost**
+    """
+
+    def set_scheduledAgeToLost(self):
+        """
+
+        ``POST /circulation/scheduled-age-to-lost``
+
+        Raises:
+            OkapiFatalError: Server Error
+        """
+        return self.call("POST", "/circulation/scheduled-age-to-lost")
+
+    def set_scheduledAgeToLostFeeCharging(self):
+        """
+
+        ``POST /circulation/scheduled-age-to-lost-fee-charging``
+
+        Raises:
+            OkapiFatalError: Server Error
+        """
+        return self.call("POST", "/circulation/scheduled-age-to-lost-fee-charging")
+
+
+class PickSlips(FolioApi):
+    """API for fetching current pick slips
+
+    **API for pick slips generation**
+    """
+
+    def get_pickSlips(self, servicePointId: str):
+        """Retrieve pickSlip item with given {pickSlipId}
+
+        ``GET /circulation/pick-slips/{servicePointId}``
+
+        Args:
+            servicePointId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/PickSlips_get_pickSlips_return.schema 
+        """
+        return self.call("GET", f"/circulation/pick-slips/{servicePointId}")
+
+
+class DeclareItemLost(FolioApi):
+    """API for declaring loaned item lost
+
+    **Declare item lost API**
+    """
+
+    def set_declareItemLost(self, loansId: str, declareItemLost: dict):
+        """
+
+        ``POST /circulation/loans/{loansId}/declare-item-lost``
+
+        Args:
+            loansId (str)
+            declareItemLost (dict): See Schema below
+
+        Raises:
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/DeclareItemLost_set_declareItemLost_request.schema
+        """
+        return self.call("POST", f"/circulation/loans/{loansId}/declare-item-lost", data=declareItemLost)
 
 
 class CirculationRules(FolioApi):
@@ -931,6 +1010,64 @@ class CirculationRules(FolioApi):
         return self.call("GET", "/circulation/rules/notice-policy-all", query=kwargs)
 
 
+class RequestsReports(FolioApi):
+    """Circulation Business Logic API
+
+    **API for report generation**
+    """
+
+    def get_holdShelfClearances(self, servicePointId: str):
+        """Retrieve holdShelfClearance item with given {holdShelfClearanceId}
+
+        ``GET /circulation/requests-reports/hold-shelf-clearance/{servicePointId}``
+
+        Args:
+            servicePointId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/RequestsReports_get_holdShelfClearances_return.schema 
+        """
+        return self.call("GET", f"/circulation/requests-reports/hold-shelf-clearance/{servicePointId}")
+
+
+class ChangeDueDate(FolioApi):
+    """API for changing due date for loans
+
+    **Change loan due date API**
+    """
+
+    def set_changeDueDate(self, loansId: str, changeDueDate: dict):
+        """
+
+        ``POST /circulation/loans/{loansId}/change-due-date``
+
+        Args:
+            loansId (str)
+            changeDueDate (dict): See Schema below
+
+        Raises:
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/ChangeDueDate_set_changeDueDate_request.schema
+        """
+        return self.call("POST", f"/circulation/loans/{loansId}/change-due-date", data=changeDueDate)
+
+
 class ClaimItemReturned(FolioApi):
     """API for declaring loaned item as claimed returned
 
@@ -980,115 +1117,25 @@ class ClaimItemReturned(FolioApi):
         return self.call("POST", f"/circulation/loans/{loansId}/declare-claimed-returned-item-as-missing", data=declareClaimedReturnedItemAsMissing)
 
 
-class EndPatronActionSession(FolioApi):
-    """End Patron Action Session API
+class CirculationEventHandlers(FolioApi):
+    """Circulation Event Handlers Endpoints
 
-    **End patron action session**
+    **API to handle events**
     """
 
-    def set_endPatronActionSession(self, endPatronActionSession: dict):
-        """
+    def set_loanRelatedFeeFineClosed(self, loanRelatedFeeFineClosed: dict):
+        """Handle fee/fine record with loan closed event
 
-        ``POST /circulation/end-patron-action-session``
+        ``POST /circulation/handlers/loan-related-fee-fine-closed``
 
         Args:
-            endPatronActionSession (dict): See Schema below
-
-        Raises:
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            loanRelatedFeeFineClosed (dict): See Schema below
 
         Schema:
 
-            .. literalinclude:: ../files/EndPatronActionSession_set_endPatronActionSession_request.schema
+            .. literalinclude:: ../files/CirculationEventHandlers_set_loanRelatedFeeFineClosed_request.schema
         """
-        return self.call("POST", "/circulation/end-patron-action-session", data=endPatronActionSession)
-
-
-class AgeToLostBackgroundProcesses(FolioApi):
-    """Background processes for ageing borrowed items to lost
-
-    **Background processes for ageing borrowed items to lost**
-    """
-
-    def set_scheduledAgeToLost(self):
-        """
-
-        ``POST /circulation/scheduled-age-to-lost``
-
-        Raises:
-            OkapiFatalError: Server Error
-        """
-        return self.call("POST", "/circulation/scheduled-age-to-lost")
-
-    def set_scheduledAgeToLostFeeCharging(self):
-        """
-
-        ``POST /circulation/scheduled-age-to-lost-fee-charging``
-
-        Raises:
-            OkapiFatalError: Server Error
-        """
-        return self.call("POST", "/circulation/scheduled-age-to-lost-fee-charging")
-
-
-class RequestMove(FolioApi):
-    """Circulation Business Logic API
-
-    **API for moving request from one Item to another**
-    """
-
-    def set_move(self, requestId: str, move: dict):
-        """Move Request to specified Item
-
-        ``POST /circulation/requests/{requestId}/move``
-
-        Args:
-            requestId (str)
-            move (dict): See Schema below
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/RequestMove_set_move_request.schema
-            .. literalinclude:: ../files/RequestMove_set_move_return.schema 
-        """
-        return self.call("POST", f"/circulation/requests/{requestId}/move", data=move)
-
-
-class LoanAnonymization(FolioApi):
-    """Loan Anonymization API
-
-    **Loan Anonymization API**
-    """
-
-    def set_byUser(self, userId: str):
-        """
-
-        ``POST /loan-anonymization/by-user/{userId}``
-
-        Args:
-            userId (str)
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Schema:
-
-            .. literalinclude:: ../files/LoanAnonymization_set_byUser_return.schema 
-        """
-        return self.call("POST", f"/loan-anonymization/by-user/{userId}")
+        return self.call("POST", "/circulation/handlers/loan-related-fee-fine-closed", data=loanRelatedFeeFineClosed)
 
 
 class InventoryReports(FolioApi):

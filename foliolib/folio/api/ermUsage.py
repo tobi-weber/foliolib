@@ -1,23 +1,23 @@
 # -*- coding: utf-8 -*-
-# Generated at 2021-05-24
+# Generated at 2022-04-28
 
 import logging
 
-from foliolib.folio import FolioApi
+from foliolib.folio import FolioApi, FolioAdminApi
 
-log = logging.getLogger("foliolib.folio.api.ermUsage")
+log = logging.getLogger("oliolib.folio.api.ermUsage")
 
 
-class Usagedataproviders(FolioApi):
+class Customreports(FolioApi):
     """mod-erm-usage API
 
-    This documents the API calls that can be made to query and manage usage data providers
+    This documents the API calls that can be made to query and manage custom reports
     """
 
-    def get_usageDataProviders(self, **kwargs):
-        """Get all usage data providers
+    def get_customReports(self, **kwargs):
+        """Get all reports.
 
-        ``GET /usage-data-providers``
+        ``GET /custom-reports``
 
         Args:
             **kwargs (properties): Keyword Arguments
@@ -36,8 +36,8 @@ class Usagedataproviders(FolioApi):
                     
                      - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
                     
-                     - ((label="Journal*" or vendor="Journal*" or platform="Journal*" or harvestingConfig.aggregator.name="Journal*") and harvestingConfig.harvestingStatus="active" and harvestingConfig.harvestVia="sushi" and hasFailedReport="no") sortby label
-            orderBy (str):  Order by field: label, harvestingConfig.harvestingStatus, latestReport, harvestingConfig.aggregator.name
+                     - year=2018
+            orderBy (str):  Order by field: 
                     
             order (str (desc|asc):): (default=desc) Order
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
@@ -61,17 +61,17 @@ class Usagedataproviders(FolioApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Usagedataproviders_get_usageDataProviders_return.schema 
+            .. literalinclude:: ../files/Customreports_get_customReports_return.schema 
         """
-        return self.call("GET", "/usage-data-providers", query=kwargs)
+        return self.call("GET", "/custom-reports", query=kwargs)
 
-    def set_usageDataProvider(self, usageDataProvider: dict):
-        """Post new usage data providers
+    def set_customReport(self, customReport: dict):
+        """Post new report
 
-        ``POST /usage-data-providers``
+        ``POST /custom-reports``
 
         Args:
-            usageDataProvider (dict): See Schema below
+            customReport (dict): See Schema below
 
         Raises:
             OkapiRequestError: Bad Request
@@ -80,21 +80,21 @@ class Usagedataproviders(FolioApi):
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
-            - **Location** - URI to the created usageDataProvider item
+            - **Location** - URI to the created customReport item
 
         Schema:
 
-            .. literalinclude:: ../files/Usagedataproviders_set_usageDataProvider_request.schema
+            .. literalinclude:: ../files/Customreports_set_customReport_request.schema
         """
-        return self.call("POST", "/usage-data-providers", data=usageDataProvider)
+        return self.call("POST", "/custom-reports", data=customReport)
 
-    def get_usageDataProvider(self, usageDataProvidersId: str):
-        """Get one usage data provider identified by id
+    def get_customReport(self, customReportsId: str):
+        """Get one report identified by id
 
-        ``GET /usage-data-providers/{usageDataProvidersId}``
+        ``GET /custom-reports/{customReportsId}``
 
         Args:
-            usageDataProvidersId (str)
+            customReportsId (str)
 
         Returns:
             dict: See Schema below
@@ -105,33 +105,33 @@ class Usagedataproviders(FolioApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Usagedataproviders_get_usageDataProvider_return.schema 
+            .. literalinclude:: ../files/Customreports_get_customReport_return.schema 
         """
-        return self.call("GET", f"/usage-data-providers/{usageDataProvidersId}")
+        return self.call("GET", f"/custom-reports/{customReportsId}")
 
-    def delete_usageDataProvider(self, usageDataProvidersId: str):
-        """Delete an usage data provider identified by id
+    def delete_customReport(self, customReportsId: str):
+        """Delete report identified by id
 
-        ``DELETE /usage-data-providers/{usageDataProvidersId}``
+        ``DELETE /custom-reports/{customReportsId}``
 
         Args:
-            usageDataProvidersId (str)
+            customReportsId (str)
 
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiFatalError: Server Error
         """
-        return self.call("DELETE", f"/usage-data-providers/{usageDataProvidersId}")
+        return self.call("DELETE", f"/custom-reports/{customReportsId}")
 
-    def modify_usageDataProvider(self, usageDataProvidersId: str, usageDataProvider: dict):
-        """Put an usage data provider identified by id
+    def modify_customReport(self, customReportsId: str, customReport: dict):
+        """Put report identified by id
 
-        ``PUT /usage-data-providers/{usageDataProvidersId}``
+        ``PUT /custom-reports/{customReportsId}``
 
         Args:
-            usageDataProvidersId (str)
-            usageDataProvider (dict): See Schema below
+            customReportsId (str)
+            customReport (dict): See Schema below
 
         Raises:
             OkapiRequestNotFound: Not Found
@@ -140,9 +140,9 @@ class Usagedataproviders(FolioApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Usagedataproviders_modify_usageDataProvider_request.schema
+            .. literalinclude:: ../files/Customreports_modify_customReport_request.schema
         """
-        return self.call("PUT", f"/usage-data-providers/{usageDataProvidersId}", data=usageDataProvider)
+        return self.call("PUT", f"/custom-reports/{customReportsId}", data=customReport)
 
 
 class Aggregatorsettings(FolioApi):
@@ -298,6 +298,198 @@ class Aggregatorsettings(FolioApi):
             OkapiFatalError: Server Error
         """
         return self.call("GET", f"/aggregator-settings/{aggregatorSettingsId}/exportcredentials", query=kwargs)
+
+
+class Files(FolioApi):
+    """mod-erm-usage API
+
+    This documents the API calls that can be made to query and manage files in module erm-usage
+    """
+
+    def upload_file(self, filePath: str):
+        """Upload/update a file in module erm-usage.
+
+        ``POST /erm-usage/files``
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+        """
+        import os
+        headers = {}
+        headers["Content-Type"] = "application/octet-stream"
+        headers["Content-length"] = str(os.path.getsize(filePath))
+        headers["Content-Disposition"] = "attachment; filename=%s" % os.path.basename(
+            filePath)
+        with open(filePath, 'rb') as f:
+            data = f.read()
+        
+        return self.call("POST", "/erm-usage/files", headers=headers, data=data)
+
+    def get_file(self, filesId: str):
+        """Get file by id
+
+        ``GET /erm-usage/files/{filesId}``
+
+        Args:
+            filesId (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+        """
+        return self.call("GET", f"/erm-usage/files/{filesId}")
+
+    def delete_file(self, filesId: str):
+        """Delete a file identified by id
+
+        ``DELETE /erm-usage/files/{filesId}``
+
+        Args:
+            filesId (str)
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+        """
+        return self.call("DELETE", f"/erm-usage/files/{filesId}")
+
+
+class Usagedataproviders(FolioApi):
+    """mod-erm-usage API
+
+    This documents the API calls that can be made to query and manage usage data providers
+    """
+
+    def get_usageDataProviders(self, **kwargs):
+        """Get all usage data providers
+
+        ``GET /usage-data-providers``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            query (str):  A query expressed as a CQL string
+                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
+                    using valid searchable fields.
+                    The first example below shows the general form of a full CQL query,
+                    but those fields might not be relevant in this context.
+                    
+                    
+                    
+                    
+                    Example:
+                    
+                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
+                    
+                     - ((label="Journal*" or vendor="Journal*" or platform="Journal*" or harvestingConfig.aggregator.name="Journal*") and harvestingConfig.harvestingStatus="active" and harvestingConfig.harvestVia="sushi" and hasFailedReport="no") sortby label
+            orderBy (str):  Order by field: label, harvestingConfig.harvestingStatus, latestReport, harvestingConfig.aggregator.name
+                    
+            order (str (desc|asc):): (default=desc) Order
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Usagedataproviders_get_usageDataProviders_return.schema 
+        """
+        return self.call("GET", "/usage-data-providers", query=kwargs)
+
+    def set_usageDataProvider(self, usageDataProvider: dict):
+        """Post new usage data providers
+
+        ``POST /usage-data-providers``
+
+        Args:
+            usageDataProvider (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Headers:
+            - **Location** - URI to the created usageDataProvider item
+
+        Schema:
+
+            .. literalinclude:: ../files/Usagedataproviders_set_usageDataProvider_request.schema
+        """
+        return self.call("POST", "/usage-data-providers", data=usageDataProvider)
+
+    def get_usageDataProvider(self, usageDataProvidersId: str):
+        """Get one usage data provider identified by id
+
+        ``GET /usage-data-providers/{usageDataProvidersId}``
+
+        Args:
+            usageDataProvidersId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Usagedataproviders_get_usageDataProvider_return.schema 
+        """
+        return self.call("GET", f"/usage-data-providers/{usageDataProvidersId}")
+
+    def delete_usageDataProvider(self, usageDataProvidersId: str):
+        """Delete an usage data provider identified by id
+
+        ``DELETE /usage-data-providers/{usageDataProvidersId}``
+
+        Args:
+            usageDataProvidersId (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+        """
+        return self.call("DELETE", f"/usage-data-providers/{usageDataProvidersId}")
+
+    def modify_usageDataProvider(self, usageDataProvidersId: str, usageDataProvider: dict):
+        """Put an usage data provider identified by id
+
+        ``PUT /usage-data-providers/{usageDataProvidersId}``
+
+        Args:
+            usageDataProvidersId (str)
+            usageDataProvider (dict): See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Usagedataproviders_modify_usageDataProvider_request.schema
+        """
+        return self.call("PUT", f"/usage-data-providers/{usageDataProvidersId}", data=usageDataProvider)
 
 
 class Counterreports(FolioApi):
@@ -587,195 +779,3 @@ class Counterreports(FolioApi):
             .. literalinclude:: ../files/Counterreports_set_delete_request.schema
         """
         return self.call("POST", "/counter-reports/reports/delete", data=delete)
-
-
-class Customreports(FolioApi):
-    """mod-erm-usage API
-
-    This documents the API calls that can be made to query and manage custom reports
-    """
-
-    def get_customReports(self, **kwargs):
-        """Get all reports.
-
-        ``GET /custom-reports``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            query (str):  A query expressed as a CQL string
-                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
-                    using valid searchable fields.
-                    The first example below shows the general form of a full CQL query,
-                    but those fields might not be relevant in this context.
-                    
-                    
-                    
-                    
-                    Example:
-                    
-                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
-                    
-                     - year=2018
-            orderBy (str):  Order by field: 
-                    
-            order (str (desc|asc):): (default=desc) Order
-            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
-                    
-                    Example:
-                    
-                     - 0
-            limit (int): (default=10) Limit the number of elements returned in the response
-                    
-                    Example:
-                    
-                     - 10
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/Customreports_get_customReports_return.schema 
-        """
-        return self.call("GET", "/custom-reports", query=kwargs)
-
-    def set_customReport(self, customReport: dict):
-        """Post new report
-
-        ``POST /custom-reports``
-
-        Args:
-            customReport (dict): See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Headers:
-            - **Location** - URI to the created customReport item
-
-        Schema:
-
-            .. literalinclude:: ../files/Customreports_set_customReport_request.schema
-        """
-        return self.call("POST", "/custom-reports", data=customReport)
-
-    def get_customReport(self, customReportsId: str):
-        """Get one report identified by id
-
-        ``GET /custom-reports/{customReportsId}``
-
-        Args:
-            customReportsId (str)
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/Customreports_get_customReport_return.schema 
-        """
-        return self.call("GET", f"/custom-reports/{customReportsId}")
-
-    def delete_customReport(self, customReportsId: str):
-        """Delete report identified by id
-
-        ``DELETE /custom-reports/{customReportsId}``
-
-        Args:
-            customReportsId (str)
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-        """
-        return self.call("DELETE", f"/custom-reports/{customReportsId}")
-
-    def modify_customReport(self, customReportsId: str, customReport: dict):
-        """Put report identified by id
-
-        ``PUT /custom-reports/{customReportsId}``
-
-        Args:
-            customReportsId (str)
-            customReport (dict): See Schema below
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/Customreports_modify_customReport_request.schema
-        """
-        return self.call("PUT", f"/custom-reports/{customReportsId}", data=customReport)
-
-
-class Files(FolioApi):
-    """mod-erm-usage API
-
-    This documents the API calls that can be made to query and manage files in module erm-usage
-    """
-
-    def upload_file(self, filePath: str):
-        """Upload/update a file in module erm-usage.
-
-        ``POST /erm-usage/files``
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-        """
-        import os
-        headers = {}
-        headers["Content-Type"] = "application/octet-stream"
-        headers["Content-length"] = str(os.path.getsize(filePath))
-        headers["Content-Disposition"] = "attachment; filename=%s" % os.path.basename(
-            filePath)
-        with open(filePath, 'rb') as f:
-            data = f.read()
-        
-        return self.call("POST", "/erm-usage/files", headers=headers, data=data)
-
-    def get_file(self, filesId: str):
-        """Get file by id
-
-        ``GET /erm-usage/files/{filesId}``
-
-        Args:
-            filesId (str)
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-        """
-        return self.call("GET", f"/erm-usage/files/{filesId}")
-
-    def delete_file(self, filesId: str):
-        """Delete a file identified by id
-
-        ``DELETE /erm-usage/files/{filesId}``
-
-        Args:
-            filesId (str)
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-        """
-        return self.call("DELETE", f"/erm-usage/files/{filesId}")
