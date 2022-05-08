@@ -5,7 +5,7 @@
   "properties": {
     "id": {
       "description": "Unique identifier",
-      "$ref": "../common/uuid.json"
+      "$ref": "../../raml-util/schemas/uuid.schema"
     },
     "hrId": {
       "description": "Human readable id",
@@ -13,7 +13,7 @@
     },
     "parentJobId": {
       "description": "Id of the parent JobExecution entity",
-      "$ref": "../common/uuid.json"
+      "$ref": "../../raml-util/schemas/uuid.schema"
     },
     "subordinationType": {
       "description": "Type of subordination to another JobExecution entities",
@@ -87,7 +87,7 @@
     },
     "userId": {
       "description": "ID of the user who created the JobExecution",
-      "$ref": "../common/uuid.json"
+      "$ref": "../../raml-util/schemas/uuid.schema"
     }
   },
   "required": [

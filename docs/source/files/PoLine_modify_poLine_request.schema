@@ -181,6 +181,10 @@
       "type": "object",
       "$ref": "receipt_status.json"
     },
+    "renewalNote": {
+      "description": "Renewal note for this purchase order line",
+      "type": "string"
+    },
     "reportingCodes": {
       "description": "a list of reporting codes associated with this purchase order line",
       "id": "reportingCodes",

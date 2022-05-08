@@ -86,7 +86,7 @@ class OASchema:
             try:
                 return self._ref_data[path]
             except:
-                print(self._ref_data.keys())
+                log.error(self._ref_data.keys())
                 raise
 
     def write_doc_include_file(self, filename, data):

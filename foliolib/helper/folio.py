@@ -5,6 +5,7 @@ import logging
 from distutils.version import StrictVersion
 
 from foliolib.folio.api.permissions import Permissions
+from foliolib.folio.exceptions import UserNotFound
 from foliolib.folio.users import Users
 from foliolib.okapi.exceptions import OkapiRequestForbidden
 from foliolib.okapi.okapiClient import OkapiClient
@@ -33,14 +34,21 @@ def create_superuser(tenant: str, username: str = "admin",
     except:
         disabled_mods = None
 
+    log.info("Disabled Mods: %s", str(disabled_mods))
     userService = Users(tenant)
 
     try:
         log.info("Create user record.")
+        try:
+            userService.get_user(username)
+            log.info("User %s exist, remove user.", username)
+            userService.delete_user(username)
+        except UserNotFound:
+            pass
         user = userService.create_user(
             username, password,
             permissions=["perms.all",
-                         "users.collection.get"],
+                         "users.all"],
             personal={"lastName": "Superuser"})
 
         log.info("Create service points for user record.")
@@ -51,6 +59,8 @@ def create_superuser(tenant: str, username: str = "admin",
             userService.set_servicePoints(username, servicepointsIds,
                                           servicepointsIds[0])
     except:
+        log.error("Failed to create Superuser %s", username)
+        # userService.delete_user(username)
         log.info("Enable mod-authtoken.")
         okapi.enable_modules([m["id"] for m in disabled_mods], tenant)
         raise

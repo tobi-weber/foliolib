@@ -11,6 +11,7 @@ from foliolib.apiBuilder.raml.helper import pluralize, singularize
 from foliolib.folio import FolioService
 from foliolib.folio.api.inventory import Inventory
 from foliolib.folio.api.inventoryStorage import (AlternativeTitleType,
+                                                 AuthorityNoteType,
                                                  CallNumberType,
                                                  ClassificationType,
                                                  ContributorNameType,
@@ -36,6 +37,7 @@ log = logging.getLogger("foliolib.folio.inventoryReferenceData")
 
 DIRS = [
     "alternative-title-types",
+    "authority-note-types",
     "call-number-types",
     "classification-types",
     "contributor-name-types",
@@ -88,6 +90,18 @@ class InventoryReferenceData(FolioService):
 
     def delete_alternativeTitleType(self, name_or_id):
         return self.__delete_reference_data(AlternativeTitleType, name_or_id)
+
+    def get_authorityNoteType(self, name_or_id):
+        return self.__get_reference_data(AuthorityNoteType, name_or_id)
+
+    def get_authorityNoteTypes(self, query=None):
+        return self.__get_all_reference_data(AuthorityNoteType, query=query)
+
+    def set_authorityNoteType(self, data, replace=False):
+        self.__set_reference_data(data, AuthorityNoteType, replace=replace)
+
+    def delete_authorityNoteType(self, name_or_id):
+        return self.__delete_reference_data(AuthorityNoteType, name_or_id)
 
     def get_callNumberType(self, name_or_id):
         return self.__get_reference_data(CallNumberType, name_or_id)

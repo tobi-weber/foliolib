@@ -11,20 +11,29 @@ log = logging.getLogger("foliolib.helper.database")
 
 
 class Postgres:
+    """Example:
+
+    with Postgres(databas="okapi_modules") as pg:
+        print(pg.get_schemas)
+    """
 
     def __init__(self, user: str = None, password: str = None, database: str = "postgres",
                  host: str = None, port: str = "5432") -> None:
-        self._host = host or Config().okapicfg().get("Postgres", "host")
-        self._port = port or Config().okapicfg().get("Postgres", "port")
-        self._user = user or Config().okapicfg().get("Postgres", "user")
-        self._password = password or Config().okapicfg().get("Postgres", "password")
+        self._host = host or Config().okapicfg().get(
+            "Postgres", "host", fallback="localhost")
+        self._port = port or Config().okapicfg().get(
+            "Postgres", "port", fallback="5432")
+        self._user = user or Config().okapicfg().get(
+            "Postgres", "user", fallback="postgres")
+        self._password = password or Config().okapicfg().get(
+            "Postgres", "password", fallback="postgres")
         self._database = database
         self._con = None
 
     def open(self):
         try:
-            log.info("Open postgres database %s on %s:%s with user %s:%s",
-                     self._database, self._host, self._port, self._user, self._password)
+            log.debug("Open postgres database %s on %s:%s with user %s:%s",
+                      self._database, self._host, self._port, self._user, self._password)
             self._con = psycopg2.connect(database=self._database, user=self._user,
                                          password=self._password, host=self._host,
                                          port=self._port)
@@ -66,12 +75,40 @@ class Postgres:
 
             return tables
 
-    def get_table(self, table: str, schema: str = None):
+    def get_table_column_names(self, table: str, schema: str = None):
         table = f"{schema}.{table}" if schema else table
+        log.debug("Get column names from table %s", table)
         with self._con.cursor() as c:
-            c.execute(f"SELECT * FROM {table};")
+            s = "SELECT column_name FROM INFORMATION_SCHEMA.COLUMNS WHERE "
+            s += f"table_name = '{table}';"
+            c.execute(s)
             r = c.fetchall()
             return r
+
+    def get_table_data(self, table: str, schema: str = None, id_=None):
+        table = f"{schema}.{table}" if schema else table
+        log.debug("Get data from table %s", table)
+        with self._con.cursor() as c:
+            s = f"SELECT * FROM {table}"
+            if id_ is not None:
+                s += f" WHERE id={id_}"
+            c.execute(s + ";")
+            r = c.fetchall()
+            return r
+
+    def delete_rows_from_table(self, table: str, schema: str = None,
+                               ids=[]):
+        table = f"{schema}.{table}" if schema else table
+        with self._con.cursor() as c:
+            for id_ in ids:
+                log.debug("Delete %s in table %s", (id_, table))
+                c.execute(f"DELETE FROM {table} WHERE id={id_};")
+
+    def clear_table(self, table: str, schema: str = None):
+        table = f"{schema}.{table}" if schema else table
+        log.debug("Clear table %s", table)
+        with self._con.cursor() as c:
+            c.execute(f"DELETE FROM {table};")
 
     def get_users(self):
         with self._con.cursor() as c:
@@ -136,8 +173,6 @@ def create_okapi_db(user: str = "okapi", password: str = "okapi25",
                     database: str = "okapi"):
     # pylint: disable=no-member
     with Postgres() as pg:
-        if not pg.is_open():
-            return
         log.info("Create okapi database %s with user %s:%s",
                  database, user, password)
         try:
@@ -154,8 +189,6 @@ def create_modules_db(user: str = "folio_admin", password: str = "folio_admin",
                       database: str = "okapi_modules"):
     # pylint: disable=no-member
     with Postgres() as pg:
-        if not pg.is_open():
-            return
         log.info("Create module database %s with user %s:%s",
                  database, user, password)
         try:
@@ -173,52 +206,40 @@ def create_modules_db(user: str = "folio_admin", password: str = "folio_admin",
 
 def purge_modules_db(tenant: str, database: str = "okapi_modules"):
     with Postgres(database=database) as pg:
-        if not pg.is_open():
-            return
         for s in pg.get_schemas():
-            if s != "public":
+            if s != "public" and s.startswith(tenant):
                 pg.drop_schema(s)
         for user in pg.get_users():
-            if tenant in user:
+            if user.startswith(tenant):
                 pg.drop_user(user)
 
 
 def get_users():
     with Postgres() as pg:
-        if not pg.is_open():
-            return
         users = pg.get_users()
         return users
 
 
 def get_databases():
     with Postgres() as pg:
-        if not pg.is_open():
-            return
         databases = pg.get_databases()
         return databases
 
 
 def get_schemas(database: str):
     with Postgres(database=database) as pg:
-        if not pg.is_open():
-            return
         schemas = pg.get_schemas()
         return schemas
 
 
 def get_tables(schema: str, database: str):
     with Postgres(database=database) as pg:
-        if not pg.is_open():
-            return
         tables = pg.get_tables(schema)
         return tables
 
 
 def get_descriptors():
     with Postgres(database="okapi") as pg:
-        if not pg.is_open():
-            return
         descriptors = pg.get_descriptors()
         return descriptors
 

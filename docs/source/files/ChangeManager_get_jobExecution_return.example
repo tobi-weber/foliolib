@@ -15,7 +15,7 @@
       "id": "dc4ac439-57ae-4779-872e-1892b163bb47",
       "name": "Load vendor order records",
       "description": "Ordered on vendor site; load MARC to create bib, holdings, item, and order; keep MARC",
-      "dataTypes": ["MARC"],
+      "dataTypes": ["MARC_BIB"],
       "tags": {"tagList": ["acq", "daily"]}
     },
     "childSnapshotWrappers": [
@@ -66,7 +66,7 @@
   "parentJobId":"67dfac11-1caf-4470-9ad1-d533f6360bdd",
   "subordinationType":"PARENT_SINGLE",
   "sourcePath":"C:\import\files\import_1.csv",
-  "fileName": "import_1.csv"
+  "fileName": "import_1.csv",
   "runBy":{
     "firstName":"DIKU",
     "lastName":"ADMINISTRATOR"

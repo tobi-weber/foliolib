@@ -10,6 +10,7 @@ from foliolib.folio.api.permissions import Permissions
 from foliolib.folio.api.users import Users as UsersApi
 from foliolib.folio.exceptions import (PermissionUserNotFound,
                                        ServicePointsUserNotFound, UserNotFound)
+from foliolib.helper.database import get_users
 from foliolib.okapi.exceptions import OkapiRequestNotFound
 
 log = logging.getLogger("foliolib.folio.users")
@@ -104,12 +105,20 @@ class Users(FolioService):
             self._login.set_credential({"userId": user["id"],
                                         "password": password
                                         })
-
+            log.info("Add User to permissions")
+            self._permissions.set_user({"userId":  user["id"]})
             if permissions is not None:
                 log.info("Set permissions %s for user record.",
                          str(permissions))
-                self._permissions.set_user({"userId":  user["id"],
-                                            "permissions": permissions})
+                # self._permissions.set_user({"userId":  user["id"],
+                #                            "permissions": permissions})
+                for perm in permissions:
+                    try:
+                        self.set_permission(username, perm)
+                    except Exception as e:
+                        log.error(e)
+                        raise
+        log.info("User %s created", username)
         return user
 
     def delete_user(self, username: str):

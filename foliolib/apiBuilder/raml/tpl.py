@@ -252,7 +252,7 @@ def get_doc(methodName: str, method: 'RamlMethod', dataParam: str = None,
 def _get_query_args(queryData):
     args = []
     for k, v in queryData.items():
-        print(k, v)
+        #print(k, v)
         t = ""
         if "type" in v:
             if "type" == "enum":

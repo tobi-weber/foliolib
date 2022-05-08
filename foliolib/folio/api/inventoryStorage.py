@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2022-04-28
+# Generated at 2022-05-05
 
 import logging
 
@@ -246,6 +246,69 @@ class InstanceReindex(FolioApi):
             OkapiFatalError: Server Error
         """
         return self.call("DELETE", f"/instance-storage/reindex/{reindexId}")
+
+
+class InstanceIteration(FolioApi):
+    """Instance iteration
+
+    Iterate instances by generating domain events for them
+    """
+
+    def set_iteration(self, iteration: dict):
+        """Submit an iteration job
+
+        ``POST /instance-storage/instances/iteration``
+
+        Args:
+            iteration (dict): See Schema below
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/InstanceIteration_set_iteration_request.schema
+            .. literalinclude:: ../files/InstanceIteration_set_iteration_return.schema 
+        """
+        return self.call("POST", "/instance-storage/instances/iteration", data=iteration)
+
+    def get_iteration(self, iterationId: str):
+        """Get iteration job by id
+
+        ``GET /instance-storage/instances/iteration/{iterationId}``
+
+        Args:
+            iterationId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/InstanceIteration_get_iteration_return.schema 
+        """
+        return self.call("GET", f"/instance-storage/instances/iteration/{iterationId}")
+
+    def delete_iteration(self, iterationId: str):
+        """Cancel iteration job by id
+
+        ``DELETE /instance-storage/instances/iteration/{iterationId}``
+
+        Args:
+            iterationId (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+        """
+        return self.call("DELETE", f"/instance-storage/instances/iteration/{iterationId}")
 
 
 class HoldingsStorage(FolioApi):
@@ -1078,6 +1141,86 @@ class BoundWithPart(FolioApi):
             .. literalinclude:: ../files/BoundWithPart_modify_boundWithPart_request.schema
         """
         return self.call("PUT", f"/inventory-storage/bound-with-parts/{boundWithPartsId}", data=boundWithPart)
+
+
+class AsyncMigration(FolioApi):
+    """Async migrations API
+
+    Running async migrations proceses for inventory enteties
+    """
+
+    def get_migrations(self):
+        """Avalilible async migrations for the inventory-storage
+
+        ``GET /inventory-storage/migrations``
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/AsyncMigration_get_migrations_return.schema 
+        """
+        return self.call("GET", "/inventory-storage/migrations")
+
+    def set_job(self, job: dict):
+        """Submit a migration job
+
+        ``POST /inventory-storage/migrations/jobs``
+
+        Args:
+            job (dict): See Schema below
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/AsyncMigration_set_job_request.schema
+            .. literalinclude:: ../files/AsyncMigration_set_job_return.schema 
+        """
+        return self.call("POST", "/inventory-storage/migrations/jobs", data=job)
+
+    def get_job(self, jobsId: str):
+        """Get migration job by id
+
+        ``GET /inventory-storage/migrations/jobs/{jobsId}``
+
+        Args:
+            jobsId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/AsyncMigration_get_job_return.schema 
+        """
+        return self.call("GET", f"/inventory-storage/migrations/jobs/{jobsId}")
+
+    def delete_job(self, jobsId: str):
+        """Cancell migration job by id
+
+        ``DELETE /inventory-storage/migrations/jobs/{jobsId}``
+
+        Args:
+            jobsId (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+        """
+        return self.call("DELETE", f"/inventory-storage/migrations/jobs/{jobsId}")
 
 
 class ItemNoteType(FolioApi):
@@ -1985,6 +2128,141 @@ class Locationunit(FolioApi):
         return self.call("PUT", f"/location-units/libraries/{librariesId}", data=library)
 
 
+class AuthorityNoteType(FolioApi):
+    """Authority note types API
+
+    This documents the API calls that can be made to query and manage Authority note types of the system
+    """
+
+    def get_authorityNoteTypes(self, **kwargs):
+        """Return a list of authority note types
+
+        ``GET /authority-note-types``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            query (str):  A query expressed as a CQL string
+                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
+                    using valid searchable fields.
+                    The first example below shows the general form of a full CQL query,
+                    but those fields might not be relevant in this context.
+                    
+                    with valid searchable fields
+                    
+                    
+                    Example:
+                    
+                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
+                    
+                     - name=aaa
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/AuthorityNoteType_get_authorityNoteTypes_return.schema 
+        """
+        return self.call("GET", "/authority-note-types", query=kwargs)
+
+    def set_authorityNoteType(self, authorityNoteType: dict):
+        """Create a new authority note type
+
+        ``POST /authority-note-types``
+
+        Args:
+            authorityNoteType (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Headers:
+            - **Location** - URI to the created authorityNoteType item
+
+        Schema:
+
+            .. literalinclude:: ../files/AuthorityNoteType_set_authorityNoteType_request.schema
+        """
+        return self.call("POST", "/authority-note-types", data=authorityNoteType)
+
+    def get_authorityNoteType(self, authorityNoteTypesId: str):
+        """Retrieve authorityNoteType item with given {authorityNoteTypeId}
+
+        ``GET /authority-note-types/{authorityNoteTypesId}``
+
+        Args:
+            authorityNoteTypesId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/AuthorityNoteType_get_authorityNoteType_return.schema 
+        """
+        return self.call("GET", f"/authority-note-types/{authorityNoteTypesId}")
+
+    def delete_authorityNoteType(self, authorityNoteTypesId: str):
+        """Delete authorityNoteType item with given {authorityNoteTypeId}
+
+        ``DELETE /authority-note-types/{authorityNoteTypesId}``
+
+        Args:
+            authorityNoteTypesId (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+        """
+        return self.call("DELETE", f"/authority-note-types/{authorityNoteTypesId}")
+
+    def modify_authorityNoteType(self, authorityNoteTypesId: str, authorityNoteType: dict):
+        """Update authorityNoteType item with given {authorityNoteTypeId}
+
+        ``PUT /authority-note-types/{authorityNoteTypesId}``
+
+        Args:
+            authorityNoteTypesId (str)
+            authorityNoteType (dict): See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/AuthorityNoteType_modify_authorityNoteType_request.schema
+        """
+        return self.call("PUT", f"/authority-note-types/{authorityNoteTypesId}", data=authorityNoteType)
+
+
 class MaterialType(FolioApi):
     """Material Types API
 
@@ -2697,7 +2975,7 @@ class InstanceStorage(FolioApi):
 
     def delete_sourceRecord(self, instanceId: str, **kwargs):
         """Delete the source record.
-        Note: The source records gets automatically deleted when its instance record is deleted.
+        Note: When the Inventory instance record is deleted, its source record in mod-inventory-storage is automatically deleted. If the Inventory instance record is linked to a corresponding record in mod-source-record-storage, that SRS record is NOT automatically deleted.
 
         ``DELETE /instance-storage/instances/{instanceId}/source-record``
 
@@ -3292,6 +3570,84 @@ class InventoryHierarchy(FolioApi):
         return self.call("POST", "/inventory-hierarchy/items-and-holdings", data=itemsAndHolding)
 
 
+class ItemStorageDereferenced(FolioApi):
+    """Item Retrieval API
+
+    **Get dereferenced items data from inventory**
+    """
+
+    def get_items(self, **kwargs):
+        """Retrieve item item with given {itemId}
+
+        ``GET /item-storage-dereferenced/items``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+            query (str):  A query expressed as a CQL string
+                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
+                    using valid searchable fields.
+                    The first example below shows the general form of a full CQL query,
+                    but those fields might not be relevant in this context.
+                    
+                    using CQL (indexes for item and material type)
+                    
+                    
+                    Example:
+                    
+                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
+                    
+                     - title="*uproot*"
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/ItemStorageDereferenced_get_items_return.schema 
+        """
+        return self.call("GET", "/item-storage-dereferenced/items", query=kwargs)
+
+    def get_item(self, itemId: str):
+        """Retrieve item item with given {itemId}
+
+        ``GET /item-storage-dereferenced/items/{itemId}``
+
+        Args:
+            itemId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/ItemStorageDereferenced_get_item_return.schema 
+        """
+        return self.call("GET", f"/item-storage-dereferenced/items/{itemId}")
+
+
 class InstanceStatus(FolioApi):
     """Instance status reference API
 
@@ -3432,6 +3788,65 @@ class InstanceStatus(FolioApi):
             .. literalinclude:: ../files/InstanceStatus_modify_instanceStatus_request.schema
         """
         return self.call("PUT", f"/instance-statuses/{instanceStatusId}", data=instanceStatus)
+
+
+class AuthoritiesReindex(FolioApi):
+    """Authority reindex
+
+    Reindex authorities by generating domain events for them
+    """
+
+    def set_reindex(self):
+        """Submit a reindex job
+
+        ``POST /authority-storage/reindex``
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/AuthoritiesReindex_set_reindex_return.schema 
+        """
+        return self.call("POST", "/authority-storage/reindex")
+
+    def get_reindex(self, reindexId: str):
+        """Get reindex job by id
+
+        ``GET /authority-storage/reindex/{reindexId}``
+
+        Args:
+            reindexId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/AuthoritiesReindex_get_reindex_return.schema 
+        """
+        return self.call("GET", f"/authority-storage/reindex/{reindexId}")
+
+    def delete_reindex(self, reindexId: str):
+        """Cancell reindex job by id
+
+        ``DELETE /authority-storage/reindex/{reindexId}``
+
+        Args:
+            reindexId (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+        """
+        return self.call("DELETE", f"/authority-storage/reindex/{reindexId}")
 
 
 class ItemDamagedStatuses(FolioApi):
@@ -3622,6 +4037,148 @@ class InventoryView(FolioApi):
             .. literalinclude:: ../files/InventoryView_get_instances_return.schema 
         """
         return self.call("GET", "/inventory-view/instances", query=kwargs)
+
+
+class RelatedInstances(FolioApi):
+    """Related Instance API
+
+    This documents the API calls that can be made to query and manage other versions of a work, referred to as a related instance.
+    """
+
+    def get_relatedInstances(self, **kwargs):
+        """Return a list of related instances
+
+        ``GET /instance-storage/related-instances``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            query (str):  A query expressed as a CQL string
+                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
+                    using valid searchable fields.
+                    The first example below shows the general form of a full CQL query,
+                    but those fields might not be relevant in this context.
+                    
+                    with valid searchable fields
+                    
+                    
+                    Example:
+                    
+                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
+                    
+                     - relatedInstanceId==758f13db-ffb4-440e-bb10-8a364aa6cb4a
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/RelatedInstances_get_relatedInstances_return.schema 
+        """
+        return self.call("GET", "/instance-storage/related-instances", query=kwargs)
+
+    def set_relatedInstance(self, relatedInstance: dict):
+        """Create a new related instance
+
+        ``POST /instance-storage/related-instances``
+
+        Args:
+            relatedInstance (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Headers:
+            - **Location** - URI to the created relatedInstance item
+
+        Schema:
+
+            .. literalinclude:: ../files/RelatedInstances_set_relatedInstance_request.schema
+        """
+        return self.call("POST", "/instance-storage/related-instances", data=relatedInstance)
+
+    def delete_relatedInstances(self):
+        """
+
+        ``DELETE /instance-storage/related-instances``
+        """
+        return self.call("DELETE", "/instance-storage/related-instances")
+
+    def get_relatedInstance(self, relatedInstanceId: str):
+        """Retrieve relatedInstance item with given {relatedInstanceId}
+
+        ``GET /instance-storage/related-instances/{relatedInstanceId}``
+
+        Args:
+            relatedInstanceId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/RelatedInstances_get_relatedInstance_return.schema 
+        """
+        return self.call("GET", f"/instance-storage/related-instances/{relatedInstanceId}")
+
+    def delete_relatedInstance(self, relatedInstanceId: str):
+        """Delete relatedInstance item with given {relatedInstanceId}
+
+        ``DELETE /instance-storage/related-instances/{relatedInstanceId}``
+
+        Args:
+            relatedInstanceId (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+        """
+        return self.call("DELETE", f"/instance-storage/related-instances/{relatedInstanceId}")
+
+    def modify_relatedInstance(self, relatedInstanceId: str, relatedInstance: dict):
+        """Update relatedInstance item with given {relatedInstanceId}
+
+        ``PUT /instance-storage/related-instances/{relatedInstanceId}``
+
+        Args:
+            relatedInstanceId (str)
+            relatedInstance (dict): See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/RelatedInstances_modify_relatedInstance_request.schema
+        """
+        return self.call("PUT", f"/instance-storage/related-instances/{relatedInstanceId}", data=relatedInstance)
 
 
 class InstanceRelationshipType(FolioApi):
@@ -4038,6 +4595,27 @@ class InstancePrecedingSucceedingTitles(FolioApi):
         """
         return self.call("PUT", f"/preceding-succeeding-titles/{precedingSucceedingTitleId}", data=precedingSucceedingTitle)
 
+    def modify_instance(self, instanceId: str, instance: dict):
+        """Update preceding/succeeding titles related to the instance
+
+        ``PUT /preceding-succeeding-titles/instances/{instanceId}``
+
+        Args:
+            instanceId (str)
+            instance (dict): See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/InstancePrecedingSucceedingTitles_modify_instance_request.schema
+        """
+        return self.call("PUT", f"/preceding-succeeding-titles/instances/{instanceId}", data=instance)
+
 
 class NatureOfContentTerm(FolioApi):
     """Nature of content term API
@@ -4172,6 +4750,148 @@ class NatureOfContentTerm(FolioApi):
             .. literalinclude:: ../files/NatureOfContentTerm_modify_natureOfContentTerm_request.schema
         """
         return self.call("PUT", f"/nature-of-content-terms/{natureOfContentTermsId}", data=natureOfContentTerm)
+
+
+class Authorities(FolioApi):
+    """Authority Storage API
+
+    **Storage for authorities in the inventory**
+    """
+
+    def get_authorities(self, **kwargs):
+        """Retrieve a list of authority items.
+
+        ``GET /authority-storage/authorities``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+            query (str):  A query expressed as a CQL string
+                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
+                    using valid searchable fields.
+                    The first example below shows the general form of a full CQL query,
+                    but those fields might not be relevant in this context.
+                    
+                    using CQL
+                    
+                    
+                    Example:
+                    
+                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
+                    
+                     - personalName="root"
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Authorities_get_authorities_return.schema 
+        """
+        return self.call("GET", "/authority-storage/authorities", query=kwargs)
+
+    def set_authority(self, authority: dict):
+        """Create a new authority item.
+
+        ``POST /authority-storage/authorities``
+
+        Args:
+            authority (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Headers:
+            - **Location** - URI to the created authority item
+
+        Schema:
+
+            .. literalinclude:: ../files/Authorities_set_authority_request.schema
+        """
+        return self.call("POST", "/authority-storage/authorities", data=authority)
+
+    def delete_authorities(self):
+        """
+
+        ``DELETE /authority-storage/authorities``
+        """
+        return self.call("DELETE", "/authority-storage/authorities")
+
+    def get_authority(self, authorityId: str):
+        """Retrieve authority Authority with given {authorityId}
+
+        ``GET /authority-storage/authorities/{authorityId}``
+
+        Args:
+            authorityId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Authorities_get_authority_return.schema 
+        """
+        return self.call("GET", f"/authority-storage/authorities/{authorityId}")
+
+    def delete_authority(self, authorityId: str):
+        """Delete authority Authority with given {authorityId}
+
+        ``DELETE /authority-storage/authorities/{authorityId}``
+
+        Args:
+            authorityId (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+        """
+        return self.call("DELETE", f"/authority-storage/authorities/{authorityId}")
+
+    def modify_authority(self, authorityId: str, authority: dict):
+        """Update authority Authority with given {authorityId}
+
+        ``PUT /authority-storage/authorities/{authorityId}``
+
+        Args:
+            authorityId (str)
+            authority (dict): See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Authorities_modify_authority_request.schema
+        """
+        return self.call("PUT", f"/authority-storage/authorities/{authorityId}", data=authority)
 
 
 class HoldingsNoteType(FolioApi):
@@ -4934,6 +5654,148 @@ class ModeOfIssuance(FolioApi):
             .. literalinclude:: ../files/ModeOfIssuance_modify_modeOfIssuance_request.schema
         """
         return self.call("PUT", f"/modes-of-issuance/{modeOfIssuanceId}", data=modeOfIssuance)
+
+
+class RelatedInstanceType(FolioApi):
+    """Related Instance Types API
+
+    This documents the API calls that can be made to query and manage other versions of a work, referred to as a related instance.
+    """
+
+    def get_relatedInstanceTypes(self, **kwargs):
+        """Return a list of related instance types
+
+        ``GET /related-instance-types``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            query (str):  A query expressed as a CQL string
+                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
+                    using valid searchable fields.
+                    The first example below shows the general form of a full CQL query,
+                    but those fields might not be relevant in this context.
+                    
+                    with valid searchable fields
+                    
+                    
+                    Example:
+                    
+                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
+                    
+                     - relatedInstanceTypeId==758f13db-ffb4-440e-bb10-8a364aa6cb4a
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/RelatedInstanceType_get_relatedInstanceTypes_return.schema 
+        """
+        return self.call("GET", "/related-instance-types", query=kwargs)
+
+    def set_relatedInstanceType(self, relatedInstanceType: dict):
+        """Create a new related instance type
+
+        ``POST /related-instance-types``
+
+        Args:
+            relatedInstanceType (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Headers:
+            - **Location** - URI to the created relatedInstanceType item
+
+        Schema:
+
+            .. literalinclude:: ../files/RelatedInstanceType_set_relatedInstanceType_request.schema
+        """
+        return self.call("POST", "/related-instance-types", data=relatedInstanceType)
+
+    def delete_relatedInstanceTypes(self):
+        """
+
+        ``DELETE /related-instance-types``
+        """
+        return self.call("DELETE", "/related-instance-types")
+
+    def get_relatedInstanceType(self, relatedInstanceTypeId: str):
+        """Retrieve relatedInstanceType item with given {relatedInstanceTypeId}
+
+        ``GET /related-instance-types/{relatedInstanceTypeId}``
+
+        Args:
+            relatedInstanceTypeId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/RelatedInstanceType_get_relatedInstanceType_return.schema 
+        """
+        return self.call("GET", f"/related-instance-types/{relatedInstanceTypeId}")
+
+    def delete_relatedInstanceType(self, relatedInstanceTypeId: str):
+        """Delete relatedInstanceType item with given {relatedInstanceTypeId}
+
+        ``DELETE /related-instance-types/{relatedInstanceTypeId}``
+
+        Args:
+            relatedInstanceTypeId (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+        """
+        return self.call("DELETE", f"/related-instance-types/{relatedInstanceTypeId}")
+
+    def modify_relatedInstanceType(self, relatedInstanceTypeId: str, relatedInstanceType: dict):
+        """Update relatedInstanceType item with given {relatedInstanceTypeId}
+
+        ``PUT /related-instance-types/{relatedInstanceTypeId}``
+
+        Args:
+            relatedInstanceTypeId (str)
+            relatedInstanceType (dict): See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/RelatedInstanceType_modify_relatedInstanceType_request.schema
+        """
+        return self.call("PUT", f"/related-instance-types/{relatedInstanceTypeId}", data=relatedInstanceType)
 
 
 class InstanceSync(FolioApi):

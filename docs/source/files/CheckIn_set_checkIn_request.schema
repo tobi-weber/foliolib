@@ -67,7 +67,7 @@
                 "displayOnHolding": {
                   "description": "Whether or not receiving history should be displayed in holding record view",
                   "type": "boolean",
-                  "default": "false"
+                  "default": false
                 },
                 "enumeration": {
                   "type": "string",

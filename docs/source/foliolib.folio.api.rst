@@ -10,7 +10,7 @@ Modules
 	:template: module2.rst
 	:recursive:
 
-	foliolib.folio.api.authtoken
+	foliolib.folio.api.audit
 	foliolib.folio.api.calendar
 	foliolib.folio.api.circulation
 	foliolib.folio.api.circulationStorage
@@ -26,10 +26,6 @@ Modules
 	foliolib.folio.api.edgeCaiasoft
 	foliolib.folio.api.edgeDematic
 	foliolib.folio.api.edgeLtiCourses
-	foliolib.folio.api.edgeOaiPmh
-	foliolib.folio.api.edgeOrders
-	foliolib.folio.api.edgePatron
-	foliolib.folio.api.edgeRtac
 	foliolib.folio.api.email
 	foliolib.folio.api.ermUsage
 	foliolib.folio.api.ermUsageHarvester
@@ -51,6 +47,7 @@ Modules
 	foliolib.folio.api.login
 	foliolib.folio.api.loginSaml
 	foliolib.folio.api.marccat
+	foliolib.folio.api.metaStorage
 	foliolib.folio.api.notes
 	foliolib.folio.api.notify
 	foliolib.folio.api.oaiPmh

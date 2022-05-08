@@ -24,7 +24,7 @@
     },
     "userId": {
       "description": "ID of the user initializing JobExecutions",
-      "$ref": "../common/uuid.json"
+      "$ref": "../../raml-util/schemas/uuid.schema"
     }
   },
   "required": [

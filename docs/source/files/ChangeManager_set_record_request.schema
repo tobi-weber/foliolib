@@ -4,6 +4,10 @@
   "type": "object",
   "additionalProperties": false,
   "properties": {
+    "id": {
+      "description": "UUID",
+      "$ref": "../../raml-util/schemas/uuid.schema"
+    },
     "initialRecords": {
       "description": "List of raw records",
       "type": "array",
@@ -19,6 +23,7 @@
     }
   },
   "required": [
+    "id",
     "recordsMetadata",
     "initialRecords"
   ]

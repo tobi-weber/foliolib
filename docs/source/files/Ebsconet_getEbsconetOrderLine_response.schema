@@ -4,82 +4,86 @@
     "description": "Ebsconet order line integration schema",
     "type": "object",
     "properties": {
-        "vendor": {
-            "description": "Vendor code",
-            "type": "string",
-            "pattern": "[\\S ]+",
-            "maxLength": 55,
-            "readOnly": true
-        },
         "cancellationRestriction": {
-            "description": "Whether or not there are cancellation restrictions for this purchase order line",
             "type": "boolean",
+            "description": "Whether or not there are cancellation restrictions for this purchase order line",
             "readOnly": false
         },
         "cancellationRestrictionNote": {
-            "description": "Free-form notes related to cancellation restrictions",
             "type": "string",
-            "readOnly": false
-        },
-        "unitPrice": {
-            "description": "The per-item list price for physical or resources of 'Other' order format",
-            "type": "number",
+            "description": "Free-form notes related to cancellation restrictions",
             "readOnly": false
         },
         "currency": {
-            "description": "An ISO currency code",
             "type": "string",
+            "description": "An ISO currency code",
+            "readOnly": false
+        },
+        "fundCode": {
+            "type": "string",
+            "description": "Fund distribution code",
+            "readOnly": false
+        },
+        "poLineNumber": {
+            "$ref": "../mod-orders/order_line_number.json",
+            "description": "A human readable number assigned to this PO line",
+            "readOnly": true
+        },
+        "publisherName": {
+            "type": "string",
+            "description": "Publisher of the material",
+            "readOnly": false
+        },
+        "renewalNote": {
+            "type": "string",
+            "description": "Renewal note for this purchase order line"
+        },
+        "quantity": {
+            "type": "integer",
+            "description": "Quantity of physical items or resources of 'Other' order format in this purchase order line",
+            "readOnly": false
+        },
+        "subscriptionFromDate": {
+            "type": "string",
+            "description": "the start date of the subscription",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": false
+        },
+        "subscriptionToDate": {
+            "type": "string",
+            "description": "the end date of the subscription",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": false
+        },
+        "unitPrice": {
+            "type": "number",
+            "description": "The per-item list price for physical or resources of 'Other' order format",
+            "readOnly": false
+        },
+        "vendor": {
+            "type": "string",
+            "description": "Vendor code",
+            "maxLength": 55,
+            "pattern": "[\\S ]+",
+            "readOnly": true
+        },
+        "vendorAccountNumber": {
+            "type": "string",
+            "description": "Account number on the vendor's end associated with this purchase order line",
             "readOnly": false
         },
         "vendorReferenceNumbers": {
-            "description": "Reference number items array",
             "type": "array",
+            "description": "Reference number items array",
             "items": {
                 "$ref": "../mod-orders/reference_number_item.json"
             }
         },
-        "poLineNumber": {
-            "description": "A human readable number assigned to this PO line",
-            "$ref": "../mod-orders/order_line_number.json",
-            "readOnly": true
-        },
-        "subscriptionToDate": {
-            "description": "the end date of the subscription",
-            "type": "string",
-            "format": "date-time",
-            "readOnly": false,
-            "nullable": true
-        },
-        "subscriptionFromDate": {
-            "description": "the start date of the subscription",
-            "type": "string",
-            "format": "date-time",
-            "readOnly": false,
-            "nullable": true
-        },
-        "quantity": {
-            "description": "Quantity of physical items or resources of 'Other' order format in this purchase order line",
-            "type": "integer",
-            "readOnly": false
-        },
-        "fundCode": {
-            "description": "Fund distribution code",
-            "type": "string",
-            "readOnly": false
-        },
-        "publisherName": {
-            "description": "Publisher of the material",
-            "type": "string",
-            "readOnly": false
-        },
-        "vendorAccountNumber": {
-            "description": "Account number on the vendor's end associated with this purchase order line",
-            "type": "string",
-            "readOnly": false
-        },
         "workflowStatus": {
-            "description": "the workflow status for the purchase order",
             "$ref": "../mod-orders/workflow_status.json",
+            "description": "the workflow status for the purchase order",
             "readOnly": true
         }
     },

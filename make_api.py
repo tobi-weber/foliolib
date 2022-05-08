@@ -4,6 +4,7 @@ import logging
 import os
 import sys
 
+from foliolib import set_logging
 from foliolib.apiBuilder.build_api import build_api
 
 log = logging.getLogger("foliolib.make_api")
@@ -24,8 +25,8 @@ FOLIO_MODS = [
     #("edge-rtac", "RAML", "ramls"),
     # ("edge-sip2", "", ""),  # NO SCHEMA
     ("mod-agreements", "", ""),  # NO SCHEMA
-    ("mod-audit", "", ""),  # NO SCHEMA
-    ("mod-authtoken", "OAS", "src/main/resources/openapi"),
+    ("mod-audit", "RAML", "ramls"),
+    #("mod-authtoken", "OAS", "src/main/resources/openapi"),
     ("mod-calendar", "RAML", "ramls"),
     ("mod-circulation", "RAML", "ramls"),
     ("mod-circulation-storage", "RAML", "ramls"),
@@ -63,15 +64,18 @@ FOLIO_MODS = [
     ("mod-login", "RAML", "ramls"),
     ("mod-login-saml", "RAML", "ramls"),
     ("mod-marccat", "RAML", "ramls"),
+    ("mod-meta-storage", "OAS", "server/src/main/resources/openapi"),
     ("mod-ncip", "", ""),  # NO SCHEMA
-    ("mod-notes", "RAML", "ramls"),
+    #("mod-notes", "RAML", "ramls"),
+    ("mod-notes", "OAS", "src/main/resources/swagger.api"),
     ("mod-notify", "RAML", "ramls"),
     ("mod-oai-pmh", "RAML", "ramls"),
     ("mod-orders", "RAML", "ramls"),
     ("mod-orders-storage", "RAML", "ramls"),
     ("mod-organizations", "RAML", "ramls"),
     ("mod-organizations-storage", "RAML", "ramls"),
-    ("mod-password-validator", "RAML", "ramls"),
+    #("mod-password-validator", "RAML", "ramls"),
+    ("mod-password-validator",  "OAS", "src/main/resources/swagger.api"),
     ("mod-patron", "RAML", "ramls"),
     ("mod-patron-blocks", "RAML", "ramls"),
     ("mod-permissions", "RAML", "ramls"),
@@ -85,7 +89,8 @@ FOLIO_MODS = [
     ("mod-shared-index", "OAS", "server/src/main/resources/openapi"),
     ("mod-source-record-manager", "RAML", "ramls"),
     ("mod-source-record-storage", "RAML", "ramls"),
-    ("mod-tags", "RAML", "ramls"),
+    #("mod-tags", "RAML", "ramls"),
+    ("mod-tags",  "OAS", "src/main/resources/swagger.api"),
     ("mod-template-engine", "RAML", "ramls"),
     ("mod-user-import", "RAML", "ramls"),
     ("mod-users", "RAML", "ramls"),
@@ -116,6 +121,11 @@ def get_repos():
 
 
 def process():
+    for fname in os.listdir(API_PATH):
+        if not fname == "__init__.py":
+            fpath = os.path.join(API_PATH, fname)
+            log.info("Delete %s", fpath)
+            os.remove(fpath)
     cur_path = os.getcwd()
     for mod in FOLIO_MODS:
         module_name = mod[0]
@@ -132,14 +142,13 @@ def process():
             os.chdir(cur_path)
 
 
-def main(repos=False):
-    if repos:
+def main():
+    if len(sys.argv) > 1 and sys.argv[1] == "repos":
         get_repos()
-    process()
+    else:
+        set_logging(level="INFO")
+        process()
 
 
 if __name__ == "__main__":
-    repos = False
-    if len(sys.argv) > 1 and sys.argv[1] == "repos":
-        repos = True
-    main(repos)
+    main()

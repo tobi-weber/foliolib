@@ -144,6 +144,14 @@
       "description": "Date and time when the item was damaged.",
       "type": "string"
     },
+    "administrativeNotes": {
+      "type": "array",
+      "description": "Administrative notes",
+      "minItems": 0,
+      "items": {
+        "type": "string"
+      }
+    },
     "notes": {
       "type": "array",
       "description": "Notes about action, copy, binding etc.",
@@ -311,13 +319,7 @@
     "permanentLocation": {
       "description": "The permanent shelving location in which an item resides",
       "type": "object",
-      "folio:$ref": "location.json",
-      "readonly": true,
-      "folio:isVirtual": true,
-      "folio:linkBase": "locations",
-      "folio:linkFromField": "permanentLocationId",
-      "folio:linkToField": "id",
-      "folio:includedElement": "locations.0"
+      "readonly": true
     },
     "temporaryLocationId": {
       "type": "string",

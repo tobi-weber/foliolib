@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2022-04-28
+# Generated at 2022-05-05
 
 import logging
 
@@ -115,6 +115,62 @@ class Search(FolioApi):
             .. literalinclude:: ../files/Search_searchAuthorities_response.schema
         """
         return self.call("GET", "/search/authorities", query=kwargs)
+
+    def getAuthoritiesIdsJob(self, jobId):
+        """Get a job for the stream of authority ids.
+
+        ``GET /search/authorities/ids/jobs/{jobId}``
+
+        Args:
+            jobId (str): UUID of the job to get
+
+        Returns:
+            dict: See Schema below.
+
+        Raises:
+            OkapiRequestError: Validation errors
+            OkapiFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
+
+        Schema:
+
+            .. literalinclude:: ../files/Search_getAuthoritiesIdsJob_response.schema
+        """
+        return self.call("GET", "/search/authorities/ids/jobs/{jobId}", jobId)
+
+    def submitAuthoritiesIdsJob(self, resourceIdsJob):
+        """Creates a job for the stream of authority ids.
+
+        ``POST /search/authorities/ids/jobs``
+
+        Args:
+            resourceIdsJob (dict): See Schema below.
+
+        Returns:
+            dict: See Schema below.
+
+        Raises:
+            OkapiRequestError: Validation errors
+            OkapiFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
+
+        Schema:
+
+            .. literalinclude:: ../files/Search_submitAuthoritiesIdsJob_request.schema
+        """
+        return self.call("POST", "/search/authorities/ids/jobs", resourceIdsJob)
+
+    def getAuthorityIds(self, **kwargs):
+        """Get a list of authority ids for CQL query
+
+        ``GET /search/authorities/ids``
+
+        Keyword Args:
+            query (str): A CQL query string with search conditions.
+
+        Raises:
+            OkapiRequestError: Validation errors
+            OkapiFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
+        """
+        return self.call("GET", "/search/authorities/ids", query=kwargs)
 
     def browseInstancesByCallNumber(self, **kwargs):
         """Provides list of instances for browsing by call number

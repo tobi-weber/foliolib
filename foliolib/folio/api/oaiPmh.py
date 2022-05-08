@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2022-04-28
+# Generated at 2022-05-05
 
 import logging
 
@@ -216,3 +216,45 @@ class FolioSetFilteringConditions(FolioApi):
             .. literalinclude:: ../files/FolioSetFilteringConditions_get_filteringConditions_return.schema 
         """
         return self.call("GET", "/oai-pmh/filtering-conditions")
+
+
+class RequestMetadata(FolioApi):
+    """Request Metadata API
+
+    API for retrieving MARC21_WITHHOLDINGS harvesting request metadata.
+    """
+
+    def get_requestMetadata(self, **kwargs):
+        """Get list of request metadata
+
+        ``GET /oai/request-metadata``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/RequestMetadata_get_requestMetadata_return.schema 
+        """
+        return self.call("GET", "/oai/request-metadata", query=kwargs)

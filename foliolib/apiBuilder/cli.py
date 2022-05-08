@@ -4,6 +4,7 @@
 import os
 
 import click
+from foliolib import set_logging
 from foliolib.apiBuilder.build_api import build_api
 
 
@@ -22,6 +23,7 @@ from foliolib.apiBuilder.build_api import build_api
 def cli(**kwargs):
     """[summary]
     """
+    set_logging()
     module_dir = kwargs["dir"]
     base_path = kwargs["basepath"]
     api_path = os.path.join(base_path, kwargs["output"])

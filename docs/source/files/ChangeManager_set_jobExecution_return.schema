@@ -6,7 +6,7 @@
   "properties": {
     "parentJobExecutionId": {
       "description": "UUID of the JobExecution entity which is parent for all JobExecution entities in a scope of one file upload process",
-      "$ref": "../common/uuid.json"
+      "$ref": "../../raml-util/schemas/uuid.schema"
     },
     "jobExecutions": {
       "description": "Array of initialized JobExecution entities",

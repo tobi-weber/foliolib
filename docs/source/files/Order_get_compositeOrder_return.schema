@@ -34,7 +34,7 @@
       "$ref": "../../common/schemas/uuid.json"
     },
     "closeReason": {
-      "description": "Close reason for purchase order",
+      "description": "Close reason for purchase order. Some values are predefined and can trigger actions, such as Cancelled. See mod-orders-storage/src/main/resources/data/system/reasons-for-closure",
       "type": "object",
       "$ref": "../../mod-orders-storage/schemas/close_reason.json"
     },

@@ -1,16 +1,16 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "description": "Collection of execution jobs",
+  "description": "Collection of execution job dtos",
   "type": "object",
   "additionalProperties": false,
   "properties": {
     "jobExecutions": {
-      "description": "List of execution jobs",
+      "description": "List of execution job dtos",
       "type": "array",
       "id": "jobExecutionList",
       "items": {
         "type": "object",
-        "$ref": "jobExecution.json"
+        "$ref": "jobExecutionDto.json"
       }
     },
     "totalRecords": {
