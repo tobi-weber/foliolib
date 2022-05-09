@@ -21,7 +21,8 @@ class ServerConfigNotFound(ConfigError):
         else:
             msg += "Available servers:\n\t"
             msg += "\n\t".join(sorted(servers))
-            msg += "\nEnable a server or create a new one!"
+            msg += "\nEnable a server config with 'foliolib server enable SERVER'"
+            msg += "\nor create a server config with 'foliolib server create -h'"
             self.msg = msg
 
     def __str__(self):
