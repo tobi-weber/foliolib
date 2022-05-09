@@ -67,8 +67,7 @@ class OkapiClient:
             self._host = f"http://{host}:{port}"
 
         self._client = requests.Session()
-        self._access_token = Config().okapicfg().get(
-            "Tokens", "supertenant") if Config().okapicfg().has_option("Tokens", "supertenant") else None
+        self._access_token = Config().get_token("supertenant")
         self.headers = None
         self.status_code = 0
 
@@ -715,8 +714,8 @@ class OkapiClient:
             path = "/" + path
         headers = headers or {}
         headers["X-Okapi-Tenant"] = tenantId
-        if not path.endswith("login") and tenantId in Config().okapicfg()["Tokens"]:
-            headers["X-Okapi-Token"] = Config().okapicfg()["Tokens"][tenantId]
+        if not path.endswith("login") and Config().has_token(tenantId):
+            headers["X-Okapi-Token"] = Config().get_token(tenantId)
         else:
             headers["X-Okapi-Token"] = ""
         res = self.request(method.upper(), path,
@@ -724,8 +723,7 @@ class OkapiClient:
         if "x-okapi-token" in self.headers:
             log.debug("Token for %s: %s", tenantId,
                       self.headers["X-Okapi-Token"])
-            Config().set_okapicfg("Tokens", tenantId,
-                                  self.headers["X-Okapi-Token"])
+            Config().set_token(tenantId, self.headers["X-Okapi-Token"])
         if self.status_code >= 200 or self.status_code < 300:
             return res
         else:

@@ -473,10 +473,11 @@ class InventoryReferenceData(FolioService):
             fullpath = os.path.join(path, refpath)
             if os.path.exists(fullpath):
                 for fname in os.listdir(fullpath):
-                    fpath = os.path.join(fullpath, fname)
-                    with open(fpath, encoding="utf-8") as f:
-                        data = json.load(f)
-                    add(data, replace)
+                    if fname.endswith((".json")):
+                        fpath = os.path.join(fullpath, fname)
+                        with open(fpath, encoding="utf-8") as f:
+                            data = json.load(f)
+                        add(data, replace)
 
     def dump_reference_data(self, path):
         for refpath in DIRS:

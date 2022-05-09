@@ -106,18 +106,10 @@ class Users(FolioService):
                                         "password": password
                                         })
             log.info("Add User to permissions")
-            self._permissions.set_user({"userId":  user["id"]})
+            data = {"userId":  user["id"]}
             if permissions is not None:
-                log.info("Set permissions %s for user record.",
-                         str(permissions))
-                # self._permissions.set_user({"userId":  user["id"],
-                #                            "permissions": permissions})
-                for perm in permissions:
-                    try:
-                        self.set_permission(username, perm)
-                    except Exception as e:
-                        log.error(e)
-                        raise
+                data["permissions"] = permissions
+            self._permissions.set_user(data)
         log.info("User %s created", username)
         return user
 
@@ -127,6 +119,7 @@ class Users(FolioService):
         Args:
             username (str): Username
         """
+        log.info("Delete user %s", username)
         userId = self.get_user(username)["id"]
         try:
             permUserId = self._permissions.get_users(

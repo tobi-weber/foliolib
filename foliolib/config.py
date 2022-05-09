@@ -167,6 +167,7 @@ class Config:
         Args:
             tenantid (str): tenant id
         """
+        return self.__okapicfg.get("Tokens", tenantid, fallback=None)
 
     def set_token(self, tenantid: str, token: str):
         """Set token for a tenant
@@ -175,6 +176,26 @@ class Config:
             tenantid (str): tenant id
             token (str): token
         """
+        self.__okapicfg.set("Tokens", tenantid, token)
+
+    def del_token(self, tenantid: str):
+        """Delete token for a tenant
+
+        Args:
+            tenantid (str): tenant id
+            token (str): token
+        """
+        if self.has_token(tenantid):
+            self.__okapicfg.remove_option("Tokens", tenantid)
+
+    def has_token(self, tenantid: str):
+        """Delete token for a tenant
+
+        Args:
+            tenantid (str): tenant id
+            token (str): token
+        """
+        return self.__okapicfg.has_option("Tokens", tenantid)
 
     def get_confdir(self):
         """Get the configuration directory
@@ -199,7 +220,7 @@ class Config:
             self.__foliolibcfg["PullNode"] = {}
             self.__foliolibcfg["PullNode"]["host"] = "folio-registry.dev.folio.org"
             self.__foliolibcfg["PullNode"]["port"] = "443"
-            self.__foliolibcfg["PullNode"]["ssl"] = True
+            self.__foliolibcfg["PullNode"]["ssl"] = str(True)
             self.__foliolibcfg["Cache"] = {}
             self.__foliolibcfg["Cache"]["descriptors"] = os.path.join(self.get_confdir(),
                                                                       "cache",
@@ -211,7 +232,8 @@ class Config:
         else:
             log.debug("%s already exists.", fpath)
 
-    def create_okapi_conf(self, name: str, okapi_host: str = "localhost", okapi_port: str = "9130",
+    def create_okapi_conf(self, name: str, okapi_host: str = "localhost",
+                          okapi_port: str = "9130", ssl=False,
                           db_host: str = "localhost", db_port: str = "5432",
                           db_user: str = "postgres", db_password: str = "postgres"):
         """Create okapi.conf for given server config name.
@@ -220,6 +242,7 @@ class Config:
             name (str): Server name.
             okapi_host (str, optional): Okapi host. Defaults to "localhost".
             okapi_port (str, optional): Okapi port. Defaults to "9130".
+            ssl (bool, optional): SSL. Defaults to False.
             db_host (str, optional): Postgres host. Defaults to "localhost".
             db_port (str, optional): Postgres port. Defaults to "5432".
             db_user (str, optional): Postgres user. Defaults to "postgres".
@@ -234,6 +257,7 @@ class Config:
             self.__okapicfg["Okapi"] = {}
             self.__okapicfg["Okapi"]["host"] = okapi_host
             self.__okapicfg["Okapi"]["port"] = okapi_port
+            self.__okapicfg["Okapi"]["ssl"] = str(ssl)
             self.__okapicfg["Postgres"] = {}
             self.__okapicfg["Postgres"]["host"] = db_host
             self.__okapicfg["Postgres"]["port"] = db_port
