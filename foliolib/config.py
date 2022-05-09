@@ -176,7 +176,8 @@ class Config:
             tenantid (str): tenant id
             token (str): token
         """
-        self.__okapicfg.set("Tokens", tenantid, token)
+        log.debug("Set token for %s", tenantid)
+        self.set_okapicfg("Tokens", tenantid, token)
 
     def del_token(self, tenantid: str):
         """Delete token for a tenant
@@ -186,6 +187,7 @@ class Config:
             token (str): token
         """
         if self.has_token(tenantid):
+            log.debug("Remove token for %s", tenantid)
             self.__okapicfg.remove_option("Tokens", tenantid)
 
     def has_token(self, tenantid: str):
