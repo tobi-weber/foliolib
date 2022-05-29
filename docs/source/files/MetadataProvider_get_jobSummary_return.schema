@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Job execution summary DTO schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "jobExecutionId": {
+      "description": "UUID",
+      "$ref": "../../raml-util/schemas/uuid.schema"
+    },
+    "totalErrors": {
+      "description": "Total errors number",
+      "type": "integer"
+    },
+    "sourceRecordSummary": {
+      "description": "Source record processing summary",
+      "$ref": "./entityProcessingSummary.json"
+    },
+    "instanceSummary": {
+      "description": "Instance processing summary",
+      "$ref": "./entityProcessingSummary.json"
+    },
+    "holdingSummary": {
+      "description": "Holding processing summary",
+      "$ref": "./entityProcessingSummary.json"
+    },
+    "itemSummary": {
+      "description": "Item processing summary",
+      "$ref": "./entityProcessingSummary.json"
+    },
+    "authoritySummary": {
+      "description": "Authority processing summary",
+      "$ref": "./entityProcessingSummary.json"
+    },
+    "orderSummary": {
+      "description": "Order processing summary",
+      "$ref": "./entityProcessingSummary.json"
+    },
+    "invoiceSummary": {
+      "description": "Invoice processing summary",
+      "$ref": "./entityProcessingSummary.json"
+    }
+  },
+  "required": [
+    "jobExecutionId"
+  ]
+}

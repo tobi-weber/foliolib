@@ -1,0 +1,9 @@
+{
+  "strict": false,
+  "value": {
+    "id": "1",
+    "timestamp": "2018-09-27T01:50:59.466Z",
+    "tenant": "diku",
+    "login": "diku_admin"
+  }
+}

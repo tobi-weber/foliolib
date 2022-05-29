@@ -1,0 +1,20 @@
+{
+  "strict": false,
+  "value": {
+    "audit": [
+      {
+        "id": "1",
+        "timestamp": "2018-09-27T01:50:59.466Z",
+        "tenant": "diku",
+        "login": "diku_admin"
+      },
+      {
+        "id": "2",
+        "timestamp": "2018-09-27T01:50:59.467Z",
+        "tenant": "diku",
+        "login": "diku_admin"
+      }
+    ],
+    "totalRecords": 2
+  }
+}

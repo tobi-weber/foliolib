@@ -141,6 +141,19 @@ class Users(FolioService):
 
         return self._users.delete_user(userId)
 
+    def modify_user(self, username: str, userData: dict):
+        """Modify a user by username.
+
+        Args:
+            username (str): Username
+        """
+        log.info("Modify user %s", username)
+        user = self.get_user(username)
+        userId = user["id"]
+        user.update(userData)
+
+        return self._users.modify_user(userId, user)
+
     def get_permissions(self, username: str):
         """Get permissions of a user
 

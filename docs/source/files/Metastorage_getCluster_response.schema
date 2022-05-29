@@ -1,0 +1,36 @@
+{
+    "description": "cluster",
+    "type": "object",
+    "properties": {
+        "clusterId": {
+            "type": "string",
+            "description": "Cluster identifier",
+            "format": "uuid"
+        },
+        "datestamp": {
+            "type": "string",
+            "description": "date time of modification",
+            "format": "date"
+        },
+        "records": {
+            "description": "List of records",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "$ref": "globalRecord.json"
+            }
+        },
+        "matchKeys": {
+            "description": "Match keys values",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "clusterId",
+        "records"
+    ]
+}

@@ -2,7 +2,6 @@
 
 python3 setup.py clean
 debian/rules clean
-echo "Remove build MANIFEST dist *.egg-info *.pyc *.pyo __pycache__"
 rm -rf build/ MANIFEST dist/ *.egg-info
 find . -name '*.pyc' -delete
 find . -name '*.pyo' -delete

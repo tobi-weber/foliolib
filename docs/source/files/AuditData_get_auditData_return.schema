@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Collection of audit records",
+  "properties": {
+    "audit": {
+      "type": "array",
+      "description": "audit records",
+      "items": {
+        "type": "object",
+        "$ref": "audit.json"
+      }
+    },
+    "totalRecords": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "audit",
+    "totalRecords"
+  ]
+}

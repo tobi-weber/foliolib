@@ -9,7 +9,6 @@ import inflection
 from foliolib import is_valid_uuid
 from foliolib.apiBuilder.raml.helper import pluralize, singularize
 from foliolib.folio import FolioService
-from foliolib.folio.api.inventory import Inventory
 from foliolib.folio.api.inventoryStorage import (AlternativeTitleType,
                                                  AuthorityNoteType,
                                                  CallNumberType,
@@ -70,14 +69,6 @@ DIRS = [
 
 
 class InventoryReferenceData(FolioService):
-
-    def __init__(self, tenant: str) -> None:
-        """
-        Args:
-            tenant (str): Tenant id
-        """
-        super().__init__(tenant)
-        self._inventory = Inventory(tenant)
 
     def get_alternativeTitleType(self, name_or_id):
         return self.__get_reference_data(AlternativeTitleType, name_or_id)
@@ -462,6 +453,7 @@ class InventoryReferenceData(FolioService):
         return self.__delete_reference_data(StatisticalCodeType)
 
     def load_reference_data(self, path, replace=False):
+        count = 0
         for refpath in DIRS:
             lastPathName = refpath.split("/")[-1]
             baseMethodName = inflection.camelize(
@@ -478,6 +470,9 @@ class InventoryReferenceData(FolioService):
                         with open(fpath, encoding="utf-8") as f:
                             data = json.load(f)
                         add(data, replace)
+                        count += 1
+        log.info("%i files processed", count)
+        return count
 
     def dump_reference_data(self, path):
         for refpath in DIRS:
@@ -557,7 +552,7 @@ class InventoryReferenceData(FolioService):
             log.info("Modify %s - %s" % (data["name"], baseMethodName))
             res = modify(data["id"], data)
         elif data["name"] not in names:
-            log.info("Add to %s - %s" % (data["name"], baseMethodName))
+            log.info("Add %s - %s" % (data["name"], baseMethodName))
             res = add(data)
         else:
             log.info("Name %s already exists" % data["name"])

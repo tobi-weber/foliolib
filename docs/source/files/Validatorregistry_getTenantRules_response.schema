@@ -1,0 +1,24 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "Rules Collection",
+    "type": "object",
+    "properties": {
+        "rules": {
+            "description": "List of rules",
+            "type": "array",
+            "id": "ruleList",
+            "items": {
+                "type": "object",
+                "$ref": "validationRule.json"
+            }
+        },
+        "totalRecords": {
+            "type": "integer"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "rules",
+        "totalRecords"
+    ]
+}

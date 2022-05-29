@@ -1,0 +1,98 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Info that an audit record contains",
+  "additionalProperties": true,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "id"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "timestamp"
+    },
+    "tenant": {
+      "type": "string",
+      "description": "tenant"
+    },
+    "user": {
+      "type": "string",
+      "description": "user"
+    },
+    "login": {
+      "type": "string",
+      "description": "login"
+    },
+    "uri": {
+      "type": "string",
+      "description": "uri"
+    },
+    "path": {
+      "type": "string",
+      "description": "path"
+    },
+    "params": {
+      "type": "object",
+      "description": "params"
+    },
+    "path_params": {
+      "type": "object",
+      "description": "path_params"
+    },
+    "request_id": {
+      "type": "string",
+      "description": "request_id"
+    },
+    "auth_result": {
+      "type": "string",
+      "description": "auth_result"
+    },
+    "auth_error": {
+      "type": "object",
+      "description": "auth_error"
+    },
+    "module_result": {
+      "type": "string",
+      "description": "module_result"
+    },
+    "module_error": {
+      "type": "object",
+      "description": "module_error"
+    },
+    "target_type": {
+      "type": "string",
+      "description": "target_type"
+    },
+    "target_id": {
+      "type": "string",
+      "description": "target_id"
+    },
+    "method": {
+      "type": "string",
+      "description": "method"
+    },
+    "extra_targets": {
+      "type": "object",
+      "description": "extra_targets"
+    },
+    "ip": {
+      "type": "string",
+      "description": "client IP"
+    },
+    "extra_headers": {
+      "type": "object",
+      "description": "extra_headers"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "metadata",
+      "$ref": "raml-util/schemas/metadata.schema",
+      "readonly": true
+    }
+  },
+  "required": [
+    "tenant"
+  ]
+}

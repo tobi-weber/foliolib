@@ -45,14 +45,21 @@ class Postgres:
         if self._con is not None:
             self._con.close()
 
+    def cursor(self):
+        return self._con.cursor()
+
     def is_open(self):
         return False if self._con is None else True
 
     def get_databases(self):
-        with self._con.cursor() as c:
+        with self.cursor() as c:
             c.execute("SELECT datname FROM pg_database")
             dbs = c.fetchall()
             return [d[0] for d in dbs]
+
+    def create_database(self, dbname: str, user: str):
+        with self.cursor() as c:
+            c.execute(f"CREATE DATABASE {dbname} WITH OWNER {user};")
 
     def get_schemas(self):
         pg_schemas = ["pg_toast",
@@ -61,14 +68,27 @@ class Postgres:
                       "pg_catalog",
                       # "public",
                       "information_schema"]
-        with self._con.cursor() as c:
+        with self.cursor() as c:
             c.execute("select schema_name from information_schema.schemata;")
             schemas = c.fetchall()
             schemas = [s[0] for s in schemas if s[0] not in pg_schemas]
             return schemas
 
+    def create_schema(self, schema: str, user: str = None):
+        with self.cursor() as c:
+            if user is None:
+                log.info("Create Schema %s", schema)
+                c.execute(f"CREATE SCHEMA {schema};")
+            else:
+                log.info("Create Schema %s for user %s", schema, user)
+                c.execute(f"CREATE SCHEMA {schema} AUTHORIZATION {user};")
+
+    def drop_schema(self, schema: str):
+        with self.cursor() as c:
+            c.execute(f"drop schema {schema} cascade")
+
     def get_tables(self, schema: str):
-        with self._con.cursor() as c:
+        with self.cursor() as c:
             c.execute(f"select * from pg_tables where schemaname='{schema}';")
             tables = c.fetchall()
             tables = [t[1] for t in tables]
@@ -78,7 +98,7 @@ class Postgres:
     def get_table_column_names(self, table: str, schema: str = None):
         table = f"{schema}.{table}" if schema else table
         log.debug("Get column names from table %s", table)
-        with self._con.cursor() as c:
+        with self.cursor() as c:
             s = "SELECT column_name FROM INFORMATION_SCHEMA.COLUMNS WHERE "
             s += f"table_name = '{table}';"
             c.execute(s)
@@ -88,7 +108,7 @@ class Postgres:
     def get_table_data(self, table: str, schema: str = None, id_=None):
         table = f"{schema}.{table}" if schema else table
         log.debug("Get data from table %s", table)
-        with self._con.cursor() as c:
+        with self.cursor() as c:
             s = f"SELECT * FROM {table}"
             if id_ is not None:
                 s += f" WHERE id={id_}"
@@ -99,7 +119,7 @@ class Postgres:
     def delete_rows_from_table(self, table: str, schema: str = None,
                                ids=[]):
         table = f"{schema}.{table}" if schema else table
-        with self._con.cursor() as c:
+        with self.cursor() as c:
             for id_ in ids:
                 log.debug("Delete %s in table %s", (id_, table))
                 c.execute(f"DELETE FROM {table} WHERE id={id_};")
@@ -111,7 +131,7 @@ class Postgres:
             c.execute(f"DELETE FROM {table};")
 
     def get_users(self):
-        with self._con.cursor() as c:
+        with self.cursor() as c:
             c.execute("""select usesysid as user_id,
                         usename as username,
                         usesuper as is_superuser,
@@ -122,27 +142,20 @@ class Postgres:
             users = c.fetchall()
             return [u[1] for u in users]
 
-    def create_database(self, dbname: str, user: str):
-        with self._con.cursor() as c:
-            c.execute(f"CREATE DATABASE {dbname} WITH OWNER {user};")
-            # self._con.commit()
-
     def create_user(self, user: str, password: str, roles: list = []):
-        with self._con.cursor() as c:
+        with self.cursor() as c:
             c.execute(
                 f"CREATE ROLE {user} WITH PASSWORD '{password}' {' '.join(roles)};")
-            # self._con.commit()
 
     def drop_user(self, user: str):
-        with self._con.cursor() as c:
+        with self.cursor() as c:
             c.execute(f"""REVOKE ALL PRIVILEGES ON ALL TABLES IN SCHEMA public FROM {user};
                         REVOKE ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public FROM {user};
                         REVOKE ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public FROM {user};
                         DROP USER {user};""")
-            # self._con.commit()
 
     def drop_schema(self, schema: str):
-        with self._con.cursor() as c:
+        with self.cursor() as c:
             c.execute(f"drop schema {schema} cascade")
             self._con.commit()
 

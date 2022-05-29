@@ -65,8 +65,9 @@ def addMD(**kwargs):
     """Add ModulDescriptor(s)
     """
     for f in kwargs["file"]:
-        d = json.load(f)
-        print("Add module descriptor %s" % d["id"])
+        m = json.load(f)
+        print("Add module descriptor %s" % m["id"])
+        OkapiClient().add_module(m)
 
 
 @module.command()

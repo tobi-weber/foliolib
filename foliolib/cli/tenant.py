@@ -174,8 +174,6 @@ def disable(**kwargs):
               help="Do not include NPM module snapshots")
 @click.option("--no-preRelease", is_flag=True,
               help="Pre-releases should be considered for installation")
-@click.option("--purge", is_flag=True,
-              help="Modules will also be purged.")
 @click.option("--simulate", is_flag=True,
               help="Simulate the installation")
 def upgrade(**kwargs):
@@ -202,8 +200,48 @@ def upgrade(**kwargs):
 
 @tenant.command()
 @click.argument("tenantid", required=True)
-@click.option("--full", is_flag=True,
-              help="Full MD should be returned")
+@click.argument("moduleid", required=True, nargs=-1)
+@click.option("--async", is_flag=True,
+              help="Upgrade in the background")
+@click.option("--ignoreErrors", is_flag=True,
+              help="Ignore errors during the uninstall operation")
+@click.option("--no-invoke", is_flag=True,
+              help="Not invoke for tenant init/permissions/purge")
+@click.option("--no-npmSnapshot", is_flag=True,
+              help="Do not include NPM module snapshots")
+@click.option("--no-preRelease", is_flag=True,
+              help="Pre-releases should be considered for installation")
+@click.option("--simulate", is_flag=True,
+              help="Simulate the installation")
+def upgrademodule(**kwargs):
+    """Upgrade tenant.
+
+    TENANTID\tThe tenant id.
+    MODULEID\tmodule id. Can be repeated.
+    """
+    _kwargs = {}
+    if kwargs["async"]:
+        _kwargs["async"] = True
+    if kwargs["ignoreerrors"]:
+        _kwargs["ignoreErrors"] = True
+    if kwargs["simulate"]:
+        _kwargs["simulate"] = True
+    if kwargs["no_invoke"]:
+        _kwargs["invoke"] = False
+    if kwargs["no_npmsnapshot"]:
+        _kwargs["npmSnapshot"] = False
+    if kwargs["no_prerelease"]:
+        _kwargs["preRelease"] = False
+    modules = kwargs["moduleid"]
+    tenantId = kwargs["tenantid"]
+    msg = OkapiClient().upgrade_modules(tenantId, modules=modules, **_kwargs)
+    print(json.dumps(msg, indent=2))
+
+
+@ tenant.command()
+@ click.argument("tenantid", required=True)
+@ click.option("--full", is_flag=True,
+               help="Full MD should be returned")
 def modules(**kwargs):
     """List modules of a tenant.
 
@@ -218,11 +256,11 @@ def modules(**kwargs):
         print(e["id"])
 
 
-@tenant.command()
-@click.argument("tenantid", required=True)
-@click.option("-i", "--interface")
-@click.option("-f", "--full", is_flag=True,
-              help="Full MD should be returned")
+@ tenant.command()
+@ click.argument("tenantid", required=True)
+@ click.option("-i", "--interface")
+@ click.option("-f", "--full", is_flag=True,
+               help="Full MD should be returned")
 def interfaces(**kwargs):
     """List interface(s).
 
@@ -254,23 +292,23 @@ def interfaces(**kwargs):
                            handler["pathPattern"]
                            )
                           )
-                    #print("\t\t%s" % p)
+                    # print("\t\t%s" % p)
 
 
-@tenant.command()
-@click.argument("tenantid")
-@click.option("--async", is_flag=True,
-              help="Uninstall in the background")
-@click.option("--undeploy", is_flag=True,
-              help="Undeploy modules")
-@click.option("--ignoreErrors", is_flag=True,
-              help="Ignore errors during the uninstall operation")
-@click.option("--no-invoke", is_flag=True,
-              help="Do not invoke for tenant init/permissions/purge")
-@click.option("--purge", is_flag=True,
-              help="Modules will also be purged.")
-@click.option("--simulate", is_flag=True,
-              help="Simulate the installation")
+@ tenant.command()
+@ click.argument("tenantid")
+@ click.option("--async", is_flag=True,
+               help="Uninstall in the background")
+@ click.option("--undeploy", is_flag=True,
+               help="Undeploy modules")
+@ click.option("--ignoreErrors", is_flag=True,
+               help="Ignore errors during the uninstall operation")
+@ click.option("--no-invoke", is_flag=True,
+               help="Do not invoke for tenant init/permissions/purge")
+@ click.option("--purge", is_flag=True,
+               help="Modules will also be purged.")
+@ click.option("--simulate", is_flag=True,
+               help="Simulate the installation")
 def uninstall(**kwargs):
     """Disable all modules of a tenant.
 

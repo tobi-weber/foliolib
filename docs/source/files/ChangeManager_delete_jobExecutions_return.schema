@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Response status of soft delete JobExecution entities",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "jobExecutionDetails": {
+      "description": "Details of job execution entities processed for soft deletion",
+      "type": "array",
+      "items": {
+        "description": "Job Execution Deletion Key Value Pair",
+        "$ref": "jobExecutionDeletionPair.json"
+      }
+    }
+  }
+}

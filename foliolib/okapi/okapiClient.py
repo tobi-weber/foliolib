@@ -630,7 +630,7 @@ class OkapiClient:
         """
         return self.request("POST", f"/ _/proxy/tenants/{tenantId}/modules", query=kwargs)
 
-    def upgrade_modules(self, tenantId: str, **kwargs):
+    def upgrade_modules(self, tenantId: str, modules: list = None, **kwargs):
         """[summary]
 
         Args:
@@ -652,8 +652,6 @@ class OkapiClient:
                         Whether to invoke for tenant init/permissions/purge
             preRelease (boolean): default = true
                         Whether pre-releases should be considered for installation.
-            purge (boolean): default = false
-                        Disabled modules will also be purged
             simulate (boolean): default = false
                         Whether the upgrade is simulated
             tenantParameters (string): Parameters for Tenant init
@@ -661,7 +659,26 @@ class OkapiClient:
         Returns:
             dict: Tenant module descriptors
         """
-        return self.request("POST", f"/_/proxy/tenants/{tenantId}/upgrade", query=kwargs)
+        if modules is None:
+            return self.request("POST", f"/_/proxy/tenants/{tenantId}/upgrade", query=kwargs)
+        else:
+            from foliolib.helper import split_modid
+            installed_modules = [m["id"]
+                                 for m in self.get_tenant_modules(tenantId)]
+            upgrade_modules = []
+            for modid in modules:
+                modname, version = split_modid(modid)
+                for from_modid in installed_modules:
+                    if from_modid.startswith(modname):
+                        upgrade_modules.append({"id": modid,
+                                                "from": from_modid,
+                                                "action": "enable"})
+                        break
+                else:
+                    log.error("No previous version of %s installed in tenant %s",
+                              modid, tenantId)
+                    return
+            return self.install_modules(upgrade_modules, tenantId, **kwargs)
 
     def get_install_jobs(self, tenantId: str, install_id: str = None):
         """Get install jobs for a tenant

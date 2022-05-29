@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Request to delete JobExecution entities",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "ids": {
+      "description": "Id of JobExecution entities to be deleted",
+      "type": "array",
+      "items": {
+        "description": "Unique identifier",
+        "$ref": "../../raml-util/schemas/uuid.schema"
+      }
+    }
+  }
+}
