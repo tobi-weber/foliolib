@@ -18,7 +18,7 @@ class Postgres:
     """
 
     def __init__(self, user: str = None, password: str = None, database: str = "postgres",
-                 host: str = None, port: str = "5432") -> None:
+                 host: str = None, port: str = None) -> None:
         self._host = host or Config().okapicfg().get(
             "Postgres", "host", fallback="localhost")
         self._port = port or Config().okapicfg().get(
@@ -32,8 +32,8 @@ class Postgres:
 
     def open(self):
         try:
-            log.debug("Open postgres database %s on %s:%s with user %s:%s",
-                      self._database, self._host, self._port, self._user, self._password)
+            log.info("Open postgres database %s on %s:%s with user %s:%s",
+                     self._database, self._host, self._port, self._user, self._password)
             self._con = psycopg2.connect(database=self._database, user=self._user,
                                          password=self._password, host=self._host,
                                          port=self._port)
@@ -60,6 +60,10 @@ class Postgres:
     def create_database(self, dbname: str, user: str):
         with self.cursor() as c:
             c.execute(f"CREATE DATABASE {dbname} WITH OWNER {user};")
+
+    def drop_database(self, dbname: str, force=False):
+        with self.cursor() as c:
+            c.execute(f"DROP DATABASE {dbname};")
 
     def get_schemas(self):
         pg_schemas = ["pg_toast",
@@ -116,6 +120,14 @@ class Postgres:
             r = c.fetchall()
             return r
 
+    def get_table_row_count(self, table: str, schema: str = None):
+        table = f"{schema}.{table}" if schema else table
+        log.debug("Get row count from table %s", table)
+        with self.cursor() as c:
+            c.execute(f"SELECT count(*) FROM {table};")
+            r = c.fetchall()[0][0]
+            return r
+
     def delete_rows_from_table(self, table: str, schema: str = None,
                                ids=[]):
         table = f"{schema}.{table}" if schema else table
@@ -129,6 +141,12 @@ class Postgres:
         log.debug("Clear table %s", table)
         with self._con.cursor() as c:
             c.execute(f"DELETE FROM {table};")
+
+    def drop_table(self, table: str, schema: str = None):
+        table = f"{schema}.{table}" if schema else table
+        log.debug("Drop table %s", table)
+        with self._con.cursor() as c:
+            c.execute(f"DROP TABLE {table};")
 
     def get_users(self):
         with self.cursor() as c:
@@ -217,7 +235,7 @@ def create_modules_db(user: str = "folio_admin", password: str = "folio_admin",
             log.error(err)
 
 
-def purge_modules_db(tenant: str, database: str = "okapi_modules"):
+def purge_modules(tenant: str, database: str = "okapi_modules"):
     with Postgres(database=database) as pg:
         for s in pg.get_schemas():
             if s != "public" and s.startswith(tenant):
@@ -225,39 +243,3 @@ def purge_modules_db(tenant: str, database: str = "okapi_modules"):
         for user in pg.get_users():
             if user.startswith(tenant):
                 pg.drop_user(user)
-
-
-def get_users():
-    with Postgres() as pg:
-        users = pg.get_users()
-        return users
-
-
-def get_databases():
-    with Postgres() as pg:
-        databases = pg.get_databases()
-        return databases
-
-
-def get_schemas(database: str):
-    with Postgres(database=database) as pg:
-        schemas = pg.get_schemas()
-        return schemas
-
-
-def get_tables(schema: str, database: str):
-    with Postgres(database=database) as pg:
-        tables = pg.get_tables(schema)
-        return tables
-
-
-def get_descriptors():
-    with Postgres(database="okapi") as pg:
-        descriptors = pg.get_descriptors()
-        return descriptors
-
-
-def get_descriptor(modId: str):
-    descriptors = get_descriptors()
-    if modId in descriptors:
-        return descriptors[modId]

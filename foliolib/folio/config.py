@@ -89,7 +89,7 @@ class Config(FolioService):
     def set_email(self, smtp_host: str, smtp_port: str, email_from: str,
                   username: str, password: str, ssl: bool = False,
                   smtp_login_option: str = None, start_tls: str = None,
-                  auth_methods: str = None):
+                  trust_all: bool = None, auth_methods: str = None):
         """Set email configuration for a tenant.
         AUTH_METHODS	authentication methods	'CRAM-MD5 LOGIN PLAIN'
 
@@ -102,51 +102,54 @@ class Config(FolioService):
             ssl (bool, optional): sslOnConnect mode for the connection. Defaults to False.
             smtp_login_option (str, optional): The login mode for the connection. Examples are DISABLED, OPTIONAL or REQUIRED Defaults to DISABLED.
             start_tls (str, optional):TLS security mode for the connection. Examples are NONE, OPTIONAL or REQUIRED Defaults to NONE.
+            trust_all (bool, optional): trust all certificates on ssl connect.
             auth_methods (str, optional): Authentication methods. Example is 'CRAM-MD5 LOGIN PLAIN'.
         """
-        entries = []
-        entries.append(
+        self.set_entry(
             EMailEntry("EMAIL_SMTP_HOST",
                        "server smtp host",
                        smtp_host))
-        entries.append(
+        self.set_entry(
             EMailEntry("EMAIL_SMTP_PORT",
                        "server smtp port",
                        smtp_port))
-        entries.append(
+        self.set_entry(
             EMailEntry("EMAIL_FROM",
                        "smtp from",
                        email_from))
 
-        entries.append(
+        self.set_entry(
             EMailEntry("EMAIL_USERNAME",
                        "smtp username",
                        username))
-        entries.append(
+        self.set_entry(
             EMailEntry("EMAIL_PASSWORD",
                        "smtp password",
                        password))
-        entries.append(
+        self.set_entry(
             EMailEntry("EMAIL_SMTP_SSL",
                        "sslOnConnect for the connection",
                        ssl))
         if smtp_login_option is not None:
-            entries.append(
+            self.set_entry(
                 EMailEntry("EMAIL_SMTP_LOGIN_OPTION",
                            "login mode for the connection",
                            smtp_login_option))
         if start_tls is not None:
-            entries.append(
+            self.set_entry(
                 EMailEntry("EMAIL_START_TLS_OPTIONS",
                            "TLS security for the connection",
                            start_tls))
+        if trust_all is not None:
+            self.set_entry(
+                EMailEntry("EMAIL_TRUST_ALL",
+                           "trust all certificates on ssl connect",
+                           trust_all))
         if auth_methods is not None:
-            entries.append(
+            self.set_entry(
                 EMailEntry("AUTH_METHODS",
                            "authentication method",
                            auth_methods))
-        for entry in entries:
-            self.set_entry(entry)
 
     def get_folio_host(self):
         return self.get_entries("USERSBL")

@@ -29,14 +29,16 @@ def is_valid_uuid(value):
 
 
 def set_logging(level="INFO", traceback=True):
+    _log = logging.getLogger()
+    _log.handlers = []
     if traceback or level == "DEBUG":
         formatter = logging.Formatter("[%(name)s] %(levelname)s %(message)s")
     else:
         formatter = logging.Formatter("%(message)s")
         sys.tracebacklimit = 0
-    log.setLevel(getattr(logging, level))
+    _log.setLevel(getattr(logging, level))
     h = logging.StreamHandler()
     if "FOLIOLIB_FILTER" in os.environ:
         h.addFilter(logging.Filter(os.environ["FOLIOLIB_FILTER"]))
     h.setFormatter(formatter)
-    log.addHandler(h)
+    _log.addHandler(h)

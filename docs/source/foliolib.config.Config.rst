@@ -26,6 +26,9 @@
             ~Config.create_okapi_conf
         
         
+            ~Config.del_token
+        
+        
             ~Config.foliolibcfg
         
         
@@ -42,6 +45,9 @@
         
         
             ~Config.get_url
+        
+        
+            ~Config.has_token
         
         
             ~Config.is_kubernetes

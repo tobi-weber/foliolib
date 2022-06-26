@@ -10,7 +10,6 @@ from foliolib.folio.api.permissions import Permissions
 from foliolib.folio.api.users import Users as UsersApi
 from foliolib.folio.exceptions import (PermissionUserNotFound,
                                        ServicePointsUserNotFound, UserNotFound)
-from foliolib.helper.database import get_users
 from foliolib.okapi.exceptions import OkapiRequestNotFound
 
 log = logging.getLogger("foliolib.folio.users")

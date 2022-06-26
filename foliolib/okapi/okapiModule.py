@@ -142,13 +142,6 @@ class OkapiModule:
             with open(fname_cache, "w", encoding="utf8") as f:
                 json.dump(descriptor, f, indent=2)
 
-        if "launchDescriptor" in descriptor:
-            if Config().is_kubernetes():
-                dockerPull = False
-            else:
-                dockerPull = True
-            descriptor["launchDescriptor"]["dockerPull"] = dockerPull
-
         return descriptor
 
     def __clean_env(self):
@@ -192,6 +185,13 @@ class OkapiModule:
                 for name, value in config["Env"].items():
                     name = remove_entry(env, name)
                     env.append({"name": name, "value": value})
+
+        if "launchDescriptor" in self._descriptor:
+            if Config().is_kubernetes():
+                dockerPull = False
+            else:
+                dockerPull = True
+            self._descriptor["launchDescriptor"]["dockerPull"] = dockerPull
 
 
 def create_okapiModule(name: str):

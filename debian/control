@@ -17,7 +17,9 @@ Build-Depends-Indep:
  python3-lxml,
  python3-github,
  python3-yaml,
- python3-magic
+ python3-magic,
+ python3-click,
+ python3-tabulate
 Standards-Version: 4.5.0
 Homepage: https://github.com/tobi-weber/foliolib
 
@@ -40,7 +42,9 @@ Depends:
  python3-github,
  python3-yaml,
  python3-magic,
- python3-setuptools,
+ python3-click,
+ python3-tabulate,
+ python3-setuptools
  ${misc:Depends},
  ${python3:Depends},
 Suggests:

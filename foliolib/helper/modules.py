@@ -4,9 +4,11 @@
 import json
 import logging
 import os
+from threading import Thread
 
+from foliolib.okapi import okapiModule
 from foliolib.okapi.okapiClient import OkapiClient
-from foliolib.okapi.okapiModule import (create_okapiModule,
+from foliolib.okapi.okapiModule import (OkapiModule, create_okapiModule,
                                         sort_modules_by_requirements)
 
 log = logging.getLogger("foliolib.helper.modules")
@@ -30,19 +32,60 @@ def add_modules(modules):
             OkapiClient().add_module(module)
 
 
-def deploy_modules(node, modules, edge_module=None):
-    edge_module = edge_module or []
+def deploy_modules(node, modules):
     for module in modules:
         if module.has_launchDescriptor():
             if OkapiClient().is_module_deployed(module.get_id()):
                 print("%s is already deployed" % module.get_id())
-            elif module.get_id().startswith("edge-"):
-                if not [m for m in edge_module if module.get_id().startswith(m)]:
-                    try:
-                        print("Deploy %s" % module.get_id())
-                        OkapiClient().deploy_module(module.get_id(), node)
-                    except:
-                        print("Error: Deploy %s failed" % module.get_id())
             else:
                 print("Deploy %s" % module.get_id())
                 OkapiClient().deploy_module(module.get_id(), node)
+
+
+def deploy_modules_threaded(node, modules):
+    class Deploy(Thread):
+        def __init__(self, node, module):
+            super().__init__(name=module.get_id())
+            self.node = node
+            self.module = module
+
+        def run(self):
+            self.exc = None
+            try:
+                OkapiClient().deploy_module(self.module.get_id(), self.node)
+            except BaseException as e:
+                self.exc = e
+
+        def join(self):
+            Thread.join(self)
+            if self.exc:
+                raise self.exc
+    threads = []
+
+    for module in modules:
+        if module.has_launchDescriptor():
+            if OkapiClient().is_module_deployed(module.get_id()):
+                print("%s is already deployed" % module.get_id())
+            else:
+                print("Deploy %s" % module.get_id())
+                t = Deploy(node, module)
+                t.start()
+                threads.append(t)
+    print("Deploying please wait ...")
+    for t in threads:
+        t.join()
+    print("Deploy done.")
+
+
+def enable_modules(tenantid, modules, loadSample=False, loadReference=False, **kwargs):
+    for module in modules:
+        if isinstance(module, OkapiModule):
+            module = module.get_id()
+        if OkapiClient().is_module_enabled(module, tenantid):
+            print("Module %s is already enabled for tenant %s" %
+                  (module, tenantid))
+        else:
+            print("Enable %s" % module)
+            OkapiClient().enable_module(module, tenantid,
+                                        loadSample=loadSample, loadReference=loadReference,
+                                        **kwargs)

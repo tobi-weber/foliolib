@@ -104,6 +104,7 @@ def secure_supertenant(username: str = "okapi_admin", password: str = "admin"):
         "users.all"
     ]
     log.info("Enable modules permissions, users and login for supertenant")
+    Config().del_token(tenant)
     module_list = ['permissions', 'users', 'login']
     o = OkapiClient()
     modules = [m["id"] for m in o.get_modules() if m["name"] in module_list]
@@ -135,8 +136,8 @@ def unsecure_supertenant():
         for tm in [m["id"] for m in o.get_tenant_modules(tenant)]:
             if tm.startswith(f"mod-{m}"):
                 log.info("Disable %s", m)
-                # o.disable_module(tm, tenant, purge=True)
-                o.disable_module(tm, tenant)
+                o.disable_module(tm, tenant, purge=True)
+                #o.disable_module(tm, tenant)
 
     print("Successfully unsecured Okapi.")
 

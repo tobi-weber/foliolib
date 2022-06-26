@@ -5,7 +5,9 @@ import json
 import logging
 import os
 
-from foliolib.helper.modules import add_modules, deploy_modules, load_modules
+from foliolib.helper.modules import (add_modules, deploy_modules,
+                                     deploy_modules_threaded, enable_modules,
+                                     load_modules)
 from foliolib.okapi.okapiClient import OkapiClient
 
 log = logging.getLogger("foliolib.helper.platform")
@@ -14,7 +16,7 @@ log = logging.getLogger("foliolib.helper.platform")
 def install_platform(platform_path: str, node: str,
                      tenantid: str, edge_module: list,
                      loadSample: bool = False, loadReference: bool = False,
-                     **kwargs):
+                     deploy_async=False, **kwargs):
     """Install a folio platform.
 
     Args:
@@ -30,17 +32,6 @@ def install_platform(platform_path: str, node: str,
             print("\nTenant %s does not exist. Create tenant ..." % tenantid)
             OkapiClient().create_tenant(tenantid)
 
-    def enable_modules(modules):
-        for module in modules:
-            if OkapiClient().is_module_enabled(module.get_id(), tenantid):
-                print("Module %s is already enabled for tenant %s" %
-                      (module.get_id(), tenantid))
-            else:
-                print("Enable %s" % module.get_id())
-                OkapiClient().enable_module(module.get_id(), tenantid,
-                                            loadSample=loadSample, loadReference=loadReference,
-                                            **kwargs)
-
     okapi_install = os.path.join(platform_path, "okapi-install.json")
     okapi_modules = load_modules(okapi_install)
     stripes_install = os.path.join(platform_path, "stripes-install.json")
@@ -53,14 +44,30 @@ def install_platform(platform_path: str, node: str,
     print("\tLoad references: %s" % str(loadReference))
 
     create_tenant()
+    edge_modules = []
+    for e in edge_module:
+        for m in okapi_modules:
+            if m.get_id().startswith(e):
+                edge_modules.append(m)
+        for m in stripes_modules:
+            if m.get_id().startswith(e):
+                edge_modules.append(m)
+    stripes_modules = [m for m in stripes_modules
+                       if not m.get_id().startswith("edge-")]
+    okapi_modules = [m for m in okapi_modules
+                     if not m.get_id().startswith("edge-")]
+    okapi_modules += edge_modules
     print("\nAdd modules ...")
     add_modules(okapi_modules + stripes_modules)
     print("\nDeploy modules ...")
-    deploy_modules(node,
-                   okapi_modules + stripes_modules,
-                   edge_module)
+    if deploy_async:
+        deploy_modules_threaded(node, okapi_modules)
+    else:
+        deploy_modules(node, okapi_modules)
     print("\nEnable modules for tenant %s ..." % tenantid)
-    enable_modules(okapi_modules + stripes_modules)
+    enable_modules(tenantid, okapi_modules + stripes_modules,
+                   loadSample=loadSample, loadReference=loadReference,
+                   **kwargs)
 
 
 def upgrade_platform(platform_path: str, node: str,
@@ -83,11 +90,22 @@ def upgrade_platform(platform_path: str, node: str,
     okapi_modules = load_modules(okapi_install)
     stripes_install = os.path.join(platform_path, "stripes-install.json")
     stripes_modules = load_modules(stripes_install)
-
+    edge_modules = []
+    for e in edge_module:
+        for m in okapi_modules:
+            if m.get_id().startswith(e):
+                edge_modules.append(m)
+        for m in stripes_modules:
+            if m.get_id().startswith(e):
+                edge_modules.append(m)
+    stripes_modules = [m for m in stripes_modules
+                       if not m.get_id().startswith("edge-")]
+    okapi_modules = [m for m in okapi_modules
+                     if not m.get_id().startswith("edge-")]
+    okapi_modules += edge_modules
     add_modules(okapi_modules + stripes_modules)
     deploy_modules(node,
-                   okapi_modules + stripes_modules,
-                   edge_module)
+                   okapi_modules + stripes_modules)
 
     if tenantid == "ALL":
         tenants = OkapiClient().get_tenants()

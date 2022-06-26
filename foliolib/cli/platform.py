@@ -20,7 +20,8 @@ def platform():
 @click.option("-n", "--node", default=get_node(),
               help="node id", show_default=True)
 @click.option("-e", "--edgemodule", multiple=True,
-              help="Exclude edge module to deploy, e.g. edge-oai-pmh. Can be repeated")
+              help="edge module to deploy, e.g. edge-oai-pmh. Can be repeated")
+@click.option("-a", "--deployAsync",  help="", is_flag=True)
 @click.option("--loadSample",  help="", is_flag=True)
 @click.option("--loadReference",  help="", is_flag=True)
 @click.option(
@@ -39,6 +40,7 @@ def install(**kwargs):
     PLATFORM\tpath to folio platform.
     TENANTID\ttenant id.
     """
+    print(kwargs)
     _kwargs = {}
     if kwargs["ignoreerrors"]:
         _kwargs["ignoreErrors"] = True
@@ -54,6 +56,7 @@ def install(**kwargs):
                      list(kwargs["edgemodule"]),
                      loadSample=kwargs["loadsample"],
                      loadReference=kwargs["loadreference"],
+                     deploy_async=kwargs["deployasync"],
                      **_kwargs)
 
 
@@ -63,7 +66,7 @@ def install(**kwargs):
 @click.option("-n", "--node", default=get_node(),
               help="node id", show_default=True)
 @click.option("-e", "--edgemodule", multiple=True,
-              help="Exclude edge module to deploy, e.g. edge-oai-pmh . Can be repeated")
+              help="edge module to deploy, e.g. edge-oai-pmh . Can be repeated")
 @click.option(
     "--ignoreErrors", is_flag=True, help="Ignore errors during the install operation")
 @click.option(

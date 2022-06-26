@@ -788,7 +788,6 @@ class OkapiClient:
             query = urlencode(query)
             query = query.replace("True", "true").replace("False", "false")
             url += "?" + query
-        log.debug("%s %s", method, url)
 
         headers = headers or {}
         headers = requests.structures.CaseInsensitiveDict(data=headers)
@@ -815,6 +814,10 @@ class OkapiClient:
             request = self._client.prepare_request(
                 requests.Request(
                     method, url, data=data, headers=headers))
+        log.debug("%s %s", method, url)
+        if data is not None:
+            log.debug("Data:\n%s", json.dumps(data, indent=2))
+        log.debug("Headers:\n%s", str(headers))
 
         try:
             response = self._client.send(request, verify=self._verify_ssl)
@@ -827,8 +830,6 @@ class OkapiClient:
         log.debug(response.status_code)
         if "FOLIOLIB_CURL" in os.environ:
             misc.print_curl(url, method, headers, data=data)
-        # log.debug(data)
-        # log.debug(headers)
         self.headers = response.headers
         self.status_code = response.status_code
         if response.status_code == 200 or response.status_code == 201:

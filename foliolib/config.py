@@ -6,6 +6,7 @@ import configparser
 import logging
 import os
 import pathlib
+from imp import reload
 
 from foliolib.exceptions import ServerConfigNotFound
 
@@ -30,8 +31,8 @@ class Config:
 
     def __init__(self):
         self._server = None
-        self.__foliolibcfg = configparser.ConfigParser()
-        self.__okapicfg = configparser.ConfigParser()
+        self.__foliolibcfg = None
+        self.__okapicfg = None
 
     def get_server(self):
         """Get current server name.
@@ -52,6 +53,8 @@ class Config:
         """
         if name in self.get_servers():
             self._server = name
+            self.__foliolibcfg = configparser.ConfigParser()
+            self.__okapicfg = configparser.ConfigParser()
             self.__load()
         else:
             raise ServerConfigNotFound(name, self.get_servers())
