@@ -19,8 +19,6 @@ def platform():
 @click.argument("tenantid")
 @click.option("-n", "--node", default=get_node(),
               help="node id", show_default=True)
-@click.option("-e", "--edgemodule", multiple=True,
-              help="edge module to deploy, e.g. edge-oai-pmh. Can be repeated")
 @click.option("-a", "--deployAsync",  help="", is_flag=True)
 @click.option("--loadSample",  help="", is_flag=True)
 @click.option("--loadReference",  help="", is_flag=True)
@@ -40,7 +38,6 @@ def install(**kwargs):
     PLATFORM\tpath to folio platform.
     TENANTID\ttenant id.
     """
-    print(kwargs)
     _kwargs = {}
     if kwargs["ignoreerrors"]:
         _kwargs["ignoreErrors"] = True
@@ -53,7 +50,6 @@ def install(**kwargs):
     if kwargs["no_prerelease"]:
         _kwargs["preRelease"] = False
     install_platform(kwargs["platform"], kwargs["node"], kwargs["tenantid"],
-                     list(kwargs["edgemodule"]),
                      loadSample=kwargs["loadsample"],
                      loadReference=kwargs["loadreference"],
                      deploy_async=kwargs["deployasync"],
@@ -65,8 +61,6 @@ def install(**kwargs):
 @click.argument("tenantid")
 @click.option("-n", "--node", default=get_node(),
               help="node id", show_default=True)
-@click.option("-e", "--edgemodule", multiple=True,
-              help="edge module to deploy, e.g. edge-oai-pmh . Can be repeated")
 @click.option(
     "--ignoreErrors", is_flag=True, help="Ignore errors during the install operation")
 @click.option(
@@ -95,5 +89,4 @@ def upgrade(**kwargs):
     if kwargs["no_prerelease"]:
         _kwargs["preRelease"] = False
     upgrade_platform(kwargs["platform"], kwargs["node"], kwargs["tenantid"],
-                     list(kwargs["edgemodule"]),
                      **_kwargs)

@@ -13,8 +13,7 @@ from foliolib.okapi.okapiClient import OkapiClient
 log = logging.getLogger("foliolib.helper.platform")
 
 
-def install_platform(platform_path: str, node: str,
-                     tenantid: str, edge_module: list,
+def install_platform(platform_path: str, node: str, tenantid: str,
                      loadSample: bool = False, loadReference: bool = False,
                      deploy_async=False, **kwargs):
     """Install a folio platform.
@@ -44,19 +43,10 @@ def install_platform(platform_path: str, node: str,
     print("\tLoad references: %s" % str(loadReference))
 
     create_tenant()
-    edge_modules = []
-    for e in edge_module:
-        for m in okapi_modules:
-            if m.get_id().startswith(e):
-                edge_modules.append(m)
-        for m in stripes_modules:
-            if m.get_id().startswith(e):
-                edge_modules.append(m)
     stripes_modules = [m for m in stripes_modules
                        if not m.get_id().startswith("edge-")]
     okapi_modules = [m for m in okapi_modules
                      if not m.get_id().startswith("edge-")]
-    okapi_modules += edge_modules
     print("\nAdd modules ...")
     add_modules(okapi_modules + stripes_modules)
     print("\nDeploy modules ...")
@@ -70,8 +60,7 @@ def install_platform(platform_path: str, node: str,
                    **kwargs)
 
 
-def upgrade_platform(platform_path: str, node: str,
-                     tenantid: str, edge_module: list,
+def upgrade_platform(platform_path: str, node: str, tenantid: str,
                      **kwargs):
     """Upgrade a folio platform.
 
@@ -90,19 +79,10 @@ def upgrade_platform(platform_path: str, node: str,
     okapi_modules = load_modules(okapi_install)
     stripes_install = os.path.join(platform_path, "stripes-install.json")
     stripes_modules = load_modules(stripes_install)
-    edge_modules = []
-    for e in edge_module:
-        for m in okapi_modules:
-            if m.get_id().startswith(e):
-                edge_modules.append(m)
-        for m in stripes_modules:
-            if m.get_id().startswith(e):
-                edge_modules.append(m)
     stripes_modules = [m for m in stripes_modules
                        if not m.get_id().startswith("edge-")]
     okapi_modules = [m for m in okapi_modules
                      if not m.get_id().startswith("edge-")]
-    okapi_modules += edge_modules
     add_modules(okapi_modules + stripes_modules)
     deploy_modules(node,
                    okapi_modules + stripes_modules)

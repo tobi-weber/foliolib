@@ -76,7 +76,7 @@ def modify(**kwargs):
 
 @tenant.command()
 @click.argument("tenantid", required=True)
-@click.argument("moduleid", nargs=-1, required=True)
+@click.option("-m", "--module", multiple=True, required=True)
 @click.option("--loadSample",  help="", is_flag=True, default=False)
 @click.option("--loadReference",  help="", is_flag=True, default=False)
 @click.option("--async", is_flag=True,
@@ -100,6 +100,7 @@ def enable(**kwargs):
     MODULEID\tOne ore multiple module id(s).
     """
     _kwargs = {}
+    tenantid = kwargs["tenantid"]
     if kwargs["async"]:
         _kwargs["async"] = True
     if kwargs["deploy"]:
@@ -114,17 +115,27 @@ def enable(**kwargs):
         _kwargs["npmSnapshot"] = False
     if kwargs["no_prerelease"]:
         _kwargs["preRelease"] = False
-    print("Enable module %s for tenant %s" %
-          (kwargs["moduleid"], kwargs["tenantid"]))
-    OkapiClient().enable_modules(kwargs["moduleid"], kwargs["tenantid"],
-                                 loadSample=kwargs["loadsample"],
-                                 loadReference=kwargs["loadreference"],
-                                 **_kwargs)
+
+    def do(tid):
+        print("Enable module %s for tenant %s" %
+              (kwargs["module"], tid))
+        msg = OkapiClient().enable_modules(kwargs["module"], tid,
+                                           loadSample=kwargs["loadsample"],
+                                           loadReference=kwargs["loadreference"],
+                                           **_kwargs)
+        print(json.dumps(msg, indent=2))
+
+    if tenantid == "ALL":
+        tenants = OkapiClient().get_tenants()
+        for tenant in tenants:
+            do(tenant["id"])
+    else:
+        do(tenantid)
 
 
 @tenant.command()
 @click.argument("tenantid", required=True)
-@click.argument("modid", nargs=-1, required=True)
+@click.option("-m", "--module", multiple=True, required=True)
 @click.option("--async", is_flag=True,
               help="Uninstall in the background")
 @click.option("--undeploy", is_flag=True,
@@ -141,9 +152,9 @@ def disable(**kwargs):
     """Disable module(s) for a tenant.
 
     TENANTID\tThe tenant id.
-    MODULEID\tOne ore multiple module id(s).
     """
     _kwargs = {}
+    tenantid = kwargs["tenantid"]
     if kwargs["async"]:
         _kwargs["async"] = True
     if kwargs["undeploy"]:
@@ -156,10 +167,25 @@ def disable(**kwargs):
         _kwargs["simulate"] = True
     if kwargs["no_invoke"]:
         _kwargs["invoke"] = False
-    print("Disable module %s for tenant %s" %
-          (kwargs["modid"], kwargs["tenantid"]))
-    OkapiClient().disable_modules(
-        kwargs["modid"], kwargs["tenantid"], **_kwargs)
+
+    def do(tid):
+        try:
+            for modid in kwargs["module"]:
+                print("Disable module %s for tenant %s" %
+                      (modid, tid))
+                msg = OkapiClient().disable_modules([modid], tid, **_kwargs)
+                print(json.dumps(msg, indent=2))
+        except Exception as e:
+            print(e)
+            if not kwargs["ignoreerrors"]:
+                raise
+
+    if tenantid == "ALL":
+        tenants = OkapiClient().get_tenants()
+        for tenant in tenants:
+            do(tenant["id"])
+    else:
+        do(tenantid)
 
 
 @tenant.command()
@@ -182,6 +208,7 @@ def upgrade(**kwargs):
     TENANTID\tThe tenant id.
     """
     _kwargs = {}
+    tenantid = kwargs["tenantid"]
     if kwargs["async"]:
         _kwargs["async"] = True
     if kwargs["ignoreerrors"]:
@@ -194,13 +221,23 @@ def upgrade(**kwargs):
         _kwargs["npmSnapshot"] = False
     if kwargs["no_prerelease"]:
         _kwargs["preRelease"] = False
-    msg = OkapiClient().upgrade_modules(kwargs["tenantid"], **_kwargs)
-    print(json.dumps(msg, indent=2))
+
+    def do(tid):
+        print("Upgrade tenant %s" % tid)
+        msg = OkapiClient().upgrade_modules(tid, **_kwargs)
+        print(json.dumps(msg, indent=2))
+
+    if tenantid == "ALL":
+        tenants = OkapiClient().get_tenants()
+        for tenant in tenants:
+            do(tenant["id"])
+    else:
+        do(tenantid)
 
 
 @tenant.command()
 @click.argument("tenantid", required=True)
-@click.argument("moduleid", required=True, nargs=-1)
+@click.option("-m", "--module", multiple=True, required=True)
 @click.option("--async", is_flag=True,
               help="Upgrade in the background")
 @click.option("--ignoreErrors", is_flag=True,
@@ -220,6 +257,7 @@ def upgrademodule(**kwargs):
     MODULEID\tmodule id. Can be repeated.
     """
     _kwargs = {}
+    tenantid = kwargs["tenantid"]
     if kwargs["async"]:
         _kwargs["async"] = True
     if kwargs["ignoreerrors"]:
@@ -232,16 +270,25 @@ def upgrademodule(**kwargs):
         _kwargs["npmSnapshot"] = False
     if kwargs["no_prerelease"]:
         _kwargs["preRelease"] = False
-    modules = kwargs["moduleid"]
-    tenantId = kwargs["tenantid"]
-    msg = OkapiClient().upgrade_modules(tenantId, modules=modules, **_kwargs)
-    print(json.dumps(msg, indent=2))
+    modules = kwargs["module"]
+
+    def do(tid):
+        print("Upgrade modules %s for tenant %s" % (str(modules), tid))
+        msg = OkapiClient().upgrade_modules(tid, modules=modules, **_kwargs)
+        print(json.dumps(msg, indent=2))
+
+    if tenantid == "ALL":
+        tenants = OkapiClient().get_tenants()
+        for tenant in tenants:
+            do(tenant["id"])
+    else:
+        do(tenantid)
 
 
-@ tenant.command()
-@ click.argument("tenantid", required=True)
-@ click.option("--full", is_flag=True,
-               help="Full MD should be returned")
+@tenant.command()
+@click.argument("tenantid", required=True)
+@click.option("--full", is_flag=True,
+              help="Full MD should be returned")
 def modules(**kwargs):
     """List modules of a tenant.
 
@@ -256,11 +303,11 @@ def modules(**kwargs):
         print(e["id"])
 
 
-@ tenant.command()
-@ click.argument("tenantid", required=True)
-@ click.option("-i", "--interface")
-@ click.option("-f", "--full", is_flag=True,
-               help="Full MD should be returned")
+@tenant.command()
+@click.argument("tenantid", required=True)
+@click.option("-i", "--interface")
+@click.option("-f", "--full", is_flag=True,
+              help="Full MD should be returned")
 def interfaces(**kwargs):
     """List interface(s).
 
@@ -295,20 +342,20 @@ def interfaces(**kwargs):
                     # print("\t\t%s" % p)
 
 
-@ tenant.command()
-@ click.argument("tenantid")
-@ click.option("--async", is_flag=True,
-               help="Uninstall in the background")
-@ click.option("--undeploy", is_flag=True,
-               help="Undeploy modules")
-@ click.option("--ignoreErrors", is_flag=True,
-               help="Ignore errors during the uninstall operation")
-@ click.option("--no-invoke", is_flag=True,
-               help="Do not invoke for tenant init/permissions/purge")
-@ click.option("--purge", is_flag=True,
-               help="Modules will also be purged.")
-@ click.option("--simulate", is_flag=True,
-               help="Simulate the installation")
+@tenant.command()
+@click.argument("tenantid")
+@click.option("--async", is_flag=True,
+              help="Uninstall in the background")
+@click.option("--undeploy", is_flag=True,
+              help="Undeploy modules")
+@click.option("--ignoreErrors", is_flag=True,
+              help="Ignore errors during the uninstall operation")
+@click.option("--no-invoke", is_flag=True,
+              help="Do not invoke for tenant init/permissions/purge")
+@click.option("--purge", is_flag=True,
+              help="Modules will also be purged.")
+@click.option("--simulate", is_flag=True,
+              help="Simulate the installation")
 def uninstall(**kwargs):
     """Disable all modules of a tenant.
 

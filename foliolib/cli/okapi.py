@@ -3,8 +3,8 @@
 
 import click
 from foliolib.config import Config
-from foliolib.helper.okapi import (clean_okapi, secure_supertenant, set_env_db,
-                                   set_env_elastic, set_env_kafka,
+from foliolib.helper.okapi import (clean_okapi, secure_supertenant, set_db_env,
+                                   set_kafka_env, set_okapi_url_env,
                                    unsecure_supertenant)
 from foliolib.okapi.okapiClient import OkapiClient
 from tabulate import tabulate
@@ -79,14 +79,35 @@ def env():
 @click.option("-v", "--value", help="")
 @click.option("-d", "--description", help="")
 def add_env(**kwargs):
-    """Add enviroment variable to Okapi.
+    """Add global enviroment variable.
     """
-    OkapiClient().set_env(kwargs["name"], kwargs["value"],
-                          description=kwargs["description"])
-    print("Added enviroment variable to Okapi:")
+    print("Add global enviroment variable:")
     print(f"\tname: {kwargs['name']}")
     print(f"\tname: {kwargs['value']}")
     print(f"\tname: {kwargs['description']}")
+    OkapiClient().set_env(kwargs["name"], kwargs["value"],
+                          description=kwargs["description"])
+
+
+@okapi.command()
+@click.argument("name", required=True, nargs=-1)
+# @click.option("-n", "--name", help="")
+def del_env(**kwargs):
+    """Remove global enviroment variable.
+    """
+    print("Remove global enviroment variable:")
+    print(f"\tname: {kwargs['name']}")
+    # OkapiClient().delete_env(kwargs['name'])
+    for name in kwargs["name"]:
+        OkapiClient().delete_env(name)
+
+
+@okapi.command()
+def set_okapi_url(**kwargs):
+    """Set global Okapi URL.
+    """
+    print("Set global Okapi URL")
+    set_okapi_url_env()
 
 
 @okapi.command()
@@ -96,7 +117,7 @@ def add_env(**kwargs):
               default="folio_admin", help=" ", show_default=True)
 @click.option("-d", "--database",
               default="okapi_modules", help=" ", show_default=True)
-def set_dbenv(**kwargs):
+def set_db(**kwargs):
     """Set global database settings to Okapi.
     """
     server = Config().okapicfg().get("Postgres", "host")
@@ -107,7 +128,7 @@ def set_dbenv(**kwargs):
     print(f"\tdatabase \t{kwargs['database']}")
     print(f"\tusername: \t{kwargs['user']}")
     print(f"\tpassword: \t{kwargs['password']}")
-    set_env_db(server, port, kwargs["user"],
+    set_db_env(server, port, kwargs["user"],
                kwargs["password"], kwargs["database"])
 
 
@@ -115,40 +136,13 @@ def set_dbenv(**kwargs):
 @click.option("-k", "--host", required=True, help="Kafka host")
 @click.option("-p", "--port",
               default="9092", help="Kafka port", show_default=True)
-def set_kafkaenv(**kwargs):
-    """Set global Kafka settings to Okapi.
+def set_kafka(**kwargs):
+    """Set global Kafka settings.
     """
     print("Set kafka parameters:")
     print(f"\tkafka host: \t{kwargs['host']}")
     print(f"\tkafka port: \t{kwargs['port']}")
-    set_env_kafka(kwargs["host"], kwargs["port"])
-
-
-@okapi.command()
-@click.option("-e", "--host", required=True, help="Elasticsearch host")
-@click.option("-p", "--port",
-              default="9200", help="Elasticsearch port", show_default=True)
-@click.option("-u", "--user",
-              default="elastic", help="Elasticsearch username",
-              show_default=True)
-@click.option("-p", "--password", default="", help="Elasticsearch password",
-              show_default=True)
-@click.option("-l", "--language", multiple=True,
-              help="Elasticsearch initial language. Can be repeated. (default: eng)", show_default=True)
-def set_elasticenv(**kwargs):
-    """Set global Elasticsearch settings to Okapi.
-    """
-    langs = kwargs["language"]
-    if not langs:
-        langs = ("eng",)
-    print("Set Elasticsearch parameters:")
-    print(f"\telasticsearch host: \t{kwargs['host']}")
-    print(f"\telasticsearch port: \t{kwargs['port']}")
-    print(f"\telasticsearch user: \t{kwargs['user']}")
-    print(f"\telasticsearch password: \t{kwargs['password']}")
-    print("\tinitial languages: \t%s" % (",".join(langs)))
-    set_env_elastic(kwargs["host"], elastic_port=kwargs["port"], elastic_user=kwargs["user"],
-                    elastic_password=kwargs["password"], languages=langs)
+    set_kafka_env(kwargs["host"], kwargs["port"])
 
 
 @okapi.command()

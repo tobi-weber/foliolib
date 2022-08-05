@@ -110,7 +110,7 @@ def deployed(**kwargs):
         if okapi_mods and kube_mods:
             print("")
         if kube_mods:
-            headers = ["Module id", "tKubernetes URL"]
+            headers = ["Module id", "Kubernetes URL"]
             body = [[e["srvcId"], e["url"]] for e in mods]
             print(tabulate(body, headers=headers))
 

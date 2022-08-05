@@ -59,6 +59,7 @@ def deploy_modules_threaded(node, modules):
         def join(self):
             Thread.join(self)
             if self.exc:
+                log.error("Deploy failed for %s", self.name)
                 raise self.exc
     threads = []
 

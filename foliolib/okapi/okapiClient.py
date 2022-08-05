@@ -22,6 +22,7 @@ from foliolib.okapi.exceptions import (OkapiException, OkapiFatalError,
                                        OkapiRequestTimeout,
                                        OkapiRequestUnauthorized,
                                        OkapiRequestUnprocessableEntity)
+from foliolib.okapi.kubeClient import KubeClient
 from github import Github
 from lxml import etree
 
@@ -85,7 +86,10 @@ class OkapiClient:
         Returns:
             dict: Enviroment variables
         """
-        return self.request("GET", "/_/env")
+        if Config().is_kubernetes():
+            return KubeClient().get_env()
+        else:
+            return self.request("GET", "/_/env")
 
     def set_env(self, name: str, value: str, description: str = ""):
         """Set an enviroment variable.
@@ -103,7 +107,23 @@ class OkapiClient:
 
 
         """
-        return self.request("POST", "/_/env", {"name": name, "value": value, "description": description})
+        if Config().is_kubernetes():
+            return KubeClient().set_env(name, value)
+        else:
+            return self.request("POST", "/_/env", {"name": name, "value": value, "description": description})
+
+    def delete_env(self, name: str):
+        """Delete an enviroment variable.
+
+        Args:
+            name (str): Name of the enviroment variable.
+
+
+        """
+        if Config().is_kubernetes():
+            return KubeClient().delete_env(name)
+        else:
+            return self.request("DELETE", "/_/env", {"name": name})
 
     def health(self, serviceID: str = None, instanceId: str = None):
         """Check health of modules
@@ -264,8 +284,11 @@ class OkapiClient:
             for module in modules:
                 if module["srvcId"] == modId:
                     return False
-            return self.request("POST", "/_/discovery/modules",
-                                {"srvcId": modId, "nodeId": node})
+            if Config().is_kubernetes():
+                return KubeClient().deploy(modId)
+            else:
+                return self.request("POST", "/_/discovery/modules",
+                                    {"srvcId": modId, "nodeId": node})
         else:
             log.error("%s has no launchDescriptor", modId)
 
@@ -276,10 +299,13 @@ class OkapiClient:
             modId (str): Module id.
             instanceId (str, optional): Instance id. Defaults to None.
         """
-        url = f"/_/discovery/modules/{modId}"
-        if instanceId is not None:
-            url += "/" + instanceId
-        return self.request("DELETE", url)
+        if Config().is_kubernetes():
+            return KubeClient().undeploy(modId)
+        else:
+            url = f"/_/discovery/modules/{modId}"
+            if instanceId is not None:
+                url += "/" + instanceId
+            return self.request("DELETE", url)
 
     def undeploy_modules(self):
         """Remove registration for all instances

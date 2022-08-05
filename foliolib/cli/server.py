@@ -61,9 +61,11 @@ def enable(**kwargs):
 
 @server.command()
 @click.argument("name")
-@click.argument("host")
+@click.option("-o", "--host", default="localhost", help="okapi host", show_default=True)
 @click.option("-p", "--port", default="9130", help="", show_default=True)
 @click.option("-s", "--ssl", is_flag=True,
+              help="")
+@click.option("-k", "--kubernetes", is_flag=True,
               help="")
 def create(**kwargs):
     """Create new server config
@@ -78,7 +80,8 @@ def create(**kwargs):
         Config().create_okapi_conf(name, okapi_host=kwargs["host"],
                                    okapi_port=kwargs["port"],
                                    db_host=kwargs["host"],
-                                   ssl=kwargs["ssl"])
+                                   ssl=kwargs["ssl"],
+                                   kubernetes=kwargs["kubernetes"])
         Config().set_server(name)
         __save_current_server(name)
     else:

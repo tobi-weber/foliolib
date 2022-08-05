@@ -13,9 +13,17 @@ from foliolib.okapi.okapiModule import (create_okapiModules,
 log = logging.getLogger("foliolib.helper.okapi")
 
 
-def set_env_db(db_host: str, db_port: str = "5432", username: str = "folio_admin",
+def set_okapi_url_env():
+    """Set Okapi URL enviroment variable.
+    """
+    okapi_host = Config().okapicfg().get("Okapi", "host")
+    okapi_port = Config().okapicfg().get("Okapi", "port")
+    OkapiClient().set_env("OKAPI_URL", f"http://{okapi_host}:{okapi_port}")
+
+
+def set_db_env(db_host: str, db_port: str = "5432", username: str = "folio_admin",
                password: str = "folio_admin", database: str = "okapi_modules"):
-    """Set database enviroment.
+    """Set database enviroment variables.
 
     Args:
         db_host (str): postgresql host.
@@ -35,43 +43,16 @@ def set_env_db(db_host: str, db_port: str = "5432", username: str = "folio_admin
     okapi.set_env("DB_MAXPOOLSIZE", "5")
 
 
-def set_env_kafka(kafka_host: str, kafka_port: str = "9092"):
-    """Set kafka enviroment.
+def set_kafka_env(kafka_host: str, kafka_port: str = "9092"):
+    """Set kafka enviroment variables.
 
     Args:
         kafka_host (str): kafka host
         kafka_port (str, optional): kafka port. Defaults to "9092".
     """
     okapi = OkapiClient()
-    okapi_host = Config().okapicfg().get("Okapi", "host")
-    okapi_port = Config().okapicfg().get("Okapi", "port")
     okapi.set_env("KAFKA_HOST", kafka_host)
     okapi.set_env("KAFKA_PORT",  kafka_port)
-    okapi.set_env("OKAPI_URL", f"http://{okapi_host}:{okapi_port}")
-
-
-def set_env_elastic(elastic_host: str, elastic_port: str = "9200",
-                    elastic_user: str = "elastic", elastic_password: str = "",
-                    languages: tuple = ("eng",)):
-    """Set elasticsearch enviroment
-
-    Args:
-        elastic_host (str): elasticsearch host
-        elastic_port (str, optional): elasticsearch password. Defaults to "9200".
-        elastic_user (str, optional): elasticsearch username. Defaults to "elastic".
-        elastic_password (str, optional): elasticsearch password. Defaults to "".
-        languages (tuple, optional): elasticsearch  initial languages. Defaults to ("eng",).
-    """
-    okapi = OkapiClient()
-    okapi_host = Config().okapicfg().get("Okapi", "host")
-    okapi_port = Config().okapicfg().get("Okapi", "port")
-    okapi.set_env("ELASTICSEARCH_HOST", elastic_host)
-    okapi.set_env("ELASTICSEARCH_PORT", elastic_port)
-    okapi.set_env("ELASTICSEARCH_USERNAME", elastic_user)
-    okapi.set_env("ELASTICSEARCH_PASSWORD", elastic_password)
-    okapi.set_env("INITIAL_LANGUAGES", ",".join(languages))
-    okapi.set_env("ELASTICSEARCH_URL", f"http://{elastic_host}:{elastic_port}")
-    okapi.set_env("OKAPI_URL", f"http://{okapi_host}:{okapi_port}")
 
 
 def login_supertenant(username: str, password: str):

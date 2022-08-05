@@ -140,7 +140,7 @@ class Postgres:
         table = f"{schema}.{table}" if schema else table
         log.debug("Clear table %s", table)
         with self._con.cursor() as c:
-            c.execute(f"DELETE FROM {table};")
+            c.execute(f"TRUNCATE TABLE {table} CONTINUE IDENTITY CASCADE;")
 
     def drop_table(self, table: str, schema: str = None):
         table = f"{schema}.{table}" if schema else table

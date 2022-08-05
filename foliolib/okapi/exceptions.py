@@ -110,3 +110,14 @@ class TenantNotFound(OkapiException):
 
     def __init__(self, tenant):
         self.msg = f"Tenant {tenant} not found"
+
+
+class KubeException(FoliolibError):
+    description = ""
+
+
+class KubeDeployError(FoliolibError):
+    description = "Deploy failed"
+
+    def __init__(self, modId, namespace):
+        self.msg = f"Deploy for {modId} in namespace {namespace}failed"

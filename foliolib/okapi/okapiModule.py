@@ -110,10 +110,31 @@ class OkapiModule:
         if "launchDescriptor" in self._descriptor:
             return self._descriptor["launchDescriptor"]["dockerImage"]
         else:
-            return ""
+            return None
+
+    def get_docker_args(self):
+        if "launchDescriptor" in self._descriptor:
+            da = self._descriptor["launchDescriptor"]["dockerArgs"]
+            if "Memory" in da["HostConfig"]:
+                memory = da["HostConfig"]["Memory"]
+            else:
+                memory = None
+            portBindings = list(da["HostConfig"]["PortBindings"].keys())[
+                0].split("/")
+            return {"memory": memory,
+                    "port": int(portBindings[0]),
+                    "protocol": portBindings[1]}
+        else:
+            return None
+
+    def get_env(self):
+        if "launchDescriptor" in self._descriptor:
+            if "env" in self._descriptor["launchDescriptor"]:
+                return self._descriptor["launchDescriptor"]["env"]
+        return []
 
     def __get_descriptor(self, modId: str):
-        log.info("Load ModuleDescriptor for %s", modId)
+        log.debug("Load ModuleDescriptor for %s", modId)
         cache_dir = Config().foliolibcfg().get("Cache", "descriptors")
         host = Config().foliolibcfg().get("PullNode", "host")
         port = Config().foliolibcfg().get("PullNode", "port")
@@ -122,18 +143,23 @@ class OkapiModule:
         except NoOptionError:
             ssl = False
 
+        log.debug("Try to pull descriptor from okapi.")
+        from foliolib.okapi import okapiClient
+        try:
+            return okapiClient.OkapiClient().get_module(modId)
+        except:
+            pass
         # Try to load from cache
         descriptor_fname = f"ModuleDescriptor-{modId}.json"
         fname_cache = os.path.join(cache_dir, descriptor_fname)
         if os.path.exists(fname_cache):
             log.debug("Load descriptor from %s", fname_cache)
             with open(fname_cache, encoding="utf8") as f:
-                descriptor = json.load(f)
-        # Load from PullNode
+                return json.load(f)
+        # Load from Okpai or from PullNode
         else:
-            log.debug("Pull descriptor for %s from %s:%s",
+            log.debug("Try to pull descriptor for %s from %s:%s",
                       modId, host, port)
-            from foliolib.okapi import okapiClient
             client = okapiClient.OkapiClient(host=host, port=port, ssl=ssl)
             descriptor = client.get_module(modId)
             descriptor_fname = f"ModuleDescriptor-{modId}.json"
@@ -141,8 +167,7 @@ class OkapiModule:
             log.debug("Write descriptor to %s", fname_cache)
             with open(fname_cache, "w", encoding="utf8") as f:
                 json.dump(descriptor, f, indent=2)
-
-        return descriptor
+            return descriptor
 
     def __clean_env(self):
         if "launchDescriptor" in self._descriptor:

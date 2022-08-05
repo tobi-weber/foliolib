@@ -6,7 +6,6 @@ import configparser
 import logging
 import os
 import pathlib
-from imp import reload
 
 from foliolib.exceptions import ServerConfigNotFound
 
@@ -81,28 +80,37 @@ class Config:
         Returns:
             ConfigParser: ConfigParser object of $MODULENAME.conf for a specific module.
         """
+        from foliolib.helper import split_modid
         modules_dir = os.path.join(self.get_confdir(),
                                    self.get_server(),
                                    "modules")
         conf_file = None
+        name, version = split_modid(modId)
         for f in os.listdir(modules_dir):
-            if os.path.splitext(f)[0] in modId:
+            if os.path.splitext(f)[0] == name:
                 conf_file = os.path.join(modules_dir, f)
-        config = configparser.ConfigParser()
         if conf_file is not None:
+            config = configparser.ConfigParser()
             config.read(conf_file)
             return config
         else:
             return None
 
     def is_kubernetes(self):
-        """Is Kubernets enabled?
+        """Is Kubernetes enabled?
 
         Returns:
             bool: Wether kubernets is enabled.
         """
-        #print(self.__okapicfg.get("Kubernetes", "enable", fallback=False))
         return self.__okapicfg.get("Kubernetes", "enable", fallback=False)
+
+    def get_kube_config(self):
+        kube_config = os.path.join(self.get_confdir(),
+                                   self.get_server(), "kube_config")
+        if os.path.exists(kube_config):
+            return kube_config
+        else:
+            raise FileNotFoundError("%s not found" % kube_config)
 
     def get_servers(self):
         """Get all available server configs.
@@ -119,11 +127,7 @@ class Config:
     def get_url(self):
         host = self.okapicfg().get("Okapi", "host")
         port = self.okapicfg().get("Okapi", "port")
-
-        try:
-            ssl = self.okapicfg().get("Okapi", "ssl")
-        except configparser.NoOptionError:
-            ssl = False
+        ssl = self.okapicfg().getboolean("Okapi", "ssl", fallback=False)
         if ssl:
             url = f"https://{host}:{port}"
         else:
@@ -219,6 +223,7 @@ class Config:
     def create_foliolib_conf(self):
         """Create foliolib.conf
         """
+        self.__foliolibcfg = configparser.ConfigParser()
         fpath = os.path.join(self.get_confdir(), "foliolib.conf")
         if not os.path.exists(fpath):
             log.debug("Write new config %s", fpath)
@@ -238,7 +243,7 @@ class Config:
             log.debug("%s already exists.", fpath)
 
     def create_okapi_conf(self, name: str, okapi_host: str = "localhost",
-                          okapi_port: str = "9130", ssl=False,
+                          okapi_port: str = "9130", ssl=False, kubernetes=False,
                           db_host: str = "localhost", db_port: str = "5432",
                           db_user: str = "postgres", db_password: str = "postgres"):
         """Create okapi.conf for given server config name.
@@ -253,6 +258,7 @@ class Config:
             db_user (str, optional): Postgres user. Defaults to "postgres".
             db_password (str, optional): Postgres password. Defaults to "postgres".
         """
+        self.__okapicfg = configparser.ConfigParser()
         sdir = os.path.join(self.get_confdir(), name)
         fpath = os.path.join(sdir, "okapi.conf")
         if not os.path.exists(fpath):
@@ -263,6 +269,9 @@ class Config:
             self.__okapicfg["Okapi"]["host"] = okapi_host
             self.__okapicfg["Okapi"]["port"] = okapi_port
             self.__okapicfg["Okapi"]["ssl"] = str(ssl)
+            self.__okapicfg["Kubernetes"] = {}
+            self.__okapicfg["Kubernetes"]["enable"] = str(kubernetes)
+            self.__okapicfg["Kubernetes"]["namespace"] = "default"
             self.__okapicfg["Postgres"] = {}
             self.__okapicfg["Postgres"]["host"] = db_host
             self.__okapicfg["Postgres"]["port"] = db_port
