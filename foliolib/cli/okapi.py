@@ -45,13 +45,15 @@ def health(**kwargs):
 def nodes():
     """List Nodes.
     """
-    headers = ["Node id", "URL"]
     body = []
     for e in OkapiClient().get_nodes():
         l = [e["nodeId"], e["url"]]
         if "nodeName" in e:
             l.append(e["nodeName"])
         body.append(l)
+    headers = ["NodeID", "URL"]
+    if len(body) == 3:
+        headers = ["NodeID", "URL", "NodeName"]
     print(tabulate(body, headers=headers))
 
 
@@ -136,13 +138,20 @@ def set_db(**kwargs):
 @click.option("-k", "--host", required=True, help="Kafka host")
 @click.option("-p", "--port",
               default="9092", help="Kafka port", show_default=True)
+@click.option("-r", "--replication-factor", default="1",
+              help="Replication Factor.", show_default=True)
+@click.option("-t", "--topicprefix",
+              help="Topicname prefix. Default is folio")
 def set_kafka(**kwargs):
     """Set global Kafka settings.
     """
     print("Set kafka parameters:")
-    print(f"\tkafka host: \t{kwargs['host']}")
-    print(f"\tkafka port: \t{kwargs['port']}")
-    set_kafka_env(kwargs["host"], kwargs["port"])
+    print(f"\tkafka host: {kwargs['host']}")
+    print(f"\tkafka port: {kwargs['port']}")
+    print(f"\treplication factor: {kwargs['replication_factor']}")
+    set_kafka_env(kwargs["host"], kwargs["port"],
+                  replication_factor=kwargs['replication_factor'],
+                  topicprefix=kwargs["topicprefix"])
 
 
 @okapi.command()

@@ -1,0 +1,126 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: folio
+  labels:
+    name: folio
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: okapi-hazelcast-cluster-role
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - endpoints
+      - pods
+      - nodes
+      - services
+    verbs:
+      - get
+      - list
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: okapi-hazelcast-cluster-role-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: okapi-hazelcast-cluster-role
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: folio
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: okapi
+  namespace: folio
+  labels:
+    app: okapi
+spec:
+  type: LoadBalancer
+  externalIPs:
+    - 192.168.10.99
+  ports:
+    - name: "okapi"
+      protocol: TCP
+      port: 9130
+      targetPort: 9130
+  selector:
+    app: okapi
+
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: okapi
+  namespace: folio
+spec:
+  serviceName: "okapi"
+  replicas: 3
+  selector:
+    matchLabels:
+      app: okapi
+  template:
+    metadata:
+      labels:
+        app: okapi
+    spec:
+      containers:
+        - env:
+            - name: OKAPI_HOST
+              value: okapi
+            - name: PG_HOST
+              value: pg
+            - name: OKAPI_KUBERNETES
+              value: "true"
+            - name: OKAPI_KUBERNETES_SERVICE_NAME
+              value: "okapi"
+            - name: OKAPI_KUBERNETES_NAMESPACE
+              value: "folio"
+            - name: INITDB
+              value: "true"
+          image: <FQDN registry>/okapi:<VERSION>
+          name: okapi
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9130
+            - containerPort: 5701
+            - containerPort: 5702
+            - containerPort: 5703
+            - containerPort: 5704
+            - containerPort: 54327
+          livenessProbe:
+            failureThreshold: 2
+            httpGet:
+              path: /_/proxy/health
+              port: 9130
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            successThreshold: 1
+            timeoutSeconds: 5
+          readinessProbe:
+            failureThreshold: 2
+            httpGet:
+              path: /_/proxy/health
+              port: 9130
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            successThreshold: 1
+            timeoutSeconds: 5
+
+
+

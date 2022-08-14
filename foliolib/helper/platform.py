@@ -61,7 +61,7 @@ def install_platform(platform_path: str, node: str, tenantid: str,
 
 
 def upgrade_platform(platform_path: str, node: str, tenantid: str,
-                     **kwargs):
+                     deploy_async=False, **kwargs):
     """Upgrade a folio platform.
 
     Args:
@@ -84,8 +84,12 @@ def upgrade_platform(platform_path: str, node: str, tenantid: str,
     okapi_modules = [m for m in okapi_modules
                      if not m.get_id().startswith("edge-")]
     add_modules(okapi_modules + stripes_modules)
-    deploy_modules(node,
-                   okapi_modules + stripes_modules)
+    if deploy_async:
+        deploy_modules_threaded(node, okapi_modules)
+    else:
+        deploy_modules(node, okapi_modules)
+    # deploy_modules(node,
+    #               okapi_modules + stripes_modules)
 
     if tenantid == "ALL":
         tenants = OkapiClient().get_tenants()

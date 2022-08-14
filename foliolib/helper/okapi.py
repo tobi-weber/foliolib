@@ -40,10 +40,12 @@ def set_db_env(db_host: str, db_port: str = "5432", username: str = "folio_admin
     okapi.set_env("DB_DATABASE", database)
     okapi.set_env("DB_QUERYTIMEOUT", "60000")
     okapi.set_env("DB_CHARSET", "UTF-8")
-    okapi.set_env("DB_MAXPOOLSIZE", "5")
+    #okapi.set_env("DB_MAXPOOLSIZE", "5")
+    #okapi.set_env("DB_MAXPOOLSIZE", "15")
 
 
-def set_kafka_env(kafka_host: str, kafka_port: str = "9092"):
+def set_kafka_env(kafka_host: str, kafka_port: str = "9092", replication_factor=1,
+                  topicprefix=None):
     """Set kafka enviroment variables.
 
     Args:
@@ -53,6 +55,9 @@ def set_kafka_env(kafka_host: str, kafka_port: str = "9092"):
     okapi = OkapiClient()
     okapi.set_env("KAFKA_HOST", kafka_host)
     okapi.set_env("KAFKA_PORT",  kafka_port)
+    okapi.set_env("REPLICATION_FACTOR",  replication_factor)
+    if topicprefix is not None:
+        okapi.set_env("ENV",  topicprefix)
 
 
 def login_supertenant(username: str, password: str):

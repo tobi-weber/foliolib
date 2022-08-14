@@ -61,6 +61,7 @@ def install(**kwargs):
 @click.argument("tenantid")
 @click.option("-n", "--node", default=get_node(),
               help="node id", show_default=True)
+@click.option("-a", "--deployAsync",  help="", is_flag=True)
 @click.option(
     "--ignoreErrors", is_flag=True, help="Ignore errors during the install operation")
 @click.option(
@@ -89,4 +90,4 @@ def upgrade(**kwargs):
     if kwargs["no_prerelease"]:
         _kwargs["preRelease"] = False
     upgrade_platform(kwargs["platform"], kwargs["node"], kwargs["tenantid"],
-                     **_kwargs)
+                     deploy_async=kwargs["deployasync"], **_kwargs)

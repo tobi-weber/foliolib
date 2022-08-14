@@ -4,6 +4,7 @@
 import base64
 import json
 import logging
+import math
 import time
 
 from foliolib.config import Config
@@ -127,10 +128,24 @@ class Resources:
 
     def __init__(self, modId) -> None:
         self._conf = Config().modulescfg(modId)
-        self._min_cpu = 0
+        module = OkapiModule(modId)
+        self._min_cpu = "10m"
         self._max_cpu = 0
-        self._min_memory = 0
-        self._max_memory = 0
+        memory = module.get_docker_args()["memory"]
+        if memory is not None:
+            mem = "%iKi" % math.ceil(memory/1024)
+            if Config().okapicfg().getboolean("Kubernetes", "dev", fallback=False):
+                min_mem = "10Mi"
+                max_mem = mem
+            else:
+                min_mem = mem
+                max_mem = mem
+        else:
+            log.warning("ModuleDescriptor for %s has no memory defined", modId)
+            min_mem = 0
+            max_mem = 0
+        self._min_memory = min_mem
+        self._max_memory = max_mem
         if self._conf is not None:
             if self._conf.has_section("Resources"):
                 self._min_cpu = self._conf.get(
