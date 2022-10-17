@@ -85,8 +85,8 @@ def add_env(**kwargs):
     """
     print("Add global enviroment variable:")
     print(f"\tname: {kwargs['name']}")
-    print(f"\tname: {kwargs['value']}")
-    print(f"\tname: {kwargs['description']}")
+    print(f"\tvalue: {kwargs['value']}")
+    print(f"\tdescription: {kwargs['description']}")
     OkapiClient().set_env(kwargs["name"], kwargs["value"],
                           description=kwargs["description"])
 
@@ -114,9 +114,9 @@ def set_okapi_url(**kwargs):
 
 @okapi.command()
 @click.option("-u", "--user",
-              default="folio_admin", help=" ", show_default=True)
+              default="folio", help=" ", show_default=True)
 @click.option("-p", "--password",
-              default="folio_admin", help=" ", show_default=True)
+              default="folio", help=" ", show_default=True)
 @click.option("-d", "--database",
               default="okapi_modules", help=" ", show_default=True)
 def set_db(**kwargs):

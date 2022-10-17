@@ -4,10 +4,11 @@
 import json
 import logging
 import os
+import sys
 
 from foliolib.helper.modules import (add_modules, deploy_modules,
-                                     deploy_modules_threaded, enable_modules,
-                                     load_modules)
+                                     deploy_modules_async, enable_modules,
+                                     load_install_file)
 from foliolib.okapi.okapiClient import OkapiClient
 
 log = logging.getLogger("foliolib.helper.platform")
@@ -32,9 +33,9 @@ def install_platform(platform_path: str, node: str, tenantid: str,
             OkapiClient().create_tenant(tenantid)
 
     okapi_install = os.path.join(platform_path, "okapi-install.json")
-    okapi_modules = load_modules(okapi_install)
+    okapi_modules = load_install_file(okapi_install)
     stripes_install = os.path.join(platform_path, "stripes-install.json")
-    stripes_modules = load_modules(stripes_install)
+    stripes_modules = load_install_file(stripes_install)
 
     print("\nInstall platform %s" % platform_path)
     print("\tNode: %s" % node)
@@ -51,7 +52,7 @@ def install_platform(platform_path: str, node: str, tenantid: str,
     add_modules(okapi_modules + stripes_modules)
     print("\nDeploy modules ...")
     if deploy_async:
-        deploy_modules_threaded(node, okapi_modules)
+        deploy_modules_async(node, okapi_modules)
     else:
         deploy_modules(node, okapi_modules)
     print("\nEnable modules for tenant %s ..." % tenantid)
@@ -76,20 +77,18 @@ def upgrade_platform(platform_path: str, node: str, tenantid: str,
         print(json.dumps(msg, indent=2))
 
     okapi_install = os.path.join(platform_path, "okapi-install.json")
-    okapi_modules = load_modules(okapi_install)
+    okapi_modules = load_install_file(okapi_install)
     stripes_install = os.path.join(platform_path, "stripes-install.json")
-    stripes_modules = load_modules(stripes_install)
+    stripes_modules = load_install_file(stripes_install)
     stripes_modules = [m for m in stripes_modules
                        if not m.get_id().startswith("edge-")]
     okapi_modules = [m for m in okapi_modules
                      if not m.get_id().startswith("edge-")]
     add_modules(okapi_modules + stripes_modules)
     if deploy_async:
-        deploy_modules_threaded(node, okapi_modules)
+        deploy_modules_async(node, okapi_modules)
     else:
         deploy_modules(node, okapi_modules)
-    # deploy_modules(node,
-    #               okapi_modules + stripes_modules)
 
     if tenantid == "ALL":
         tenants = OkapiClient().get_tenants()

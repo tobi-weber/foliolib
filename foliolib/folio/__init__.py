@@ -28,7 +28,7 @@ class FolioApi:
 
     def call(self, method: str, path: str, data: dict = None,
              query: dict = None, headers: dict = None, files: dict = None):
-        return self._okapi.call_tenant_service(method, path, self._tenant, data=data,
+        return self._okapi.call_tenant_service(self._tenant, method, path, data=data,
                                                query=query, headers=headers, files=files)
 
 

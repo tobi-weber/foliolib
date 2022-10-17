@@ -1,5 +1,5 @@
-# # -*- coding: utf-8 -*-
-# Copyright (C) 2020 Tobias Weber <tobi-weber@gmx.de>
+# -*- coding: utf-8 -*-
+# Copyright (C) 2022 Tobias Weber <tobi-weber@gmx.de>
 
 import setuptools
 

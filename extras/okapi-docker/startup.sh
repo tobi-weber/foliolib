@@ -173,7 +173,9 @@ echo "OKAPI JAR: $OKAPI_JAR"
 echo "############################"
 echo ""
 
-echo -n "Starting Okapi..."
-$JAVA $OKAPI_JAVA_OPTS -jar "$OKAPI_JAR" $OKAPI_ROLE $OKAPI_OPTIONS
+CMD="$JAVA $OKAPI_JAVA_OPTS -jar "$OKAPI_JAR" $OKAPI_ROLE $OKAPI_OPTIONS"
+echo $CMD
 
+echo -n "Starting Okapi..."
+exec $CMD
 

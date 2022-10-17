@@ -381,7 +381,7 @@ class InventoryReferenceData(FolioService):
                                             baseMethodName="library")
 
     def get_materialType(self, name_or_id):
-        return self.__get_reference_data(MaterialType)
+        return self.__get_reference_data(MaterialType, name_or_id)
 
     def get_materialTypes(self, query=None):
         return self.__get_all_reference_data(MaterialType, query=query)
@@ -393,7 +393,7 @@ class InventoryReferenceData(FolioService):
         return self.__delete_reference_data(MaterialType)
 
     def get_modeOfIssuance(self, name_or_id):
-        return self.__get_reference_data(ModeOfIssuance)
+        return self.__get_reference_data(ModeOfIssuance, name_or_id)
 
     def get_modesOfIssuance(self, query=None):
         return self.__get_all_reference_data(ModeOfIssuance, query=query)
@@ -402,10 +402,10 @@ class InventoryReferenceData(FolioService):
         self.__set_reference_data(data, ModeOfIssuance, replace=replace)
 
     def delete_modeOfIssuance(self, name_or_id):
-        return self.__delete_reference_data(ModeOfIssuance)
+        return self.__delete_reference_data(ModeOfIssuance, name_or_id)
 
     def get_natureOfContentTerm(self, name_or_id):
-        return self.__get_reference_data(NatureOfContentTerm)
+        return self.__get_reference_data(NatureOfContentTerm, name_or_id)
 
     def get_natureOfContentTerms(self, query=None):
         return self.__get_all_reference_data(NatureOfContentTerm, query=query)
@@ -414,10 +414,10 @@ class InventoryReferenceData(FolioService):
         self.__set_reference_data(data, NatureOfContentTerm, replace=replace)
 
     def delete_natureOfContentTerm(self, name_or_id):
-        return self.__delete_reference_data(NatureOfContentTerm)
+        return self.__delete_reference_data(NatureOfContentTerm, name_or_id)
 
     def get_servicePoint(self, name_or_id):
-        return self.__get_reference_data(ServicePoint)
+        return self.__get_reference_data(ServicePoint, name_or_id)
 
     def get_servicePoints(self, query=None):
         return self.__get_all_reference_data(ServicePoint, query=query)
@@ -426,10 +426,10 @@ class InventoryReferenceData(FolioService):
         self.__set_reference_data(data, ServicePoint, replace=replace)
 
     def delete_servicePoint(self, name_or_id):
-        return self.__delete_reference_data(ServicePoint)
+        return self.__delete_reference_data(ServicePoint, name_or_id)
 
     def get_statisticalCode(self, name_or_id):
-        return self.__get_reference_data(StatisticalCode)
+        return self.__get_reference_data(StatisticalCode, name_or_id)
 
     def get_statisticalCodes(self, query=None):
         return self.__get_all_reference_data(StatisticalCode, query=query)
@@ -438,10 +438,10 @@ class InventoryReferenceData(FolioService):
         self.__set_reference_data(data, StatisticalCode, replace=replace)
 
     def delete_statisticalCode(self, name_or_id):
-        return self.__delete_reference_data(StatisticalCode)
+        return self.__delete_reference_data(StatisticalCode, name_or_id)
 
     def get_statisticalCodeType(self, name_or_id):
-        return self.__get_reference_data(StatisticalCodeType)
+        return self.__get_reference_data(StatisticalCodeType, name_or_id)
 
     def get_statisticalCodeTypes(self, query=None):
         return self.__get_all_reference_data(StatisticalCodeType, query=query)
@@ -450,7 +450,7 @@ class InventoryReferenceData(FolioService):
         self.__set_reference_data(data, StatisticalCodeType, replace=replace)
 
     def delete_statisticalCodeType(self, name_or_id):
-        return self.__delete_reference_data(StatisticalCodeType)
+        return self.__delete_reference_data(StatisticalCodeType, name_or_id)
 
     def load_reference_data(self, path, replace=False):
         count = 0

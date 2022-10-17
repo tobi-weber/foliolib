@@ -6,16 +6,10 @@ import logging
 import time
 from distutils.version import StrictVersion
 
-from foliolib import create_uuid
 from foliolib.config import Config
-from foliolib.folio.api.inventoryStorage import ServicePoint, ServicePointsUser
-from foliolib.folio.api.login import Login
 from foliolib.folio.api.permissions import Permissions
-from foliolib.folio.api.users import Users as UsersApi
-from foliolib.folio.exceptions import (PermissionUserNotFound,
-                                       ServicePointsUserNotFound, UserNotFound)
+from foliolib.folio.exceptions import UserNotFound
 from foliolib.folio.users import Users
-from foliolib.okapi.exceptions import OkapiRequestForbidden
 from foliolib.okapi.okapiClient import OkapiClient
 
 log = logging.getLogger("foliolib.helper.okapi")
@@ -37,7 +31,7 @@ def create_superuser(tenant: str, username: str = "admin",
 
     log.info("Disable authtoken for tenant.")
     try:
-        mod_authtoken = okapi.get_tenant_interface("authtoken", tenant)[0]
+        mod_authtoken = okapi.get_tenant_interface(tenant, "authtoken")[0]
         disabled_mods = okapi.disable_module(mod_authtoken["id"], tenant)
     except:
         disabled_mods = None
@@ -51,7 +45,7 @@ def create_superuser(tenant: str, username: str = "admin",
         try:
             userService.get_user(username)
             log.info("User %s exist.", username)
-            okapi.enable_modules([m["id"] for m in disabled_mods], tenant)
+            okapi.enable_modules(tenant, [m["id"] for m in disabled_mods])
             return
         except UserNotFound:
             pass
@@ -71,11 +65,11 @@ def create_superuser(tenant: str, username: str = "admin",
     except:
         log.error("Failed to create Superuser %s", username)
         log.info("Enable mod-authtoken.")
-        okapi.enable_modules([m["id"] for m in disabled_mods], tenant)
+        okapi.enable_modules(tenant, [m["id"] for m in disabled_mods])
         raise
 
     log.info("Enable mod-authtoken.")
-    okapi.enable_modules([m["id"] for m in disabled_mods], tenant)
+    okapi.enable_modules(tenant, [m["id"] for m in disabled_mods])
 
     log.info("Login as superuser")
     userService.login(username, password)

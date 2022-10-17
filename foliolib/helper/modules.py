@@ -6,7 +6,6 @@ import logging
 import os
 from threading import Thread
 
-from foliolib.okapi import okapiModule
 from foliolib.okapi.okapiClient import OkapiClient
 from foliolib.okapi.okapiModule import (OkapiModule, create_okapiModule,
                                         sort_modules_by_requirements)
@@ -14,9 +13,9 @@ from foliolib.okapi.okapiModule import (OkapiModule, create_okapiModule,
 log = logging.getLogger("foliolib.helper.modules")
 
 
-def load_modules(install_file):
+def load_install_file(install_file):
     log.debug("Load modules for %s", install_file)
-    with open(os.path.join(install_file)) as f:
+    with open(install_file) as f:
         modules = sort_modules_by_requirements(
             [create_okapiModule(m["id"]) for m in json.load(f)]
         )
@@ -26,9 +25,9 @@ def load_modules(install_file):
 def add_modules(modules):
     for module in modules:
         if OkapiClient().is_module_added(module):
-            print("%s is already added" % module.get_id())
+            log.warning("%s is already added", module.get_id())
         else:
-            print("Add %s" % module.get_id())
+            log.info("Add %s", module.get_id())
             OkapiClient().add_module(module)
 
 
@@ -36,13 +35,13 @@ def deploy_modules(node, modules):
     for module in modules:
         if module.has_launchDescriptor():
             if OkapiClient().is_module_deployed(module.get_id()):
-                print("%s is already deployed" % module.get_id())
+                log.warning("%s is already deployed", module.get_id())
             else:
-                print("Deploy %s" % module.get_id())
+                log.info("Deploy %s", module.get_id())
                 OkapiClient().deploy_module(module.get_id(), node)
 
 
-def deploy_modules_threaded(node, modules):
+def deploy_modules_async(node, modules):
     class Deploy(Thread):
         def __init__(self, node, module):
             super().__init__(name=module.get_id())
@@ -66,16 +65,16 @@ def deploy_modules_threaded(node, modules):
     for module in modules:
         if module.has_launchDescriptor():
             if OkapiClient().is_module_deployed(module.get_id()):
-                print("%s is already deployed" % module.get_id())
+                log.warning("%s is already deployed", module.get_id())
             else:
-                print("Deploy %s" % module.get_id())
+                log.info("Deploy %s", module.get_id())
                 t = Deploy(node, module)
                 t.start()
                 threads.append(t)
-    print("Deploying please wait ...")
+    log.info("Deploying please wait ...")
     for t in threads:
         t.join()
-    print("Deploy done.")
+    log.info("Deploy done.")
 
 
 def enable_modules(tenantid, modules, loadSample=False, loadReference=False, **kwargs):
@@ -83,10 +82,10 @@ def enable_modules(tenantid, modules, loadSample=False, loadReference=False, **k
         if isinstance(module, OkapiModule):
             module = module.get_id()
         if OkapiClient().is_module_enabled(module, tenantid):
-            print("Module %s is already enabled for tenant %s" %
-                  (module, tenantid))
+            log.warning("Module %s is already enabled for tenant %s",
+                        (module, tenantid))
         else:
-            print("Enable %s" % module)
-            OkapiClient().enable_module(module, tenantid,
+            log.info("Enable %s", module)
+            OkapiClient().enable_module(tenantid, module,
                                         loadSample=loadSample, loadReference=loadReference,
                                         **kwargs)

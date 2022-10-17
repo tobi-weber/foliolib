@@ -25,12 +25,7 @@ def uninstall_tenant(tenantid, **kwargs):
         [OkapiModule(descriptor) for descriptor in descriptors]
     )
     modules.reverse()
-    #modules = [OkapiModule(descriptor) for descriptor in descriptors]
     modIds = [module.get_id() for module in modules]
-
-    #print("Uninstall %s" % (", ".join(modIds)))
-    #msg = okapi.disable_modules(modIds, tenantid, **kwargs)
-    #print(json.dumps(msg, indent=2))
 
     for modId in modIds:
         print("Uninstall module %s" % modId)

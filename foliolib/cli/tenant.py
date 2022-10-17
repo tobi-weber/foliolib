@@ -119,7 +119,7 @@ def enable(**kwargs):
     def do(tid):
         print("Enable module %s for tenant %s" %
               (kwargs["module"], tid))
-        msg = OkapiClient().enable_modules(kwargs["module"], tid,
+        msg = OkapiClient().enable_modules(tid, kwargs["module"],
                                            loadSample=kwargs["loadsample"],
                                            loadReference=kwargs["loadreference"],
                                            **_kwargs)
@@ -128,7 +128,8 @@ def enable(**kwargs):
     if tenantid == "ALL":
         tenants = OkapiClient().get_tenants()
         for tenant in tenants:
-            do(tenant["id"])
+            if tenant["id"] != "supertenant":
+                do(tenant["id"])
     else:
         do(tenantid)
 
@@ -183,7 +184,8 @@ def disable(**kwargs):
     if tenantid == "ALL":
         tenants = OkapiClient().get_tenants()
         for tenant in tenants:
-            do(tenant["id"])
+            if tenant["id"] != "supertenant":
+                do(tenant["id"])
     else:
         do(tenantid)
 
@@ -224,13 +226,19 @@ def upgrade(**kwargs):
 
     def do(tid):
         print("Upgrade tenant %s" % tid)
-        msg = OkapiClient().upgrade_modules(tid, **_kwargs)
-        print(json.dumps(msg, indent=2))
+        try:
+            msg = OkapiClient().upgrade_modules(tid, **_kwargs)
+            print(json.dumps(msg, indent=2))
+        except Exception as e:
+            print(e)
+            if not kwargs["ignoreerrors"]:
+                raise
 
     if tenantid == "ALL":
         tenants = OkapiClient().get_tenants()
         for tenant in tenants:
-            do(tenant["id"])
+            if tenant["id"] != "supertenant":
+                do(tenant["id"])
     else:
         do(tenantid)
 
@@ -280,7 +288,8 @@ def upgrademodule(**kwargs):
     if tenantid == "ALL":
         tenants = OkapiClient().get_tenants()
         for tenant in tenants:
-            do(tenant["id"])
+            if tenant["id"] != "supertenant":
+                do(tenant["id"])
     else:
         do(tenantid)
 
@@ -314,8 +323,8 @@ def interfaces(**kwargs):
     TENANTID\tThe tenant id.
     """
     if kwargs["interface"]:
-        inf = OkapiClient().get_tenant_interface(kwargs["interface"],
-                                                 kwargs["tenantid"])
+        inf = OkapiClient().get_tenant_interface(kwargs["tenantid"],
+                                                 kwargs["interface"])
         print("Interface is in module %s" % inf[0]["id"])
         # print(inf)
     else:

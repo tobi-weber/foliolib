@@ -6,6 +6,7 @@ import pprint
 
 from foliolib.config import Config
 from foliolib.folio.users import Users
+from foliolib.helper import split_modid
 from foliolib.okapi.okapiClient import OkapiClient
 from foliolib.okapi.okapiModule import (create_okapiModules,
                                         sort_modules_by_requirements)
@@ -21,15 +22,15 @@ def set_okapi_url_env():
     OkapiClient().set_env("OKAPI_URL", f"http://{okapi_host}:{okapi_port}")
 
 
-def set_db_env(db_host: str, db_port: str = "5432", username: str = "folio_admin",
-               password: str = "folio_admin", database: str = "okapi_modules"):
+def set_db_env(db_host: str, db_port: str = "5432", username: str = "folio",
+               password: str = "folio", database: str = "okapi_modules"):
     """Set database enviroment variables.
 
     Args:
         db_host (str): postgresql host.
         db_port (str, optional): postgresql port. Defaults to "5432".
-        username (str, optional): postgresql admin username. Defaults to "folio_admin".
-        password (str, optional): postgresql admin database. Defaults to "folio_admin".
+        username (str, optional): postgresql admin username. Defaults to "folio".
+        password (str, optional): postgresql admin database. Defaults to "folio".
         database (str, optional): postgresql okapi modules database. Defaults to "okapi_modules".
     """
     okapi = OkapiClient()
@@ -38,7 +39,8 @@ def set_db_env(db_host: str, db_port: str = "5432", username: str = "folio_admin
     okapi.set_env("DB_USERNAME", username)
     okapi.set_env("DB_PASSWORD", password)
     okapi.set_env("DB_DATABASE", database)
-    okapi.set_env("DB_QUERYTIMEOUT", "60000")
+    #okapi.set_env("DB_QUERYTIMEOUT", "60000")
+    okapi.set_env("DB_QUERYTIMEOUT", "120000")
     okapi.set_env("DB_CHARSET", "UTF-8")
     #okapi.set_env("DB_MAXPOOLSIZE", "5")
     #okapi.set_env("DB_MAXPOOLSIZE", "15")
@@ -67,11 +69,11 @@ def login_supertenant(username: str, password: str):
         username (str): username for supertenant.
         password (str): password supertenant.
     """
-    print("Logging in supertenant")
+    log.info("Logging in supertenant")
     userService = Users("supertenant")
     token = userService.login(username, password)
     if token is None:
-        print("Login failed")
+        log.error("Login failed")
 
 
 def secure_supertenant(username: str = "okapi_admin", password: str = "admin"):
@@ -91,10 +93,11 @@ def secure_supertenant(username: str = "okapi_admin", password: str = "admin"):
     ]
     log.info("Enable modules permissions, users and login for supertenant")
     Config().del_token(tenant)
-    module_list = ['permissions', 'users', 'login']
+    module_list = ['mod-permissions', 'mod-users', 'mod-login']
     o = OkapiClient()
-    modules = [m["id"] for m in o.get_modules() if m["name"] in module_list]
-    res = o.enable_modules(modules, tenant)
+    modules = [m["id"]
+               for m in o.get_modules() if split_modid(m["id"])[0] in module_list]
+    res = o.enable_modules(tenant, modules)
     # print(res)
 
     userServices = Users(tenant)
@@ -104,12 +107,12 @@ def secure_supertenant(username: str = "okapi_admin", password: str = "admin"):
         username, password, permissions=permissions)
 
     authtoken = [m["id"]
-                 for m in o.get_modules() if m["name"] == "authtoken"][0]
-    res = o.enable_module(authtoken, tenant)
+                 for m in o.get_modules() if split_modid(m["id"])[0] == "mod-authtoken"][0]
+    res = o.enable_module(tenant, authtoken)
     # print(res)
 
     login_supertenant(username, password)
-    print("Successfully secured Okapi.")
+    log.info("Successfully secured Okapi.")
 
 
 def unsecure_supertenant():
@@ -125,7 +128,7 @@ def unsecure_supertenant():
                 o.disable_module(tm, tenant, purge=True)
                 #o.disable_module(tm, tenant)
 
-    print("Successfully unsecured Okapi.")
+    log.info("Successfully unsecured Okapi.")
 
 
 def clean_okapi():
@@ -171,18 +174,3 @@ def clean_okapi():
     if okapiModule is not None:
         log.info("Remove %s", okapiModule)
         okapi.remove_module(okapiModule)
-
-
-def print_okapi_all():
-    pp = pprint.PrettyPrinter(indent=2)
-    okapi = OkapiClient()
-    print("# Env")
-    pp.pprint(okapi.get_env())
-    print("# Nodes")
-    pp.pprint(okapi.get_nodes())
-    print("# Modules")
-    pp.pprint(okapi.get_modules())
-    print("# Deployed Modules")
-    pp.pprint(okapi.get_deployed_modules())
-    print("# Tenants")
-    pp.pprint(okapi.get_tenants())

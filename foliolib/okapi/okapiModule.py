@@ -52,6 +52,7 @@ class OkapiModule:
         log.debug("Create OkapiModule %s", self.get_id())
         self.__clean_env()
         self.__set_modules_parameters()
+        #print(json.dumps(self._descriptor, indent=2))
 
     def get_id(self):
         """ Get module name
@@ -167,6 +168,7 @@ class OkapiModule:
             log.debug("Write descriptor to %s", fname_cache)
             with open(fname_cache, "w", encoding="utf8") as f:
                 json.dump(descriptor, f, indent=2)
+
             return descriptor
 
     def __clean_env(self):
@@ -208,6 +210,7 @@ class OkapiModule:
             if "Env" in config:
                 env = self._descriptor["launchDescriptor"]["env"]
                 for name, value in config["Env"].items():
+                    name = name.upper()
                     name = remove_entry(env, name)
                     env.append({"name": name, "value": value})
 

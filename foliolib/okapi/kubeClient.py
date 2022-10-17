@@ -4,371 +4,30 @@
 import base64
 import json
 import logging
-import math
 import time
 
 from foliolib.config import Config
-from foliolib.helper import split_modid
-from foliolib.okapi.exceptions import KubeDeployError, OkapiRequestError
-from foliolib.okapi.okapiModule import OkapiModule
+from foliolib.okapi.exceptions import (KubeDeployError, OkapiFatalError,
+                                       OkapiRequestError)
+from foliolib.okapi.okapiModuleKubernetes import OkapiModuleKubernetes
 from kubernetes import client, config
+from kubernetes.client.exceptions import ApiException
 from kubernetes.config.config_exception import ConfigException
 
+from . import GLOBAL_ENV_NAME_KUBERNETES
+
 log = logging.getLogger("foliolib.okapi.kubeClient")
-
-GLOBAL_ENV_NAME = "okapi-global-env"
-
-
-class HealthProbe:
-
-    def __init__(self, modId, http_port) -> None:
-        self._conf = Config().modulescfg(modId)
-        self._healthCheck = True
-        self._path = "admin/health"
-        self._port = http_port
-
-    def get_path(self):
-        return self._path
-
-    def get_port(self):
-        return self._port
-
-    def get_probe(self):
-        data = {"httpGet": {"path": self.get_path(),
-                            "port": self.get_port(),
-                            "scheme": "HTTP"
-                            }
-                }
-        return data
-
-
-class StartupProbe(HealthProbe):
-
-    def __init__(self, modId, http_port) -> None:
-        super().__init__(modId, http_port)
-        self.failureThreshold = 60
-        self.periodSeconds = 10
-        if self._conf is not None:
-            self.failureThreshold = self._conf.get(
-                "StartupProbe", "failureThreshold", fallback=self.failureThreshold)
-            self.periodSeconds = self._conf.get(
-                "StartupProbe", "periodSeconds", fallback=self.periodSeconds)
-
-    def get_probe(self):
-        data = super().get_probe()
-        data["failureThreshold"] = self.failureThreshold
-        data["periodSeconds"] = self.periodSeconds
-
-        return data
-
-
-class LivenessProbe(HealthProbe):
-
-    def __init__(self, modId, http_port) -> None:
-        super().__init__(modId, http_port)
-        self.failureThreshold = 3
-        self.initialDelaySeconds = 45
-        self.periodSeconds = 60
-        self.successThreshold = 1
-        self.timeoutSeconds = 5
-        if self._conf is not None:
-            self.failureThreshold = self._conf.get(
-                "LivenessProbe", "failureThreshold", fallback=self.failureThreshold)
-            self.initialDelaySeconds = self._conf.get(
-                "LivenessProbe", "periodSeconds", fallback=self.initialDelaySeconds)
-            self.periodSeconds = self._conf.get(
-                "LivenessProbe", "periodSeconds", fallback=self.periodSeconds)
-            self.successThreshold = self._conf.get(
-                "LivenessProbe", "successThreshold", fallback=self.successThreshold)
-            self.timeoutSeconds = self._conf.get(
-                "LivenessProbe", "timeoutSeconds", fallback=self.timeoutSeconds)
-
-    def get_probe(self):
-        data = super().get_probe()
-        data["failureThreshold"] = self.failureThreshold
-        data["initialDelaySeconds"] = self.initialDelaySeconds
-        data["periodSeconds"] = self.periodSeconds
-        data["timeoutSeconds"] = self.timeoutSeconds
-
-        return data
-
-
-class ReadinessProbe(HealthProbe):
-
-    def __init__(self, modId, http_port) -> None:
-        super().__init__(modId, http_port)
-        self.failureThreshold = 3
-        self.initialDelaySeconds = 45
-        self.periodSeconds = 60
-        self.successThreshold = 1
-        self.timeoutSeconds = 5
-        if self._conf is not None:
-            self.failureThreshold = self._conf.get(
-                "ReadinessProbe", "failureThreshold", fallback=self.failureThreshold)
-            self.initialDelaySeconds = self._conf.get(
-                "ReadinessProbe", "periodSeconds", fallback=self.initialDelaySeconds)
-            self.periodSeconds = self._conf.get(
-                "ReadinessProbe", "periodSeconds", fallback=self.periodSeconds)
-            self.successThreshold = self._conf.get(
-                "ReadinessProbe", "successThreshold", fallback=self.successThreshold)
-            self.timeoutSeconds = self._conf.get(
-                "ReadinessProbe", "timeoutSeconds", fallback=self.timeoutSeconds)
-
-    def get_probe(self):
-        data = super().get_probe()
-        data["failureThreshold"] = self.failureThreshold
-        data["initialDelaySeconds"] = self.initialDelaySeconds
-        data["periodSeconds"] = self.periodSeconds
-        data["timeoutSeconds"] = self.timeoutSeconds
-
-        return data
-
-
-class Resources:
-
-    def __init__(self, modId) -> None:
-        self._conf = Config().modulescfg(modId)
-        module = OkapiModule(modId)
-        self._min_cpu = "10m"
-        self._max_cpu = 0
-        memory = module.get_docker_args()["memory"]
-        if memory is not None:
-            mem = "%iKi" % math.ceil(memory/1024)
-            if Config().okapicfg().getboolean("Kubernetes", "dev", fallback=False):
-                min_mem = "10Mi"
-                max_mem = mem
-            else:
-                min_mem = mem
-                max_mem = mem
-        else:
-            log.warning("ModuleDescriptor for %s has no memory defined", modId)
-            min_mem = 0
-            max_mem = 0
-        self._min_memory = min_mem
-        self._max_memory = max_mem
-        if self._conf is not None:
-            if self._conf.has_section("Resources"):
-                self._min_cpu = self._conf.get(
-                    "Resources", "min-cpu", fallback=self._min_cpu)
-                self._max_cpu = self._conf.get(
-                    "Resources", "max-cpu", fallback=self._max_cpu)
-                self._min_memory = self._conf.get(
-                    "Resources", "min-memory", fallback=self._min_memory)
-                self._max_memory = self._conf.get(
-                    "Resources", "max-memory", fallback=self._max_memory)
-
-    def get_resources(self):
-        resources = {}
-        if self._min_cpu or self._min_memory:
-            requests = {}
-            if self._min_cpu:
-                requests["cpu"] = self._min_cpu
-            if self._min_memory:
-                requests["memory"] = self._min_memory
-            resources["requests"] = requests
-        if self._max_cpu or self._max_memory:
-            limits = {}
-            if self._max_cpu:
-                limits["cpu"] = self._max_cpu
-            if self._max_memory:
-                limits["memory"] = self._max_memory
-            resources["limits"] = limits
-
-        return resources
-
-
-class Volume:
-
-    def __init__(self, modId) -> None:
-        self._conf = Config().modulescfg(modId)
-        self.name = f"{modId}-data"
-        self.name = "%s-data" % modId.replace(".", "-")
-        self.mountPath = None
-        self.size = None
-        if self._conf is not None:
-            if self._conf.has_section("Volume"):
-                # self.name = self._conf.get("Volume", "name")
-                self.mountPath = self._conf.get("Volume", "mountPath")
-                self.size = self._conf.get("Volume", "size")
-
-    def get_volumeMount(self):
-        return {"mountPath": self.mountPath,
-                "name": self.name
-
-                }
-
-    def get_volumeClaim(self):
-        return {"name": self.name,
-                "persistentVolumeClaim": {"claimName": self.name}
-                }
-
-
-class OkapiModuleKubernetes:
-
-    def __init__(self, modId):
-        module = OkapiModule(modId)
-        self._modId = modId
-        self._name, self._version = split_modid(modId)
-        self._docker_image = module.get_docker_image()
-        docker_args = module.get_docker_args()
-        self._kind = "Deployment"
-        self._memory = docker_args["memory"]
-        self._port = docker_args["port"]
-        self._protocol = docker_args["protocol"]
-        self._env = module.get_env()
-        self.healthCheck = True
-        self.hasVolume = False
-        self.hasResources = False
-        modcfg = Config().modulescfg(modId)
-        okapicfg = Config().okapicfg()
-
-        self._replicas = okapicfg.getint("Kubernetes", "replicas", fallback=1)
-
-        if modcfg is not None:
-            if modcfg.has_section("Kubernetes"):
-                if modcfg.has_option("Kubernetes", "replicas"):
-                    self._replicas = modcfg.getint("Kubernetes", "replicas")
-                if modcfg.has_option("Kubernetes", "kind"):
-                    kind = modcfg.get("Kubernetes", "kind")
-                    if kind in ["Deployment", "StatefulSet"]:
-                        self._kind = kind
-                self.healthCheck = modcfg.getboolean(
-                    "Kubernetes", "healthCheck", fallback=True)
-            if modcfg.has_section("Volume"):
-                self.hasVolume = True
-            if modcfg.has_section("Resources"):
-                self.hasResources = True
-
-    def get_kind(self):
-        return self._kind
-
-    def get_rfc_name(self):
-        return self._modId.replace(".", "-")
-
-    def get_persistentVolumeClaim_name(self):
-        if self.hasVolume:
-            return Volume(self._modId).name
-
-    def get_service(self):
-        service = {
-            "apiVersion": "v1",
-            "kind": "Service",
-            "metadata": {
-                "name": self.get_rfc_name(),
-                "labels": {
-                    "run": self._modId,
-                    "app.kubernetes.io/name": self._name,
-                    "app.kubernetes.io/version": self._version,
-                    "app": self._name
-                }
-            },
-            "spec": {
-                "ports": [
-                    {
-                        "name": "http",
-                        "port": self._port,
-                        "protocol": self._protocol.upper()
-                    }
-                ],
-                "selector": {
-                    "app": self._modId
-                }
-            }
-        }
-        if self._kind == "StatefulSet":
-            service["spec"]["clusterIP"] = "None"
-            # service["spec"]["ports"][0]["targetPort"] = self._port
-
-        return service
-
-    def get_deployment(self):
-        deployment = {
-            "apiVersion": "apps/v1",
-            "kind": self._kind,
-            "metadata": {
-                "name": self.get_rfc_name()
-            },
-            "spec": {
-                "selector": {
-                    "matchLabels": {
-                        "app": self._modId
-                    }
-                },
-                "replicas": self._replicas,
-                "template": {
-                    "metadata": {
-                        "labels": {
-                            "app": self._modId
-                        }
-                    },
-                    "spec": {
-                        "containers": [
-                            {
-                                "name": self._modId.replace(".", "-"),
-                                "image": self._docker_image,
-                                "imagePullPolicy": "IfNotPresent",
-                                "ports": [
-                                    {
-                                        "containerPort": self._port
-                                    }
-                                ],
-                                "env": self._env,
-                                "envFrom": [
-                                    {
-                                        "secretRef": {
-                                            "name": GLOBAL_ENV_NAME,
-                                            "optional": True
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                }
-            }
-        }
-
-        resources = Resources(self._modId).get_resources()
-        if resources:
-            deployment["spec"]["template"]["spec"]["containers"][0]["resources"] = resources
-        if self.healthCheck:
-            deployment["spec"]["template"]["spec"]["containers"][0]["startupProbe"] = StartupProbe(
-                self._modId, self._port).get_probe()
-            deployment["spec"]["template"]["spec"]["containers"][0]["livenessProbe"] = LivenessProbe(
-                self._modId, self._port).get_probe()
-            deployment["spec"]["template"]["spec"]["containers"][0]["readinessProbe"] = ReadinessProbe(
-                self._modId, self._port).get_probe()
-        if self.hasVolume:
-            deployment["spec"]["template"]["spec"]["containers"][0]["volumeMounts"] = [
-                Volume(self._modId).get_volumeMount()]
-            deployment["spec"]["template"]["spec"]["volumes"] = [
-                Volume(self._modId).get_volumeClaim()]
-        if self._kind == "StatefulSet":
-            deployment["spec"]["serviceName"] = self._modId.replace(".", "-")
-            deployment["spec"]["selector"] = {"matchLabels":
-                                              {"app": self._modId}}
-
-        return deployment
-
-    def get_persistentVolumeClaim(self):
-        vol = Volume(self._modId)
-        if self.hasVolume:
-            return {"apiVersion": "v1",
-                    "kind": "PersistentVolumeClaim",
-                    # "metadata": {"name": vol.name},
-                    "metadata": {"name": vol.name,
-                                  "labels":  {"app": self._modId}},
-                    "spec": {"accessModes": ["ReadWriteOnce"],
-                             "resources": {"requests": {"storage": vol.size}},
-                             }
-                    }
-        return None
 
 
 class KubeClient:
 
-    def __init__(self):
-        kube_config = Config().get_kube_config()
+    def __init__(self, kube_config: str = None):
+        """Client for kubernetes to manage Folio modules
+
+        Args:
+            kube_config (str)): Path to kube config. Defaults to None.
+        """
+        kube_config = kube_config or Config().get_kube_config()
         try:
             config.load_kube_config(config_file=kube_config)
         except ConfigException as e:
@@ -376,16 +35,26 @@ class KubeClient:
         self._namespace = Config().okapicfg().get(
             "Kubernetes", "namespace", fallback="default")
 
-    def deploy(self, modId):
+    def deploy(self, modId: str):
+        """Deploy a Folio module
+
+        Args:
+            modId (str): Module id, e.g. mod-users-1.8.0
+        """
         from foliolib.okapi.okapiClient import OkapiClient
         module = OkapiModuleKubernetes(modId)
         service = module.get_service()
-        if module.hasVolume:
-            persistentVolumeClaim = module.get_persistentVolumeClaim()
+        volume = module.volume()
+        hazelcast = module.hazelcast()
+        if volume:
+            persistentVolumeClaim = volume["persistentVolumeClaim"]
             log.debug("Create PersistentVolumeClaim:\n%s" %
                       json.dumps(persistentVolumeClaim, indent=2))
             self.create_persistenVolumeClaim(
                 persistentVolumeClaim, self._namespace)
+        if hazelcast:
+            self.create_configMap(
+                hazelcast["name"], hazelcast["data"], namespace=self._namespace)
         log.debug("Create Service:\n%s" % json.dumps(service, indent=2))
         self.create_service(service, namespace=self._namespace)
         deployment = module.get_deployment()
@@ -405,15 +74,25 @@ class KubeClient:
             log.debug("Wait for %s is deployed" % modId)
             try:
                 isDeployed = OkapiClient().is_module_deployed(modId)
+            except OkapiFatalError:
+                pass
             except OkapiRequestError:
                 pass
+            except ApiException:
+                pass
+
             if not isDeployed and secs >= maxSecs:
                 log.error("Deployment for %s in namespace %s failed",
                           modId, self._namespace)
                 self.undeploy(modId)
                 raise KubeDeployError(modId, self._namespace)
 
-    def undeploy(self, modId):
+    def undeploy(self, modId: str):
+        """Undeploy a Folio module
+
+        Args:
+            modId (str): Module id, e.g. mod-users-1.8.0
+        """
         module = OkapiModuleKubernetes(modId)
         log.debug(self.remove_service(
             module.get_rfc_name(), namespace=self._namespace))
@@ -425,34 +104,61 @@ class KubeClient:
                 module.get_rfc_name(), namespace=self._namespace)
         else:
             raise Exception("Unknown kind %s" % self._kind)
-        if module.hasVolume:
+        volume = module.volume()
+        hazelcast = module.hazelcast()
+        if volume:
             log.debug(self.remove_persistenVolumeClaim(
-                module.get_persistentVolumeClaim_name(), namespace=self._namespace))
+                volume["claim"]["name"], namespace=self._namespace))
+        if module.hazelcast():
+            self.remove_configMap(hazelcast["name"], namespace=self._namespace)
 
     def get_env(self):
-        env = self.get_secret(GLOBAL_ENV_NAME, namespace=self._namespace)
+        """Get enviroment variables.
+
+        Returns:
+            list: List with enviroment variables.
+        """
+        env = self.get_secret(GLOBAL_ENV_NAME_KUBERNETES,
+                              namespace=self._namespace)
         if env is not None:
             return [{"name": k, "value": base64.b64decode(v).decode("utf-8")}
                     for k, v in env.items()]
 
         return {}
 
-    def set_env(self, name, value):
-        env = self.get_secret(GLOBAL_ENV_NAME, namespace=self._namespace) or {}
+    def set_env(self, name: str, value: str):
+        """Set an enviroment variable.
+
+        Args:
+            name (str): Name of the variable.
+            value (str): Value of the variable.
+        """
+        env = self.get_secret(GLOBAL_ENV_NAME_KUBERNETES,
+                              namespace=self._namespace) or {}
         v = base64.b64encode(value.encode("utf-8"))
         env[name] = v.decode("utf-8")
-        if self.exists_secret(GLOBAL_ENV_NAME, namespace=self._namespace):
-            self.remove_secret(GLOBAL_ENV_NAME, namespace=self._namespace)
-        self.create_secret(GLOBAL_ENV_NAME, env, namespace=self._namespace)
+        if self.exists_secret(GLOBAL_ENV_NAME_KUBERNETES, namespace=self._namespace):
+            self.remove_secret(GLOBAL_ENV_NAME_KUBERNETES,
+                               namespace=self._namespace)
+        self.create_secret(GLOBAL_ENV_NAME_KUBERNETES,
+                           env, namespace=self._namespace)
 
-    def delete_env(self, name):
-        env = self.get_secret(GLOBAL_ENV_NAME, namespace=self._namespace)
+    def delete_env(self, name: str):
+        """Delete an enviroment variable.
+
+        Args:
+            name (str): Name of the variable.
+        """
+        env = self.get_secret(GLOBAL_ENV_NAME_KUBERNETES,
+                              namespace=self._namespace)
         if name in env:
             del env[name]
-        if self.exists_secret(GLOBAL_ENV_NAME, namespace=self._namespace):
-            self.remove_secret(GLOBAL_ENV_NAME, namespace=self._namespace)
+        if self.exists_secret(GLOBAL_ENV_NAME_KUBERNETES, namespace=self._namespace):
+            self.remove_secret(GLOBAL_ENV_NAME_KUBERNETES,
+                               namespace=self._namespace)
         if env:
-            self.create_secret(GLOBAL_ENV_NAME, env, namespace=self._namespace)
+            self.create_secret(GLOBAL_ENV_NAME_KUBERNETES,
+                               env, namespace=self._namespace)
 
     def get_api_versions(self):
         versions = []
@@ -467,43 +173,78 @@ class KubeClient:
 
         return versions
 
-    def get_service(self, name, namespace="default"):
+    def get_service(self, name: str, namespace: str = "default"):
+        """Get a service.
+
+        Args:
+            name (str): Name of the service
+            namespace (str, optional): Namespace of the service. Defaults to "default".
+
+        Returns:
+            dict: Dictonary of the service.
+        """
         core_v1 = client.CoreV1Api()
         return core_v1.read_namespaced_service(name, namespace)
 
-    def get_services(self, namespace=None):
+    def get_services(self, namespace: str = None):
+        """Get services of one or all namespaces.
+
+        Args:
+            namespace (str, optional): Namespace. Defaults to None.
+
+        Returns:
+            list: List of services.
+        """
         core_v1 = client.CoreV1Api()
         if namespace is None:
             return core_v1.list_service_for_all_namespaces()
         else:
             return core_v1.list_namespaced_service(namespace)
 
-    def create_service(self, data, namespace="default"):
+    def create_service(self, data: dict, namespace: str = "default"):
+        """Create a service.
+
+        Args:
+            data (dict): Dict of the service.
+            namespace (str, optional): Namespace. Defaults to "default".
+
+        Returns:
+            dict: Created service.
+        """
         core_v1 = client.CoreV1Api()
         return core_v1.create_namespaced_service(namespace, data)
 
-    def remove_service(self, name, namespace="default"):
+    def remove_service(self, name: str, namespace: str = "default"):
+        """Remove a service.
+
+        Args:
+            name (str): Name of the service.
+            namespace (str, optional): Namespace. Defaults to "default".
+
+        Returns:
+            _type_: _description_
+        """
         core_v1 = client.CoreV1Api()
         return core_v1.delete_namespaced_service(name, namespace)
 
-    def get_deployment(self, name):
+    def get_deployment(self, name: str):
         apps_v1 = client.AppsV1Api()
 
-    def get_deployments(self, namespace=None):
+    def get_deployments(self, namespace: str = None):
         apps_v1 = client.AppsV1Api()
 
-    def create_deployment(self, data, namespace="default"):
+    def create_deployment(self, data: dict, namespace: str = "default"):
         log.debug("Create Deployment in namespace %s with %s",
                   namespace, str(data))
         apps_v1 = client.AppsV1Api()
         return apps_v1.create_namespaced_deployment(namespace, data)
 
-    def remove_deployment(self, name, namespace="default"):
+    def remove_deployment(self, name: str, namespace: str = "default"):
         log.debug("Remove Deployment %s in namespace %s", name, namespace)
         apps_v1 = client.AppsV1Api()
         return apps_v1.delete_namespaced_deployment(name, namespace)
 
-    def exists_secret(self, name, namespace="default"):
+    def exists_secret(self, name: str, namespace: str = "default"):
         core_v1 = client.CoreV1Api()
         secrets = core_v1.list_namespaced_secret(namespace)
         for k in secrets.items:
@@ -511,7 +252,7 @@ class KubeClient:
                 return True
         return False
 
-    def get_secret(self, name, namespace="default"):
+    def get_secret(self, name: str, namespace: str = "default"):
         core_v1 = client.CoreV1Api()
         secrets = core_v1.list_namespaced_secret(namespace)
         for k in secrets.items:
@@ -519,7 +260,7 @@ class KubeClient:
                 return k.data
         return None
 
-    def create_secret(self, name, data, namespace="default"):
+    def create_secret(self, name: str, data: dict, namespace: str = "default"):
         log.debug("Create secret %s in namespace %s with %s",
                   name, namespace, str(data))
         core_v1 = client.CoreV1Api()
@@ -531,29 +272,87 @@ class KubeClient:
         body.type = 'Opaque'
         return core_v1.create_namespaced_secret(namespace, body)
 
-    def remove_secret(self, name, namespace="default"):
+    def remove_secret(self, name: str, namespace: str = "default"):
         core_v1 = client.CoreV1Api()
         return core_v1.delete_namespaced_secret(name, namespace)
 
-    def create_stateful_set(self, data, namespace="default"):
+    def create_stateful_set(self, data: dict, namespace: str = "default"):
         log.debug("Create StatefulSet in namespace %s with %s",
                   namespace, str(data))
         apps_v1 = client.AppsV1Api()
         apps_v1.create_namespaced_stateful_set(namespace, data)
 
-    def remove_stateful_set(self, name, namespace="default"):
+    def remove_stateful_set(self, name: str, namespace: str = "default"):
         log.debug("Remove StatefulSet %s in namespace %s", name, namespace)
         apps_v1 = client.AppsV1Api()
         apps_v1.delete_namespaced_stateful_set(name, namespace)
 
-    def create_persistenVolumeClaim(self, data, namespace="default"):
+    def create_persistenVolumeClaim(self, data: dict, namespace: str = "default"):
         log.debug("Create PersistentVolumeClaim in namespace %s with %s",
                   namespace, str(data))
         core_v1 = client.CoreV1Api()
         core_v1.create_namespaced_persistent_volume_claim(namespace, data)
 
-    def remove_persistenVolumeClaim(self, name, namespace="default"):
+    def remove_persistenVolumeClaim(self, name: str, namespace: str = "default"):
         log.debug("Remove PersistentVolumeClaim %s in namespace %s",
                   name, namespace)
         core_v1 = client.CoreV1Api()
         core_v1.delete_namespaced_persistent_volume_claim(name, namespace)
+
+    def create_configMap(self, name: str, data: dict, namespace: str = "default"):
+        log.debug("Create ConfigMap %s in namespace %s",
+                  name, namespace)
+        core_v1 = client.CoreV1Api()
+        metadata = client.V1ObjectMeta(
+            name=name,
+            namespace=namespace,
+        )
+        configmap = client.V1ConfigMap(
+            api_version="v1",
+            kind="ConfigMap",
+            data=data,
+            metadata=metadata
+        )
+        core_v1.create_namespaced_config_map(namespace, configmap)
+
+    def remove_configMap(self, name: str, namespace: str = "default"):
+        log.debug("Remove ConfigMap %s in namespace %s",
+                  name, namespace)
+        core_v1 = client.CoreV1Api()
+        core_v1.delete_namespaced_config_map(name, namespace)
+
+
+class KubeAdmin(KubeClient):
+
+    def restart_folio(self, namespace: str = "folio"):
+        apps_v1 = client.AppsV1Api()
+        core_v1 = client.CoreV1Api()
+        deps = apps_v1.list_namespaced_deployment(namespace)
+        stfs = apps_v1.list_namespaced_stateful_set(namespace)
+        dnames = {d.metadata.name: d.spec.replicas for d in deps.items}
+        snames = {s.metadata.name: s.spec.replicas for s in stfs.items}
+        for name in dnames.keys():
+            log.info("Stop Pods for Deployment %s", name)
+            apps_v1.patch_namespaced_deployment_scale(
+                name, namespace, [{'op': 'replace', 'path': '/spec/replicas', 'value': 0}])
+        for name in snames.keys():
+            log.info("Stop Pods for StatefulSet %s", name)
+            apps_v1.patch_namespaced_stateful_set_scale(
+                name, namespace, [{'op': 'replace', 'path': '/spec/replicas', 'value': 0}])
+        log.info("Wait for all Pods terminated ...")
+        while True:
+            pods = core_v1.list_namespaced_pod(namespace)
+            if pods.items:
+                time.sleep(1)
+            else:
+                break
+        for name, replicas in dnames.items():
+            log.info("Start %i Pods for Deployment %s",
+                     replicas, name)
+            apps_v1.patch_namespaced_deployment_scale(
+                name, namespace, [{'op': 'replace', 'path': '/spec/replicas', 'value': replicas}])
+        for name, replicas in snames.items():
+            log.info("Start %i Pods for StatefulSet %s",
+                     replicas, name)
+            apps_v1.patch_namespaced_stateful_set_scale(
+                name, namespace, [{'op': 'replace', 'path': '/spec/replicas', 'value': replicas}])

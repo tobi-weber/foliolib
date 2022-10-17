@@ -119,9 +119,9 @@ def initdb(**kwargs):
 
 @server.command()
 @click.option(
-    "-u", "--user", default="folio_admin", help=" ", show_default=True)
+    "-u", "--user", default="folio", help=" ", show_default=True)
 @click.option("-p", "--password",
-              default="folio_admin", help=" ", show_default=True)
+              default="folio", help=" ", show_default=True)
 @click.option("-d", "--database",
               default="okapi_modules", help=" ", show_default=True)
 def initmoduledb(**kwargs):

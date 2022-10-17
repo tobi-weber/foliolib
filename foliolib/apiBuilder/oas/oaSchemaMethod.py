@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2020 Tobias Weber <tobi-weber@gmx.de>
+# Copyright (C) 2022 Tobias Weber <tobi-weber@gmx.de>
 
 import json
 import logging
@@ -9,10 +9,6 @@ from types import MethodType
 
 import inflection
 from foliolib.apiBuilder.oas.operationIds import operationIds
-from foliolib.apiBuilder.raml.exceptions import (RamlTraitDataError,
-                                                 RamlTraitNotFound,
-                                                 RamlUnknownDataType,
-                                                 RamlUnknownStatusCode)
 from foliolib.okapi.exceptions import (OkapiFatalError, OkapiMoved,
                                        OkapiRequestConflict, OkapiRequestError,
                                        OkapiRequestForbidden,

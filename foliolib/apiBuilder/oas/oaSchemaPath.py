@@ -1,16 +1,11 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2020 Tobias Weber <tobi-weber@gmx.de>
+# Copyright (C) 2022 Tobias Weber <tobi-weber@gmx.de>
 
 import json
 import logging
 import os
 import re
 
-import inflection
-from foliolib import RAISE
-from foliolib.apiBuilder.oas.exceptions import (CodeBuilderError,
-                                                RamlResourceTypeNotFound)
-from foliolib.apiBuilder.oas.helper import merge_dict, pluralize, singularize
 from foliolib.apiBuilder.oas.oaSchemaMethod import OASchemaMethod
 
 log = logging.getLogger("foliolib.apiBuilder.oas.schemaPath")

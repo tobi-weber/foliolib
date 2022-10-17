@@ -193,7 +193,7 @@ class OkapiClient:
         """Add a module
 
         Args:
-            module (Union[str, OkapiModule]): Module Descriptor or instance of OkapiModule
+            module (Union[str, OkapiModule]): Module id, Module Descriptor or instance of OkapiModule
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
@@ -207,40 +207,38 @@ class OkapiClient:
         Returns:
             dict: Module descriptor
         """
-        if isinstance(module, okapiModule.OkapiModule):
-            descriptor = module.get_descriptor()
-        else:
-            descriptor = module
+        if not isinstance(module, okapiModule.OkapiModule):
+            module = okapiModule.OkapiModule(module)
+        descriptor = module.get_descriptor()
         return self.request("POST", "/_/proxy/modules",
                             descriptor, query=kwargs)
 
-    def remove_module(self, modId: str):
+    def remove_module(self, module: Union[str, okapiModule.OkapiModule]):
         """Remove module descriptor for a particular module,
         module will no longer be selectable by tenants.
 
         Args:
-            modId (str): Module id
+            module (Union[str, OkapiModule]): Module id, Module Descriptor or instance of OkapiModule
         """
+        if not isinstance(module, okapiModule.OkapiModule):
+            module = okapiModule.OkapiModule(module)
+        modId = module.get_id()
         return self.request("DELETE", f"/_/proxy/modules/{modId}")
 
     def is_module_added(self, module: Union[str, okapiModule.OkapiModule]):
         """Is module added?
 
         Args:
-            module (Union[str, okapiModule.OkapiModule]): Module ID or instance of OkapiModule
+            module (Union[str, OkapiModule]): Module id, Module Descriptor or instance of OkapiModule
 
         Returns:
             bool: wether module is added.
         """
-        if isinstance(module, okapiModule.OkapiModule):
-            modId = module.get_id()
-        else:
-            modId = module
-
-        modules = self.get_modules(filter=modId)
-
-        for mod in modules:
-            if mod["id"] == modId:
+        if not isinstance(module, okapiModule.OkapiModule):
+            module = okapiModule.OkapiModule(module)
+        modId = module.get_id()
+        for m in self.get_modules(filter=modId):
+            if m["id"] == modId:
                 return True
 
         return False
@@ -299,6 +297,8 @@ class OkapiClient:
             modId (str): Module id.
             instanceId (str, optional): Instance id. Defaults to None.
         """
+        if isinstance(modId, okapiModule.OkapiModule):
+            modId = modId.get_id()
         if Config().is_kubernetes():
             return KubeClient().undeploy(modId)
         else:
@@ -321,6 +321,8 @@ class OkapiClient:
         Returns:
             bool: wether module is deployed.
         """
+        if isinstance(modId, okapiModule.OkapiModule):
+            modId = modId.get_id()
         mods = self.get_deployed_modules()
         for mod in mods:
             if mod["srvcId"] == modId:
@@ -336,12 +338,12 @@ class OkapiClient:
         """
         return self.request("GET", "/_/proxy/tenants")
 
-    def get_tenant_module(self, modId: str, tenantId: str):
+    def get_tenant_module(tenantId: str, self, modId: str):
         """Get a module of a tenant
 
         Args:
-            modId (str): Module id.
             tenantId (str): Tenant id.
+            modId (str): Module id.
 
         Returns:
             dict: Dict with module data.
@@ -394,12 +396,12 @@ class OkapiClient:
         """
         return self.request("GET", f"/_/proxy/tenants/{tenantId}/interfaces", query=kwargs)
 
-    def get_tenant_interface(self,  interfaceId: str, tenantId: str, **kwargs):
+    def get_tenant_interface(self, tenantId: str, interfaceId: str, **kwargs):
         """Get interface for a tenant.
 
         Args:
-            interfaceId (str):
-            tenantId (str):
+            tenantId (str): Tenant id
+            interfaceId (str): Interface id
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
@@ -448,13 +450,13 @@ class OkapiClient:
         """
         return self.request("DELETE", f"/_/proxy/tenants/{tenantId}")
 
-    def enable_module(self, modId: str, tenantId: str, loadSample: bool = False,
+    def enable_module(self, tenantId: str, modId: str, loadSample: bool = False,
                       loadReference: bool = False, upgrade=False, **kwargs):
         """Enable a module for a tenant
 
         Args:
-            modId (str): Module id
             tenantId (str): Tenant id
+            modId (str): Module id
             loadSample (bool, optional): If samples should loaded. Defaults to False.
             loadReference (bool, optional): If references should loaded. Defaults to False.
             **kwargs (properties): Keyword Arguments
@@ -482,16 +484,16 @@ class OkapiClient:
         Returns:
             dict: Tenant module descriptor
         """
-        return self.enable_modules([modId], tenantId, loadSample=loadSample, loadReference=loadReference,
+        return self.enable_modules(tenantId, [modId], loadSample=loadSample, loadReference=loadReference,
                                    upgrade=upgrade, **kwargs)
 
-    def enable_modules(self, modIds: list, tenantId: str, loadSample: bool = False,
+    def enable_modules(self, tenantId: str, modIds: list, loadSample: bool = False,
                        loadReference: bool = False, **kwargs):
         """Enable modules for a tenant
 
         Args:
-            modIds (list): List with Module ids
             tenantId (str): Tenant id
+            modIds (list): List with Module ids
             loadSample (bool, optional): If samples should loaded. Defaults to False.
             loadReference (bool, optional): If references should loaded. Defaults to False.
             **kwargs (properties): Keyword Arguments
@@ -624,6 +626,8 @@ class OkapiClient:
                         Whether pre-releases should be considered for installation.
             purge (boolean): default = false
                         Disabled modules will also be purged.
+            reinstall: (boolean - default: false)
+                        Whether to install modules even if up-to-update.
             simulate (boolean): default = false
                         Whether the installation is simulated
 
@@ -644,7 +648,7 @@ class OkapiClient:
         """Disable all modules of a tenant
 
         Args:
-            tenantId (str):
+            tenantId (str): Tenant id
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
@@ -656,11 +660,14 @@ class OkapiClient:
         """
         return self.request("POST", f"/ _/proxy/tenants/{tenantId}/modules", query=kwargs)
 
-    def upgrade_modules(self, tenantId: str, modules: list = None, **kwargs):
+    def upgrade_modules(self, tenantId: str, modules: list = None, loadSample: bool = False,
+                        loadReference: bool = False,  **kwargs):
         """[summary]
 
         Args:
-            tenantId (str):
+            tenantId (str): Tenant id
+            loadSample (bool, optional): If samples should loaded. Defaults to False.
+            loadReference (bool, optional): If references should loaded. Defaults to False.
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
@@ -685,6 +692,13 @@ class OkapiClient:
         Returns:
             dict: Tenant module descriptors
         """
+        tenantParameters = []
+        if loadSample:
+            tenantParameters.append("loadSample=true")
+        if loadReference:
+            tenantParameters.append("loadReference=true")
+        if tenantParameters:
+            kwargs["tenantParameters"] = ",".join(tenantParameters)
         if modules is None:
             return self.request("POST", f"/_/proxy/tenants/{tenantId}/upgrade", query=kwargs)
         else:
@@ -737,14 +751,14 @@ class OkapiClient:
                 return True
         return False
 
-    def call_tenant_service(self, method: str, path: str, tenantId: str, data: dict = None,
+    def call_tenant_service(self, tenantId: str, method: str, path: str, data: dict = None,
                             query: dict = None, headers: dict = None, files: dict = None):
         """Call a tenant service
 
         Args:
+            tenantId (str): Tenant id
             method (str): HTML method (GET, POST, PUT, DELETE ...)
             path (str): Path of the service
-            tenantId (str): Tenant id
             data (dict, optional): Post data to call the service. Defaults to None.
             query (dict, optional): Query data to call the service. Defaults to None.
             headers (dict, optional): Headers to call the service. Defaults to None.

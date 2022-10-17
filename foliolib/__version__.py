@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+# Copyright (C) 2022 Tobias Weber <tobi-weber@gmx.de>
+
 __title__ = "foliolib"
 __description__ = "Okapi/Folio Manager and Library"
 __url__ = "https://github.com/tobi-weber/foliolib"
