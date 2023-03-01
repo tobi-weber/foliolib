@@ -2,6 +2,7 @@
   "budgetExpenseClassTotals": [
     {
       "expenseClassName": "Electronic",
+      "expenseClassCode": "Elec",
       "expenseClassStatus": "Active",
       "encumbered": "30.05",
       "awaitingPayment": "0.0",

@@ -58,7 +58,7 @@ class RamlMethod:
         self._data["redirect"] = None
         self._data["errors"] = []
         self._build_data(methodData)
-        #print(json.dumps(self._data, indent=2, default=str))
+        # print(json.dumps(self._data, indent=2, default=str))
 
     def get_method(self):
         return self._method
@@ -200,7 +200,8 @@ class RamlMethod:
             elif "multipart/form-data" in body:
                 bodyData["pyType"] = "filePath"
             elif "application/x-www-form-urlencoded" in body:
-                bodyData["pyType"] = "form-urlencoded"
+                # bodyData["pyType"] = "form-urlencoded"
+                bodyData["pyType"] = "str"
             elif "text/plain" in body or "application/xml" in body or\
                     "text/csv" in body or "text/json" in body or\
                     "text/html" in body or "text/xml" in body:

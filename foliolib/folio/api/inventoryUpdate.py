@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2022-05-05
+# Generated at 2023-02-10
 
 import logging
 
@@ -27,6 +27,8 @@ class InventoryUpdate(FolioApi):
 
         Raises:
             OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
 
         Schema:
 
@@ -43,17 +45,44 @@ class InventoryUpdate(FolioApi):
         Args:
             inventoryUpsertHrid (dict): See Schema below
 
+        Returns:
+            dict: See Schema below
+
         Raises:
+            OkapiRequestError: Bad Request
             OkapiRequestNotFound: Not Found
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiRequestError: Bad Request
             OkapiFatalError: Server Error
 
         Schema:
 
             .. literalinclude:: ../files/InventoryUpdate_delete_inventoryUpsertHrids_request.schema
+            .. literalinclude:: ../files/InventoryUpdate_delete_inventoryUpsertHrids_return.schema 
         """
         return self.call("DELETE", "/inventory-upsert-hrid", data=inventoryUpsertHrid)
+
+    def modify_inventoryBatchUpsertHrid(self, inventoryBatchUpsertHrid: dict):
+        """
+
+        ``PUT /inventory-batch-upsert-hrid``
+
+        Args:
+            inventoryBatchUpsertHrid (dict): See Schema below
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/InventoryUpdate_modify_inventoryBatchUpsertHrid_request.schema
+            .. literalinclude:: ../files/InventoryUpdate_modify_inventoryBatchUpsertHrid_return.schema 
+        """
+        return self.call("PUT", "/inventory-batch-upsert-hrid", data=inventoryBatchUpsertHrid)
 
     def modify_sharedInventoryUpsertMatchkey(self, sharedInventoryUpsertMatchkey: dict):
         """
@@ -67,8 +96,9 @@ class InventoryUpdate(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
             OkapiRequestError: Bad Request
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiFatalError: Server Error
 
         Schema:
 
@@ -85,15 +115,19 @@ class InventoryUpdate(FolioApi):
         Args:
             sharedInventoryUpsertMatchkey (dict): See Schema below
 
+        Returns:
+            dict: See Schema below
+
         Raises:
+            OkapiRequestError: Bad Request
             OkapiRequestNotFound: Not Found
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiRequestError: Bad Request
             OkapiFatalError: Server Error
 
         Schema:
 
             .. literalinclude:: ../files/InventoryUpdate_delete_sharedInventoryUpsertMatchkeys_request.schema
+            .. literalinclude:: ../files/InventoryUpdate_delete_sharedInventoryUpsertMatchkeys_return.schema 
         """
         return self.call("DELETE", "/shared-inventory-upsert-matchkey", data=sharedInventoryUpsertMatchkey)
 
@@ -130,3 +164,26 @@ class InventoryUpdate(FolioApi):
             .. literalinclude:: ../files/InventoryUpdate_get_fetch_return.schema 
         """
         return self.call("GET", f"/shared-inventory-upsert-matchkey/fetch/{fetchId}")
+
+    def modify_sharedInventoryBatchUpsertMatchkey(self, sharedInventoryBatchUpsertMatchkey: dict):
+        """
+
+        ``PUT /shared-inventory-batch-upsert-matchkey``
+
+        Args:
+            sharedInventoryBatchUpsertMatchkey (dict): See Schema below
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/InventoryUpdate_modify_sharedInventoryBatchUpsertMatchkey_request.schema
+            .. literalinclude:: ../files/InventoryUpdate_modify_sharedInventoryBatchUpsertMatchkey_return.schema 
+        """
+        return self.call("PUT", "/shared-inventory-batch-upsert-matchkey", data=sharedInventoryBatchUpsertMatchkey)

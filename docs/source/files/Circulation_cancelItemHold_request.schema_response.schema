@@ -2,6 +2,7 @@
     "$schema": "http://json-schema.org/draft-04/schema#",
     "description": "D2IR response",
     "type": "object",
+    "x-implements": "org.folio.innreach.domain.dto.InnReachResponseData",
     "properties": {
         "status": {
             "description": "Status",

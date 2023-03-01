@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
-# Generated at 2022-05-05
+# Generated at 2023-02-10
 
 import logging
 
 from foliolib.folio import FolioApi, FolioAdminApi
 
 log = logging.getLogger("foliolib.folio.api.dataExportWorker")
+
+
 
 
 
@@ -183,6 +185,4 @@ class BulkeditAdmin(FolioAdminApi):
             OkapiFatalError: Internal server errors, e.g. due to misconfiguration
         """
         return self.call("POST", "/bulk-edit/{jobId}/roll-back", jobId)
-
-
 

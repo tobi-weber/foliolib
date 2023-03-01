@@ -179,6 +179,22 @@
           "name"
         ]
       }
+    },
+    "loanPolicyId": {
+      "description": "Loan policy ID",
+      "$ref": "raml-util/schemas/uuid.schema"
+    },
+    "overdueFinePolicyId": {
+      "description": "Overdue fine policy ID",
+      "$ref": "raml-util/schemas/uuid.schema"
+    },
+    "lostItemFeePolicyId": {
+      "description": "Lost item fee policy ID",
+      "$ref": "raml-util/schemas/uuid.schema"
+    },
+    "processId": {
+      "description": "Randomly generated UUID added to fees/fines created in scope of the same process (e.g. same check-in or same scheduled Lost Item Fee generation job run)",
+      "$ref": "raml-util/schemas/uuid.schema"
     }
   },
   "additionalProperties": false,

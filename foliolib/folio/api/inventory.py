@@ -1,11 +1,134 @@
 # -*- coding: utf-8 -*-
-# Generated at 2022-05-05
+# Generated at 2023-02-10
 
 import logging
 
 from foliolib.folio import FolioApi, FolioAdminApi
 
 log = logging.getLogger("oliolib.folio.api.inventory")
+
+
+class InventoryBatch(FolioApi):
+    """Batch API
+
+    **API for interacting with an inventory of physical resources**
+    """
+
+    def set_batch(self, batch: dict):
+        """Create collection of instances in one request
+
+        ``POST /inventory/instances/batch``
+
+        Args:
+            batch (dict): See Schema below
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestConflict: Conflict
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/InventoryBatch_set_batch_request.schema
+            .. literalinclude:: ../files/InventoryBatch_set_batch_return.schema 
+        """
+        return self.call("POST", "/inventory/instances/batch", data=batch)
+
+
+class InventoryConfig(FolioApi):
+    """Inventory configuration API
+
+    **API for interacting with configuration for Instances, Items, Holdings**
+    """
+
+    def get_blockedFields_instances(self):
+        """Provides configuration with blocked fields of instance
+
+        ``GET /inventory/config/instances/blocked-fields``
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/InventoryConfig_get_blockedFields_instances_return.schema 
+        """
+        return self.call("GET", "/inventory/config/instances/blocked-fields")
+
+    def get_blockedFields_holdings(self):
+        """Provides configuration with blocked fields of holdings
+
+        ``GET /inventory/config/holdings/blocked-fields``
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/InventoryConfig_get_blockedFields_holdings_return.schema 
+        """
+        return self.call("GET", "/inventory/config/holdings/blocked-fields")
+
+
+class InventoryMove(FolioApi):
+    """Inventory Move API
+
+    **API for moving items between holdings and holdings between instances**
+    """
+
+    def set_move_items(self, move: dict):
+        """
+
+        ``POST /inventory/items/move``
+
+        Args:
+            move (dict): See Schema below
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/InventoryMove_set_move_items_request.schema
+            .. literalinclude:: ../files/InventoryMove_set_move_items_return.schema 
+        """
+        return self.call("POST", "/inventory/items/move", data=move)
+
+    def set_move_holdings(self, move: dict):
+        """
+
+        ``POST /inventory/holdings/move``
+
+        Args:
+            move (dict): See Schema below
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/InventoryMove_set_move_holdings_request.schema
+            .. literalinclude:: ../files/InventoryMove_set_move_holdings_return.schema 
+        """
+        return self.call("POST", "/inventory/holdings/move", data=move)
 
 
 class Isbn(FolioApi):
@@ -92,76 +215,6 @@ class Isbn(FolioApi):
             .. literalinclude:: ../files/Isbn_get_validators_return.schema 
         """
         return self.call("GET", "/isbn/validator", query=kwargs)
-
-
-class InventoryBatch(FolioApi):
-    """Batch API
-
-    **API for interacting with an inventory of physical resources**
-    """
-
-    def set_batch(self, batch: dict):
-        """Create collection of instances in one request
-
-        ``POST /inventory/instances/batch``
-
-        Args:
-            batch (dict): See Schema below
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/InventoryBatch_set_batch_request.schema
-            .. literalinclude:: ../files/InventoryBatch_set_batch_return.schema 
-        """
-        return self.call("POST", "/inventory/instances/batch", data=batch)
-
-
-class InventoryConfig(FolioApi):
-    """Inventory configuration API
-
-    **API for interacting with configuration for Instances, Items, Holdings**
-    """
-
-    def get_blockedFields_instances(self):
-        """Provides configuration with blocked fields of instance
-
-        ``GET /inventory/config/instances/blocked-fields``
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/InventoryConfig_get_blockedFields_instances_return.schema 
-        """
-        return self.call("GET", "/inventory/config/instances/blocked-fields")
-
-    def get_blockedFields_holdings(self):
-        """Provides configuration with blocked fields of holdings
-
-        ``GET /inventory/config/holdings/blocked-fields``
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/InventoryConfig_get_blockedFields_holdings_return.schema 
-        """
-        return self.call("GET", "/inventory/config/holdings/blocked-fields")
 
 
 class InventoryEventHandlers(FolioApi):
@@ -741,113 +794,3 @@ class Inventory(FolioApi):
             .. literalinclude:: ../files/Inventory_modify_instance_request.schema
         """
         return self.call("PUT", f"/inventory/instances/{instanceId}", data=instance)
-
-    def get_contexts(self):
-        """Provides Dublin Core context for instances
-
-        ``GET /inventory/instances/context``
-
-        Returns:
-            dict: See Schema below
-
-        Schema:
-
-            .. literalinclude:: ../files/Inventory_get_contexts_return.schema 
-        """
-        return self.call("GET", "/inventory/instances/context")
-
-    def upload_mods(self, filePath: str):
-        """
-
-        ``POST /inventory/ingest/mods``
-
-        Args:
-            filePath (str): Path to the file.
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-
-        Headers:
-            - **location** - URI pointing to the location of ingest status
-        """
-        import os
-        import magic
-        mimeType = magic.Magic(mime=True).from_file(filePath)
-        filename = os.path.basename((filePath))
-        files = {"mods": (filename, open(filePath, "rb"), mimeType)}
-        
-        return self.call("POST", "/inventory/ingest/mods", files=files)
-
-    def get_status(self, statusId: str):
-        """Status of a MODS ingest
-
-        ``GET /inventory/ingest/mods/status/{statusId}``
-
-        Args:
-            statusId (str)
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/Inventory_get_status_return.schema 
-        """
-        return self.call("GET", f"/inventory/ingest/mods/status/{statusId}")
-
-
-class InventoryMove(FolioApi):
-    """Inventory Move API
-
-    **API for moving items between holdings and holdings between instances**
-    """
-
-    def set_move_items(self, move: dict):
-        """
-
-        ``POST /inventory/items/move``
-
-        Args:
-            move (dict): See Schema below
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Schema:
-
-            .. literalinclude:: ../files/InventoryMove_set_move_items_request.schema
-            .. literalinclude:: ../files/InventoryMove_set_move_items_return.schema 
-        """
-        return self.call("POST", "/inventory/items/move", data=move)
-
-    def set_move_holdings(self, move: dict):
-        """
-
-        ``POST /inventory/holdings/move``
-
-        Args:
-            move (dict): See Schema below
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Schema:
-
-            .. literalinclude:: ../files/InventoryMove_set_move_holdings_request.schema
-            .. literalinclude:: ../files/InventoryMove_set_move_holdings_return.schema 
-        """
-        return self.call("POST", "/inventory/holdings/move", data=move)

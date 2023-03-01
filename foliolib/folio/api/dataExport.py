@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2022-05-05
+# Generated at 2023-02-10
 
 import logging
 
@@ -8,100 +8,16 @@ from foliolib.folio import FolioApi, FolioAdminApi
 log = logging.getLogger("oliolib.folio.api.dataExport")
 
 
-class DataExportFileDefinition(FolioApi):
-    """Data export File Definition API
+class DataExportJobProfile(FolioApi):
+    """Data export Job Profile API
 
-    APIs for creating fileDefinition to upload files
+    APIs for creating job Profiles to manage export jobs
     """
 
-    def set_fileDefinition(self, fileDefinition: dict):
-        """API to create file definition to use it for the file uploading
+    def get_jobProfiles(self, **kwargs):
+        """Retrieve a list of jobProfile items.
 
-        ``POST /data-export/file-definitions``
-
-        Args:
-            fileDefinition (dict): See Schema below
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestPayloadToLarge: Payload Too Large
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Schema:
-
-            .. literalinclude:: ../files/DataExportFileDefinition_set_fileDefinition_request.schema
-        """
-        return self.call("POST", "/data-export/file-definitions", data=fileDefinition)
-
-    def get_fileDefinition(self, fileDefinitionId: str):
-        """Method to get file definition by id
-
-        ``GET /data-export/file-definitions/{fileDefinitionId}``
-
-        Args:
-            fileDefinitionId (str)
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/DataExportFileDefinition_get_fileDefinition_return.schema 
-        """
-        return self.call("GET", f"/data-export/file-definitions/{fileDefinitionId}")
-
-    def upload_upload(self, fileDefinitionId: str, filePath: str):
-        """Method to upload file
-
-        ``POST /data-export/file-definitions/{fileDefinitionId}/upload``
-
-        Args:
-            fileDefinitionId (str)
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/DataExportFileDefinition_upload_upload_return.schema 
-        """
-        import os
-        headers = {}
-        headers["Content-Type"] = "application/octet-stream"
-        headers["Content-length"] = str(os.path.getsize(filePath))
-        headers["Content-Disposition"] = "attachment; filename=%s" % os.path.basename(
-            filePath)
-        with open(filePath, 'rb') as f:
-            data = f.read()
-        
-        return self.call("POST", f"/data-export/file-definitions/{fileDefinitionId}/upload", headers=headers, data=data)
-
-
-class DataExportMappingProfiles(FolioApi):
-    """Data export Mapping Profile API
-
-    APIs for managing Mapping Profiles
-    """
-
-    def get_mappingProfiles(self, **kwargs):
-        """Retrieve a list of mappingProfile items.
-
-        ``GET /data-export/mapping-profiles``
+        ``GET /data-export/job-profiles``
 
         Args:
             **kwargs (properties): Keyword Arguments
@@ -143,17 +59,17 @@ class DataExportMappingProfiles(FolioApi):
 
         Schema:
 
-            .. literalinclude:: ../files/DataExportMappingProfiles_get_mappingProfiles_return.schema 
+            .. literalinclude:: ../files/DataExportJobProfile_get_jobProfiles_return.schema 
         """
-        return self.call("GET", "/data-export/mapping-profiles", query=kwargs)
+        return self.call("GET", "/data-export/job-profiles", query=kwargs)
 
-    def set_mappingProfile(self, mappingProfile: dict):
-        """Create a new mappingProfile item.
+    def set_jobProfile(self, jobProfile: dict):
+        """Create a new jobProfile item.
 
-        ``POST /data-export/mapping-profiles``
+        ``POST /data-export/job-profiles``
 
         Args:
-            mappingProfile (dict): See Schema below
+            jobProfile (dict): See Schema below
 
         Raises:
             OkapiRequestError: Bad Request
@@ -162,21 +78,21 @@ class DataExportMappingProfiles(FolioApi):
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
-            - **Location** - URI to the created mappingProfile item
+            - **Location** - URI to the created jobProfile item
 
         Schema:
 
-            .. literalinclude:: ../files/DataExportMappingProfiles_set_mappingProfile_request.schema
+            .. literalinclude:: ../files/DataExportJobProfile_set_jobProfile_request.schema
         """
-        return self.call("POST", "/data-export/mapping-profiles", data=mappingProfile)
+        return self.call("POST", "/data-export/job-profiles", data=jobProfile)
 
-    def get_mappingProfile(self, mappingProfilesId: str):
-        """Retrieve mappingProfile item with given {mappingProfileId}
+    def get_jobProfile(self, jobProfilesId: str):
+        """Retrieve jobProfile item with given {jobProfileId}
 
-        ``GET /data-export/mapping-profiles/{mappingProfilesId}``
+        ``GET /data-export/job-profiles/{jobProfilesId}``
 
         Args:
-            mappingProfilesId (str)
+            jobProfilesId (str)
 
         Returns:
             dict: See Schema below
@@ -187,33 +103,33 @@ class DataExportMappingProfiles(FolioApi):
 
         Schema:
 
-            .. literalinclude:: ../files/DataExportMappingProfiles_get_mappingProfile_return.schema 
+            .. literalinclude:: ../files/DataExportJobProfile_get_jobProfile_return.schema 
         """
-        return self.call("GET", f"/data-export/mapping-profiles/{mappingProfilesId}")
+        return self.call("GET", f"/data-export/job-profiles/{jobProfilesId}")
 
-    def delete_mappingProfile(self, mappingProfilesId: str):
-        """Delete mappingProfile item with given {mappingProfileId}
+    def delete_jobProfile(self, jobProfilesId: str):
+        """Delete jobProfile item with given {jobProfileId}
 
-        ``DELETE /data-export/mapping-profiles/{mappingProfilesId}``
+        ``DELETE /data-export/job-profiles/{jobProfilesId}``
 
         Args:
-            mappingProfilesId (str)
+            jobProfilesId (str)
 
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiFatalError: Server Error
         """
-        return self.call("DELETE", f"/data-export/mapping-profiles/{mappingProfilesId}")
+        return self.call("DELETE", f"/data-export/job-profiles/{jobProfilesId}")
 
-    def modify_mappingProfile(self, mappingProfilesId: str, mappingProfile: dict):
-        """Update mappingProfile item with given {mappingProfileId}
+    def modify_jobProfile(self, jobProfilesId: str, jobProfile: dict):
+        """Update jobProfile item with given {jobProfileId}
 
-        ``PUT /data-export/mapping-profiles/{mappingProfilesId}``
+        ``PUT /data-export/job-profiles/{jobProfilesId}``
 
         Args:
-            mappingProfilesId (str)
-            mappingProfile (dict): See Schema below
+            jobProfilesId (str)
+            jobProfile (dict): See Schema below
 
         Raises:
             OkapiRequestNotFound: Not Found
@@ -222,9 +138,9 @@ class DataExportMappingProfiles(FolioApi):
 
         Schema:
 
-            .. literalinclude:: ../files/DataExportMappingProfiles_modify_mappingProfile_request.schema
+            .. literalinclude:: ../files/DataExportJobProfile_modify_jobProfile_request.schema
         """
-        return self.call("PUT", f"/data-export/mapping-profiles/{mappingProfilesId}", data=mappingProfile)
+        return self.call("PUT", f"/data-export/job-profiles/{jobProfilesId}", data=jobProfile)
 
 
 class DataExport(FolioApi):
@@ -448,43 +364,16 @@ class DataExportLogs(FolioApi):
         return self.call("GET", "/data-export/logs", query=kwargs)
 
 
-class DataExportTransformationFields(FolioApi):
-    """Data export transformation fields API
+class DataExportMappingProfiles(FolioApi):
+    """Data export Mapping Profile API
 
-    API for getting transformation fields
+    APIs for managing Mapping Profiles
     """
 
-    def get_transformationFields(self):
-        """Retrieve transformationField item with given {transformationFieldId}
+    def get_mappingProfiles(self, **kwargs):
+        """Retrieve a list of mappingProfile items.
 
-        ``GET /data-export/transformation-fields``
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/DataExportTransformationFields_get_transformationFields_return.schema 
-        """
-        return self.call("GET", "/data-export/transformation-fields")
-
-
-class DataExportJobProfile(FolioApi):
-    """Data export Job Profile API
-
-    APIs for creating job Profiles to manage export jobs
-    """
-
-    def get_jobProfiles(self, **kwargs):
-        """Retrieve a list of jobProfile items.
-
-        ``GET /data-export/job-profiles``
+        ``GET /data-export/mapping-profiles``
 
         Args:
             **kwargs (properties): Keyword Arguments
@@ -526,17 +415,17 @@ class DataExportJobProfile(FolioApi):
 
         Schema:
 
-            .. literalinclude:: ../files/DataExportJobProfile_get_jobProfiles_return.schema 
+            .. literalinclude:: ../files/DataExportMappingProfiles_get_mappingProfiles_return.schema 
         """
-        return self.call("GET", "/data-export/job-profiles", query=kwargs)
+        return self.call("GET", "/data-export/mapping-profiles", query=kwargs)
 
-    def set_jobProfile(self, jobProfile: dict):
-        """Create a new jobProfile item.
+    def set_mappingProfile(self, mappingProfile: dict):
+        """Create a new mappingProfile item.
 
-        ``POST /data-export/job-profiles``
+        ``POST /data-export/mapping-profiles``
 
         Args:
-            jobProfile (dict): See Schema below
+            mappingProfile (dict): See Schema below
 
         Raises:
             OkapiRequestError: Bad Request
@@ -545,21 +434,21 @@ class DataExportJobProfile(FolioApi):
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
-            - **Location** - URI to the created jobProfile item
+            - **Location** - URI to the created mappingProfile item
 
         Schema:
 
-            .. literalinclude:: ../files/DataExportJobProfile_set_jobProfile_request.schema
+            .. literalinclude:: ../files/DataExportMappingProfiles_set_mappingProfile_request.schema
         """
-        return self.call("POST", "/data-export/job-profiles", data=jobProfile)
+        return self.call("POST", "/data-export/mapping-profiles", data=mappingProfile)
 
-    def get_jobProfile(self, jobProfilesId: str):
-        """Retrieve jobProfile item with given {jobProfileId}
+    def get_mappingProfile(self, mappingProfilesId: str):
+        """Retrieve mappingProfile item with given {mappingProfileId}
 
-        ``GET /data-export/job-profiles/{jobProfilesId}``
+        ``GET /data-export/mapping-profiles/{mappingProfilesId}``
 
         Args:
-            jobProfilesId (str)
+            mappingProfilesId (str)
 
         Returns:
             dict: See Schema below
@@ -570,33 +459,33 @@ class DataExportJobProfile(FolioApi):
 
         Schema:
 
-            .. literalinclude:: ../files/DataExportJobProfile_get_jobProfile_return.schema 
+            .. literalinclude:: ../files/DataExportMappingProfiles_get_mappingProfile_return.schema 
         """
-        return self.call("GET", f"/data-export/job-profiles/{jobProfilesId}")
+        return self.call("GET", f"/data-export/mapping-profiles/{mappingProfilesId}")
 
-    def delete_jobProfile(self, jobProfilesId: str):
-        """Delete jobProfile item with given {jobProfileId}
+    def delete_mappingProfile(self, mappingProfilesId: str):
+        """Delete mappingProfile item with given {mappingProfileId}
 
-        ``DELETE /data-export/job-profiles/{jobProfilesId}``
+        ``DELETE /data-export/mapping-profiles/{mappingProfilesId}``
 
         Args:
-            jobProfilesId (str)
+            mappingProfilesId (str)
 
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiFatalError: Server Error
         """
-        return self.call("DELETE", f"/data-export/job-profiles/{jobProfilesId}")
+        return self.call("DELETE", f"/data-export/mapping-profiles/{mappingProfilesId}")
 
-    def modify_jobProfile(self, jobProfilesId: str, jobProfile: dict):
-        """Update jobProfile item with given {jobProfileId}
+    def modify_mappingProfile(self, mappingProfilesId: str, mappingProfile: dict):
+        """Update mappingProfile item with given {mappingProfileId}
 
-        ``PUT /data-export/job-profiles/{jobProfilesId}``
+        ``PUT /data-export/mapping-profiles/{mappingProfilesId}``
 
         Args:
-            jobProfilesId (str)
-            jobProfile (dict): See Schema below
+            mappingProfilesId (str)
+            mappingProfile (dict): See Schema below
 
         Raises:
             OkapiRequestNotFound: Not Found
@@ -605,6 +494,117 @@ class DataExportJobProfile(FolioApi):
 
         Schema:
 
-            .. literalinclude:: ../files/DataExportJobProfile_modify_jobProfile_request.schema
+            .. literalinclude:: ../files/DataExportMappingProfiles_modify_mappingProfile_request.schema
         """
-        return self.call("PUT", f"/data-export/job-profiles/{jobProfilesId}", data=jobProfile)
+        return self.call("PUT", f"/data-export/mapping-profiles/{mappingProfilesId}", data=mappingProfile)
+
+
+class DataExportFileDefinition(FolioApi):
+    """Data export File Definition API
+
+    APIs for creating fileDefinition to upload files
+    """
+
+    def set_fileDefinition(self, fileDefinition: dict):
+        """API to create file definition to use it for the file uploading
+
+        ``POST /data-export/file-definitions``
+
+        Args:
+            fileDefinition (dict): See Schema below
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestPayloadToLarge: Payload Too Large
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/DataExportFileDefinition_set_fileDefinition_request.schema
+        """
+        return self.call("POST", "/data-export/file-definitions", data=fileDefinition)
+
+    def get_fileDefinition(self, fileDefinitionId: str):
+        """Method to get file definition by id
+
+        ``GET /data-export/file-definitions/{fileDefinitionId}``
+
+        Args:
+            fileDefinitionId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/DataExportFileDefinition_get_fileDefinition_return.schema 
+        """
+        return self.call("GET", f"/data-export/file-definitions/{fileDefinitionId}")
+
+    def upload_upload(self, fileDefinitionId: str, filePath: str):
+        """Method to upload file
+
+        ``POST /data-export/file-definitions/{fileDefinitionId}/upload``
+
+        Args:
+            fileDefinitionId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/DataExportFileDefinition_upload_upload_return.schema 
+        """
+        import os
+        headers = {}
+        headers["Content-Type"] = "application/octet-stream"
+        headers["Content-length"] = str(os.path.getsize(filePath))
+        headers["Content-Disposition"] = "attachment; filename=%s" % os.path.basename(
+            filePath)
+        with open(filePath, 'rb') as f:
+            data = f.read()
+        
+        return self.call("POST", f"/data-export/file-definitions/{fileDefinitionId}/upload", headers=headers, data=data)
+
+
+class DataExportTransformationFields(FolioApi):
+    """Data export transformation fields API
+
+    API for getting transformation fields
+    """
+
+    def get_transformationFields(self):
+        """Retrieve transformationField item with given {transformationFieldId}
+
+        ``GET /data-export/transformation-fields``
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/DataExportTransformationFields_get_transformationFields_return.schema 
+        """
+        return self.call("GET", "/data-export/transformation-fields")

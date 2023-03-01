@@ -245,6 +245,7 @@
     "requestType",
     "requestLevel",
     "requestDate",
-    "fulfilmentPreference"
+    "fulfilmentPreference",
+    "status"
   ]
 }

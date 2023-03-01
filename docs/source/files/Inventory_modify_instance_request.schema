@@ -3,10 +3,6 @@
   "description": "An instance record",
   "type": "object",
   "properties": {
-    "@context": {
-      "description": "Instance context",
-      "type": "string"
-    },
     "id": {
       "type": "string",
       "description": "The system assigned unique ID of the instance record"
@@ -26,37 +22,6 @@
     "source": {
       "type": "string",
       "description": "The metadata source and its format of the underlying record to the instance record. (e.g. FOLIO if it's a record created in Inventory;  MARC if it's a MARC record created in MARCcat or EPKB if it's a record coming from eHoldings)"
-    },
-    "relatedInstances": {
-      "description": "Array of related instances",
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "description": "Id of the related instance join",
-            "type": "string"
-          },
-          "instanceId": {
-            "description": "Id of the instance",
-            "type": "string"
-          },
-          "relatedInstanceId": {
-            "description": "Id of the related instance",
-            "type": "string"
-          },
-          "relatedInstanceTypeId": {
-            "description": "Id of the related instance type",
-            "type": "string"
-          }
-        },
-        "additionalProperties": false,
-        "required": [
-          "instanceId",
-          "relatedInstanceId",
-          "relatedInstanceTypeId"
-        ]
-      }
     },
     "parentInstances": {
       "description": "Array of parent instances",
@@ -131,6 +96,11 @@
           "alternativeTitle": {
             "type": "string",
             "description": "An alternative title for the resource"
+          },
+          "authorityId": {
+            "type": "string",
+            "description": "UUID of authority record that controls an alternative title",
+            "$ref": "uuid.json"
           }
         }
       },
@@ -148,7 +118,22 @@
       "type": "array",
       "description": "List of series titles associated with the resource (e.g. Harry Potter)",
       "items": {
-        "type": "string"
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": "Series title value"
+          },
+          "authorityId": {
+            "type": "string",
+            "description": "UUID of authority record that controls an series title",
+            "$ref": "uuid.json"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "value"
+        ]
       },
       "uniqueItems": true
     },
@@ -198,6 +183,11 @@
             "type": "string",
             "description": "Contributor type terms defined by the MARC code list for relators"
           },
+          "authorityId": {
+            "type": "string",
+            "description": "ID of authority record that controls the contributor",
+            "$ref": "uuid.json"
+          },
           "primary": {
             "type": "boolean",
             "description": "Whether this is the primary contributor"
@@ -214,7 +204,22 @@
       "type": "array",
       "description": "List of subject headings",
       "items": {
-        "type": "string"
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": "Subject heading value"
+          },
+          "authorityId": {
+            "type": "string",
+            "description": "UUID of authority record that controls a subject heading",
+            "$ref": "uuid.json"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "value"
+        ]
       },
       "uniqueItems": true
     },
@@ -439,20 +444,6 @@
       "type": "object",
       "$ref": "raml-util/schemas/metadata.schema",
       "readonly": true
-    },
-    "links": {
-      "description": "Links",
-      "type": "object",
-      "properties": {
-        "self": {
-          "description": "self",
-          "type": "string"
-        }
-      },
-      "additionalProperties": false,
-      "required": [
-        "self"
-      ]
     },
     "natureOfContentTermIds": {
       "type": "array",

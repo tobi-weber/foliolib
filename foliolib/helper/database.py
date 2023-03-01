@@ -3,11 +3,16 @@
 
 import logging
 
-import psycopg2
 from foliolib.config import Config
-from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
 log = logging.getLogger("foliolib.helper.database")
+
+
+try:
+    import psycopg2
+    from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+except:
+    log.debug("Cannot import postgres client. You have to install psycopg2.")
 
 
 class Postgres:

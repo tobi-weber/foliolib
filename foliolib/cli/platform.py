@@ -15,8 +15,9 @@ def platform():
 
 
 @platform.command()
-@click.argument("platform")
 @click.argument("tenantid")
+@click.option("-p", "--platform", default="R3-2022-GA",
+              help="Path to platform directory, tgz file, zip file or platform version")
 @click.option("-n", "--node", default=get_node(),
               help="node id", show_default=True)
 @click.option("-a", "--deployAsync",  help="", is_flag=True)
@@ -35,7 +36,6 @@ def platform():
 def install(**kwargs):
     """Install a folio platform.
 
-    PLATFORM\tpath to folio platform.
     TENANTID\ttenant id.
     """
     _kwargs = {}
@@ -57,11 +57,15 @@ def install(**kwargs):
 
 
 @platform.command()
-@click.argument("platform")
-@click.argument("tenantid")
+@click.option("-t", "--tenant", default="ALL",
+              help="Tenant id to upgrade. Default all tenants will be upgraded")
+@click.option("-p", "--platform", required=True,
+              help="Path to platform directory, tgz file, zip file or platform version")
 @click.option("-n", "--node", default=get_node(),
               help="node id", show_default=True)
 @click.option("-a", "--deployAsync",  help="", is_flag=True)
+@click.option("-e", "--exclude",  help="Exclude module from upgrade, e.g. mod-authtoken",
+              multiple=True)
 @click.option(
     "--ignoreErrors", is_flag=True, help="Ignore errors during the install operation")
 @click.option(
@@ -73,10 +77,7 @@ def install(**kwargs):
 @click.option(
     "--simulate", is_flag=True, help="Simulate the installation")
 def upgrade(**kwargs):
-    """Upgrade a folio platform.
-
-    PLATFORM\tpath to folio platform.
-    TENANTID\ttenant id.
+    """Upgrade folio tenants.
     """
     _kwargs = {}
     if kwargs["ignoreerrors"]:
@@ -89,5 +90,6 @@ def upgrade(**kwargs):
         _kwargs["npmSnapshot"] = False
     if kwargs["no_prerelease"]:
         _kwargs["preRelease"] = False
-    upgrade_platform(kwargs["platform"], kwargs["node"], kwargs["tenantid"],
-                     deploy_async=kwargs["deployasync"], **_kwargs)
+    upgrade_platform(kwargs["platform"], kwargs["node"], kwargs["tenant"],
+                     deploy_async=kwargs["deployasync"],
+                     exclude=kwargs["exclude"], **_kwargs)

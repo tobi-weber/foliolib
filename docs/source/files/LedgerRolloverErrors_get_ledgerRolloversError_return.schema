@@ -16,7 +16,10 @@
       "type": "string",
       "enum": [
         "Fund",
-        "Order"
+        "Order",
+        "Order rollover",
+        "Financial rollover",
+        "Other"
       ]
     },
     "failedAction": {
@@ -40,7 +43,6 @@
   },
   "additionalProperties": false,
   "required": [
-    "details",
     "errorType",
     "errorMessage",
     "failedAction",

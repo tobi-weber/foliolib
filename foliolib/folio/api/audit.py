@@ -1,11 +1,165 @@
 # -*- coding: utf-8 -*-
-# Generated at 2022-05-05
+# Generated at 2023-02-10
 
 import logging
 
 from foliolib.folio import FolioApi, FolioAdminApi
 
 log = logging.getLogger("oliolib.folio.api.audit")
+
+
+class AcquisitionEvents(FolioApi):
+    """Acquisition Audit events API
+
+    API for retrieving events for acquisition changes
+    """
+
+    def get_order(self, orderId: str, **kwargs):
+        """Get list of order events by order_id
+
+        ``GET /audit-data/acquisition/order/{orderId}``
+
+        Args:
+            orderId (str)
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            sortBy (str): (default=action_date) sorting by field: actionDate
+            sortOrder (str): (default=desc) sort order: asc or desc
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/AcquisitionEvents_get_order_return.schema 
+        """
+        return self.call("GET", f"/audit-data/acquisition/order/{orderId}", query=kwargs)
+
+    def get_orderLine(self, orderLineId: str, **kwargs):
+        """Get list of order_line events by order_line_id
+
+        ``GET /audit-data/acquisition/order-line/{orderLineId}``
+
+        Args:
+            orderLineId (str)
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            sortBy (str): (default=action_date) sorting by field: actionDate
+            sortOrder (str): (default=desc) sort order: asc or desc
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/AcquisitionEvents_get_orderLine_return.schema 
+        """
+        return self.call("GET", f"/audit-data/acquisition/order-line/{orderLineId}", query=kwargs)
+
+
+class ModAuditHandlers(FolioApi):
+    """Audit event handlers API
+
+    API for event handling
+    """
+
+    def set_logRecord(self, logRecord: dict):
+        """
+
+        ``POST /audit/handlers/log-record``
+
+        Args:
+            logRecord (dict): See Schema below
+
+        Schema:
+
+            .. literalinclude:: ../files/ModAuditHandlers_set_logRecord_request.schema
+        """
+        return self.call("POST", "/audit/handlers/log-record", data=logRecord)
+
+
+class CirculationLogs(FolioApi):
+    """mod-audit API
+
+    This documents the API calls that can be made to query circulation audit logs records
+    """
+
+    def get_logs(self, **kwargs):
+        """Retrieve a list of log items.
+
+        ``GET /audit-data/circulation/logs``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            query (str):  A query expressed as a CQL string
+                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
+                    using valid searchable fields.
+                    The first example below shows the general form of a full CQL query,
+                    but those fields might not be relevant in this context.
+                    
+                    with valid searchable fields, for example userBarcode
+                    
+                    
+                    Example:
+                    
+                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
+                    
+                     - userBarcode=1000024158
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/CirculationLogs_get_logs_return.schema 
+        """
+        return self.call("GET", "/audit-data/circulation/logs", query=kwargs)
 
 
 class AuditData(FolioApi):
@@ -146,78 +300,3 @@ class AuditData(FolioApi):
             .. literalinclude:: ../files/AuditData_modify_auditDatum_request.schema
         """
         return self.call("PUT", f"/audit-data/{auditDataId}", data=auditDatum)
-
-
-class ModAuditHandlers(FolioApi):
-    """Audit event handlers API
-
-    API for event handling
-    """
-
-    def set_logRecord(self, logRecord: dict):
-        """
-
-        ``POST /audit/handlers/log-record``
-
-        Args:
-            logRecord (dict): See Schema below
-
-        Schema:
-
-            .. literalinclude:: ../files/ModAuditHandlers_set_logRecord_request.schema
-        """
-        return self.call("POST", "/audit/handlers/log-record", data=logRecord)
-
-
-class CirculationLogs(FolioApi):
-    """mod-audit API
-
-    This documents the API calls that can be made to query circulation audit logs records
-    """
-
-    def get_logs(self, **kwargs):
-        """Retrieve a list of log items.
-
-        ``GET /audit-data/circulation/logs``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            query (str):  A query expressed as a CQL string
-                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
-                    using valid searchable fields.
-                    The first example below shows the general form of a full CQL query,
-                    but those fields might not be relevant in this context.
-                    
-                    with valid searchable fields, for example userBarcode
-                    
-                    
-                    Example:
-                    
-                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
-                    
-                     - userBarcode=1000024158
-            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
-                    
-                    Example:
-                    
-                     - 0
-            limit (int): (default=10) Limit the number of elements returned in the response
-                    
-                    Example:
-                    
-                     - 10
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/CirculationLogs_get_logs_return.schema 
-        """
-        return self.call("GET", "/audit-data/circulation/logs", query=kwargs)

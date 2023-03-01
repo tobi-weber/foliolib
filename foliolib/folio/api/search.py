@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2022-05-05
+# Generated at 2023-02-10
 
 import logging
 
@@ -73,7 +73,7 @@ class Search(FolioApi):
         ``GET /search/{recordType}/facets``
 
         Args:
-            recordType (str):  (enum: ['instances', 'authorities'])
+            recordType (str):  (enum: ['instances', 'authorities', 'contributors'])
 
         Keyword Args:
             query (str): A CQL query string with search conditions.
@@ -116,10 +116,10 @@ class Search(FolioApi):
         """
         return self.call("GET", "/search/authorities", query=kwargs)
 
-    def getAuthoritiesIdsJob(self, jobId):
-        """Get a job for the stream of authority ids.
+    def getIdsJob(self, jobId):
+        """Get a job for the stream of resource ids.
 
-        ``GET /search/authorities/ids/jobs/{jobId}``
+        ``GET /search/resources/jobs/{jobId}``
 
         Args:
             jobId (str): UUID of the job to get
@@ -133,14 +133,14 @@ class Search(FolioApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Search_getAuthoritiesIdsJob_response.schema
+            .. literalinclude:: ../files/Search_getIdsJob_response.schema
         """
-        return self.call("GET", "/search/authorities/ids/jobs/{jobId}", jobId)
+        return self.call("GET", "/search/resources/jobs/{jobId}", jobId)
 
-    def submitAuthoritiesIdsJob(self, resourceIdsJob):
-        """Creates a job for the stream of authority ids.
+    def submitIdsJob(self, resourceIdsJob):
+        """Creates a job for the stream of resource ids.
 
-        ``POST /search/authorities/ids/jobs``
+        ``POST /search/resources/jobs``
 
         Args:
             resourceIdsJob (dict): See Schema below.
@@ -154,23 +154,23 @@ class Search(FolioApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Search_submitAuthoritiesIdsJob_request.schema
+            .. literalinclude:: ../files/Search_submitIdsJob_request.schema
         """
-        return self.call("POST", "/search/authorities/ids/jobs", resourceIdsJob)
+        return self.call("POST", "/search/resources/jobs", resourceIdsJob)
 
-    def getAuthorityIds(self, **kwargs):
-        """Get a list of authority ids for CQL query
+    def getResourceIds(self, jobId):
+        """Get a list of resource ids by job id
 
-        ``GET /search/authorities/ids``
+        ``GET /search/resources/jobs/{jobId}/ids``
 
-        Keyword Args:
-            query (str): A CQL query string with search conditions.
+        Args:
+            jobId (str): UUID of the job to get
 
         Raises:
             OkapiRequestError: Validation errors
             OkapiFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
         """
-        return self.call("GET", "/search/authorities/ids", query=kwargs)
+        return self.call("GET", "/search/resources/jobs/{jobId}/ids", jobId)
 
     def browseInstancesByCallNumber(self, **kwargs):
         """Provides list of instances for browsing by call number
@@ -220,6 +220,30 @@ class Search(FolioApi):
             .. literalinclude:: ../files/Search_browseInstancesBySubject_response.schema
         """
         return self.call("GET", "/search/browse/subjects/instances", query=kwargs)
+
+    def browseInstancesByContributor(self, **kwargs):
+        """Provides list of instances for browsing by contributor
+
+        ``GET /search/browse/contributors/instances``
+
+        Keyword Args:
+            query (str): A CQL query string with search conditions.
+            limit (int): Limit the number of elements returned in the response. (minimum: 0, maximum: 500, default: 100)
+            highlightMatch (bool): Whether to highlight matched resource by query input or not. (default: True)
+            precedingRecordsCount (int): Number of preceding records for browsing around and around-including options (minimum: 1, maximum: 100)
+
+        Returns:
+            dict: See Schema below.
+
+        Raises:
+            OkapiRequestError: Validation errors
+            OkapiFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
+
+        Schema:
+
+            .. literalinclude:: ../files/Search_browseInstancesByContributor_response.schema
+        """
+        return self.call("GET", "/search/browse/contributors/instances", query=kwargs)
 
     def browseAuthorities(self, **kwargs):
         """Provides list of authorities by headingRef
@@ -451,7 +475,7 @@ class SearchAdmin(FolioAdminApi):
         ``PUT /search/config/features/{featureId}``
 
         Args:
-            featureId (str): Feature id (name) (enum: ['search.all.fields', 'browse.cn.intermediate.values'])
+            featureId (str): Feature id (name) (enum: ['search.all.fields', 'browse.cn.intermediate.values', 'browse.cn.intermediate.remove.duplicates'])
             featureConfig (dict): See Schema below.
 
         Returns:
@@ -474,7 +498,7 @@ class SearchAdmin(FolioAdminApi):
         ``DELETE /search/config/features/{featureId}``
 
         Args:
-            featureId (str): Feature id (name) (enum: ['search.all.fields', 'browse.cn.intermediate.values'])
+            featureId (str): Feature id (name) (enum: ['search.all.fields', 'browse.cn.intermediate.values', 'browse.cn.intermediate.remove.duplicates'])
 
         Raises:
             OkapiRequestNotFound: No feature configuration is found by id

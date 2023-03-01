@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2022-05-05
+# Generated at 2023-02-10
 
 import logging
 
@@ -8,16 +8,16 @@ from foliolib.folio import FolioApi, FolioAdminApi
 log = logging.getLogger("oliolib.folio.api.invoiceStorage")
 
 
-class InvoiceNumber(FolioApi):
-    """Invoice Number
+class VoucherNumber(FolioApi):
+    """Voucher Number
 
-    **API used to manage invoice number.**
+    **API used to manage voucher number.**
     """
 
-    def get_invoiceNumbers(self, **kwargs):
-        """Get generated invoice number
+    def get_voucherNumbers(self, **kwargs):
+        """Get generated voucher number
 
-        ``GET /invoice-storage/invoice-number``
+        ``GET /voucher-storage/voucher-number``
 
         Args:
             **kwargs (properties): Keyword Arguments
@@ -34,9 +34,40 @@ class InvoiceNumber(FolioApi):
 
         Schema:
 
-            .. literalinclude:: ../files/InvoiceNumber_get_invoiceNumbers_return.schema 
+            .. literalinclude:: ../files/VoucherNumber_get_voucherNumbers_return.schema 
         """
-        return self.call("GET", "/invoice-storage/invoice-number", query=kwargs)
+        return self.call("GET", "/voucher-storage/voucher-number", query=kwargs)
+
+    def get_starts(self):
+        """Get voucher number start
+
+        ``GET /voucher-storage/voucher-number/start``
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/VoucherNumber_get_starts_return.schema 
+        """
+        return self.call("GET", "/voucher-storage/voucher-number/start")
+
+    def set_start(self, value: str):
+        """(Re)set the start value of the voucher number sequence
+
+        ``POST /voucher-storage/voucher-number/start/{value}``
+
+        Args:
+            value (str)
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+        """
+        return self.call("POST", f"/voucher-storage/voucher-number/start/{value}")
 
 
 class BatchGroup(FolioApi):
@@ -171,43 +202,6 @@ class BatchGroup(FolioApi):
             .. literalinclude:: ../files/BatchGroup_modify_batchGroup_request.schema
         """
         return self.call("PUT", f"/batch-group-storage/batch-groups/{batchGroupsId}", data=batchGroup)
-
-
-class InvoiceLineNumber(FolioApi):
-    """Invoice Line Number
-
-    **API used to manage Invoice Line number.  This API is intended for internal use only**
-    """
-
-    def get_invoiceLineNumbers(self, **kwargs):
-        """Get invoice line number
-
-        ``GET /invoice-storage/invoice-line-number``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            invoiceId (uuid):  The UUID of a invoice
-                    
-                    Example:
-                    
-                     - 8ad4b87b-9b47-4199-b0c3-5480745c6b41
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/InvoiceLineNumber_get_invoiceLineNumbers_return.schema 
-        """
-        return self.call("GET", "/invoice-storage/invoice-line-number", query=kwargs)
 
 
 class Invoice(FolioApi):
@@ -583,6 +577,459 @@ class Invoice(FolioApi):
         return self.call("PUT", f"/invoice-storage/invoice-lines/{invoiceLinesId}", data=invoiceLine)
 
 
+class InvoiceNumber(FolioApi):
+    """Invoice Number
+
+    **API used to manage invoice number.**
+    """
+
+    def get_invoiceNumbers(self, **kwargs):
+        """Get generated invoice number
+
+        ``GET /invoice-storage/invoice-number``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            lang (str): (default=en) Requested language. Optional. [lang=en]
+                    
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/InvoiceNumber_get_invoiceNumbers_return.schema 
+        """
+        return self.call("GET", "/invoice-storage/invoice-number", query=kwargs)
+
+
+class BatchVoucherExportConfiguration(FolioApi):
+    """Batch voucher export configurations CRUD API
+
+    This documents the API calls that can be made to manage batch voucher export configurations; This API is intended for internal use only
+    """
+
+    def get_exportConfigurations(self, **kwargs):
+        """Get list of batch voucher export configurations
+
+        ``GET /batch-voucher-storage/export-configurations``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+            query (str):  A query expressed as a CQL string
+                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
+                    using valid searchable fields.
+                    The first example below shows the general form of a full CQL query,
+                    but those fields might not be relevant in this context.
+                    
+                    with valid searchable fields: for example format
+                    
+                    
+                    Example:
+                    
+                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
+                    
+                     - format=="Application/xml"
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/BatchVoucherExportConfiguration_get_exportConfigurations_return.schema 
+        """
+        return self.call("GET", "/batch-voucher-storage/export-configurations", query=kwargs)
+
+    def set_exportConfiguration(self, exportConfiguration: dict):
+        """Create a new exportConfiguration item.
+
+        ``POST /batch-voucher-storage/export-configurations``
+
+        Args:
+            exportConfiguration (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+
+        Headers:
+            - **Location** - URI to the created exportConfiguration item
+
+        Schema:
+
+            .. literalinclude:: ../files/BatchVoucherExportConfiguration_set_exportConfiguration_request.schema
+        """
+        return self.call("POST", "/batch-voucher-storage/export-configurations", data=exportConfiguration)
+
+    def get_exportConfiguration(self, exportConfigurationsId: str):
+        """Retrieve exportConfiguration item with given {exportConfigurationId}
+
+        ``GET /batch-voucher-storage/export-configurations/{exportConfigurationsId}``
+
+        Args:
+            exportConfigurationsId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/BatchVoucherExportConfiguration_get_exportConfiguration_return.schema 
+        """
+        return self.call("GET", f"/batch-voucher-storage/export-configurations/{exportConfigurationsId}")
+
+    def delete_exportConfiguration(self, exportConfigurationsId: str):
+        """Delete exportConfiguration item with given {exportConfigurationId}
+
+        ``DELETE /batch-voucher-storage/export-configurations/{exportConfigurationsId}``
+
+        Args:
+            exportConfigurationsId (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+        """
+        return self.call("DELETE", f"/batch-voucher-storage/export-configurations/{exportConfigurationsId}")
+
+    def modify_exportConfiguration(self, exportConfigurationsId: str, exportConfiguration: dict):
+        """Update exportConfiguration item with given {exportConfigurationId}
+
+        ``PUT /batch-voucher-storage/export-configurations/{exportConfigurationsId}``
+
+        Args:
+            exportConfigurationsId (str)
+            exportConfiguration (dict): See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/BatchVoucherExportConfiguration_modify_exportConfiguration_request.schema
+        """
+        return self.call("PUT", f"/batch-voucher-storage/export-configurations/{exportConfigurationsId}", data=exportConfiguration)
+
+    def set_exportConfiguration_by_exportConfigurationsId(self, exportConfigurationsId: str):
+        """
+
+        ``POST /batch-voucher-storage/export-configurations/{exportConfigurationsId}``
+
+        Args:
+            exportConfigurationsId (str)
+        """
+        return self.call("POST", f"/batch-voucher-storage/export-configurations/{exportConfigurationsId}")
+
+    def get_credential(self, exportConfigurationsId: str):
+        """Retrieve credential item with given {credentialId}
+
+        ``GET /batch-voucher-storage/export-configurations/{exportConfigurationsId}/credentials``
+
+        Args:
+            exportConfigurationsId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/BatchVoucherExportConfiguration_get_credential_return.schema 
+        """
+        return self.call("GET", f"/batch-voucher-storage/export-configurations/{exportConfigurationsId}/credentials")
+
+    def delete_credential(self, exportConfigurationsId: str):
+        """Delete credential item with given {credentialId}
+
+        ``DELETE /batch-voucher-storage/export-configurations/{exportConfigurationsId}/credentials``
+
+        Args:
+            exportConfigurationsId (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+        """
+        return self.call("DELETE", f"/batch-voucher-storage/export-configurations/{exportConfigurationsId}/credentials")
+
+    def modify_credential(self, exportConfigurationsId: str, credential: dict):
+        """Update credential item with given {credentialId}
+
+        ``PUT /batch-voucher-storage/export-configurations/{exportConfigurationsId}/credentials``
+
+        Args:
+            exportConfigurationsId (str)
+            credential (dict): See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/BatchVoucherExportConfiguration_modify_credential_request.schema
+        """
+        return self.call("PUT", f"/batch-voucher-storage/export-configurations/{exportConfigurationsId}/credentials", data=credential)
+
+    def set_credential(self, exportConfigurationsId: str):
+        """
+
+        ``POST /batch-voucher-storage/export-configurations/{exportConfigurationsId}/credentials``
+
+        Args:
+            exportConfigurationsId (str)
+        """
+        return self.call("POST", f"/batch-voucher-storage/export-configurations/{exportConfigurationsId}/credentials")
+
+
+class BatchVoucherExports(FolioApi):
+    """Batch voucher exports CRUD API
+
+    This documents the API calls that can be made to manage batch voucher exports
+    """
+
+    def get_batchVoucherExports(self, **kwargs):
+        """Get list of batch voucher exports
+
+        ``GET /batch-voucher-storage/batch-voucher-exports``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+            query (str):  A query expressed as a CQL string
+                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
+                    using valid searchable fields.
+                    The first example below shows the general form of a full CQL query,
+                    but those fields might not be relevant in this context.
+                    
+                    with valid searchable fields: for example format
+                    
+                    
+                    Example:
+                    
+                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
+                    
+                     - format=="Application/xml"
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/BatchVoucherExports_get_batchVoucherExports_return.schema 
+        """
+        return self.call("GET", "/batch-voucher-storage/batch-voucher-exports", query=kwargs)
+
+    def set_batchVoucherExport(self, batchVoucherExport: dict):
+        """Create a new batchVoucherExport item.
+
+        ``POST /batch-voucher-storage/batch-voucher-exports``
+
+        Args:
+            batchVoucherExport (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Headers:
+            - **Location** - URI to the created batchVoucherExport item
+
+        Schema:
+
+            .. literalinclude:: ../files/BatchVoucherExports_set_batchVoucherExport_request.schema
+        """
+        return self.call("POST", "/batch-voucher-storage/batch-voucher-exports", data=batchVoucherExport)
+
+    def get_batchVoucherExport(self, batchVoucherExportsId: str):
+        """Retrieve batchVoucherExport item with given {batchVoucherExportId}
+
+        ``GET /batch-voucher-storage/batch-voucher-exports/{batchVoucherExportsId}``
+
+        Args:
+            batchVoucherExportsId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/BatchVoucherExports_get_batchVoucherExport_return.schema 
+        """
+        return self.call("GET", f"/batch-voucher-storage/batch-voucher-exports/{batchVoucherExportsId}")
+
+    def delete_batchVoucherExport(self, batchVoucherExportsId: str):
+        """Delete batchVoucherExport item with given {batchVoucherExportId}
+
+        ``DELETE /batch-voucher-storage/batch-voucher-exports/{batchVoucherExportsId}``
+
+        Args:
+            batchVoucherExportsId (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+        """
+        return self.call("DELETE", f"/batch-voucher-storage/batch-voucher-exports/{batchVoucherExportsId}")
+
+    def modify_batchVoucherExport(self, batchVoucherExportsId: str, batchVoucherExport: dict):
+        """Update batchVoucherExport item with given {batchVoucherExportId}
+
+        ``PUT /batch-voucher-storage/batch-voucher-exports/{batchVoucherExportsId}``
+
+        Args:
+            batchVoucherExportsId (str)
+            batchVoucherExport (dict): See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/BatchVoucherExports_modify_batchVoucherExport_request.schema
+        """
+        return self.call("PUT", f"/batch-voucher-storage/batch-voucher-exports/{batchVoucherExportsId}", data=batchVoucherExport)
+
+
+class BatchVoucher(FolioApi):
+    """Batch Vouchers CRUD API
+
+    **API used to manage batch vouchers.**
+    """
+
+    def set_batchVoucher(self, batchVoucher: dict):
+        """Process batchVouchers.
+
+        ``POST /batch-voucher-storage/batch-vouchers``
+
+        Args:
+            batchVoucher (dict): See Schema below
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Headers:
+            - **Location** - URI to the created batchVoucher item
+
+        Schema:
+
+            .. literalinclude:: ../files/BatchVoucher_set_batchVoucher_request.schema
+        """
+        return self.call("POST", "/batch-voucher-storage/batch-vouchers", data=batchVoucher)
+
+    def get_batchVouchers(self, batchVouchersId: str):
+        """Retrieve batchVoucher item with given {batchVoucherId}
+
+        ``GET /batch-voucher-storage/batch-vouchers/{batchVouchersId}``
+
+        Args:
+            batchVouchersId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/BatchVoucher_get_batchVouchers_return.schema 
+        """
+        return self.call("GET", f"/batch-voucher-storage/batch-vouchers/{batchVouchersId}")
+
+    def delete_batchVoucher(self, batchVouchersId: str):
+        """Delete batchVoucher item with given {batchVoucherId}
+
+        ``DELETE /batch-voucher-storage/batch-vouchers/{batchVouchersId}``
+
+        Args:
+            batchVouchersId (str)
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+        """
+        return self.call("DELETE", f"/batch-voucher-storage/batch-vouchers/{batchVouchersId}")
+
+
 class Voucher(FolioApi):
     """Vouchers CRUD API
 
@@ -845,93 +1292,26 @@ class Voucher(FolioApi):
         return self.call("PUT", f"/voucher-storage/voucher-lines/{voucherLinesId}", data=voucherLine)
 
 
-class BatchVoucher(FolioApi):
-    """Batch Vouchers CRUD API
+class InvoiceLineNumber(FolioApi):
+    """Invoice Line Number
 
-    **API used to manage batch vouchers.**
+    **API used to manage Invoice Line number.  This API is intended for internal use only**
     """
 
-    def set_batchVoucher(self, batchVoucher: dict):
-        """Process batchVouchers.
+    def get_invoiceLineNumbers(self, **kwargs):
+        """Get invoice line number
 
-        ``POST /batch-voucher-storage/batch-vouchers``
-
-        Args:
-            batchVoucher (dict): See Schema below
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Headers:
-            - **Location** - URI to the created batchVoucher item
-
-        Schema:
-
-            .. literalinclude:: ../files/BatchVoucher_set_batchVoucher_request.schema
-        """
-        return self.call("POST", "/batch-voucher-storage/batch-vouchers", data=batchVoucher)
-
-    def get_batchVouchers(self, batchVouchersId: str):
-        """Retrieve batchVoucher item with given {batchVoucherId}
-
-        ``GET /batch-voucher-storage/batch-vouchers/{batchVouchersId}``
-
-        Args:
-            batchVouchersId (str)
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Schema:
-
-            .. literalinclude:: ../files/BatchVoucher_get_batchVouchers_return.schema 
-        """
-        return self.call("GET", f"/batch-voucher-storage/batch-vouchers/{batchVouchersId}")
-
-    def delete_batchVoucher(self, batchVouchersId: str):
-        """Delete batchVoucher item with given {batchVoucherId}
-
-        ``DELETE /batch-voucher-storage/batch-vouchers/{batchVouchersId}``
-
-        Args:
-            batchVouchersId (str)
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-        """
-        return self.call("DELETE", f"/batch-voucher-storage/batch-vouchers/{batchVouchersId}")
-
-
-class VoucherNumber(FolioApi):
-    """Voucher Number
-
-    **API used to manage voucher number.**
-    """
-
-    def get_voucherNumbers(self, **kwargs):
-        """Get generated voucher number
-
-        ``GET /voucher-storage/voucher-number``
+        ``GET /invoice-storage/invoice-line-number``
 
         Args:
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            invoiceId (uuid):  The UUID of a invoice
+                    
+                    Example:
+                    
+                     - 8ad4b87b-9b47-4199-b0c3-5480745c6b41
             lang (str): (default=en) Requested language. Optional. [lang=en]
                     
 
@@ -939,391 +1319,11 @@ class VoucherNumber(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/VoucherNumber_get_voucherNumbers_return.schema 
-        """
-        return self.call("GET", "/voucher-storage/voucher-number", query=kwargs)
-
-    def get_starts(self):
-        """Get voucher number start
-
-        ``GET /voucher-storage/voucher-number/start``
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/VoucherNumber_get_starts_return.schema 
-        """
-        return self.call("GET", "/voucher-storage/voucher-number/start")
-
-    def set_start(self, value: str):
-        """(Re)set the start value of the voucher number sequence
-
-        ``POST /voucher-storage/voucher-number/start/{value}``
-
-        Args:
-            value (str)
-
-        Raises:
             OkapiRequestError: Bad Request
             OkapiFatalError: Server Error
-        """
-        return self.call("POST", f"/voucher-storage/voucher-number/start/{value}")
-
-
-class BatchVoucherExports(FolioApi):
-    """Batch voucher exports CRUD API
-
-    This documents the API calls that can be made to manage batch voucher exports
-    """
-
-    def get_batchVoucherExports(self, **kwargs):
-        """Get list of batch voucher exports
-
-        ``GET /batch-voucher-storage/batch-voucher-exports``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
-                    
-                    Example:
-                    
-                     - 0
-            limit (int): (default=10) Limit the number of elements returned in the response
-                    
-                    Example:
-                    
-                     - 10
-            query (str):  A query expressed as a CQL string
-                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
-                    using valid searchable fields.
-                    The first example below shows the general form of a full CQL query,
-                    but those fields might not be relevant in this context.
-                    
-                    with valid searchable fields: for example format
-                    
-                    
-                    Example:
-                    
-                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
-                    
-                     - format=="Application/xml"
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
 
-            .. literalinclude:: ../files/BatchVoucherExports_get_batchVoucherExports_return.schema 
+            .. literalinclude:: ../files/InvoiceLineNumber_get_invoiceLineNumbers_return.schema 
         """
-        return self.call("GET", "/batch-voucher-storage/batch-voucher-exports", query=kwargs)
-
-    def set_batchVoucherExport(self, batchVoucherExport: dict):
-        """Create a new batchVoucherExport item.
-
-        ``POST /batch-voucher-storage/batch-voucher-exports``
-
-        Args:
-            batchVoucherExport (dict): See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Headers:
-            - **Location** - URI to the created batchVoucherExport item
-
-        Schema:
-
-            .. literalinclude:: ../files/BatchVoucherExports_set_batchVoucherExport_request.schema
-        """
-        return self.call("POST", "/batch-voucher-storage/batch-voucher-exports", data=batchVoucherExport)
-
-    def get_batchVoucherExport(self, batchVoucherExportsId: str):
-        """Retrieve batchVoucherExport item with given {batchVoucherExportId}
-
-        ``GET /batch-voucher-storage/batch-voucher-exports/{batchVoucherExportsId}``
-
-        Args:
-            batchVoucherExportsId (str)
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Schema:
-
-            .. literalinclude:: ../files/BatchVoucherExports_get_batchVoucherExport_return.schema 
-        """
-        return self.call("GET", f"/batch-voucher-storage/batch-voucher-exports/{batchVoucherExportsId}")
-
-    def delete_batchVoucherExport(self, batchVoucherExportsId: str):
-        """Delete batchVoucherExport item with given {batchVoucherExportId}
-
-        ``DELETE /batch-voucher-storage/batch-voucher-exports/{batchVoucherExportsId}``
-
-        Args:
-            batchVoucherExportsId (str)
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-        """
-        return self.call("DELETE", f"/batch-voucher-storage/batch-voucher-exports/{batchVoucherExportsId}")
-
-    def modify_batchVoucherExport(self, batchVoucherExportsId: str, batchVoucherExport: dict):
-        """Update batchVoucherExport item with given {batchVoucherExportId}
-
-        ``PUT /batch-voucher-storage/batch-voucher-exports/{batchVoucherExportsId}``
-
-        Args:
-            batchVoucherExportsId (str)
-            batchVoucherExport (dict): See Schema below
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Schema:
-
-            .. literalinclude:: ../files/BatchVoucherExports_modify_batchVoucherExport_request.schema
-        """
-        return self.call("PUT", f"/batch-voucher-storage/batch-voucher-exports/{batchVoucherExportsId}", data=batchVoucherExport)
-
-
-class BatchVoucherExportConfiguration(FolioApi):
-    """Batch voucher export configurations CRUD API
-
-    This documents the API calls that can be made to manage batch voucher export configurations; This API is intended for internal use only
-    """
-
-    def get_exportConfigurations(self, **kwargs):
-        """Get list of batch voucher export configurations
-
-        ``GET /batch-voucher-storage/export-configurations``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
-                    
-                    Example:
-                    
-                     - 0
-            limit (int): (default=10) Limit the number of elements returned in the response
-                    
-                    Example:
-                    
-                     - 10
-            query (str):  A query expressed as a CQL string
-                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
-                    using valid searchable fields.
-                    The first example below shows the general form of a full CQL query,
-                    but those fields might not be relevant in this context.
-                    
-                    with valid searchable fields: for example format
-                    
-                    
-                    Example:
-                    
-                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
-                    
-                     - format=="Application/xml"
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/BatchVoucherExportConfiguration_get_exportConfigurations_return.schema 
-        """
-        return self.call("GET", "/batch-voucher-storage/export-configurations", query=kwargs)
-
-    def set_exportConfiguration(self, exportConfiguration: dict):
-        """Create a new exportConfiguration item.
-
-        ``POST /batch-voucher-storage/export-configurations``
-
-        Args:
-            exportConfiguration (dict): See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-
-        Headers:
-            - **Location** - URI to the created exportConfiguration item
-
-        Schema:
-
-            .. literalinclude:: ../files/BatchVoucherExportConfiguration_set_exportConfiguration_request.schema
-        """
-        return self.call("POST", "/batch-voucher-storage/export-configurations", data=exportConfiguration)
-
-    def get_exportConfiguration(self, exportConfigurationsId: str):
-        """Retrieve exportConfiguration item with given {exportConfigurationId}
-
-        ``GET /batch-voucher-storage/export-configurations/{exportConfigurationsId}``
-
-        Args:
-            exportConfigurationsId (str)
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/BatchVoucherExportConfiguration_get_exportConfiguration_return.schema 
-        """
-        return self.call("GET", f"/batch-voucher-storage/export-configurations/{exportConfigurationsId}")
-
-    def delete_exportConfiguration(self, exportConfigurationsId: str):
-        """Delete exportConfiguration item with given {exportConfigurationId}
-
-        ``DELETE /batch-voucher-storage/export-configurations/{exportConfigurationsId}``
-
-        Args:
-            exportConfigurationsId (str)
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-        """
-        return self.call("DELETE", f"/batch-voucher-storage/export-configurations/{exportConfigurationsId}")
-
-    def modify_exportConfiguration(self, exportConfigurationsId: str, exportConfiguration: dict):
-        """Update exportConfiguration item with given {exportConfigurationId}
-
-        ``PUT /batch-voucher-storage/export-configurations/{exportConfigurationsId}``
-
-        Args:
-            exportConfigurationsId (str)
-            exportConfiguration (dict): See Schema below
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/BatchVoucherExportConfiguration_modify_exportConfiguration_request.schema
-        """
-        return self.call("PUT", f"/batch-voucher-storage/export-configurations/{exportConfigurationsId}", data=exportConfiguration)
-
-    def set_exportConfiguration_by_exportConfigurationsId(self, exportConfigurationsId: str):
-        """
-
-        ``POST /batch-voucher-storage/export-configurations/{exportConfigurationsId}``
-
-        Args:
-            exportConfigurationsId (str)
-        """
-        return self.call("POST", f"/batch-voucher-storage/export-configurations/{exportConfigurationsId}")
-
-    def get_credential(self, exportConfigurationsId: str):
-        """Retrieve credential item with given {credentialId}
-
-        ``GET /batch-voucher-storage/export-configurations/{exportConfigurationsId}/credentials``
-
-        Args:
-            exportConfigurationsId (str)
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/BatchVoucherExportConfiguration_get_credential_return.schema 
-        """
-        return self.call("GET", f"/batch-voucher-storage/export-configurations/{exportConfigurationsId}/credentials")
-
-    def delete_credential(self, exportConfigurationsId: str):
-        """Delete credential item with given {credentialId}
-
-        ``DELETE /batch-voucher-storage/export-configurations/{exportConfigurationsId}/credentials``
-
-        Args:
-            exportConfigurationsId (str)
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-        """
-        return self.call("DELETE", f"/batch-voucher-storage/export-configurations/{exportConfigurationsId}/credentials")
-
-    def modify_credential(self, exportConfigurationsId: str, credential: dict):
-        """Update credential item with given {credentialId}
-
-        ``PUT /batch-voucher-storage/export-configurations/{exportConfigurationsId}/credentials``
-
-        Args:
-            exportConfigurationsId (str)
-            credential (dict): See Schema below
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/BatchVoucherExportConfiguration_modify_credential_request.schema
-        """
-        return self.call("PUT", f"/batch-voucher-storage/export-configurations/{exportConfigurationsId}/credentials", data=credential)
-
-    def set_credential(self, exportConfigurationsId: str):
-        """
-
-        ``POST /batch-voucher-storage/export-configurations/{exportConfigurationsId}/credentials``
-
-        Args:
-            exportConfigurationsId (str)
-        """
-        return self.call("POST", f"/batch-voucher-storage/export-configurations/{exportConfigurationsId}/credentials")
+        return self.call("GET", "/invoice-storage/invoice-line-number", query=kwargs)

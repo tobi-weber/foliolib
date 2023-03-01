@@ -7,6 +7,7 @@
     ],
     "description": "D2IR Bib info response",
     "type": "object",
+    "x-implements": "org.folio.innreach.domain.dto.InnReachResponseData",
     "properties": {
         "bibInfo": {
             "description": "D2IR Bib info",

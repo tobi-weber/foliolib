@@ -45,9 +45,36 @@
       "description": "Information about authority associated with source record",
       "$ref": "processedEntityInfo.json"
     },
-    "relatedOrderInfo": {
-      "description": "Information about order associated with source record",
-      "$ref": "processedEntityInfo.json"
+    "relatedPoLineInfo": {
+      "description": "Information about poLine associated with source record",
+      "properties": {
+        "actionStatus": {
+          "description": "Status of action performed above folio entity, value MULTIPLE if multiple entities of the same type were affected",
+          "$ref": "./actionStatus.json"
+        },
+        "idList": {
+          "description": "Id of entities which were affected during data import process",
+          "type": "array",
+          "items": {
+            "$ref": "../../raml-util/schemas/uuid.schema"
+          }
+        },
+        "hridList": {
+          "description": "Human readable id of entities which were affected during data import process",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "error": {
+          "description": "Error message",
+          "type": "string"
+        },
+        "orderId": {
+          "description": "Order identifier, UUID",
+          "$ref": "../../raml-util/schemas/uuid.schema"
+        }
+      }
     },
     "relatedInvoiceInfo": {
       "description": "Information about invoice associated with source record",

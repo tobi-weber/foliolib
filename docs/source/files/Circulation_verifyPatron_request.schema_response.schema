@@ -7,6 +7,7 @@
     ],
     "description": "D2IR Patron info response",
     "type": "object",
+    "x-implements": "org.folio.innreach.domain.dto.InnReachResponseData",
     "properties": {
         "patronInfo": {
             "description": "D2IR Patron info",

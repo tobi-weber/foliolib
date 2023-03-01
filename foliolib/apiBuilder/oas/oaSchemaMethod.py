@@ -145,6 +145,7 @@ class OASchemaMethod:
                 params.append(oaParameter.get_name())
         if requestContent is not None and requestContent.get_schema_name() is not None:
             params.append(requestContent.get_schema_name())
+        params = [p.replace("-", "_") for p in params]
         request_parameters = ", " + ", ".join(params) if params else ""
         methodParams = request_parameters
         if requestContent is not None and requestContent.get_mime_type() == "multipart/form-data":

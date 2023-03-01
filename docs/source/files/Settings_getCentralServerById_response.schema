@@ -57,6 +57,11 @@
             "description": "Local server secret",
             "type": "string"
         },
+        "checkPickupLocation": {
+            "description": "Indicates whether to look up pickup locations for INN-Reach item hold requests based on transaction pickupLocation",
+            "type": "boolean",
+            "default": false
+        },
         "metadata": {
             "description": "Entity metadata",
             "type": "object",

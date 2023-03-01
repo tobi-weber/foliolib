@@ -82,8 +82,8 @@ def enable_modules(tenantid, modules, loadSample=False, loadReference=False, **k
         if isinstance(module, OkapiModule):
             module = module.get_id()
         if OkapiClient().is_module_enabled(module, tenantid):
-            log.warning("Module %s is already enabled for tenant %s",
-                        (module, tenantid))
+            log.warning(
+                "Module %s is already enabled for tenant %s", module, tenantid)
         else:
             log.info("Enable %s", module)
             OkapiClient().enable_module(tenantid, module,

@@ -17,18 +17,22 @@ SPHINX_DOC_SRC = "docs/source"
 FOLIO_GITURL = "https://github.com/folio-org/"
 
 FOLIO_MODS = [
-    ("edge-caiasoft", "OAS", "src/main/resources/swagger.api"),
-    ("edge-dematic", "OAS", "src/main/resources/swagger.api"),
-    ("edge-lti-courses", "RAML", "ramls"),
-    ("edge-ncip", "", ""),  # NO SCHEMA
-    #("edge-oai-pmh", "RAML", "ramls"),
-    #("edge-orders", "RAML", "ramls"),
-    #("edge-patron", "RAML", "ramls"),
-    #("edge-rtac", "RAML", "ramls"),
+    # ("edge-caiasoft", "OAS", "src/main/resources/swagger.api"),
+    # ("edge-dematic", "OAS", "src/main/resources/swagger.api"),
+    # ("edge-lti-courses", "RAML", "ramls"),
+    # ("edge-ncip", "", ""),  # NO SCHEMA
+    # ("edge-oai-pmh", "RAML", "ramls"),
+    # ("edge-orders", "RAML", "ramls"),
+    # ("edge-patron", "RAML", "ramls"),
+    # ("edge-rtac", "RAML", "ramls"),
     # ("edge-sip2", "", ""),  # NO SCHEMA
+    # ("folio-custom-fields", "RAML", "ramls"),
+    # ("folio-spring-base", "OAS", "src/main/resources/swagger.api"), # ERROR
+    # ("folio-vertx-lib", "OAS", "src/main/resources/openapi"), # ERROR
     ("mod-agreements", "", ""),  # NO SCHEMA
     ("mod-audit", "RAML", "ramls"),
-    #("mod-authtoken", "OAS", "src/main/resources/openapi"),
+    # ("mod-authtoken", "OAS", "src/main/resources/openapi"),
+    ("mod-bulk-operations", "OAS", "src/main/resources/swagger.api"),
     ("mod-calendar", "RAML", "ramls"),
     ("mod-circulation", "RAML", "ramls"),
     ("mod-circulation-storage", "RAML", "ramls"),
@@ -45,8 +49,10 @@ FOLIO_MODS = [
     ("mod-data-import-converter-storage", "RAML", "ramls"),
     ("mod-ebsconet", "OAS", "src/main/resources/swagger.api"),
     ("mod-email", "RAML", "ramls"),
+    ("mod-entities-links", "OAS", "src/main/resources/swagger.api"),
     ("mod-erm-usage", "RAML", "ramls"),
     ("mod-erm-usage-harvester", "RAML", "ramls"),
+    # ("mod-eusage-reports", "OAS", "server/src/main/resources/openapi"), # ERROR
     ("mod-event-config", "RAML", "ramls"),
     ("mod-feesfines", "RAML", "ramls"),
     ("mod-finance", "RAML", "ramls"),
@@ -68,7 +74,7 @@ FOLIO_MODS = [
     ("mod-marccat", "RAML", "ramls"),
     ("mod-meta-storage", "OAS", "server/src/main/resources/openapi"),
     ("mod-ncip", "", ""),  # NO SCHEMA
-    #("mod-notes", "RAML", "ramls"),
+    # ("mod-notes", "RAML", "ramls"),
     ("mod-notes", "OAS", "src/main/resources/swagger.api"),
     ("mod-notify", "RAML", "ramls"),
     ("mod-oai-pmh", "RAML", "ramls"),
@@ -76,7 +82,7 @@ FOLIO_MODS = [
     ("mod-orders-storage", "RAML", "ramls"),
     ("mod-organizations", "RAML", "ramls"),
     ("mod-organizations-storage", "RAML", "ramls"),
-    #("mod-password-validator", "RAML", "ramls"),
+    # ("mod-password-validator", "RAML", "ramls"),
     ("mod-password-validator",  "OAS", "src/main/resources/swagger.api"),
     ("mod-patron", "RAML", "ramls"),
     ("mod-patron-blocks", "RAML", "ramls"),
@@ -84,20 +90,22 @@ FOLIO_MODS = [
     ("mod-pubsub", "RAML", "ramls"),
     ("mod-quick-marc", "OAS", "src/main/resources/swagger.api"),
     ("mod-remote-storage", "OAS", "src/main/resources/swagger.api"),
+    ("mod-reservoir", "OAS", "server/src/main/resources/openapi"),
     ("mod-rtac", "RAML", "ramls"),
     ("mod-search", "OAS", "src/main/resources/swagger.api"),
     ("mod-sender", "RAML", "ramls"),
     ("mod-service-interaction", "", ""),  # NO SCHEMA
+    ("mod-settings", "OAS", "src/main/resources/openapi"),
     ("mod-shared-index", "OAS", "server/src/main/resources/openapi"),
     ("mod-source-record-manager", "RAML", "ramls"),
     ("mod-source-record-storage", "RAML", "ramls"),
-    #("mod-tags", "RAML", "ramls"),
+    # ("mod-tags", "RAML", "ramls"),
     ("mod-tags",  "OAS", "src/main/resources/swagger.api"),
     ("mod-template-engine", "RAML", "ramls"),
     ("mod-user-import", "RAML", "ramls"),
     ("mod-users", "RAML", "ramls"),
     ("mod-users-bl", "RAML", "ramls"),
-    #("mod-z3950", "", ""),
+    # ("mod-z3950", "", ""),
 ]
 
 
@@ -145,7 +153,7 @@ def process():
 
 
 def main():
-    if len(sys.argv) > 1 and sys.argv[1] == "repos":
+    if len(sys.argv) > 1 and sys.argv[1] == "pull":
         get_repos()
     else:
         set_logging(level="INFO")

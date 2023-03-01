@@ -4,7 +4,6 @@
 import json
 import logging
 import os
-from distutils.version import LooseVersion
 from typing import Union
 from urllib.parse import urlencode, urljoin
 
@@ -23,8 +22,6 @@ from foliolib.okapi.exceptions import (OkapiException, OkapiFatalError,
                                        OkapiRequestUnauthorized,
                                        OkapiRequestUnprocessableEntity)
 from foliolib.okapi.kubeClient import KubeClient
-from github import Github
-from lxml import etree
 
 urllib3.disable_warnings()
 log = logging.getLogger("foliolib.okapi.okapiClient")
@@ -86,10 +83,13 @@ class OkapiClient:
         Returns:
             dict: Enviroment variables
         """
-        if Config().is_kubernetes():
-            return KubeClient().get_env()
+        if Config().is_foliolib_env():
+            return Config().get_env()
         else:
-            return self.request("GET", "/_/env")
+            if Config().is_kubernetes():
+                return KubeClient().get_env()
+            else:
+                return self.request("GET", "/_/env")
 
     def set_env(self, name: str, value: str, description: str = ""):
         """Set an enviroment variable.
@@ -104,26 +104,32 @@ class OkapiClient:
 
         Headers:
             - **Location** - URI to the environment entry instance
-
-
         """
-        if Config().is_kubernetes():
-            return KubeClient().set_env(name, value)
+        if Config().is_foliolib_env():
+            log.debug("Set global env in foliolib")
+            Config().set_env(name, value)
+            return Config().get_env()
         else:
-            return self.request("POST", "/_/env", {"name": name, "value": value, "description": description})
+            if Config().is_kubernetes():
+                log.debug("Set global env in kubernetes")
+                return KubeClient().set_env(name, value)
+            else:
+                log.debug("Set global env in okapi")
+                return self.request("POST", "/_/env", {"name": name, "value": value, "description": description})
 
     def delete_env(self, name: str):
         """Delete an enviroment variable.
 
         Args:
             name (str): Name of the enviroment variable.
-
-
         """
-        if Config().is_kubernetes():
-            return KubeClient().delete_env(name)
+        if Config().is_foliolib_env():
+            Config().delete_env(name)
         else:
-            return self.request("DELETE", "/_/env", {"name": name})
+            if Config().is_kubernetes():
+                return KubeClient().delete_env(name)
+            else:
+                return self.request("DELETE", "/_/env", {"name": name})
 
     def health(self, serviceID: str = None, instanceId: str = None):
         """Check health of modules
@@ -488,7 +494,7 @@ class OkapiClient:
                                    upgrade=upgrade, **kwargs)
 
     def enable_modules(self, tenantId: str, modIds: list, loadSample: bool = False,
-                       loadReference: bool = False, **kwargs):
+                       loadReference: bool = False, deploy=False, **kwargs):
         """Enable modules for a tenant
 
         Args:
@@ -496,13 +502,12 @@ class OkapiClient:
             modIds (list): List with Module ids
             loadSample (bool, optional): If samples should loaded. Defaults to False.
             loadReference (bool, optional): If references should loaded. Defaults to False.
+            deploy (boolean), optional: Whether to deploy. Defaults to False
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
             async (boolean): default = false
                         Whether to install in the background
-            deploy (boolean): default = false
-                        Whether to deploy
             ignoreErrors (boolean): default = false
                         Okapi 4.2.0 and later, it is possible to ignore errors during the install operation. This is done by supplying parameter ignoreErrors=true.
                         In this case, Okapi will try to upgrade all modules in the modules list, regardless if one of them fails. However, for individual modules,
@@ -527,6 +532,12 @@ class OkapiClient:
             tenantParameters.append("loadReference=true")
         if tenantParameters:
             kwargs["tenantParameters"] = ",".join(tenantParameters)
+        if deploy:
+            for modId in modIds:
+                if not self.is_module_added(modId):
+                    self.add_module(modId)
+                if not self.is_module_deployed(modId):
+                    self.deploy_module(modId)
         data = [{"id": modId, "action": "enable"} for modId in modIds]
         return self.install_modules(data, tenantId, **kwargs)
 
@@ -834,7 +845,7 @@ class OkapiClient:
         headers["Accept"] = 'application/json, text/plain'
         if "X-Okapi-Token" not in headers:
             if self._access_token is not None:
-                #log.debug("Token for supertenant: %s", self._access_token)
+                # log.debug("Token for supertenant: %s", self._access_token)
                 headers["X-Okapi-Token"] = self._access_token
         if method == "GET" or method == "DELETE":
             request = self._client.prepare_request(
@@ -908,94 +919,3 @@ class OkapiClient:
             print(response.text)
             raise OkapiException(
                 f"ERROR {response.status_code}: Not implemented")
-
-
-def request_release(name: str, version: str = None):
-    """Get release data of a folio module from github
-
-    Args:
-        name (str): Module name
-        version (str, optional): Version of the release. Defaults to None.
-
-    Raises:
-        OkapiNotFound:
-
-    Returns:
-        dict: Dict with release data.
-    """
-    access_token = Config().foliolibcfg().get("GitHub", "access-token")
-    g = Github(access_token)
-    repo = g.get_repo(f"folio-org/{name}")
-    if version is None:
-        release = repo.get_latest_release()
-        version = release.tag_name.replace("v", "")
-        log.info("No version given. Latest version is %s", version)
-
-    releases = repo.get_releases()
-    release = None
-    for r in releases:
-        if version in r.tag_name:
-            release = r
-            break
-    if not release:
-        raise OkapiRequestNotFound(f"There is no release for {name} {version}")
-    tarball_url = release.tarball_url
-
-    return {"name": name,
-            "version": version,
-            "url": tarball_url}
-
-
-def request_docker_tag(name: str, version: str = None, repository: str = "folioorg"):
-    """Get the docker tag of a folio module.
-
-    Args:
-        name (str): Module name
-        version (str, optional): Version of the module. Defaults to None.
-        repository (str, optional):Docker repository. Defaults to "folioorg".
-
-    Raises:
-        OkapiException:
-
-    Returns:
-        str: Docker tag
-    """
-    url = f"https://registry.hub.docker.com/v1/repositories/{repository}/{name}/tags"
-    response = requests.get(url)
-    tags = response.json()
-    if not tags:
-        raise OkapiException(f"Docker Image for {name} not found")
-    if version is not None:
-        tags = [tag["name"]
-                for tag in tags if version in tag["name"]]
-    if version is None or len(tags) == 0:
-        tags = response.json()
-        tags = [tag["name"].replace("v", "")
-                for tag in tags if not "latest" in tag["name"]]
-    try:
-        tags = sorted(tags, key=LooseVersion)
-    except:
-        tags = sorted(tags)
-
-    tag = tags.pop()
-
-    return tag
-
-
-def request_snapshot_version(name: str):
-    """Get the latest snapshot version from github.
-
-    Args:
-        name (str): Module name
-
-    Returns:
-        str: Snapshot version
-    """
-    url = f"https://raw.githubusercontent.com/folio-org/{name}/master/pom.xml"
-    response = requests.get(url)
-    root = etree.fromstring(response.text.encode("utf-8"))
-    version = root.find('version', root.nsmap).text
-    tag = request_docker_tag(name, version, repository="folioci")
-    log.info("Latest snapshot version is %s", tag)
-
-    return tag

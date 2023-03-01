@@ -1,11 +1,44 @@
 # -*- coding: utf-8 -*-
-# Generated at 2022-05-05
+# Generated at 2023-02-10
 
 import logging
 
 from foliolib.folio import FolioApi, FolioAdminApi
 
 log = logging.getLogger("foliolib.folio.api.passwordValidator")
+
+
+
+class PasswordvalidatorAdmin(FolioAdminApi):
+    """Password validator module
+    Administration
+
+    
+    """
+
+    def validatePassword(self, password):
+        """Validate password
+
+        ``POST /tenant/password/validate``
+
+        Args:
+            password (dict): See Schema below.
+
+        Returns:
+            dict: See Schema below.
+
+        Raises:
+            OkapiRequestError: Bad request
+            OkapiRequestNotFound: Not found error
+            OkapiRequestUnprocessableEntity: Validation errors
+            OkapiFatalError: Internal server error
+
+        Schema:
+
+            .. literalinclude:: ../files/Passwordvalidator_validatePassword_request.schema
+            .. literalinclude:: ../files/Passwordvalidator_validatePassword_request.schema_response.schema
+        """
+        return self.call("POST", "/tenant/password/validate", password)
 
 
 
@@ -102,36 +135,3 @@ class ValidatorregistryAdmin(FolioAdminApi):
             .. literalinclude:: ../files/Validatorregistry_getTenantRuleById_response.schema
         """
         return self.call("GET", "/tenant/rules/{ruleId}")
-
-
-
-class PasswordvalidatorAdmin(FolioAdminApi):
-    """Password validator module
-    Administration
-
-    
-    """
-
-    def validatePassword(self, password):
-        """Validate password
-
-        ``POST /tenant/password/validate``
-
-        Args:
-            password (dict): See Schema below.
-
-        Returns:
-            dict: See Schema below.
-
-        Raises:
-            OkapiRequestError: Bad request
-            OkapiRequestNotFound: Not found error
-            OkapiRequestUnprocessableEntity: Validation errors
-            OkapiFatalError: Internal server error
-
-        Schema:
-
-            .. literalinclude:: ../files/Passwordvalidator_validatePassword_request.schema
-            .. literalinclude:: ../files/Passwordvalidator_validatePassword_request.schema_response.schema
-        """
-        return self.call("POST", "/tenant/password/validate", password)

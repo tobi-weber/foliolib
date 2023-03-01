@@ -29,10 +29,19 @@
             ~Config.del_token
         
         
+            ~Config.delete_env
+        
+        
             ~Config.foliolibcfg
         
         
             ~Config.get_confdir
+        
+        
+            ~Config.get_env
+        
+        
+            ~Config.get_kube_config
         
         
             ~Config.get_server
@@ -50,6 +59,9 @@
             ~Config.has_token
         
         
+            ~Config.is_foliolib_env
+        
+        
             ~Config.is_kubernetes
         
         
@@ -57,6 +69,12 @@
         
         
             ~Config.okapicfg
+        
+        
+            ~Config.remove_okapicfg
+        
+        
+            ~Config.set_env
         
         
             ~Config.set_foliolibcfg

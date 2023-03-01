@@ -45,6 +45,7 @@ class OkapiModule:
         Args:
             module (Union[dict, str]): ModuleDescriptor or Module id, e.g. mod-users-17.1.0
         """
+        # print("Create OkapiModule %s" % str(module))
         if isinstance(module, dict):
             self._descriptor = module
         elif isinstance(module, str):
@@ -52,7 +53,7 @@ class OkapiModule:
         log.debug("Create OkapiModule %s", self.get_id())
         self.__clean_env()
         self.__set_modules_parameters()
-        #print(json.dumps(self._descriptor, indent=2))
+        # print(json.dumps(self._descriptor, indent=2))
 
     def get_id(self):
         """ Get module name
@@ -200,26 +201,39 @@ class OkapiModule:
                 name = name.lower()
             return name
 
-        config = Config().modulescfg(self.get_id())
-        if config is not None:
-            if "Docker" in config:
-                if "Memory" in config["Docker"]:
-                    self._descriptor["launchDescriptor"]["dockerArgs"]["HostConfig"]["Memory"]\
-                        = config.getint(
-                        "Docker", "Memory")
-            if "Env" in config:
-                env = self._descriptor["launchDescriptor"]["env"]
-                for name, value in config["Env"].items():
-                    name = name.upper()
-                    name = remove_entry(env, name)
-                    env.append({"name": name, "value": value})
-
         if "launchDescriptor" in self._descriptor:
-            if Config().is_kubernetes():
-                dockerPull = False
+            # print("Add Global env to module %s" % self.get_id())
+            if "env" in self._descriptor["launchDescriptor"]:
+                module_env = self._descriptor["launchDescriptor"]["env"]
             else:
-                dockerPull = True
-            self._descriptor["launchDescriptor"]["dockerPull"] = dockerPull
+                module_env = []
+                self._descriptor["launchDescriptor"]["env"] = module_env
+            for name, value in Config().get_env(True).items():
+                # print("Add env %s: %s" % (name, value))
+                name = name.upper()
+                name = remove_entry(module_env, name)
+                module_env.append({"name": name, "value": value})
+
+            config = Config().modulescfg(self.get_id())
+            # print("Add module env of %s" % self.get_id())
+            if config is not None:
+                if "Docker" in config:
+                    if "Memory" in config["Docker"]:
+                        self._descriptor["launchDescriptor"]["dockerArgs"]["HostConfig"]["Memory"]\
+                            = config.getint(
+                            "Docker", "Memory")
+                if "Env" in config:
+                    for name, value in config["Env"].items():
+                        # print("Add env %s: %s" % (name, value))
+                        name = name.upper()
+                        name = remove_entry(module_env, name)
+                        module_env.append({"name": name, "value": value})
+
+                if Config().is_kubernetes():
+                    dockerPull = False
+                else:
+                    dockerPull = True
+                self._descriptor["launchDescriptor"]["dockerPull"] = dockerPull
 
 
 def create_okapiModule(name: str):

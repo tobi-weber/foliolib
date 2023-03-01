@@ -11,6 +11,10 @@
       "type": "string",
       "$ref": "../../common/schemas/uuid.json"
     },
+    "_version": {
+      "type": "integer",
+      "description": "Record version for optimistic locking"
+    },
     "code": {
       "description": "The code of the expense class",
       "type": "string",

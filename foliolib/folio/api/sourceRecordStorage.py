@@ -1,211 +1,11 @@
 # -*- coding: utf-8 -*-
-# Generated at 2022-05-05
+# Generated at 2023-02-10
 
 import logging
 
 from foliolib.folio import FolioApi, FolioAdminApi
 
 log = logging.getLogger("oliolib.folio.api.sourceRecordStorage")
-
-
-class SourceRecordStorageSnapshots(FolioApi):
-    """Source Record Storage Snapshot API
-
-    API for managing snapshots
-    """
-
-    def get_snapshots(self, **kwargs):
-        """Retrieve a list of snapshot items.
-
-        ``GET /source-storage/snapshots``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
-                    
-                    Example:
-                    
-                     - 0
-            limit (int): (default=10) Limit the number of elements returned in the response
-                    
-                    Example:
-                    
-                     - 10
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Schema:
-
-            .. literalinclude:: ../files/SourceRecordStorageSnapshots_get_snapshots_return.schema 
-        """
-        return self.call("GET", "/source-storage/snapshots", query=kwargs)
-
-    def set_snapshot(self, snapshot: dict):
-        """Create a new snapshot item.
-
-        ``POST /source-storage/snapshots``
-
-        Args:
-            snapshot (dict): See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Headers:
-            - **Location** - URI to the created snapshot item
-
-        Schema:
-
-            .. literalinclude:: ../files/SourceRecordStorageSnapshots_set_snapshot_request.schema
-        """
-        return self.call("POST", "/source-storage/snapshots", data=snapshot)
-
-    def get_snapshot(self, jobExecutionId: str):
-        """Retrieve snapshot item with given {snapshotId}
-
-        ``GET /source-storage/snapshots/{jobExecutionId}``
-
-        Args:
-            jobExecutionId (str)
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/SourceRecordStorageSnapshots_get_snapshot_return.schema 
-        """
-        return self.call("GET", f"/source-storage/snapshots/{jobExecutionId}")
-
-    def delete_snapshot(self, jobExecutionId: str):
-        """Deletes snapshot and all related records
-
-        ``DELETE /source-storage/snapshots/{jobExecutionId}``
-
-        Args:
-            jobExecutionId (str)
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-        """
-        return self.call("DELETE", f"/source-storage/snapshots/{jobExecutionId}")
-
-    def modify_snapshot(self, jobExecutionId: str, snapshot: dict):
-        """Update snapshot item with given {snapshotId}
-
-        ``PUT /source-storage/snapshots/{jobExecutionId}``
-
-        Args:
-            jobExecutionId (str)
-            snapshot (dict): See Schema below
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Schema:
-
-            .. literalinclude:: ../files/SourceRecordStorageSnapshots_modify_snapshot_request.schema
-        """
-        return self.call("PUT", f"/source-storage/snapshots/{jobExecutionId}", data=snapshot)
-
-
-class SourceRecordStorageBatch(FolioApi):
-    """Source Record Storage Batch API
-
-    Batch API for managing records
-    """
-
-    def set_verifiedRecord(self, verifiedRecord: dict):
-        """Get a list of invalid Marc Bib Record IDs, which doesn't exists in the system
-
-        ``POST /source-storage/batch/verified-records``
-
-        Args:
-            verifiedRecord (dict): See Schema below
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Schema:
-
-            .. literalinclude:: ../files/SourceRecordStorageBatch_set_verifiedRecord_request.schema
-            .. literalinclude:: ../files/SourceRecordStorageBatch_set_verifiedRecord_return.schema 
-        """
-        return self.call("POST", "/source-storage/batch/verified-records", data=verifiedRecord)
-
-    def set_record(self, record: dict):
-        """Creates records from a record collection. It returns both saved records and error messages for records that were not saved.
-
-        ``POST /source-storage/batch/records``
-
-        Args:
-            record (dict): See Schema below
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Schema:
-
-            .. literalinclude:: ../files/SourceRecordStorageBatch_set_record_request.schema
-            .. literalinclude:: ../files/SourceRecordStorageBatch_set_record_return.schema 
-        """
-        return self.call("POST", "/source-storage/batch/records", data=record)
-
-    def modify_parsedRecord(self, parsedRecord: dict):
-        """Updates parsed records from a collection. It returns both updated records and error messages for records that were not updated.
-
-        ``PUT /source-storage/batch/parsed-records``
-
-        Args:
-            parsedRecord (dict): See Schema below
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Schema:
-
-            .. literalinclude:: ../files/SourceRecordStorageBatch_modify_parsedRecord_request.schema
-            .. literalinclude:: ../files/SourceRecordStorageBatch_modify_parsedRecord_return.schema 
-        """
-        return self.call("PUT", "/source-storage/batch/parsed-records", data=parsedRecord)
 
 
 class SourceRecordStorageSourceRecords(FolioApi):
@@ -371,6 +171,11 @@ class SourceRecordStorageSourceRecords(FolioApi):
                     Example:
                     
                      - INSTANCE
+            state (str): (default=ACTUAL) State of the looking record
+                    
+                    Example:
+                    
+                     - DELETED
 
         Returns:
             dict: See Schema below
@@ -387,184 +192,82 @@ class SourceRecordStorageSourceRecords(FolioApi):
         return self.call("GET", f"/source-storage/source-records/{sourceRecordsId}", query=kwargs)
 
 
-class SourceRecordStorageRecords(FolioApi):
-    """Source Record Storage Record API
+class SourceRecordStorageBatch(FolioApi):
+    """Source Record Storage Batch API
 
-    API for managing records
+    Batch API for managing records
     """
 
-    def get_records(self, **kwargs):
-        """Retrieve a list of record items.
+    def set_verifiedRecord(self, verifiedRecord: dict):
+        """Get a list of invalid Marc Bib Record IDs, which doesn't exists in the system
 
-        ``GET /source-storage/records``
+        ``POST /source-storage/batch/verified-records``
 
         Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
-                    
-                    Example:
-                    
-                     - 0
-            limit (int): (default=10) Limit the number of elements returned in the response
-                    
-                    Example:
-                    
-                     - 10
+            verifiedRecord (dict): See Schema below
 
         Returns:
             dict: See Schema below
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
             OkapiFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
 
-            .. literalinclude:: ../files/SourceRecordStorageRecords_get_records_return.schema 
+            .. literalinclude:: ../files/SourceRecordStorageBatch_set_verifiedRecord_request.schema
+            .. literalinclude:: ../files/SourceRecordStorageBatch_set_verifiedRecord_return.schema 
         """
-        return self.call("GET", "/source-storage/records", query=kwargs)
+        return self.call("POST", "/source-storage/batch/verified-records", data=verifiedRecord)
 
     def set_record(self, record: dict):
-        """Create a new record item.
+        """Creates records from a record collection. It returns both saved records and error messages for records that were not saved.
 
-        ``POST /source-storage/records``
+        ``POST /source-storage/batch/records``
 
         Args:
             record (dict): See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Headers:
-            - **Location** - URI to the created record item
-
-        Schema:
-
-            .. literalinclude:: ../files/SourceRecordStorageRecords_set_record_request.schema
-        """
-        return self.call("POST", "/source-storage/records", data=record)
-
-    def get_record(self, recordsId: str):
-        """Retrieve record item with given {recordId}
-
-        ``GET /source-storage/records/{recordsId}``
-
-        Args:
-            recordsId (str)
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/SourceRecordStorageRecords_get_record_return.schema 
-        """
-        return self.call("GET", f"/source-storage/records/{recordsId}")
-
-    def delete_record(self, recordsId: str):
-        """Delete record item with given {recordId}
-
-        ``DELETE /source-storage/records/{recordsId}``
-
-        Args:
-            recordsId (str)
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-        """
-        return self.call("DELETE", f"/source-storage/records/{recordsId}")
-
-    def modify_record(self, recordsId: str, record: dict):
-        """Update record item with given {recordId}
-
-        ``PUT /source-storage/records/{recordsId}``
-
-        Args:
-            recordsId (str)
-            record (dict): See Schema below
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-
-        Schema:
-
-            .. literalinclude:: ../files/SourceRecordStorageRecords_modify_record_request.schema
-        """
-        return self.call("PUT", f"/source-storage/records/{recordsId}", data=record)
-
-    def get_formatted_by_record(self, recordsId: str, **kwargs):
-        """Get Record with formatted content
-
-        ``GET /source-storage/records/{recordsId}/formatted``
-
-        Args:
-            recordsId (str)
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            idType (str): (default=RECORD) Type of Id for Record lookup
-                    
-                    Example:
-                    
-                     - INSTANCE
 
         Returns:
             dict: See Schema below
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiRequestNotFound: Not Found
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
             OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
 
-            .. literalinclude:: ../files/SourceRecordStorageRecords_get_formatted_by_record_return.schema 
+            .. literalinclude:: ../files/SourceRecordStorageBatch_set_record_request.schema
+            .. literalinclude:: ../files/SourceRecordStorageBatch_set_record_return.schema 
         """
-        return self.call("GET", f"/source-storage/records/{recordsId}/formatted", query=kwargs)
+        return self.call("POST", "/source-storage/batch/records", data=record)
 
-    def modify_suppressFromDiscovery(self, recordsId: str, **kwargs):
-        """Update Record suppress from discovery additional information
+    def modify_parsedRecord(self, parsedRecord: dict):
+        """Updates parsed records from a collection. It returns both updated records and error messages for records that were not updated.
 
-        ``PUT /source-storage/records/{recordsId}/suppress-from-discovery``
+        ``PUT /source-storage/batch/parsed-records``
 
         Args:
-            recordsId (str)
-            **kwargs (properties): Keyword Arguments
+            parsedRecord (dict): See Schema below
 
-        Keyword Args:
-            idType (str): (default=RECORD) Type of Id for Record lookup
-                    
-                    Example:
-                    
-                     - INSTANCE
-            suppress (bool): (default=True) Whether to suppress or unsuppress from discovery
-                    
-                    Example:
-                    
-                     - False
+        Returns:
+            dict: See Schema below
 
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnprocessableEntity: Unprocessable Entity
             OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/SourceRecordStorageBatch_modify_parsedRecord_request.schema
+            .. literalinclude:: ../files/SourceRecordStorageBatch_modify_parsedRecord_return.schema 
         """
-        return self.call("PUT", f"/source-storage/records/{recordsId}/suppress-from-discovery", query=kwargs)
+        return self.call("PUT", "/source-storage/batch/parsed-records", data=parsedRecord)
 
 
 class SourceRecordStorageTestRecords(FolioApi):
@@ -755,3 +458,305 @@ class SourceRecordStorageStream(FolioApi):
             .. literalinclude:: ../files/SourceRecordStorageStream_set_marcRecordIdentifier_request.schema
         """
         return self.call("POST", "/source-storage/stream/marc-record-identifiers", data=marcRecordIdentifier)
+
+
+class SourceRecordStorageRecords(FolioApi):
+    """Source Record Storage Record API
+
+    API for managing records
+    """
+
+    def get_records(self, **kwargs):
+        """Retrieve a list of record items.
+
+        ``GET /source-storage/records``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/SourceRecordStorageRecords_get_records_return.schema 
+        """
+        return self.call("GET", "/source-storage/records", query=kwargs)
+
+    def set_record(self, record: dict):
+        """Create a new record item.
+
+        ``POST /source-storage/records``
+
+        Args:
+            record (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Headers:
+            - **Location** - URI to the created record item
+
+        Schema:
+
+            .. literalinclude:: ../files/SourceRecordStorageRecords_set_record_request.schema
+        """
+        return self.call("POST", "/source-storage/records", data=record)
+
+    def get_record(self, recordsId: str):
+        """Retrieve record item with given {recordId}
+
+        ``GET /source-storage/records/{recordsId}``
+
+        Args:
+            recordsId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/SourceRecordStorageRecords_get_record_return.schema 
+        """
+        return self.call("GET", f"/source-storage/records/{recordsId}")
+
+    def delete_record(self, recordsId: str):
+        """Delete record item with given {recordId}
+
+        ``DELETE /source-storage/records/{recordsId}``
+
+        Args:
+            recordsId (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+        """
+        return self.call("DELETE", f"/source-storage/records/{recordsId}")
+
+    def modify_record(self, recordsId: str, record: dict):
+        """Update record item with given {recordId}
+
+        ``PUT /source-storage/records/{recordsId}``
+
+        Args:
+            recordsId (str)
+            record (dict): See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/SourceRecordStorageRecords_modify_record_request.schema
+        """
+        return self.call("PUT", f"/source-storage/records/{recordsId}", data=record)
+
+    def get_formatted_by_record(self, recordsId: str, **kwargs):
+        """Get Record with formatted content
+
+        ``GET /source-storage/records/{recordsId}/formatted``
+
+        Args:
+            recordsId (str)
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            idType (str): (default=RECORD) Type of Id for Record lookup
+                    
+                    Example:
+                    
+                     - INSTANCE
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/SourceRecordStorageRecords_get_formatted_by_record_return.schema 
+        """
+        return self.call("GET", f"/source-storage/records/{recordsId}/formatted", query=kwargs)
+
+    def modify_suppressFromDiscovery(self, recordsId: str, **kwargs):
+        """Update Record suppress from discovery additional information
+
+        ``PUT /source-storage/records/{recordsId}/suppress-from-discovery``
+
+        Args:
+            recordsId (str)
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            idType (str): (default=RECORD) Type of Id for Record lookup
+                    
+                    Example:
+                    
+                     - INSTANCE
+            suppress (bool): (default=True) Whether to suppress or unsuppress from discovery
+                    
+                    Example:
+                    
+                     - False
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiFatalError: Server Error
+        """
+        return self.call("PUT", f"/source-storage/records/{recordsId}/suppress-from-discovery", query=kwargs)
+
+
+class SourceRecordStorageSnapshots(FolioApi):
+    """Source Record Storage Snapshot API
+
+    API for managing snapshots
+    """
+
+    def get_snapshots(self, **kwargs):
+        """Retrieve a list of snapshot items.
+
+        ``GET /source-storage/snapshots``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/SourceRecordStorageSnapshots_get_snapshots_return.schema 
+        """
+        return self.call("GET", "/source-storage/snapshots", query=kwargs)
+
+    def set_snapshot(self, snapshot: dict):
+        """Create a new snapshot item.
+
+        ``POST /source-storage/snapshots``
+
+        Args:
+            snapshot (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Headers:
+            - **Location** - URI to the created snapshot item
+
+        Schema:
+
+            .. literalinclude:: ../files/SourceRecordStorageSnapshots_set_snapshot_request.schema
+        """
+        return self.call("POST", "/source-storage/snapshots", data=snapshot)
+
+    def get_snapshot(self, jobExecutionId: str):
+        """Retrieve snapshot item with given {snapshotId}
+
+        ``GET /source-storage/snapshots/{jobExecutionId}``
+
+        Args:
+            jobExecutionId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/SourceRecordStorageSnapshots_get_snapshot_return.schema 
+        """
+        return self.call("GET", f"/source-storage/snapshots/{jobExecutionId}")
+
+    def delete_snapshot(self, jobExecutionId: str):
+        """Deletes snapshot and all related records
+
+        ``DELETE /source-storage/snapshots/{jobExecutionId}``
+
+        Args:
+            jobExecutionId (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+        """
+        return self.call("DELETE", f"/source-storage/snapshots/{jobExecutionId}")
+
+    def modify_snapshot(self, jobExecutionId: str, snapshot: dict):
+        """Update snapshot item with given {snapshotId}
+
+        ``PUT /source-storage/snapshots/{jobExecutionId}``
+
+        Args:
+            jobExecutionId (str)
+            snapshot (dict): See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/SourceRecordStorageSnapshots_modify_snapshot_request.schema
+        """
+        return self.call("PUT", f"/source-storage/snapshots/{jobExecutionId}", data=snapshot)

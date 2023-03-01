@@ -30,11 +30,29 @@
     },
     "createJobProfileId": {
       "type": "string",
-      "description": "Job profile to use for create"
+      "description": "Default job profile to use for create",
+      "$ref": "raml-util/schemas/uuid.schema"
     },
     "updateJobProfileId": {
       "type": "string",
-      "description": "Job profile to use for update"
+      "description": "Default job profile to use for update",
+      "$ref": "raml-util/schemas/uuid.schema"
+    },
+    "allowedCreateJobProfileIds": {
+      "type": "array",
+      "description": "Job profiles to use for create",
+      "items": {
+        "type": "string",
+        "$ref": "raml-util/schemas/uuid.schema"
+      }
+    },
+    "allowedUpdateJobProfileIds": {
+      "type": "array",
+      "description": "Job profiles to use for update",
+      "items": {
+        "type": "string",
+        "$ref": "raml-util/schemas/uuid.schema"
+      }
     },
     "targetOptions": {
       "type": "object",
@@ -52,6 +70,8 @@
   },
   "additionalProperties": false,
   "required": [
-    "name"
+    "name",
+    "createJobProfileId",
+    "updateJobProfileId"
   ]
 }

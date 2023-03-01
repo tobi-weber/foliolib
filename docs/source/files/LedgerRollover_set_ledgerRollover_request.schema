@@ -7,9 +7,18 @@
       "description": "id of ledger fiscal year rollover",
       "$ref": "../../common/schemas/uuid.json"
     },
+    "_version": {
+      "type": "integer",
+      "description": "Record version for optimistic locking"
+    },
     "ledgerId": {
       "description": "Ledger UUID for which rollover was started",
       "$ref": "../../common/schemas/uuid.json"
+    },
+    "rolloverType": {
+      "description": "Type of rollover. Action Commit means run real rollover",
+      "type": "object",
+      "$ref": "../../mod-finance/schemas/ledger_rollover_type.json"
     },
     "fromFiscalYearId": {
       "description": "UUID of the fiscal year from which rollover will be happened",

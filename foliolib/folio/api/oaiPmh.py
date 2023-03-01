@@ -1,11 +1,31 @@
 # -*- coding: utf-8 -*-
-# Generated at 2022-05-05
+# Generated at 2023-02-10
 
 import logging
 
 from foliolib.folio import FolioApi, FolioAdminApi
 
 log = logging.getLogger("oliolib.folio.api.oaiPmh")
+
+
+class CleanupJob(FolioApi):
+    """OAI-PMH Business Logic API
+
+    provides endpoint for triggering clean up process of expired instances from instances table.
+    """
+
+    def set_cleanUpInstance(self):
+        """
+
+        ``POST /oai-pmh/clean-up-instances``
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+        """
+        return self.call("POST", "/oai-pmh/clean-up-instances")
 
 
 class OaiPmh(FolioApi):
@@ -51,24 +71,207 @@ class OaiPmh(FolioApi):
         return self.call("GET", "/oai/records", query=kwargs)
 
 
-class CleanupJob(FolioApi):
-    """OAI-PMH Business Logic API
+class RequestMetadata(FolioApi):
+    """Request Metadata API
 
-    provides endpoint for triggering clean up process of expired instances from instances table.
+    API for retrieving MARC21_WITHHOLDINGS harvesting request metadata.
     """
 
-    def set_cleanUpInstance(self):
-        """
+    def get_requestMetadata(self, **kwargs):
+        """Get list of request metadata
 
-        ``POST /oai-pmh/clean-up-instances``
+        ``GET /oai/request-metadata``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiRequestNotFound: Not Found
             OkapiFatalError: Server Error
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/RequestMetadata_get_requestMetadata_return.schema 
         """
-        return self.call("POST", "/oai-pmh/clean-up-instances")
+        return self.call("GET", "/oai/request-metadata", query=kwargs)
+
+    def get_failedToSaveInstances(self, requestId: str, **kwargs):
+        """Get list of failed to save instances UUIDs
+
+        ``GET /oai/request-metadata/{requestId}/failed-to-save-instances``
+
+        Args:
+            requestId (str)
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/RequestMetadata_get_failedToSaveInstances_return.schema 
+        """
+        return self.call("GET", f"/oai/request-metadata/{requestId}/failed-to-save-instances", query=kwargs)
+
+    def get_skippedInstances(self, requestId: str, **kwargs):
+        """Get list of skipped instances UUIDs
+
+        ``GET /oai/request-metadata/{requestId}/skipped-instances``
+
+        Args:
+            requestId (str)
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/RequestMetadata_get_skippedInstances_return.schema 
+        """
+        return self.call("GET", f"/oai/request-metadata/{requestId}/skipped-instances", query=kwargs)
+
+    def get_failedInstances(self, requestId: str, **kwargs):
+        """Get list of failed instances UUIDs
+
+        ``GET /oai/request-metadata/{requestId}/failed-instances``
+
+        Args:
+            requestId (str)
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/RequestMetadata_get_failedInstances_return.schema 
+        """
+        return self.call("GET", f"/oai/request-metadata/{requestId}/failed-instances", query=kwargs)
+
+    def get_suppressedFromDiscoveryInstances(self, requestId: str, **kwargs):
+        """Get list of suppressed from discovery instances UUIDs
+
+        ``GET /oai/request-metadata/{requestId}/suppressed-from-discovery-instances``
+
+        Args:
+            requestId (str)
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/RequestMetadata_get_suppressedFromDiscoveryInstances_return.schema 
+        """
+        return self.call("GET", f"/oai/request-metadata/{requestId}/suppressed-from-discovery-instances", query=kwargs)
+
+
+class FolioSetFilteringConditions(FolioApi):
+    """Set API
+
+    API for retirieving filtering condition values
+    """
+
+    def get_filteringConditions(self):
+        """
+
+        ``GET /oai-pmh/filtering-conditions``
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/FolioSetFilteringConditions_get_filteringConditions_return.schema 
+        """
+        return self.call("GET", "/oai-pmh/filtering-conditions")
 
 
 class FolioSet(FolioApi):
@@ -191,70 +394,3 @@ class FolioSet(FolioApi):
             .. literalinclude:: ../files/FolioSet_modify_set_request.schema
         """
         return self.call("PUT", f"/oai-pmh/sets/{setsId}", data=set)
-
-
-class FolioSetFilteringConditions(FolioApi):
-    """Set API
-
-    API for retirieving filtering condition values
-    """
-
-    def get_filteringConditions(self):
-        """
-
-        ``GET /oai-pmh/filtering-conditions``
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/FolioSetFilteringConditions_get_filteringConditions_return.schema 
-        """
-        return self.call("GET", "/oai-pmh/filtering-conditions")
-
-
-class RequestMetadata(FolioApi):
-    """Request Metadata API
-
-    API for retrieving MARC21_WITHHOLDINGS harvesting request metadata.
-    """
-
-    def get_requestMetadata(self, **kwargs):
-        """Get list of request metadata
-
-        ``GET /oai/request-metadata``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
-                    
-                    Example:
-                    
-                     - 0
-            limit (int): (default=10) Limit the number of elements returned in the response
-                    
-                    Example:
-                    
-                     - 10
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/RequestMetadata_get_requestMetadata_return.schema 
-        """
-        return self.call("GET", "/oai/request-metadata", query=kwargs)

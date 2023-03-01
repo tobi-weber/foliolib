@@ -11,6 +11,10 @@
                 "description": "Export type",
                 "$ref": "exportType.json#/ExportType"
             },
+            "tenant": {
+                "description": "Tenant id",
+                "type": "string"
+            },
             "exportTypeSpecificParameters": {
                 "$ref": "exportTypeSpecificParameters.json#/ExportTypeSpecificParameters"
             },

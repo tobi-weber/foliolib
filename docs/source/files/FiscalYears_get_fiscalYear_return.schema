@@ -7,6 +7,10 @@
       "description": "UUID of the fiscal year record",
       "$ref": "../../common/schemas/uuid.json"
     },
+    "_version": {
+      "type": "integer",
+      "description": "Record version for optimistic locking"
+    },
     "acqUnitIds": {
       "description": "UUIDs of the acquisition units associated with this fiscal year",
       "type": "array",
@@ -20,8 +24,7 @@
     },
     "code": {
       "description": "The code of the fiscal year",
-      "type": "string",
-      "pattern": "^[a-zA-Z]+[0-9]{4}$"
+      "type": "string"
     },
     "currency": {
       "description": "Currency code which is recorded when the FY ends, otherwise the system currency can be assumed",

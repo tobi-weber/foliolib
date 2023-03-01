@@ -66,7 +66,7 @@ class KubeClient:
         else:
             raise Exception("Unknown kind %s" % self._kind)
         isDeployed = False
-        maxSecs = 300
+        maxSecs = 600
         secs = 0
         while not isDeployed:
             time.sleep(5)

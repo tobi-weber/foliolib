@@ -1,41 +1,11 @@
 # -*- coding: utf-8 -*-
-# Generated at 2022-05-05
+# Generated at 2023-02-10
 
 import logging
 
 from foliolib.folio import FolioApi, FolioAdminApi
 
 log = logging.getLogger("oliolib.folio.api.notify")
-
-
-class PatronNotice(FolioApi):
-    """mod-notify API
-
-    This documents the API calls that can be made to post patron notices for users
-    """
-
-    def set_patronNotice(self, patronNotice: dict, **kwargs):
-        """Send patron notice
-
-        ``POST /patron-notice``
-
-        Args:
-            patronNotice (dict)
-            **kwargs (properties): Keyword Arguments: See Schema below
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
-
-        Raises:
-            OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/PatronNotice_set_patronNotice_request.schema
-        """
-        return self.call("POST", "/patron-notice", data=patronNotice, query=kwargs)
 
 
 class Notify(FolioApi):
@@ -288,3 +258,33 @@ class Notify(FolioApi):
             .. literalinclude:: ../files/Notify_modify_notify_request.schema
         """
         return self.call("PUT", f"/notify/{notifyId}", data=notify)
+
+
+class PatronNotice(FolioApi):
+    """mod-notify API
+
+    This documents the API calls that can be made to post patron notices for users
+    """
+
+    def set_patronNotice(self, patronNotice: dict, **kwargs):
+        """Send patron notice
+
+        ``POST /patron-notice``
+
+        Args:
+            patronNotice (dict)
+            **kwargs (properties): Keyword Arguments: See Schema below
+
+        Keyword Args:
+            lang (str): (default=en) Requested language. Optional. [lang=en]
+                    
+
+        Raises:
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/PatronNotice_set_patronNotice_request.schema
+        """
+        return self.call("POST", "/patron-notice", data=patronNotice, query=kwargs)

@@ -7,6 +7,10 @@
       "description": "UUID of fund type",
       "$ref": "../../common/schemas/uuid.json"
     },
+    "_version": {
+      "type": "integer",
+      "description": "Record version for optimistic locking"
+    },
     "name": {
       "description": "Name of fund type",
       "type": "string"

@@ -61,7 +61,7 @@ def enable(**kwargs):
 
 @server.command()
 @click.argument("name")
-@click.option("-o", "--host", default="localhost", help="okapi host", show_default=True)
+@click.option("-H", "--host", default="localhost", help="okapi host", show_default=True)
 @click.option("-p", "--port", default="9130", help="", show_default=True)
 @click.option("-s", "--ssl", is_flag=True,
               help="")
@@ -71,7 +71,6 @@ def create(**kwargs):
     """Create new server config
 
     NAME\tserver name.
-    HOST\thostname or ip of the okapi server.
     """
     name = kwargs["name"]
     if not name in Config().get_servers():
@@ -104,29 +103,29 @@ def delete(**kwargs):
         print(f"Config for %s does not exist" % kwargs["name"])
 
 
-@server.command()
-@click.option("-u", "--user", default="okapi", help=" ", show_default=True)
-@click.option("-p", "--password",
-              default="okapi25", help=" ", show_default=True)
-@click.option("-d", "--database", default="okapi", help=" ", show_default=True)
-def initdb(**kwargs):
-    """Initialize Okapi database.
-    """
-    database.create_okapi_db(user=kwargs["user"],
-                             password=kwargs["password"],
-                             database=kwargs["database"])
+# @server.command()
+# @click.option("-u", "--user", default="okapi", help=" ", show_default=True)
+# @click.option("-p", "--password",
+#               default="okapi25", help=" ", show_default=True)
+# @click.option("-d", "--database", default="okapi", help=" ", show_default=True)
+# def initdb(**kwargs):
+#     """Initialize Okapi database.
+#     """
+#     database.create_okapi_db(user=kwargs["user"],
+#                              password=kwargs["password"],
+#                              database=kwargs["database"])
 
 
-@server.command()
-@click.option(
-    "-u", "--user", default="folio", help=" ", show_default=True)
-@click.option("-p", "--password",
-              default="folio", help=" ", show_default=True)
-@click.option("-d", "--database",
-              default="okapi_modules", help=" ", show_default=True)
-def initmoduledb(**kwargs):
-    """Initialize Module database.
-    """
-    database.create_modules_db(user=kwargs["user"],
-                               password=kwargs["password"],
-                               database=kwargs["database"])
+# @server.command()
+# @click.option(
+#     "-u", "--user", default="folio", help=" ", show_default=True)
+# @click.option("-p", "--password",
+#               default="folio", help=" ", show_default=True)
+# @click.option("-d", "--database",
+#               default="okapi_modules", help=" ", show_default=True)
+# def initmoduledb(**kwargs):
+#     """Initialize Module database.
+#     """
+#     database.create_modules_db(user=kwargs["user"],
+#                                password=kwargs["password"],
+#                                database=kwargs["database"])

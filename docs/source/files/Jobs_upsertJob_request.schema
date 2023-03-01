@@ -27,6 +27,10 @@
                 "description": "Was the job created by system",
                 "type": "boolean"
             },
+            "tenant": {
+                "description": "Tenant id",
+                "type": "string"
+            },
             "type": {
                 "description": "Export type",
                 "$ref": "exportType.json#/ExportType"

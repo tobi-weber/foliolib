@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
-# Generated at 2022-05-05
+# Generated at 2023-02-10
 
 import logging
 
 from foliolib.folio import FolioApi, FolioAdminApi
 
 log = logging.getLogger("foliolib.folio.api.innReach")
-
 
 
 
@@ -1199,6 +1198,67 @@ class SettingsAdmin(FolioAdminApi):
         """
         return self.call("POST", "/inn-reach/central-servers/{centralServerId}/visible-patron-field-configuration", centralServerId, visiblePatronFieldConfigurationDTO)
 
+    def getPagingSlipTemplate(self, centralServerId):
+        """Get Paging Slip Template
+
+        ``GET /inn-reach/central-servers/{centralServerId}/paging-slip-template``
+
+        Args:
+            centralServerId (str):  (format: uuid)
+
+        Returns:
+            dict: See Schema below.
+
+        Raises:
+            OkapiRequestNotFound: Item not found
+            OkapiFatalError: Internal server error
+
+        Schema:
+
+            .. literalinclude:: ../files/Settings_getPagingSlipTemplate_response.schema
+        """
+        return self.call("GET", "/inn-reach/central-servers/{centralServerId}/paging-slip-template", centralServerId)
+
+		
+    def updatePagingSlipTemplate(self, centralServerId, pagingSlipTemplateDTO):
+        """Update Paging Slip Template
+
+        ``PUT /inn-reach/central-servers/{centralServerId}/paging-slip-template``
+
+        Args:
+            centralServerId (str):  (format: uuid)
+            pagingSlipTemplateDTO (dict): See Schema below.
+
+        Raises:
+            OkapiRequestError: Bad request
+            OkapiRequestNotFound: Item not found
+            OkapiFatalError: Internal server error
+
+        Schema:
+
+            .. literalinclude:: ../files/Settings_updatePagingSlipTemplate_request.schema
+        """
+        return self.call("PUT", "/inn-reach/central-servers/{centralServerId}/paging-slip-template", centralServerId, pagingSlipTemplateDTO)
+
+    def getAllPagingSlipTemplates(self):
+        """Get list of Paging Slip Templates
+
+        ``GET /inn-reach/central-servers/paging-slip-template``
+
+        Returns:
+            dict: See Schema below.
+
+        Raises:
+            OkapiRequestNotFound: Item not found
+            OkapiFatalError: Internal server error
+
+        Schema:
+
+            .. literalinclude:: ../files/Settings_getAllPagingSlipTemplates_response.schema
+        """
+        return self.call("GET", "/inn-reach/central-servers/paging-slip-template")
+
+
 
 
 class CirculationAdmin(FolioAdminApi):
@@ -2004,3 +2064,24 @@ class CirculationAdmin(FolioAdminApi):
             .. literalinclude:: ../files/Circulation_transferLocalHold_response.schema
         """
         return self.call("POST", "/inn-reach/transactions/{id}/localhold/transfer-item/{itemId}", id_, itemId)
+
+    def getPagingSlips(self, servicePointId):
+        """Get a list of available tokens for INN-Reach paging slips
+
+        ``GET /inn-reach/paging-slips/{servicePointId}``
+
+        Args:
+            servicePointId (str):  (format: uuid)
+
+        Returns:
+            dict: See Schema below.
+
+        Raises:
+            OkapiRequestNotFound: Item not found
+            OkapiFatalError: Internal server error
+
+        Schema:
+
+            .. literalinclude:: ../files/Circulation_getPagingSlips_response.schema
+        """
+        return self.call("GET", "/inn-reach/paging-slips/{servicePointId}", servicePointId)

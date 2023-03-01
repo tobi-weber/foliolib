@@ -135,7 +135,7 @@ class Config:
 
         return url
 
-    def set_okapicfg(self, section: str, option: str, value):
+    def set_okapicfg(self, section: str, option: str, value: str):
         """Set a value in okapi.conf
 
         Args:
@@ -152,7 +152,22 @@ class Config:
         with open(fname, "w") as f:
             self.__okapicfg.write(f)
 
-    def set_foliolibcfg(self, section: str, option: str, value):
+    def remove_okapicfg(self, section: str, option: str):
+        """Remove a option in okapi.conf
+
+        Args:
+            section (str): Section
+            option (str): Option
+            value (any): Value
+        """
+        fname = os.path.join(self.get_confdir(),
+                             self.get_server(),
+                             "okapi.conf")
+        self.__okapicfg.remove_option(section, option)
+        with open(fname, "w") as f:
+            self.__okapicfg.write(f)
+
+    def set_foliolibcfg(self, section: str, option: str, value: str):
         """Set a value in foliolib.conf
 
         Args:
@@ -205,6 +220,40 @@ class Config:
             token (str): token
         """
         return self.__okapicfg.has_option("Tokens", tenantid)
+
+    def is_foliolib_env(self):
+        """Is global env handled by foliolib?
+
+        Returns:
+            bool: Wether foliolib env is enabled.
+        """
+        is_foliolib_env = self.__okapicfg.get(
+            "Okapi", "foliolibEnv", fallback=False)
+        # if is_foliolib_env and not self.__okapicfg.has_section("Env"):
+        #    self.__okapicfg.add_section("Env")
+
+        return is_foliolib_env
+
+    def get_env(self, as_dict=False):
+        if self.is_foliolib_env():
+            if as_dict:
+                return {k: v for k, v in self.__okapicfg["Env"].items()}
+            else:
+                return [{"name": k, "value": v}
+                        for k, v in self.__okapicfg["Env"].items()]
+        else:
+            if as_dict:
+                return {}
+            else:
+                return []
+
+    def set_env(self, key, value):
+        if self.is_foliolib_env():
+            self.set_okapicfg("Env", key, value)
+
+    def delete_env(self, key):
+        if self.is_foliolib_env():
+            self.remove_okapicfg("Env", key)
 
     def get_confdir(self):
         """Get the configuration directory
@@ -269,15 +318,16 @@ class Config:
             self.__okapicfg["Okapi"]["host"] = okapi_host
             self.__okapicfg["Okapi"]["port"] = okapi_port
             self.__okapicfg["Okapi"]["ssl"] = str(ssl)
-            self.__okapicfg["Kubernetes"] = {}
-            self.__okapicfg["Kubernetes"]["enable"] = str(kubernetes)
-            self.__okapicfg["Kubernetes"]["namespace"] = "default"
-            self.__okapicfg["Postgres"] = {}
-            self.__okapicfg["Postgres"]["host"] = db_host
-            self.__okapicfg["Postgres"]["port"] = db_port
-            self.__okapicfg["Postgres"]["user"] = db_user
-            self.__okapicfg["Postgres"]["password"] = db_password
-            self.__okapicfg["Tokens"] = {}
+            self.__okapicfg["Okapi"]["foliolibenv"] = str(False)
+            # self.__okapicfg["Kubernetes"] = {}
+            # self.__okapicfg["Kubernetes"]["enable"] = str(kubernetes)
+            # self.__okapicfg["Kubernetes"]["namespace"] = "default"
+            # self.__okapicfg["Postgres"] = {}
+            # self.__okapicfg["Postgres"]["host"] = db_host
+            # self.__okapicfg["Postgres"]["port"] = db_port
+            # self.__okapicfg["Postgres"]["user"] = db_user
+            # self.__okapicfg["Postgres"]["password"] = db_password
+            # self.__okapicfg["Tokens"] = {}
             with open(fpath, "w") as f:
                 self.__okapicfg.write(f)
             if not os.path.exists(os.path.join(sdir, "modules")):

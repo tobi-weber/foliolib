@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2022-05-05
+# Generated at 2023-02-10
 
 import logging
 
@@ -8,229 +8,53 @@ from foliolib.folio import FolioApi, FolioAdminApi
 log = logging.getLogger("oliolib.folio.api.sourceRecordManager")
 
 
-class MetadataProvider(FolioApi):
-    """Metadata Provider API
+class MappingMetadataProvider(FolioApi):
+    """Mapping Metadata Provider API
 
-    API for accessing metadata
+    API for accessing mapping rules and mapping parameters
     """
 
-    def get_jobExecutions(self, **kwargs):
+    def get_mappingMetadatum_for_jobExecution(self, jobExecutionId: str):
         """
 
-        ``GET /metadata-provider/jobExecutions``
+        ``GET /mapping-metadata/{jobExecutionId}``
 
         Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            statusAny (list):  JobExecution statuses to filter by
-                    
-                    Example:
-                    
-                     - ['COMMITTED', 'ERROR']
-            profileIdNotAny (list):  Filter by specified job profile ids
-                    
-                    Example:
-                    
-                     - ['d0ebb7b0-2f0f-11eb-adc1-0242ac120002', '91f9b8d6-d80e-4727-9783-73fb53e3c786']
-            statusNot (str):  Filter by status not equal to
-                    
-                    Example:
-                    
-                     - COMPLETED
-            uiStatusAny (list):  JobExecution statuses to filter by
-                    
-                    Example:
-                    
-                     - ['READY_FOR_PREVIEW']
-            hrId (str):  Filter by jobExecution hrid
-                    
-                    Example:
-                    
-                     - 123
-            fileName (str):  Filter by jobExecution file name
-                    
-                    Example:
-                    
-                     - importBib1.bib
-            profileIdAny (list):  Filter by specified job profile ids
-                    
-                    Example:
-                    
-                     - ['d0ebb7b0-2f0f-11eb-adc1-0242ac120002', '91f9b8d6-d80e-4727-9783-73fb53e3c786']
-            userId (str):  Filter by user id
-                    
-                    Example:
-                    
-                     - d0ebb7b0-2f0f-11eb-adc1-0242ac120002
-            completedAfter (datetime):  Start date to filter after, inclusive
-            completedBefore (datetime):  End date to filter before, inclusive
-            sortBy (list): (default=['completed_date,asc']) Sorting jobExecutions by field: completed_date, progress_total, file_name, status, job_profile_name, hrid, job_user_first_name, job_user_last_name
-                    
-                    Example:
-                    
-                     - ['completed_date,asc']
-            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
-                    
-                    Example:
-                    
-                     - 0
-            limit (int): (default=10) Limit the number of elements returned in the response
-                    
-                    Example:
-                    
-                     - 10
+            jobExecutionId (str)
 
         Returns:
             dict: See Schema below
 
         Raises:
+            OkapiRequestNotFound: Not Found
             OkapiFatalError: Server Error
 
         Schema:
 
-            .. literalinclude:: ../files/MetadataProvider_get_jobExecutions_return.schema 
+            .. literalinclude:: ../files/MappingMetadataProvider_get_mappingMetadatum_for_jobExecution_return.schema 
         """
-        return self.call("GET", "/metadata-provider/jobExecutions", query=kwargs)
+        return self.call("GET", f"/mapping-metadata/{jobExecutionId}")
 
-    def get_log(self, jobExecutionId: str):
+    def get_mappingMetadatum(self, recordType: str):
         """
 
-        ``GET /metadata-provider/logs/{jobExecutionId}``
+        ``GET /mapping-metadata/type/{recordType}``
 
         Args:
-            jobExecutionId (str)
+            recordType (str)
 
         Returns:
             dict: See Schema below
 
         Raises:
+            OkapiRequestNotFound: Not Found
             OkapiFatalError: Server Error
 
         Schema:
 
-            .. literalinclude:: ../files/MetadataProvider_get_log_return.schema 
+            .. literalinclude:: ../files/MappingMetadataProvider_get_mappingMetadatum_return.schema 
         """
-        return self.call("GET", f"/metadata-provider/logs/{jobExecutionId}")
-
-    def get_journalRecords(self, jobExecutionId: str, **kwargs):
-        """get journal records by job execution id
-
-        ``GET /metadata-provider/journalRecords/{jobExecutionId}``
-
-        Args:
-            jobExecutionId (str)
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            sortBy (str):  sort criteria
-                    
-                    Example:
-                    
-                     - source_record_order, action_type, error
-            order (str (asc|desc):): (default=asc) sort direction
-                    
-                    Example:
-                    
-                     - desc
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestNotFound: Not Found
-
-        Schema:
-
-            .. literalinclude:: ../files/MetadataProvider_get_journalRecords_return.schema 
-        """
-        return self.call("GET", f"/metadata-provider/journalRecords/{jobExecutionId}", query=kwargs)
-
-    def get_jobLogEntries(self, jobExecutionId: str, **kwargs):
-        """get journal records by job execution id
-
-        ``GET /metadata-provider/jobLogEntries/{jobExecutionId}``
-
-        Args:
-            jobExecutionId (str)
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            sortBy (str): (default=source_record_order) sorting by field: source_record_order, title, source_record_action_status, instance_action_status, holdings_action_status, item_action_status, order_action_status, invoice_action_status, error
-                    
-                    Example:
-                    
-                     - source_record_order
-            order (str (asc|desc):): (default=asc) sorting direction
-                    
-                    Example:
-                    
-                     - desc
-            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
-                    
-                    Example:
-                    
-                     - 0
-            limit (int): (default=10) Limit the number of elements returned in the response
-                    
-                    Example:
-                    
-                     - 10
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-
-        Schema:
-
-            .. literalinclude:: ../files/MetadataProvider_get_jobLogEntries_return.schema 
-        """
-        return self.call("GET", f"/metadata-provider/jobLogEntries/{jobExecutionId}", query=kwargs)
-
-    def get_record(self, jobExecutionId: str, recordId: str):
-        """get record processing log dto by job execution id and record id (to get EDIFACT import log data a journal record id is expected)
-
-        ``GET /metadata-provider/jobLogEntries/{jobExecutionId}/records/{recordId}``
-
-        Args:
-            jobExecutionId (str)
-            recordId (str)
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestNotFound: Not Found
-
-        Schema:
-
-            .. literalinclude:: ../files/MetadataProvider_get_record_return.schema 
-        """
-        return self.call("GET", f"/metadata-provider/jobLogEntries/{jobExecutionId}/records/{recordId}")
-
-    def get_jobSummary(self, jobExecutionId: str):
-        """get summary result for import job
-
-        ``GET /metadata-provider/jobSummary/{jobExecutionId}``
-
-        Args:
-            jobExecutionId (str)
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-
-        Schema:
-
-            .. literalinclude:: ../files/MetadataProvider_get_jobSummary_return.schema 
-        """
-        return self.call("GET", f"/metadata-provider/jobSummary/{jobExecutionId}")
+        return self.call("GET", f"/mapping-metadata/type/{recordType}")
 
 
 class ChangeManager(FolioApi):
@@ -501,6 +325,290 @@ class ChangeManager(FolioApi):
         return self.call("PUT", f"/change-manager/parsedRecords/{parsedRecordsId}", data=parsedRecord)
 
 
+class MetadataProvider(FolioApi):
+    """Metadata Provider API
+
+    API for accessing metadata
+    """
+
+    def get_jobExecutions(self, **kwargs):
+        """
+
+        ``GET /metadata-provider/jobExecutions``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            statusAny (list):  JobExecution statuses to filter by
+                    
+                    Example:
+                    
+                     - ['COMMITTED', 'ERROR']
+            profileIdNotAny (list):  Filter by specified job profile ids
+                    
+                    Example:
+                    
+                     - ['d0ebb7b0-2f0f-11eb-adc1-0242ac120002', '91f9b8d6-d80e-4727-9783-73fb53e3c786']
+            statusNot (str):  Filter by status not equal to
+                    
+                    Example:
+                    
+                     - COMPLETED
+            uiStatusAny (list):  JobExecution statuses to filter by
+                    
+                    Example:
+                    
+                     - ['READY_FOR_PREVIEW']
+            hrId (str):  Filter by jobExecution hrid
+                    
+                    Example:
+                    
+                     - 123
+            fileName (str):  Filter by jobExecution file name
+                    
+                    Example:
+                    
+                     - importBib1.bib
+            fileNameNotAny (list):  Filter by specified file names
+                    
+                    Example:
+                    
+                     - ['No file name']
+            profileIdAny (list):  Filter by specified job profile ids
+                    
+                    Example:
+                    
+                     - ['d0ebb7b0-2f0f-11eb-adc1-0242ac120002', '91f9b8d6-d80e-4727-9783-73fb53e3c786']
+            userId (str):  Filter by user id
+                    
+                    Example:
+                    
+                     - d0ebb7b0-2f0f-11eb-adc1-0242ac120002
+            completedAfter (datetime):  Start date to filter after, inclusive
+            completedBefore (datetime):  End date to filter before, inclusive
+            sortBy (list): (default=['completed_date,asc']) Sorting jobExecutions by field: completed_date, progress_total, file_name, status, job_profile_name, hrid, job_user_first_name, job_user_last_name
+                    
+                    Example:
+                    
+                     - ['completed_date,asc']
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/MetadataProvider_get_jobExecutions_return.schema 
+        """
+        return self.call("GET", "/metadata-provider/jobExecutions", query=kwargs)
+
+    def get_journalRecords(self, jobExecutionId: str, **kwargs):
+        """get journal records by job execution id
+
+        ``GET /metadata-provider/journalRecords/{jobExecutionId}``
+
+        Args:
+            jobExecutionId (str)
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            sortBy (str):  sort criteria
+                    
+                    Example:
+                    
+                     - source_record_order, action_type, error
+            order (str (asc|desc):): (default=asc) sort direction
+                    
+                    Example:
+                    
+                     - desc
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestNotFound: Not Found
+
+        Schema:
+
+            .. literalinclude:: ../files/MetadataProvider_get_journalRecords_return.schema 
+        """
+        return self.call("GET", f"/metadata-provider/journalRecords/{jobExecutionId}", query=kwargs)
+
+    def get_jobLogEntries(self, jobExecutionId: str, **kwargs):
+        """get journal records by job execution id
+
+        ``GET /metadata-provider/jobLogEntries/{jobExecutionId}``
+
+        Args:
+            jobExecutionId (str)
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            sortBy (str): (default=source_record_order) sorting by field: source_record_order, title, source_record_action_status, instance_action_status, holdings_action_status, item_action_status, order_action_status, invoice_action_status, error
+                    
+                    Example:
+                    
+                     - source_record_order
+            order (str (asc|desc):): (default=asc) sorting direction
+                    
+                    Example:
+                    
+                     - desc
+            errorsOnly (bool): (default=False) Filter by occurrence of error field
+                    
+                    Example:
+                    
+                     - True
+            entityType (str (MARC|INSTANCE|HOLDINGS|AUTHORITY|ITEM|ORDER|INVOICE|ALL):): (default=ALL) Filter by entity type: MARC, INSTANCE, HOLDINGS, AUTHORITY, ITEM, ORDER, INVOICE
+                    
+                    Example:
+                    
+                     - MARC
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+
+        Schema:
+
+            .. literalinclude:: ../files/MetadataProvider_get_jobLogEntries_return.schema 
+        """
+        return self.call("GET", f"/metadata-provider/jobLogEntries/{jobExecutionId}", query=kwargs)
+
+    def get_record(self, jobExecutionId: str, recordId: str):
+        """get record processing log dto by job execution id and record id (to get EDIFACT import log data a journal record id is expected)
+
+        ``GET /metadata-provider/jobLogEntries/{jobExecutionId}/records/{recordId}``
+
+        Args:
+            jobExecutionId (str)
+            recordId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestNotFound: Not Found
+
+        Schema:
+
+            .. literalinclude:: ../files/MetadataProvider_get_record_return.schema 
+        """
+        return self.call("GET", f"/metadata-provider/jobLogEntries/{jobExecutionId}/records/{recordId}")
+
+    def get_jobSummary(self, jobExecutionId: str):
+        """get summary result for import job
+
+        ``GET /metadata-provider/jobSummary/{jobExecutionId}``
+
+        Args:
+            jobExecutionId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+
+        Schema:
+
+            .. literalinclude:: ../files/MetadataProvider_get_jobSummary_return.schema 
+        """
+        return self.call("GET", f"/metadata-provider/jobSummary/{jobExecutionId}")
+
+    def get_jobProfiles(self, **kwargs):
+        """
+
+        ``GET /metadata-provider/jobExecutions/jobProfiles``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/MetadataProvider_get_jobProfiles_return.schema 
+        """
+        return self.call("GET", "/metadata-provider/jobExecutions/jobProfiles", query=kwargs)
+
+    def get_users(self, **kwargs):
+        """get unique users for job JobExecutions
+
+        ``GET /metadata-provider/jobExecutions/users``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/MetadataProvider_get_users_return.schema 
+        """
+        return self.call("GET", "/metadata-provider/jobExecutions/users", query=kwargs)
+
+
 class MappingRulesProvider(FolioApi):
     """Mapping rules Provider API
 
@@ -573,31 +681,3 @@ class MappingRulesProvider(FolioApi):
             .. literalinclude:: ../files/MappingRulesProvider_modify_restore_return.schema 
         """
         return self.call("PUT", f"/mapping-rules/{recordType}/restore")
-
-
-class MappingMetadataProvider(FolioApi):
-    """Mapping Metadata Provider API
-
-    API for accessing mapping rules and mapping parameters
-    """
-
-    def get_mappingMetadatum(self, jobExecutionId: str):
-        """
-
-        ``GET /mapping-metadata/{jobExecutionId}``
-
-        Args:
-            jobExecutionId (str)
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/MappingMetadataProvider_get_mappingMetadatum_return.schema 
-        """
-        return self.call("GET", f"/mapping-metadata/{jobExecutionId}")

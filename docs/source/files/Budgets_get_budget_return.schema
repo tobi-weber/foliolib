@@ -7,6 +7,10 @@
       "description": "UUID of this budget",
       "$ref": "../../common/schemas/uuid.json"
     },
+    "_version": {
+      "type": "integer",
+      "description": "Record version for optimistic locking"
+    },
     "name": {
       "description": "The name of the budget",
       "type": "string"

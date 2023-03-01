@@ -3,7 +3,7 @@
   "amount": 25,
   "awaitingPayment": {
     "encumbranceId": "12ac70a4-5c9d-112f-9acb-852adf67d7e1",
-    "releaseEncumbrance": "true"
+    "releaseEncumbrance": true
   },
   "currency": "USD",
   "description": "PO_Line: History of Incas",

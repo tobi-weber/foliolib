@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2022-05-05
+# Generated at 2023-02-10
 
 import logging
 
@@ -52,18 +52,25 @@ class SamlLogin(FolioApi):
         """
         return self.call("POST", "/saml/login", data=login)
 
-    def set_callback(self):
+    def set_callback(self, callback: str):
         """Redirect browser to sso-landing page with generated token.
 
         ``POST /saml/callback``
+
+        Args:
+            callback (str): See Schema below
 
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestForbidden: Forbidden
             OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/SamlLogin_set_callback_request.schema
         """
-        return self.call("POST", "/saml/callback")
+        return self.call("POST", "/saml/callback", data=callback)
 
     def get_checks(self):
         """Decides if SSO login is configured properly, returns true or false

@@ -13,16 +13,11 @@
         },
         "sourceId": {
             "type": "string",
-            "description": "Source identifier",
-            "format": "uuid"
+            "description": "Source identifier"
         },
-        "marcPayload": {
+        "payload": {
             "type": "object",
-            "description": "MARC payload in JSON"
-        },
-        "inventoryPayload": {
-            "type": "object",
-            "description": "inventory payload"
+            "description": "Payload in JSON"
         }
     },
     "additionalProperties": false,

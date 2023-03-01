@@ -34,7 +34,7 @@
             "description": "Publisher of the material",
             "readOnly": false
         },
-        "renewalNote": {
+        "internalNote": {
             "type": "string",
             "description": "Renewal note for this purchase order line"
         },
@@ -85,6 +85,17 @@
             "$ref": "../mod-orders/workflow_status.json",
             "description": "the workflow status for the purchase order",
             "readOnly": true
+        },
+        "type": {
+            "type": "string",
+            "description": "Set to non-renewal to cancel the purchase order line",
+            "readOnly": true,
+            "pattern": "^([Rr][Ee][Nn][Ee][Ww][Aa][Ll]|[Nn][Oo][Nn][-][Rr][Ee][Nn][Ee][Ww][Aa][Ll])$"
+        },
+        "customerNote": {
+            "type": "string",
+            "description": "customerNote on the ebsconet's end can be associated with this purchase order line",
+            "readOnly": false
         }
     },
     "required": [

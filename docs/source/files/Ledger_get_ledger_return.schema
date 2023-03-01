@@ -7,6 +7,10 @@
       "description": "UUID of this ledger",
       "$ref": "../../common/schemas/uuid.json"
     },
+    "_version": {
+      "type": "integer",
+      "description": "Record version for optimistic locking"
+    },
     "name": {
       "description": "The name of the ledger",
       "type": "string"

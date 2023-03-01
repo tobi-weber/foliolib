@@ -15,15 +15,22 @@ FolioLib
     :target: https://foliolib.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
 
-FolioLib is a manager and library for `Okapi <https://github.com/folio-org/okapi>`_ 
-and `Folio <https://www.folio.org/>`_.
-The Library is automatically generated from the RAML files of the different Folio-Modules.
+FolioLib is an API-Client for `Folio <https://www.folio.org/>`_.
+The API is generated from the RAML and OAS files from the Folio-Modules.
 
 Documentation can be found `here <https://foliolib.readthedocs.io/>`_.
 
+Features:
 
-Installation
-============
+- Python Folio API
+- Commandline interface
+- Install and manage Folio
+- Install and manage Folio on Kubernetes
+- Manage multiple Folio servers
+
+
+Quickstart
+==========
 
 The installation requires python 3.6 or higher.
 
@@ -31,29 +38,34 @@ The installation requires python 3.6 or higher.
 
     pip install foliolib
 
-
-Command-line interfaces
-#######################
-
-FolioLib provides two command-line interfaces.
+Define a config for your Folio server:
 
 .. code-block:: bash
 
-    okapicli --help
-
-After the first call of okapicli, foliolib creates a directory with configurations
-under $HOME/.foliolib.
+    foliolib server create --help
 
 
 .. code-block:: bash
 
-    foliocli --help
+    foliolib server create myServer -H okapi.server.url -p 9130
 
+Make a Folio-API request:
 
+.. code-block:: python
 
+    >>> from foliolib import server
+    >>> from foliolib.folio.users import Users
+    >>> from foliolib.folio.api.inventory import Inventory
+    >>>
+    >>> server("myServer")
+    >>>
+    >>> Users("TenantId").login("UserId","Password")
+    >>> inventory = Inventory("TenantId")
+    >>> instances = inventory.get_instances(query="title==*")
+    >>> print(instances)
 
+Also foliolib provides a command line interface:
 
+.. code-block:: bash
 
-
-
-
+    foliolib --help

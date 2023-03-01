@@ -47,11 +47,7 @@
               "type": "string",
               "description": "SUSHI service URL to access provider's SUSHI service."
             }
-          },
-          "required": [
-            "serviceType",
-            "serviceUrl"
-          ]
+          }
         },
         "aggregator": {
           "type": "object",

@@ -1,4 +1,4 @@
 {
   "strict": false,
-  "value": "{\n  \"id\": \"99fb699a-cdf1-11e9-a9d9-f2801f1b9aa1\",\n  \"exportType\": \"EDIFACT_ORDERS_EXPORT\",\n  \"exportJobId\": \"22fb627a-cdf1-11e8-a8d5-f2801f1b9aa1\",\n  \"exportDate\": \"2020-12-25\",\n  \"exportedPoLineIds\": [\n    \"11fb627a-cdf1-11e8-a8d5-f2801f1b9fd1\",\n    \"11fb627a-cdf1-11e8-a8d5-f2801f1b9fd2\",\n    \"11fb627a-cdf1-11e8-a8d5-f2801f1b9fd3\",\n    \"11fb627a-cdf1-11e8-a8d5-f2801f1b9fd4\"\n  ]\n}\n"
+  "value": "{\n  \"id\": \"99fb699a-cdf1-11e9-a9d9-f2801f1b9aa1\",\n  \"exportType\": \"EDIFACT_ORDERS_EXPORT\",\n  \"exportMethod\": \"EdifactExport\",\n  \"exportFileName\": \"my_order.edi\",\n  \"vendorId\": \"88fb699a-cdf1-11e9-88d9-f2801f188aa1\",\n  \"vendorName\": \"Amazon\",\n  \"jobName\": \"TestJob\",\n  \"exportJobId\": \"22fb627a-cdf1-11e8-a8d5-f2801f1b9aa1\",\n  \"exportDate\": \"2020-12-25\",\n  \"exportedPoLineIds\": [\n    \"11fb627a-cdf1-11e8-a8d5-f2801f1b9fd1\",\n    \"11fb627a-cdf1-11e8-a8d5-f2801f1b9fd2\",\n    \"11fb627a-cdf1-11e8-a8d5-f2801f1b9fd3\",\n    \"11fb627a-cdf1-11e8-a8d5-f2801f1b9fd4\"\n  ]\n}\n"
 }
