@@ -65,8 +65,6 @@ def enable(**kwargs):
 @click.option("-p", "--port", default="9130", help="", show_default=True)
 @click.option("-s", "--ssl", is_flag=True,
               help="")
-@click.option("-k", "--kubernetes", is_flag=True,
-              help="")
 def create(**kwargs):
     """Create new server config
 
@@ -78,9 +76,7 @@ def create(**kwargs):
         Config().create_foliolib_conf()
         Config().create_okapi_conf(name, okapi_host=kwargs["host"],
                                    okapi_port=kwargs["port"],
-                                   db_host=kwargs["host"],
-                                   ssl=kwargs["ssl"],
-                                   kubernetes=kwargs["kubernetes"])
+                                   ssl=kwargs["ssl"])
         Config().set_server(name)
         __save_current_server(name)
     else:
@@ -94,38 +90,10 @@ def delete(**kwargs):
 
     NAME\tserver name.
     """
-    print(f"Del configs for server %s" % kwargs["name"])
+    print(f"Delete configs for server %s" % kwargs["name"])
     confdir = os.path.join(Config().get_confdir(), kwargs["name"])
     if os.path.exists(confdir):
-        print(f"Del {confdir}")
+        print(f"Delete {confdir}")
         shutil.rmtree(confdir)
     else:
         print(f"Config for %s does not exist" % kwargs["name"])
-
-
-# @server.command()
-# @click.option("-u", "--user", default="okapi", help=" ", show_default=True)
-# @click.option("-p", "--password",
-#               default="okapi25", help=" ", show_default=True)
-# @click.option("-d", "--database", default="okapi", help=" ", show_default=True)
-# def initdb(**kwargs):
-#     """Initialize Okapi database.
-#     """
-#     database.create_okapi_db(user=kwargs["user"],
-#                              password=kwargs["password"],
-#                              database=kwargs["database"])
-
-
-# @server.command()
-# @click.option(
-#     "-u", "--user", default="folio", help=" ", show_default=True)
-# @click.option("-p", "--password",
-#               default="folio", help=" ", show_default=True)
-# @click.option("-d", "--database",
-#               default="okapi_modules", help=" ", show_default=True)
-# def initmoduledb(**kwargs):
-#     """Initialize Module database.
-#     """
-#     database.create_modules_db(user=kwargs["user"],
-#                                password=kwargs["password"],
-#                                database=kwargs["database"])

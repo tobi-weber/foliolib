@@ -3,13 +3,12 @@
 
 import click
 from foliolib.config import Config
-from foliolib.helper.okapi import (clean_okapi, secure_supertenant, set_db_env,
-                                   set_kafka_env, set_okapi_url_env,
+from foliolib.helper.okapi import (clean_okapi, secure_supertenant,
                                    unsecure_supertenant)
 from foliolib.okapi.okapiClient import OkapiClient
 from tabulate import tabulate
 
-from.orderedGroup import OrderedGroup
+from .orderedGroup import OrderedGroup
 
 
 @click.group(cls=OrderedGroup)
@@ -102,56 +101,6 @@ def del_env(**kwargs):
     # OkapiClient().delete_env(kwargs['name'])
     for name in kwargs["name"]:
         OkapiClient().delete_env(name)
-
-
-@okapi.command()
-def set_okapi_url(**kwargs):
-    """Set global Okapi URL.
-    """
-    print("Set global Okapi URL")
-    set_okapi_url_env()
-
-
-@okapi.command()
-@click.option("-u", "--user",
-              default="folio", help=" ", show_default=True)
-@click.option("-p", "--password",
-              default="folio", help=" ", show_default=True)
-@click.option("-d", "--database",
-              default="okapi_modules", help=" ", show_default=True)
-def set_db(**kwargs):
-    """Set global database settings to Okapi.
-    """
-    server = Config().okapicfg().get("Postgres", "host")
-    port = Config().okapicfg().get("Postgres", "port")
-    print("Set db parameters:")
-    print(f"\tdb host: \t{server}")
-    print(f"\tdb port: \t{port}")
-    print(f"\tdatabase \t{kwargs['database']}")
-    print(f"\tusername: \t{kwargs['user']}")
-    print(f"\tpassword: \t{kwargs['password']}")
-    set_db_env(server, port, kwargs["user"],
-               kwargs["password"], kwargs["database"])
-
-
-@okapi.command()
-@click.option("-k", "--host", required=True, help="Kafka host")
-@click.option("-p", "--port",
-              default="9092", help="Kafka port", show_default=True)
-@click.option("-r", "--replication-factor", default="1",
-              help="Replication Factor.", show_default=True)
-@click.option("-t", "--topicprefix",
-              help="Topicname prefix. Default is folio")
-def set_kafka(**kwargs):
-    """Set global Kafka settings.
-    """
-    print("Set kafka parameters:")
-    print(f"\tkafka host: {kwargs['host']}")
-    print(f"\tkafka port: {kwargs['port']}")
-    print(f"\treplication factor: {kwargs['replication_factor']}")
-    set_kafka_env(kwargs["host"], kwargs["port"],
-                  replication_factor=kwargs['replication_factor'],
-                  topicprefix=kwargs["topicprefix"])
 
 
 @okapi.command()

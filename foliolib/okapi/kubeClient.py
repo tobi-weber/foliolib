@@ -34,6 +34,8 @@ class KubeClient:
             log.error("Failed to load kube config %s", kube_config)
         self._namespace = Config().okapicfg().get(
             "Kubernetes", "namespace", fallback="default")
+        self._deploy_timeout = Config().okapicfg().getint(
+            "Kubernetes", "deployTimeout", fallback=3600)
 
     def deploy(self, modId: str):
         """Deploy a Folio module
@@ -42,7 +44,11 @@ class KubeClient:
             modId (str): Module id, e.g. mod-users-1.8.0
         """
         from foliolib.okapi.okapiClient import OkapiClient
+        if OkapiClient().is_module_deployed(modId):
+            log.error("Module %s is already deployed" % modId)
+            return
         module = OkapiModuleKubernetes(modId)
+        name = module.get_rfc_name()
         service = module.get_service()
         volume = module.volume()
         hazelcast = module.hazelcast()
@@ -50,23 +56,30 @@ class KubeClient:
             persistentVolumeClaim = volume["persistentVolumeClaim"]
             log.debug("Create PersistentVolumeClaim:\n%s" %
                       json.dumps(persistentVolumeClaim, indent=2))
-            self.create_persistenVolumeClaim(
-                persistentVolumeClaim, self._namespace)
+            self.create_persistenVolumeClaim(persistentVolumeClaim)
         if hazelcast:
+            if self.is_configMap(hazelcast["name"]):
+                self.remove_configMap(hazelcast["name"])
             self.create_configMap(
-                hazelcast["name"], hazelcast["data"], namespace=self._namespace)
+                hazelcast["name"], hazelcast["data"])
         log.debug("Create Service:\n%s" % json.dumps(service, indent=2))
-        self.create_service(service, namespace=self._namespace)
+        if self.is_service(name):
+            self.remove_service(name)
+        self.create_service(service)
         deployment = module.get_deployment()
         log.debug("Create Deployment:\n%s" % json.dumps(deployment, indent=2))
         if module.get_kind() == "Deployment":
-            self.create_deployment(deployment, namespace=self._namespace)
+            if self.is_deployment(name):
+                self.remove_deployment(name)
+            self.create_deployment(deployment)
         elif module.get_kind() == "StatefulSet":
-            self.create_stateful_set(deployment, namespace=self._namespace)
+            if self.is_stateful_set(name):
+                self.remove_stateful_set(name)
+            self.create_stateful_set(deployment)
         else:
             raise Exception("Unknown kind %s" % self._kind)
         isDeployed = False
-        maxSecs = 600
+        maxSecs = self._deploy_timeout
         secs = 0
         while not isDeployed:
             time.sleep(5)
@@ -87,6 +100,20 @@ class KubeClient:
                 self.undeploy(modId)
                 raise KubeDeployError(modId, self._namespace)
 
+    def patch(self, modId: str):
+        from foliolib.okapi.okapiClient import OkapiClient
+        module = OkapiModuleKubernetes(modId)
+        deployment = module.get_deployment()
+        log.debug("Create Deployment:\n%s" % json.dumps(deployment, indent=2))
+        if module.get_kind() == "Deployment":
+            self.patch_deployment(module.get_rfc_name(),
+                                  deployment)
+        elif module.get_kind() == "StatefulSet":
+            self.patch_stateful_set(
+                module.get_rfc_name(), deployment)
+        else:
+            raise Exception("Unknown kind %s" % self._kind)
+
     def undeploy(self, modId: str):
         """Undeploy a Folio module
 
@@ -95,22 +122,22 @@ class KubeClient:
         """
         module = OkapiModuleKubernetes(modId)
         log.debug(self.remove_service(
-            module.get_rfc_name(), namespace=self._namespace))
+            module.get_rfc_name()))
         if module.get_kind() == "Deployment":
             log.debug(self.remove_deployment(
-                module.get_rfc_name(), namespace=self._namespace))
+                module.get_rfc_name()))
         elif module.get_kind() == "StatefulSet":
             self.remove_stateful_set(
-                module.get_rfc_name(), namespace=self._namespace)
+                module.get_rfc_name())
         else:
             raise Exception("Unknown kind %s" % self._kind)
         volume = module.volume()
         hazelcast = module.hazelcast()
         if volume:
             log.debug(self.remove_persistenVolumeClaim(
-                volume["claim"]["name"], namespace=self._namespace))
+                volume["claim"]["name"]))
         if module.hazelcast():
-            self.remove_configMap(hazelcast["name"], namespace=self._namespace)
+            self.remove_configMap(hazelcast["name"])
 
     def get_env(self):
         """Get enviroment variables.
@@ -118,8 +145,7 @@ class KubeClient:
         Returns:
             list: List with enviroment variables.
         """
-        env = self.get_secret(GLOBAL_ENV_NAME_KUBERNETES,
-                              namespace=self._namespace)
+        env = self.get_secret(GLOBAL_ENV_NAME_KUBERNETES)
         if env is not None:
             return [{"name": k, "value": base64.b64decode(v).decode("utf-8")}
                     for k, v in env.items()]
@@ -133,15 +159,12 @@ class KubeClient:
             name (str): Name of the variable.
             value (str): Value of the variable.
         """
-        env = self.get_secret(GLOBAL_ENV_NAME_KUBERNETES,
-                              namespace=self._namespace) or {}
+        env = self.get_secret(GLOBAL_ENV_NAME_KUBERNETES) or {}
         v = base64.b64encode(value.encode("utf-8"))
         env[name] = v.decode("utf-8")
-        if self.exists_secret(GLOBAL_ENV_NAME_KUBERNETES, namespace=self._namespace):
-            self.remove_secret(GLOBAL_ENV_NAME_KUBERNETES,
-                               namespace=self._namespace)
-        self.create_secret(GLOBAL_ENV_NAME_KUBERNETES,
-                           env, namespace=self._namespace)
+        if self.exists_secret(GLOBAL_ENV_NAME_KUBERNETES):
+            self.remove_secret(GLOBAL_ENV_NAME_KUBERNETES)
+        self.create_secret(GLOBAL_ENV_NAME_KUBERNETES)
 
     def delete_env(self, name: str):
         """Delete an enviroment variable.
@@ -149,16 +172,13 @@ class KubeClient:
         Args:
             name (str): Name of the variable.
         """
-        env = self.get_secret(GLOBAL_ENV_NAME_KUBERNETES,
-                              namespace=self._namespace)
+        env = self.get_secret(GLOBAL_ENV_NAME_KUBERNETES)
         if name in env:
             del env[name]
-        if self.exists_secret(GLOBAL_ENV_NAME_KUBERNETES, namespace=self._namespace):
-            self.remove_secret(GLOBAL_ENV_NAME_KUBERNETES,
-                               namespace=self._namespace)
+        if self.exists_secret(GLOBAL_ENV_NAME_KUBERNETES):
+            self.remove_secret(GLOBAL_ENV_NAME_KUBERNETES)
         if env:
-            self.create_secret(GLOBAL_ENV_NAME_KUBERNETES,
-                               env, namespace=self._namespace)
+            self.create_secret(GLOBAL_ENV_NAME_KUBERNETES, env)
 
     def get_api_versions(self):
         versions = []
@@ -173,7 +193,7 @@ class KubeClient:
 
         return versions
 
-    def get_service(self, name: str, namespace: str = "default"):
+    def get_service(self, name: str):
         """Get a service.
 
         Args:
@@ -184,24 +204,18 @@ class KubeClient:
             dict: Dictonary of the service.
         """
         core_v1 = client.CoreV1Api()
-        return core_v1.read_namespaced_service(name, namespace)
+        return core_v1.read_namespaced_service(name, self._namespace)
 
-    def get_services(self, namespace: str = None):
-        """Get services of one or all namespaces.
-
-        Args:
-            namespace (str, optional): Namespace. Defaults to None.
+    def get_services(self):
+        """Get services.
 
         Returns:
             list: List of services.
         """
         core_v1 = client.CoreV1Api()
-        if namespace is None:
-            return core_v1.list_service_for_all_namespaces()
-        else:
-            return core_v1.list_namespaced_service(namespace)
+        return core_v1.list_namespaced_service(self._namespace)
 
-    def create_service(self, data: dict, namespace: str = "default"):
+    def create_service(self, data: dict):
         """Create a service.
 
         Args:
@@ -212,9 +226,9 @@ class KubeClient:
             dict: Created service.
         """
         core_v1 = client.CoreV1Api()
-        return core_v1.create_namespaced_service(namespace, data)
+        return core_v1.create_namespaced_service(self._namespace, data)
 
-    def remove_service(self, name: str, namespace: str = "default"):
+    def remove_service(self, name: str):
         """Remove a service.
 
         Args:
@@ -225,44 +239,66 @@ class KubeClient:
             _type_: _description_
         """
         core_v1 = client.CoreV1Api()
-        return core_v1.delete_namespaced_service(name, namespace)
+        return core_v1.delete_namespaced_service(name, self._namespace)
+
+    def is_service(self, name: str):
+        services = self.get_services()
+        for service in services.items:
+            if name == service.metadata.name:
+                return True
+        return False
 
     def get_deployment(self, name: str):
         apps_v1 = client.AppsV1Api()
 
-    def get_deployments(self, namespace: str = None):
+    def get_deployments(self):
         apps_v1 = client.AppsV1Api()
+        return apps_v1.list_namespaced_deployment(self._namespace)
 
-    def create_deployment(self, data: dict, namespace: str = "default"):
+    def create_deployment(self, data: dict):
         log.debug("Create Deployment in namespace %s with %s",
-                  namespace, str(data))
+                  self._namespace, str(data))
         apps_v1 = client.AppsV1Api()
-        return apps_v1.create_namespaced_deployment(namespace, data)
+        return apps_v1.create_namespaced_deployment(self._namespace, data)
 
-    def remove_deployment(self, name: str, namespace: str = "default"):
-        log.debug("Remove Deployment %s in namespace %s", name, namespace)
+    def patch_deployment(self, name, data: dict):
+        log.debug("Patch Deployment %s in namespace %s with %s",
+                  name, self._namespace, str(data))
         apps_v1 = client.AppsV1Api()
-        return apps_v1.delete_namespaced_deployment(name, namespace)
+        return apps_v1.patch_namespaced_deployment(name, self._namespace, data)
 
-    def exists_secret(self, name: str, namespace: str = "default"):
+    def remove_deployment(self, name: str):
+        log.debug("Remove Deployment %s in namespace %s",
+                  name, self._namespace)
+        apps_v1 = client.AppsV1Api()
+        return apps_v1.delete_namespaced_deployment(name, self._namespace)
+
+    def is_deployment(self, name: str):
+        deployments = self.get_deployments()
+        for deployment in deployments.items:
+            if name == deployment.metadata.name:
+                return True
+        return False
+
+    def exists_secret(self, name: str):
         core_v1 = client.CoreV1Api()
-        secrets = core_v1.list_namespaced_secret(namespace)
+        secrets = core_v1.list_namespaced_secret(self._namespace)
         for k in secrets.items:
             if k.metadata.name == name:
                 return True
         return False
 
-    def get_secret(self, name: str, namespace: str = "default"):
+    def get_secret(self, name: str):
         core_v1 = client.CoreV1Api()
-        secrets = core_v1.list_namespaced_secret(namespace)
+        secrets = core_v1.list_namespaced_secret(self._namespace)
         for k in secrets.items:
             if k.metadata.name == name:
                 return k.data
         return None
 
-    def create_secret(self, name: str, data: dict, namespace: str = "default"):
+    def create_secret(self, name: str, data: dict):
         log.debug("Create secret %s in namespace %s with %s",
-                  name, namespace, str(data))
+                  name, self._namespace, str(data))
         core_v1 = client.CoreV1Api()
         body = client.V1Secret()
         body.api_version = 'v1'
@@ -270,42 +306,62 @@ class KubeClient:
         body.kind = 'Secret'
         body.metadata = {'name': name}
         body.type = 'Opaque'
-        return core_v1.create_namespaced_secret(namespace, body)
+        return core_v1.create_namespaced_secret(self._namespace, body)
 
-    def remove_secret(self, name: str, namespace: str = "default"):
+    def remove_secret(self, name: str):
         core_v1 = client.CoreV1Api()
-        return core_v1.delete_namespaced_secret(name, namespace)
+        return core_v1.delete_namespaced_secret(name, self._namespace)
 
-    def create_stateful_set(self, data: dict, namespace: str = "default"):
+    def get_stateful_sets(self):
+        apps_v1 = client.AppsV1Api()
+        return apps_v1.list_namespaced_stateful_set(self._namespace)
+
+    def create_stateful_set(self, data: dict):
         log.debug("Create StatefulSet in namespace %s with %s",
-                  namespace, str(data))
+                  self._namespace, str(data))
         apps_v1 = client.AppsV1Api()
-        apps_v1.create_namespaced_stateful_set(namespace, data)
+        apps_v1.create_namespaced_stateful_set(self._namespace, data)
 
-    def remove_stateful_set(self, name: str, namespace: str = "default"):
-        log.debug("Remove StatefulSet %s in namespace %s", name, namespace)
+    def patch_stateful_set(self, name: str, data: dict):
+        log.debug("Patch StatefulSet %s in namespace %s with %s",
+                  name, self._namespace, str(data))
         apps_v1 = client.AppsV1Api()
-        apps_v1.delete_namespaced_stateful_set(name, namespace)
+        apps_v1.patch_namespaced_stateful_set(name, self._namespace, data)
 
-    def create_persistenVolumeClaim(self, data: dict, namespace: str = "default"):
+    def remove_stateful_set(self, name: str):
+        log.debug("Remove StatefulSet %s in namespace %s",
+                  name, self._namespace)
+        apps_v1 = client.AppsV1Api()
+        apps_v1.delete_namespaced_stateful_set(name, self._namespace)
+
+    def is_stateful_set(self, name: str):
+        stateful_sets = self.get_stateful_sets()
+        for stateful_set in stateful_sets.items:
+            if name == stateful_set.metadata.name:
+                return True
+        return False
+
+    def create_persistenVolumeClaim(self, data: dict):
         log.debug("Create PersistentVolumeClaim in namespace %s with %s",
-                  namespace, str(data))
+                  self._namespace, str(data))
         core_v1 = client.CoreV1Api()
-        core_v1.create_namespaced_persistent_volume_claim(namespace, data)
+        core_v1.create_namespaced_persistent_volume_claim(
+            self._namespace, data)
 
-    def remove_persistenVolumeClaim(self, name: str, namespace: str = "default"):
+    def remove_persistenVolumeClaim(self, name: str):
         log.debug("Remove PersistentVolumeClaim %s in namespace %s",
-                  name, namespace)
+                  name, self._namespace)
         core_v1 = client.CoreV1Api()
-        core_v1.delete_namespaced_persistent_volume_claim(name, namespace)
+        core_v1.delete_namespaced_persistent_volume_claim(
+            name, self._namespace)
 
-    def create_configMap(self, name: str, data: dict, namespace: str = "default"):
+    def create_configMap(self, name: str, data: dict):
         log.debug("Create ConfigMap %s in namespace %s",
-                  name, namespace)
+                  name, self._namespace)
         core_v1 = client.CoreV1Api()
         metadata = client.V1ObjectMeta(
             name=name,
-            namespace=namespace,
+            namespace=self._namespace,
         )
         configmap = client.V1ConfigMap(
             api_version="v1",
@@ -313,46 +369,61 @@ class KubeClient:
             data=data,
             metadata=metadata
         )
-        core_v1.create_namespaced_config_map(namespace, configmap)
+        core_v1.create_namespaced_config_map(self._namespace, configmap)
 
-    def remove_configMap(self, name: str, namespace: str = "default"):
+    def remove_configMap(self, name: str):
         log.debug("Remove ConfigMap %s in namespace %s",
-                  name, namespace)
+                  name, self._namespace)
         core_v1 = client.CoreV1Api()
-        core_v1.delete_namespaced_config_map(name, namespace)
+        core_v1.delete_namespaced_config_map(name, self._namespace)
+
+    def get_configMaps(self):
+        core_v1 = client.CoreV1Api()
+        return core_v1.list_namespaced_config_map(self._namespace)
+
+    def is_configMap(self, name: str):
+        configMaps = self.get_configMaps()
+        for configMap in configMaps.items:
+            if name == configMap.metadata.name:
+                return True
+        return False
 
 
 class KubeAdmin(KubeClient):
 
-    def restart_folio(self, namespace: str = "folio"):
+    def restart_folio(self):
         apps_v1 = client.AppsV1Api()
         core_v1 = client.CoreV1Api()
-        deps = apps_v1.list_namespaced_deployment(namespace)
-        stfs = apps_v1.list_namespaced_stateful_set(namespace)
+        deps = apps_v1.list_namespaced_deployment(self._namespace)
+        stfs = apps_v1.list_namespaced_stateful_set(self._namespace)
         dnames = {d.metadata.name: d.spec.replicas for d in deps.items}
         snames = {s.metadata.name: s.spec.replicas for s in stfs.items}
         for name in dnames.keys():
             log.info("Stop Pods for Deployment %s", name)
             apps_v1.patch_namespaced_deployment_scale(
-                name, namespace, [{'op': 'replace', 'path': '/spec/replicas', 'value': 0}])
+                name, self._namespace, [{'op': 'replace', 'path': '/spec/replicas', 'value': 0}])
         for name in snames.keys():
             log.info("Stop Pods for StatefulSet %s", name)
             apps_v1.patch_namespaced_stateful_set_scale(
-                name, namespace, [{'op': 'replace', 'path': '/spec/replicas', 'value': 0}])
+                name, self._namespace, [{'op': 'replace', 'path': '/spec/replicas', 'value': 0}])
         log.info("Wait for all Pods terminated ...")
         while True:
-            pods = core_v1.list_namespaced_pod(namespace)
+            pods = core_v1.list_namespaced_pod(self._namespace)
             if pods.items:
                 time.sleep(1)
             else:
                 break
         for name, replicas in dnames.items():
+            if replicas == 0:
+                replicas = 1
             log.info("Start %i Pods for Deployment %s",
                      replicas, name)
             apps_v1.patch_namespaced_deployment_scale(
-                name, namespace, [{'op': 'replace', 'path': '/spec/replicas', 'value': replicas}])
+                name, self._namespace, [{'op': 'replace', 'path': '/spec/replicas', 'value': replicas}])
         for name, replicas in snames.items():
+            if replicas == 0:
+                replicas = 1
             log.info("Start %i Pods for StatefulSet %s",
                      replicas, name)
             apps_v1.patch_namespaced_stateful_set_scale(
-                name, namespace, [{'op': 'replace', 'path': '/spec/replicas', 'value': replicas}])
+                name, self._namespace, [{'op': 'replace', 'path': '/spec/replicas', 'value': replicas}])

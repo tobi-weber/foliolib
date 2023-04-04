@@ -10,6 +10,7 @@ from urllib.parse import urlencode, urljoin
 import requests
 import urllib3
 from foliolib.config import Config
+from foliolib.helper import get_node
 from foliolib.okapi import misc, okapiModule
 from foliolib.okapi.exceptions import (OkapiException, OkapiFatalError,
                                        OkapiMoved, OkapiNotReachable,
@@ -329,11 +330,13 @@ class OkapiClient:
         """
         if isinstance(modId, okapiModule.OkapiModule):
             modId = modId.get_id()
-        mods = self.get_deployed_modules()
-        for mod in mods:
-            if mod["srvcId"] == modId:
-                return True
-
+        try:
+            mods = self.get_deployed_modules()
+            for mod in mods:
+                if mod["srvcId"] == modId:
+                    return True
+        except:
+            pass
         return False
 
     def get_tenants(self):
@@ -537,7 +540,7 @@ class OkapiClient:
                 if not self.is_module_added(modId):
                     self.add_module(modId)
                 if not self.is_module_deployed(modId):
-                    self.deploy_module(modId)
+                    self.deploy_module(modId, get_node())
         data = [{"id": modId, "action": "enable"} for modId in modIds]
         return self.install_modules(data, tenantId, **kwargs)
 

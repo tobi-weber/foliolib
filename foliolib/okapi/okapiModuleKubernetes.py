@@ -37,6 +37,12 @@ class OkapiModuleKubernetes:
 
         self._replicas = okapicfg.getint("Kubernetes", "replicas", fallback=1)
 
+        if self._modId.startswith("mod-authtoken"):
+            self._replicas = 1
+
+        if self._modId.startswith("mod-data-import"):
+            self._replicas = 1
+
         if modcfg is not None:
             if modcfg.has_section("Kubernetes"):
                 if modcfg.has_option("Kubernetes", "replicas"):
@@ -283,13 +289,11 @@ class OkapiModuleKubernetes:
         max_cpu = 0
         memory = module.get_docker_args()["memory"]
         if memory is not None:
-            mem = "%iKi" % math.ceil(memory/1024)
-            if Config().okapicfg().getboolean("Kubernetes", "dev", fallback=False):
-                min_mem = "10Mi"
-                max_mem = mem
-            else:
-                min_mem = mem
-                max_mem = mem
+            memoryRequestPercentage = Config().okapicfg().getint(
+                "Kubernetes", "memoryRequestPercentage", fallback=100)
+            mk = math.ceil(memory/1024)
+            min_mem = "%iKi" % ((mk * memoryRequestPercentage) / 100)
+            max_mem = "%iKi" % mk
         else:
             log.warning(
                 "ModuleDescriptor for %s has no memory defined", self._modId)

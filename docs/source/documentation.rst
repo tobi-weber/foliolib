@@ -4,7 +4,7 @@ Documentation
 Configuration
 -------------
 
-After the first start of okapicli a configuration with default values will be created
+After the first run of okapicli a configuration with default values will be created
 under $HOME/.foliolib.
 
 

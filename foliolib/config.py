@@ -292,9 +292,7 @@ class Config:
             log.debug("%s already exists.", fpath)
 
     def create_okapi_conf(self, name: str, okapi_host: str = "localhost",
-                          okapi_port: str = "9130", ssl=False, kubernetes=False,
-                          db_host: str = "localhost", db_port: str = "5432",
-                          db_user: str = "postgres", db_password: str = "postgres"):
+                          okapi_port: str = "9130", ssl=False):
         """Create okapi.conf for given server config name.
 
         Args:
@@ -302,10 +300,6 @@ class Config:
             okapi_host (str, optional): Okapi host. Defaults to "localhost".
             okapi_port (str, optional): Okapi port. Defaults to "9130".
             ssl (bool, optional): SSL. Defaults to False.
-            db_host (str, optional): Postgres host. Defaults to "localhost".
-            db_port (str, optional): Postgres port. Defaults to "5432".
-            db_user (str, optional): Postgres user. Defaults to "postgres".
-            db_password (str, optional): Postgres password. Defaults to "postgres".
         """
         self.__okapicfg = configparser.ConfigParser()
         sdir = os.path.join(self.get_confdir(), name)
@@ -318,16 +312,19 @@ class Config:
             self.__okapicfg["Okapi"]["host"] = okapi_host
             self.__okapicfg["Okapi"]["port"] = okapi_port
             self.__okapicfg["Okapi"]["ssl"] = str(ssl)
-            self.__okapicfg["Okapi"]["foliolibenv"] = str(False)
-            # self.__okapicfg["Kubernetes"] = {}
-            # self.__okapicfg["Kubernetes"]["enable"] = str(kubernetes)
-            # self.__okapicfg["Kubernetes"]["namespace"] = "default"
-            # self.__okapicfg["Postgres"] = {}
-            # self.__okapicfg["Postgres"]["host"] = db_host
-            # self.__okapicfg["Postgres"]["port"] = db_port
-            # self.__okapicfg["Postgres"]["user"] = db_user
-            # self.__okapicfg["Postgres"]["password"] = db_password
-            # self.__okapicfg["Tokens"] = {}
+            self.__okapicfg["Okapi"]["foliolibenv"] = str(True)
+            self.__okapicfg["Env"] = {}
+            self.__okapicfg["Env"]["db_host"] = okapi_host
+            self.__okapicfg["Env"]["db_port"] = "default"
+            self.__okapicfg["Env"]["db_username"] = "okapi"
+            self.__okapicfg["Env"]["db_password"] = "okapi25"
+            self.__okapicfg["Env"]["db_database"] = "okapi"
+            self.__okapicfg["Env"]["db_querytimeout"] = "120000"
+            self.__okapicfg["Env"]["db_charset"] = "UTF-8"
+            self.__okapicfg["Env"]["kafka_host"] = okapi_host
+            self.__okapicfg["Env"]["kafka_port"] = "9092"
+            self.__okapicfg["Env"]["okapi_url"] = f"http://{okapi_host}:{okapi_port}"
+            self.__okapicfg["Env"]["replication_factor"] = "1"
             with open(fpath, "w") as f:
                 self.__okapicfg.write(f)
             if not os.path.exists(os.path.join(sdir, "modules")):
