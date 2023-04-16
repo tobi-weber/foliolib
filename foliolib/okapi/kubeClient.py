@@ -391,39 +391,50 @@ class KubeClient:
 
 class KubeAdmin(KubeClient):
 
-    def restart_folio(self):
-        apps_v1 = client.AppsV1Api()
-        core_v1 = client.CoreV1Api()
-        deps = apps_v1.list_namespaced_deployment(self._namespace)
-        stfs = apps_v1.list_namespaced_stateful_set(self._namespace)
-        dnames = {d.metadata.name: d.spec.replicas for d in deps.items}
-        snames = {s.metadata.name: s.spec.replicas for s in stfs.items}
-        for name in dnames.keys():
+    def __init__(self, kube_config: str = None):
+        super().__init__(kube_config)
+        self.__apps_v1 = client.AppsV1Api()
+        self.__core_v1 = client.CoreV1Api()
+        self.__dnames = {}
+        self.__snames = {}
+
+    def stop_folio(self):
+        deps = self.__apps_v1.list_namespaced_deployment(self._namespace)
+        stfs = self.__apps_v1.list_namespaced_stateful_set(self._namespace)
+        self.__dnames = {d.metadata.name: d.spec.replicas for d in deps.items}
+        self.__snames = {s.metadata.name: s.spec.replicas for s in stfs.items}
+        for name in self.__dnames.keys():
             log.info("Stop Pods for Deployment %s", name)
-            apps_v1.patch_namespaced_deployment_scale(
+            self.__apps_v1.patch_namespaced_deployment_scale(
                 name, self._namespace, [{'op': 'replace', 'path': '/spec/replicas', 'value': 0}])
-        for name in snames.keys():
+        for name in self.__snames.keys():
             log.info("Stop Pods for StatefulSet %s", name)
-            apps_v1.patch_namespaced_stateful_set_scale(
+            self.__apps_v1.patch_namespaced_stateful_set_scale(
                 name, self._namespace, [{'op': 'replace', 'path': '/spec/replicas', 'value': 0}])
         log.info("Wait for all Pods terminated ...")
         while True:
-            pods = core_v1.list_namespaced_pod(self._namespace)
+            pods = self.__core_v1.list_namespaced_pod(self._namespace)
             if pods.items:
                 time.sleep(1)
             else:
                 break
-        for name, replicas in dnames.items():
+
+    def start_folio(self):
+        for name, replicas in self.__dnames.items():
             if replicas == 0:
                 replicas = 1
             log.info("Start %i Pods for Deployment %s",
                      replicas, name)
-            apps_v1.patch_namespaced_deployment_scale(
+            self.__apps_v1.patch_namespaced_deployment_scale(
                 name, self._namespace, [{'op': 'replace', 'path': '/spec/replicas', 'value': replicas}])
-        for name, replicas in snames.items():
+        for name, replicas in self.__snames.items():
             if replicas == 0:
                 replicas = 1
             log.info("Start %i Pods for StatefulSet %s",
                      replicas, name)
-            apps_v1.patch_namespaced_stateful_set_scale(
+            self.__apps_v1.patch_namespaced_stateful_set_scale(
                 name, self._namespace, [{'op': 'replace', 'path': '/spec/replicas', 'value': replicas}])
+
+    def restart_folio(self):
+        self.stop_folio()
+        self.start_folio()

@@ -6,11 +6,12 @@ import json
 import click
 from foliolib.config import Config
 from foliolib.helper import get_node
+from foliolib.okapi.kubeClient import KubeClient
 from foliolib.okapi.okapiClient import OkapiClient
 from foliolib.okapi.okapiModule import create_okapiModules
 from tabulate import tabulate
 
-from.orderedGroup import OrderedGroup
+from .orderedGroup import OrderedGroup
 
 
 @click.group(cls=OrderedGroup)
@@ -139,3 +140,21 @@ def undeploy(**kwargs):
     for m in kwargs["moduleid"]:
         print(f"Undeploy module {m}")
         OkapiClient().undeploy_module(m)
+
+
+if Config().is_kubernetes():
+    @module.command()
+    @click.argument("moduleid", nargs=-1)
+    def redeploy(**kwargs):
+        """Redeploy module(s).
+
+        MODULEID\tmodule id. Can be repeated.
+        """
+        modIds = kwargs["moduleid"]
+        if not modIds:
+            modIds = [module["id"] for module in OkapiClient().get_modules()
+                      if "launchDescriptor" in OkapiClient().get_module(module["id"])]
+
+        for modId in modIds:
+            print("Redeploy %s" % modId)
+            KubeClient().patch(modId)
