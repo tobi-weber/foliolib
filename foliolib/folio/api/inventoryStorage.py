@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-02-10
+# Generated at 2023-04-16
 
 import logging
 
@@ -5292,7 +5292,7 @@ class BoundWithPart(FolioApi):
         return self.call("PUT", f"/inventory-storage/bound-with-parts/{boundWithPartsId}", data=boundWithPart)
 
     def modify_boundWith(self, boundWith: dict):
-        """Manage all parts (holdings references) of a bound-with item
+        """Manage the collective set of parts (holdings references) of a bound-with item
 
         ``PUT /inventory-storage/bound-withs``
 

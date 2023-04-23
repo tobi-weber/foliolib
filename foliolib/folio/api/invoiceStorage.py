@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-02-10
+# Generated at 2023-04-16
 
 import logging
 
@@ -14,17 +14,10 @@ class VoucherNumber(FolioApi):
     **API used to manage voucher number.**
     """
 
-    def get_voucherNumbers(self, **kwargs):
+    def get_voucherNumbers(self):
         """Get generated voucher number
 
         ``GET /voucher-storage/voucher-number``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
 
         Returns:
             dict: See Schema below
@@ -36,7 +29,7 @@ class VoucherNumber(FolioApi):
 
             .. literalinclude:: ../files/VoucherNumber_get_voucherNumbers_return.schema 
         """
-        return self.call("GET", "/voucher-storage/voucher-number", query=kwargs)
+        return self.call("GET", "/voucher-storage/voucher-number")
 
     def get_starts(self):
         """Get voucher number start
@@ -85,6 +78,11 @@ class BatchGroup(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -219,6 +217,11 @@ class Invoice(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -347,6 +350,11 @@ class Invoice(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -457,6 +465,11 @@ class Invoice(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -583,17 +596,10 @@ class InvoiceNumber(FolioApi):
     **API used to manage invoice number.**
     """
 
-    def get_invoiceNumbers(self, **kwargs):
+    def get_invoiceNumbers(self):
         """Get generated invoice number
 
         ``GET /invoice-storage/invoice-number``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
 
         Returns:
             dict: See Schema below
@@ -605,7 +611,7 @@ class InvoiceNumber(FolioApi):
 
             .. literalinclude:: ../files/InvoiceNumber_get_invoiceNumbers_return.schema 
         """
-        return self.call("GET", "/invoice-storage/invoice-number", query=kwargs)
+        return self.call("GET", "/invoice-storage/invoice-number")
 
 
 class BatchVoucherExportConfiguration(FolioApi):
@@ -623,6 +629,11 @@ class BatchVoucherExportConfiguration(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -834,6 +845,11 @@ class BatchVoucherExports(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -1045,6 +1061,11 @@ class Voucher(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -1172,6 +1193,11 @@ class Voucher(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -1312,8 +1338,6 @@ class InvoiceLineNumber(FolioApi):
                     Example:
                     
                      - 8ad4b87b-9b47-4199-b0c3-5480745c6b41
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
 
         Returns:
             dict: See Schema below

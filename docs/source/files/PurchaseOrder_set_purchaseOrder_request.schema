@@ -116,6 +116,11 @@
         "$ref": "../../common/schemas/uuid.json"
       }
     },
+    "nextPolNumber": {
+      "description": "Number that will be used next time a purchase order line is created",
+      "type": "integer",
+      "readonly": true
+    },
     "tags": {
       "type": "object",
       "description": "arbitrary tags associated with this purchase order",

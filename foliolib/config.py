@@ -31,7 +31,7 @@ class Config:
     def __init__(self):
         self._server = None
         self.__foliolibcfg = None
-        self.__okapicfg = None
+        self.__servercfg = None
 
     def get_server(self):
         """Get current server name.
@@ -53,7 +53,7 @@ class Config:
         if name in self.get_servers():
             self._server = name
             self.__foliolibcfg = configparser.ConfigParser()
-            self.__okapicfg = configparser.ConfigParser()
+            self.__servercfg = configparser.ConfigParser()
             self.__load()
         else:
             raise ServerConfigNotFound(name, self.get_servers())
@@ -66,13 +66,13 @@ class Config:
         """
         return self.__foliolibcfg
 
-    def okapicfg(self):
-        """Get okapi.conf ConfigParser object.
+    def servercfg(self):
+        """Get server.conf ConfigParser object.
 
         Returns:
-            ConfigParser: ConfigParser object of okapi.conf of the current server setted.
+            ConfigParser: ConfigParser object of server.conf of the current server setted.
         """
-        return self.__okapicfg
+        return self.__servercfg
 
     def modulescfg(self, modId):
         """Get ConfigParser object of a module config file.
@@ -102,7 +102,7 @@ class Config:
         Returns:
             bool: Wether kubernets is enabled.
         """
-        return self.__okapicfg.get("Kubernetes", "enable", fallback=False)
+        return self.__servercfg.get("Kubernetes", "enable", fallback=False)
 
     def get_kube_config(self):
         kube_config = os.path.join(self.get_confdir(),
@@ -120,14 +120,14 @@ class Config:
         """
         servers = []
         for f in os.listdir(self.get_confdir()):
-            if os.path.exists(os.path.join(self.get_confdir(), f, "okapi.conf")):
+            if os.path.exists(os.path.join(self.get_confdir(), f, "server.conf")):
                 servers.append(f)
         return servers
 
     def get_url(self):
-        host = self.okapicfg().get("Okapi", "host")
-        port = self.okapicfg().get("Okapi", "port")
-        ssl = self.okapicfg().getboolean("Okapi", "ssl", fallback=False)
+        host = self.servercfg().get("Okapi", "host")
+        port = self.servercfg().get("Okapi", "port")
+        ssl = self.servercfg().getboolean("Okapi", "ssl", fallback=False)
         if ssl:
             url = f"https://{host}:{port}"
         else:
@@ -135,8 +135,8 @@ class Config:
 
         return url
 
-    def set_okapicfg(self, section: str, option: str, value: str):
-        """Set a value in okapi.conf
+    def set_servercfg(self, section: str, option: str, value: str):
+        """Set a value in server.conf
 
         Args:
             section (str): Section
@@ -145,15 +145,15 @@ class Config:
         """
         fname = os.path.join(self.get_confdir(),
                              self.get_server(),
-                             "okapi.conf")
-        if not section in self.__okapicfg:
-            self.__okapicfg[section] = {}
-        self.__okapicfg.set(section, option, value)
+                             "server.conf")
+        if not section in self.__servercfg:
+            self.__servercfg[section] = {}
+        self.__servercfg.set(section, option, value)
         with open(fname, "w") as f:
-            self.__okapicfg.write(f)
+            self.__servercfg.write(f)
 
-    def remove_okapicfg(self, section: str, option: str):
-        """Remove a option in okapi.conf
+    def remove_servercfg(self, section: str, option: str):
+        """Remove a option in server.conf
 
         Args:
             section (str): Section
@@ -162,10 +162,10 @@ class Config:
         """
         fname = os.path.join(self.get_confdir(),
                              self.get_server(),
-                             "okapi.conf")
-        self.__okapicfg.remove_option(section, option)
+                             "server.conf")
+        self.__servercfg.remove_option(section, option)
         with open(fname, "w") as f:
-            self.__okapicfg.write(f)
+            self.__servercfg.write(f)
 
     def set_foliolibcfg(self, section: str, option: str, value: str):
         """Set a value in foliolib.conf
@@ -177,7 +177,7 @@ class Config:
         """
         fname = os.path.join(self.get_confdir(),
                              "foliolib.conf")
-        if not section in self.__okapicfg:
+        if not section in self.__servercfg:
             self.__foliolibcfg[section] = {}
         self.__foliolibcfg.set(section, option, value)
         with open(fname, "w") as f:
@@ -189,7 +189,7 @@ class Config:
         Args:
             tenantid (str): tenant id
         """
-        return self.__okapicfg.get("Tokens", tenantid, fallback=None)
+        return self.__servercfg.get("Tokens", tenantid, fallback=None)
 
     def set_token(self, tenantid: str, token: str):
         """Set token for a tenant
@@ -199,7 +199,7 @@ class Config:
             token (str): token
         """
         log.debug("Set token for %s", tenantid)
-        self.set_okapicfg("Tokens", tenantid, token)
+        self.set_servercfg("Tokens", tenantid, token)
 
     def del_token(self, tenantid: str):
         """Delete token for a tenant
@@ -210,7 +210,7 @@ class Config:
         """
         if self.has_token(tenantid):
             log.debug("Remove token for %s", tenantid)
-            self.__okapicfg.remove_option("Tokens", tenantid)
+            self.__servercfg.remove_option("Tokens", tenantid)
 
     def has_token(self, tenantid: str):
         """Delete token for a tenant
@@ -219,7 +219,7 @@ class Config:
             tenantid (str): tenant id
             token (str): token
         """
-        return self.__okapicfg.has_option("Tokens", tenantid)
+        return self.__servercfg.has_option("Tokens", tenantid)
 
     def is_foliolib_env(self):
         """Is global env handled by foliolib?
@@ -227,20 +227,18 @@ class Config:
         Returns:
             bool: Wether foliolib env is enabled.
         """
-        is_foliolib_env = self.__okapicfg.get(
+        is_foliolib_env = self.__servercfg.get(
             "Okapi", "foliolibEnv", fallback=False)
-        # if is_foliolib_env and not self.__okapicfg.has_section("Env"):
-        #    self.__okapicfg.add_section("Env")
 
         return is_foliolib_env
 
     def get_env(self, as_dict=False):
         if self.is_foliolib_env():
             if as_dict:
-                return {k: v for k, v in self.__okapicfg["Env"].items()}
+                return {k: v for k, v in self.__servercfg["Env"].items()}
             else:
                 return [{"name": k, "value": v}
-                        for k, v in self.__okapicfg["Env"].items()]
+                        for k, v in self.__servercfg["Env"].items()]
         else:
             if as_dict:
                 return {}
@@ -249,11 +247,11 @@ class Config:
 
     def set_env(self, key, value):
         if self.is_foliolib_env():
-            self.set_okapicfg("Env", key, value)
+            self.set_servercfg("Env", key, value)
 
     def delete_env(self, key):
         if self.is_foliolib_env():
-            self.remove_okapicfg("Env", key)
+            self.remove_servercfg("Env", key)
 
     def get_confdir(self):
         """Get the configuration directory
@@ -291,9 +289,9 @@ class Config:
         else:
             log.debug("%s already exists.", fpath)
 
-    def create_okapi_conf(self, name: str, okapi_host: str = "localhost",
-                          okapi_port: str = "9130", ssl=False):
-        """Create okapi.conf for given server config name.
+    def create_server_conf(self, name: str, okapi_host: str = "localhost",
+                           okapi_port: str = "9130", ssl=False):
+        """Create server.conf for given server config name.
 
         Args:
             name (str): Server name.
@@ -301,32 +299,35 @@ class Config:
             okapi_port (str, optional): Okapi port. Defaults to "9130".
             ssl (bool, optional): SSL. Defaults to False.
         """
-        self.__okapicfg = configparser.ConfigParser()
+        self.__servercfg = configparser.ConfigParser()
         sdir = os.path.join(self.get_confdir(), name)
-        fpath = os.path.join(sdir, "okapi.conf")
+        fpath = os.path.join(sdir, "server.conf")
         if not os.path.exists(fpath):
             os.mkdir(sdir)
             os.mkdir(os.path.join(sdir, "modules"))
             log.debug("Write new config %s", fpath)
-            self.__okapicfg["Okapi"] = {}
-            self.__okapicfg["Okapi"]["host"] = okapi_host
-            self.__okapicfg["Okapi"]["port"] = okapi_port
-            self.__okapicfg["Okapi"]["ssl"] = str(ssl)
-            self.__okapicfg["Okapi"]["foliolibenv"] = str(True)
-            self.__okapicfg["Env"] = {}
-            self.__okapicfg["Env"]["db_host"] = okapi_host
-            self.__okapicfg["Env"]["db_port"] = "default"
-            self.__okapicfg["Env"]["db_username"] = "okapi"
-            self.__okapicfg["Env"]["db_password"] = "okapi25"
-            self.__okapicfg["Env"]["db_database"] = "okapi"
-            self.__okapicfg["Env"]["db_querytimeout"] = "120000"
-            self.__okapicfg["Env"]["db_charset"] = "UTF-8"
-            self.__okapicfg["Env"]["kafka_host"] = okapi_host
-            self.__okapicfg["Env"]["kafka_port"] = "9092"
-            self.__okapicfg["Env"]["okapi_url"] = f"http://{okapi_host}:{okapi_port}"
-            self.__okapicfg["Env"]["replication_factor"] = "1"
+            self.__servercfg["Okapi"] = {}
+            self.__servercfg["Okapi"]["host"] = okapi_host
+            self.__servercfg["Okapi"]["port"] = okapi_port
+            self.__servercfg["Okapi"]["ssl"] = str(ssl)
+            self.__servercfg["Okapi"]["foliolibenv"] = str(True)
+            self.__servercfg["Cli"] = {}
+            self.__servercfg["Cli"]["confirm"] = str(True)
+            self.__servercfg["Cli"]["loglevel"] = "INFO"
+            self.__servercfg["Env"] = {}
+            self.__servercfg["Env"]["db_host"] = okapi_host
+            self.__servercfg["Env"]["db_port"] = "default"
+            self.__servercfg["Env"]["db_username"] = "okapi"
+            self.__servercfg["Env"]["db_password"] = "okapi25"
+            self.__servercfg["Env"]["db_database"] = "okapi"
+            self.__servercfg["Env"]["db_querytimeout"] = "120000"
+            self.__servercfg["Env"]["db_charset"] = "UTF-8"
+            self.__servercfg["Env"]["kafka_host"] = okapi_host
+            self.__servercfg["Env"]["kafka_port"] = "9092"
+            self.__servercfg["Env"]["okapi_url"] = f"http://{okapi_host}:{okapi_port}"
+            self.__servercfg["Env"]["replication_factor"] = "1"
             with open(fpath, "w") as f:
-                self.__okapicfg.write(f)
+                self.__servercfg.write(f)
             if not os.path.exists(os.path.join(sdir, "modules")):
                 os.mkdir(os.path.join(sdir, "modules"))
         else:
@@ -340,11 +341,11 @@ class Config:
         if not os.path.exists(self.__foliolibcfg["Cache"]["descriptors"]):
             os.makedirs(self.__foliolibcfg["Cache"]
                         ["descriptors"], exist_ok=True)
-        # Load okapi.conf
+        # Load server.conf
         sdir = os.path.join(self.get_confdir(), self.get_server())
-        fpath = os.path.join(sdir, "okapi.conf")
+        fpath = os.path.join(sdir, "server.conf")
         log.debug("Load config from %s", fpath)
-        self.__okapicfg.read(fpath)
+        self.__servercfg.read(fpath)
 
 
 def server(name, logging_level="INFO"):

@@ -168,6 +168,10 @@
       "description": "UUID of vendor",
       "$ref": "../../common/schemas/uuid.json"
     },
+    "fiscalYearId": {
+      "description": "UUID of fiscal year",
+      "$ref": "../../common/schemas/uuid.json"
+    },
     "accountNo": {
       "description": "The unique number of the organization account",
       "type": "string"

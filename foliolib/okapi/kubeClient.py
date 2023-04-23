@@ -32,9 +32,9 @@ class KubeClient:
             config.load_kube_config(config_file=kube_config)
         except ConfigException as e:
             log.error("Failed to load kube config %s", kube_config)
-        self._namespace = Config().okapicfg().get(
+        self._namespace = Config().servercfg().get(
             "Kubernetes", "namespace", fallback="default")
-        self._deploy_timeout = Config().okapicfg().getint(
+        self._deploy_timeout = Config().servercfg().getint(
             "Kubernetes", "deployTimeout", fallback=3600)
 
     def deploy(self, modId: str):

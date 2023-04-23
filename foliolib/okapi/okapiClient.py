@@ -53,11 +53,11 @@ class OkapiClient:
             host (str, optional): IP or Hostame of the Okapi server. Defaults from foliolib.conf.
             port (str, optional):. Defaults from foliolib.conf.
         """
-        host = host or Config().okapicfg().get("Okapi", "host")
-        port = port or Config().okapicfg().get("Okapi", "port")
-        self._okapi_path = path or Config().okapicfg().get("Okapi", "path", fallback=None)
-        ssl = ssl or Config().okapicfg().getboolean("Okapi", "ssl", fallback=False)
-        self._verify_ssl = Config().okapicfg().getboolean(
+        host = host or Config().servercfg().get("Okapi", "host")
+        port = port or Config().servercfg().get("Okapi", "port")
+        self._okapi_path = path or Config().servercfg().get("Okapi", "path", fallback=None)
+        ssl = ssl or Config().servercfg().getboolean("Okapi", "ssl", fallback=False)
+        self._verify_ssl = Config().servercfg().getboolean(
             "Okapi", "verify_ssl", fallback=True)
 
         if ssl:

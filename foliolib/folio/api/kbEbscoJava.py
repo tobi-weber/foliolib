@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-02-10
+# Generated at 2023-04-16
 
 import logging
 
@@ -1571,6 +1571,7 @@ class Titles(FolioApi):
                     Example:
                     
                      - academic
+            filter[packageIds] (list):  Search by package ids.
             include (str):  Include related resource objects, each representing a partnering of this title with a package.
                     Any bogus value, like `include=deciduousTrees`, will be silently ignored.
                     

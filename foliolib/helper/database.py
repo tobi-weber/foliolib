@@ -24,13 +24,13 @@ class Postgres:
 
     def __init__(self, user: str = None, password: str = None, database: str = "postgres",
                  host: str = None, port: str = None) -> None:
-        self._host = host or Config().okapicfg().get(
+        self._host = host or Config().servercfg().get(
             "Postgres", "host", fallback="localhost")
-        self._port = port or Config().okapicfg().get(
+        self._port = port or Config().servercfg().get(
             "Postgres", "port", fallback="5432")
-        self._user = user or Config().okapicfg().get(
+        self._user = user or Config().servercfg().get(
             "Postgres", "user", fallback="postgres")
-        self._password = password or Config().okapicfg().get(
+        self._password = password or Config().servercfg().get(
             "Postgres", "password", fallback="postgres")
         self._database = database
         self._con = None

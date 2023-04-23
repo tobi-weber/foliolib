@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-02-10
+# Generated at 2023-04-16
 
 import logging
 
@@ -23,6 +23,11 @@ class BatchGroup(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -160,6 +165,11 @@ class Invoice(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -291,6 +301,11 @@ class Invoice(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -378,6 +393,69 @@ class Invoice(FolioApi):
         """
         return self.call("DELETE", f"/invoice/invoices/{invoicesId}/documents/{documentId}")
 
+    def get_fiscalYears(self, invoicesId: str, **kwargs):
+        """Get a list of fiscal years to approve or pay the invoice
+
+        ``GET /invoice/invoices/{invoicesId}/fiscal-years``
+
+        Args:
+            invoicesId (str)
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+            query (str):  A query expressed as a CQL string
+                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
+                    using valid searchable fields.
+                    The first example below shows the general form of a full CQL query,
+                    but those fields might not be relevant in this context.
+                    
+                    with valid searchable fields: for example metadata.createdDate
+                    
+                    
+                    Example:
+                    
+                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
+                    
+                     - metadata.createdDate > '2018-07-19T00:00:00.000+0000'
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Invoice_get_fiscalYears_return.schema 
+        """
+        return self.call("GET", f"/invoice/invoices/{invoicesId}/fiscal-years", query=kwargs)
+
+    def set_fiscalYear(self, invoicesId: str):
+        """
+
+        ``POST /invoice/invoices/{invoicesId}/fiscal-years``
+
+        Args:
+            invoicesId (str)
+        """
+        return self.call("POST", f"/invoice/invoices/{invoicesId}/fiscal-years")
+
     def get_invoiceLines(self, **kwargs):
         """Retrieve a list of invoiceLine items.
 
@@ -387,6 +465,11 @@ class Invoice(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -567,6 +650,11 @@ class BatchVoucherExportConfiguration(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -782,6 +870,11 @@ class BatchVoucherExports(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -978,6 +1071,11 @@ class Voucher(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -1079,6 +1177,11 @@ class Voucher(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:

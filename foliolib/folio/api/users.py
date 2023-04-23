@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-02-10
+# Generated at 2023-04-16
 
 import logging
 
@@ -564,6 +564,13 @@ class Users(FolioApi):
             OkapiFatalError: Server Error
         """
         return self.call("POST", "/users/expire/timer")
+
+    def set_process(self):
+        """Read audit events from DB and send them to Kafka
+
+        ``POST /users/outbox/process``
+        """
+        return self.call("POST", "/users/outbox/process")
 
 
 class Groups(FolioApi):

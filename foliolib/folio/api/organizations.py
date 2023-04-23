@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-02-10
+# Generated at 2023-04-16
 
 import logging
 
@@ -37,6 +37,11 @@ class Organizations(FolioApi):
                      - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
                     
                      - status=="Active"
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -132,6 +137,7 @@ class Organizations(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
 
         Schema:

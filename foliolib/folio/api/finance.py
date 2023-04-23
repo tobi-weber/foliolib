@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-02-10
+# Generated at 2023-04-16
 
 import logging
 
@@ -37,6 +37,11 @@ class LedgerRolloverProgress(FolioApi):
                      - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
                     
                      - ["code", "MEDGRANT", "="]
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -132,6 +137,11 @@ class FinanceFundCodesExpenseClasses(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -173,6 +183,11 @@ class ExpenseClasses(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -309,6 +324,11 @@ class FiscalYears(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -436,18 +456,13 @@ class ReleaseEncumbrance(FolioApi):
     This documents the API calls that release any remaining money encumbered back to the budget's available pool
     """
 
-    def set_releaseEncumbrance(self, releaseEncumbranceId: str, **kwargs):
+    def set_releaseEncumbrance(self, releaseEncumbranceId: str):
         """Release encumbrance
 
         ``POST /finance/release-encumbrance/{releaseEncumbranceId}``
 
         Args:
             releaseEncumbranceId (str)
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
 
         Raises:
             OkapiRequestError: Bad Request
@@ -455,7 +470,7 @@ class ReleaseEncumbrance(FolioApi):
             OkapiFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
         """
-        return self.call("POST", f"/finance/release-encumbrance/{releaseEncumbranceId}", query=kwargs)
+        return self.call("POST", f"/finance/release-encumbrance/{releaseEncumbranceId}")
 
 
 class ExchangeRate(FolioApi):
@@ -483,8 +498,6 @@ class ExchangeRate(FolioApi):
                     Example:
                     
                      - EUR
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
 
         Returns:
             dict: See Schema below
@@ -530,6 +543,11 @@ class LedgerRolloverErrors(FolioApi):
                      - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
                     
                      - ["code", "MEDGRANT", "="]
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -546,6 +564,7 @@ class LedgerRolloverErrors(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
             OkapiFatalError: Server Error
             OkapiRequestError: Bad Request
 
@@ -554,6 +573,44 @@ class LedgerRolloverErrors(FolioApi):
             .. literalinclude:: ../files/LedgerRolloverErrors_get_ledgerRolloversErrors_return.schema 
         """
         return self.call("GET", "/finance/ledger-rollovers-errors", query=kwargs)
+
+    def set_ledgerRolloversError(self, ledgerRolloversError: dict):
+        """Create a new ledgerRolloversError item.
+
+        ``POST /finance/ledger-rollovers-errors``
+
+        Args:
+            ledgerRolloversError (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+
+        Headers:
+            - **Location** - URI to the created ledgerRolloversError item
+
+        Schema:
+
+            .. literalinclude:: ../files/LedgerRolloverErrors_set_ledgerRolloversError_request.schema
+        """
+        return self.call("POST", "/finance/ledger-rollovers-errors", data=ledgerRolloversError)
+
+    def delete_ledgerRolloversError(self, ledgerRolloversErrorsId: str):
+        """Delete a ledger rollover error
+
+        ``DELETE /finance/ledger-rollovers-errors/{ledgerRolloversErrorsId}``
+
+        Args:
+            ledgerRolloversErrorsId (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+        """
+        return self.call("DELETE", f"/finance/ledger-rollovers-errors/{ledgerRolloversErrorsId}")
 
 
 class GroupFundFiscalYear(FolioApi):
@@ -571,6 +628,11 @@ class GroupFundFiscalYear(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -633,18 +695,13 @@ class GroupFundFiscalYear(FolioApi):
         """
         return self.call("POST", "/finance/group-fund-fiscal-years", data=groupFundFiscalYear)
 
-    def delete_groupFundFiscalYear(self, groupFundFiscalYearsId: str, **kwargs):
+    def delete_groupFundFiscalYear(self, groupFundFiscalYearsId: str):
         """Delete a group fund fiscal year
 
         ``DELETE /finance/group-fund-fiscal-years/{groupFundFiscalYearsId}``
 
         Args:
             groupFundFiscalYearsId (str)
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
 
         Raises:
             OkapiRequestNotFound: Not Found
@@ -652,7 +709,7 @@ class GroupFundFiscalYear(FolioApi):
             OkapiFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
         """
-        return self.call("DELETE", f"/finance/group-fund-fiscal-years/{groupFundFiscalYearsId}", query=kwargs)
+        return self.call("DELETE", f"/finance/group-fund-fiscal-years/{groupFundFiscalYearsId}")
 
 
 class Groups(FolioApi):
@@ -670,6 +727,11 @@ class Groups(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -829,6 +891,11 @@ class Ledgers(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -1001,6 +1068,11 @@ class LedgerRolloverLogs(FolioApi):
                      - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
                     
                      - ["ledgerRolloverType", "Commit", "="]
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -1065,6 +1137,11 @@ class FundTypes(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -1215,6 +1292,11 @@ class LedgerRollover(FolioApi):
                      - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
                     
                      - ["code", "MEDGRANT", "="]
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -1354,43 +1436,33 @@ class Transaction(FolioApi):
         """
         return self.call("POST", "/finance/encumbrances", data=encumbrance)
 
-    def modify_encumbrance(self, encumbrancesId: str, encumbrance: dict, **kwargs):
+    def modify_encumbrance(self, encumbrancesId: str, encumbrance: dict):
         """Update a Transaction instance
 
         ``PUT /finance/encumbrances/{encumbrancesId}``
 
         Args:
             encumbrancesId (str)
-            encumbrance (dict)
-            **kwargs (properties): Keyword Arguments: See Schema below
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
+            encumbrance (dict): See Schema below
 
         Schema:
 
             .. literalinclude:: ../files/Transaction_modify_encumbrance_request.schema
         """
-        return self.call("PUT", f"/finance/encumbrances/{encumbrancesId}", data=encumbrance, query=kwargs)
+        return self.call("PUT", f"/finance/encumbrances/{encumbrancesId}", data=encumbrance)
 
-    def delete_encumbrance(self, encumbrancesId: str, **kwargs):
+    def delete_encumbrance(self, encumbrancesId: str):
         """Delete an encumbrance with given transactionId
 
         ``DELETE /finance/encumbrances/{encumbrancesId}``
 
         Args:
             encumbrancesId (str)
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            lang (str): (default=en) Requested language. Optional. [lang=en]
-                    
 
         Raises:
             OkapiRequestUnprocessableEntity: Unprocessable Entity
         """
-        return self.call("DELETE", f"/finance/encumbrances/{encumbrancesId}", query=kwargs)
+        return self.call("DELETE", f"/finance/encumbrances/{encumbrancesId}")
 
     def set_payment(self, payment: dict):
         """Create a payment by transaction
@@ -1538,6 +1610,11 @@ class Transaction(FolioApi):
                      - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
                     
                      - currency=USD
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -1704,6 +1781,11 @@ class LedgerRolloverBudgets(FolioApi):
                      - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
                     
                      - ["budgetStatus", "Active", "="]
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -1814,6 +1896,11 @@ class Budgets(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -1973,6 +2060,11 @@ class Funds(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:

@@ -2,6 +2,7 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "User Schema",
   "description": "A user",
+  "javaName": "User",
   "type": "object",
   "properties": {
     "username": {

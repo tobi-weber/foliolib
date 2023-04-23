@@ -53,8 +53,8 @@ def enable(**kwargs):
         config.set_server(name)
         __save_current_server(name)
         print("Loaded config: %s - %s:%s" % (Config().get_server(),
-                                             Config().okapicfg().get("Okapi", "host"),
-                                             Config().okapicfg().get("Okapi", "port")))
+                                             Config().servercfg().get("Okapi", "host"),
+                                             Config().servercfg().get("Okapi", "port")))
     else:
         print("Config for server %s does not exist." % name)
 
@@ -74,9 +74,9 @@ def create(**kwargs):
     if not name in Config().get_servers():
         print(f"Create configs for server %s." % name)
         Config().create_foliolib_conf()
-        Config().create_okapi_conf(name, okapi_host=kwargs["host"],
-                                   okapi_port=kwargs["port"],
-                                   ssl=kwargs["ssl"])
+        Config().create_server_conf(name, okapi_host=kwargs["host"],
+                                    okapi_port=kwargs["port"],
+                                    ssl=kwargs["ssl"])
         Config().set_server(name)
         __save_current_server(name)
     else:

@@ -29,7 +29,7 @@ class OkapiModuleKubernetes:
         self.healthCheck = True
         self.podAntiAffinity = True
         modcfg = Config().modulescfg(modId)
-        okapicfg = Config().okapicfg()
+        okapicfg = Config().servercfg()
         self._namespace = okapicfg.get(
             "Kubernetes", "namespace", fallback="default")
         self.imagePullSecret = okapicfg.get(
@@ -289,7 +289,7 @@ class OkapiModuleKubernetes:
         max_cpu = 0
         memory = module.get_docker_args()["memory"]
         if memory is not None:
-            memoryRequestPercentage = Config().okapicfg().getint(
+            memoryRequestPercentage = Config().servercfg().getint(
                 "Kubernetes", "memoryRequestPercentage", fallback=100)
             mk = math.ceil(memory/1024)
             min_mem = "%iKi" % ((mk * memoryRequestPercentage) / 100)

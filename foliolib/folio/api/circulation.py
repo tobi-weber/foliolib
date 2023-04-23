@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-02-10
+# Generated at 2023-04-16
 
 import logging
 
@@ -100,7 +100,7 @@ class LoanAnonymization(FolioApi):
     """
 
     def set_byUser(self, userId: str):
-        """
+        """Note that a 422 error with haveAssociatedFeesAndFines message and key loanIds has a value that is not a JSON array but a JSON string that contains a serialized JSON array of the loan ids.
 
         ``POST /loan-anonymization/by-user/{userId}``
 
