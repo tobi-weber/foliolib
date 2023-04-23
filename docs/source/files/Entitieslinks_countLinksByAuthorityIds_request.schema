@@ -1,0 +1,16 @@
+{
+    "type": "object",
+    "title": "Collection of UUIDs",
+    "description": "Collection of UUIDs",
+    "properties": {
+        "ids": {
+            "type": "array",
+            "items": {
+                "$ref": "#/components/schemas/uuid"
+            }
+        }
+    },
+    "required": [
+        "ids"
+    ]
+}

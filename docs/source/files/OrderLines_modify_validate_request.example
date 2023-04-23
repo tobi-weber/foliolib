@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n  \"cost\": {\n    \"poLineEstimatedPrice\": 100.00,\n    \"additionalCost\": 0,\n    \"currency\": \"USD\",\n    \"discount\": 0,\n    \"discountType\": \"percentage\",\n    \"exchangeRate\": 1,\n    \"listUnitPrice\": 50,\n    \"listUnitPriceElectronic\": 50,\n    \"quantityElectronic\": 1,\n    \"quantityPhysical\": 1\n  },\n  \"fundDistribution\": [\n    {\n      \"code\": \"HIST\",\n      \"fundId\": \"63157e96-0693-426d-b0df-948bacdfdb08\",\n      \"distributionType\": \"percentage\",\n      \"value\": 50.0\n    },\n    {\n      \"code\": \"EUROHIST\",\n      \"fundId\": \"e9285a1c-1dfc-4380-868c-e74073003f43\",\n      \"distributionType\": \"amount\",\n      \"value\": 50.00\n    }\n  ]\n}\n"
+}

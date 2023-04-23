@@ -1,0 +1,25 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "A collection of bulk operations",
+    "BulkOperationCollection": {
+        "type": "object",
+        "properties": {
+            "bulkOperations": {
+                "description": "List of bulk operations",
+                "type": "array",
+                "items": {
+                    "$ref": "bulk_operation_dto.json#/BulkOperationDto"
+                },
+                "minItems": 1
+            },
+            "totalRecords": {
+                "type": "integer"
+            }
+        },
+        "required": [
+            "bulkOperations",
+            "totalRecords"
+        ],
+        "additionalProperties": false
+    }
+}

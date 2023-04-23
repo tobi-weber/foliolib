@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n  \"subTotal\": 100,\n  \"currency\": \"USD\",\n  \"fundDistribution\": [\n    {\n      \"code\": \"HIST\",\n      \"fundId\": \"63157e96-0693-426d-b0df-948bacdfdb08\",\n      \"distributionType\": \"percentage\",\n      \"value\": 50.00\n    },\n    {\n      \"code\": \"EUROHIST\",\n      \"fundId\": \"e9285a1c-1dfc-4380-868c-e74073003f43\",\n      \"distributionType\": \"amount\",\n      \"value\": 50.00\n    }\n  ]\n}\n"
+}

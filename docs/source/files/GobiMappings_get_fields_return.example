@@ -1,0 +1,15 @@
+{
+  "fields": [
+    {
+      "name": "PREFIX",
+      "path": "po.poNumberPrefix",
+      "description": "Purchase order prefix"
+    },
+    {
+      "name": "QUANTITY_ELECTRONIC",
+      "path": "poLine.cost.quantityElectronic",
+      "description": "Purchase order line electronic quantity"
+    }
+  ],
+  "totalRecords": 2
+}

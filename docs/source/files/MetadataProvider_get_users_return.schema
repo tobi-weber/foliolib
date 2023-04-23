@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of job executions unique user info",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "jobExecutionUsersInfo": {
+      "description": "List of Job Execution unique users info",
+      "type": "array",
+      "id": "entries",
+      "items": {
+        "$ref": "jobExecutionUserInfo.json"
+      }
+    },
+    "totalRecords": {
+      "description": "Total number of records in collection",
+      "type": "integer"
+    }
+  },
+  "excludedFromEqualsAndHashCode": [
+    "totalRecords"
+  ],
+  "required": [
+    "jobExecutionUsersInfo",
+    "totalRecords"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of related Job Profiles",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "jobProfilesInfo": {
+      "description": "List of related Job Profiles",
+      "type": "array",
+      "id": "profileInfoList",
+      "items": {
+        "type": "object",
+        "$ref": "profileInfo.json"
+      }
+    },
+    "totalRecords": {
+      "description": "Total number of related Job Profiles",
+      "type": "integer"
+    }
+  },
+  "excludedFromEqualsAndHashCode": [
+    "totalRecords"
+  ],
+  "required": [
+    "jobProfilesInfo",
+    "totalRecords"
+  ]
+}

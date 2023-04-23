@@ -1,0 +1,21 @@
+{
+    "type": "object",
+    "title": "Collection of instance links",
+    "description": "Collection of instance links",
+    "properties": {
+        "links": {
+            "type": "array",
+            "items": {
+                "$ref": "#/components/schemas/instanceLinkDto"
+            }
+        },
+        "totalRecords": {
+            "type": "integer",
+            "readOnly": true,
+            "description": "Total amount of notes"
+        }
+    },
+    "required": [
+        "links"
+    ]
+}

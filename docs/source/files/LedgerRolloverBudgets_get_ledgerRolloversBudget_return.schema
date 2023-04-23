@@ -1,0 +1,154 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A budget",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "UUID of this budget",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "_version": {
+      "type": "integer",
+      "description": "Record version for optimistic locking"
+    },
+    "budgetId": {
+      "description": "Ledger fiscal year rollover budget UUID",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "ledgerRolloverId": {
+      "description": "Ledger fiscal year rollover UUID",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "name": {
+      "description": "The name of the budget",
+      "type": "string"
+    },
+    "fundDetails": {
+      "description": "Fund details for a budget",
+      "type": "object",
+      "$ref": "fund_details.json"
+    },
+    "expenseClassDetails": {
+      "description": "Expense class details for a budget",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "budget_expense_class_totals.json"
+      }
+    },
+    "budgetStatus": {
+      "description": "The status of the budget",
+      "type": "string",
+      "enum": [
+        "Active",
+        "Frozen",
+        "Inactive",
+        "Planned",
+        "Closed"
+      ]
+    },
+    "allowableEncumbrance": {
+      "description": "The encumbrance percentage limit for this budget",
+      "type": "number"
+    },
+    "allowableExpenditure": {
+      "description": "The expenditure percentage limit for this budget",
+      "type": "number"
+    },
+    "allocated": {
+      "description": "The amount currently allocated to this budget",
+      "type": "number"
+    },
+    "awaitingPayment": {
+      "default": 0,
+      "description": "The amount currently awaiting payment for this budget",
+      "type": "number"
+    },
+    "available": {
+      "description": "The amount currently available for this budge",
+      "type": "number"
+    },
+    "encumbered": {
+      "default": 0,
+      "description": "The amount currently encumbered for this budget",
+      "type": "number"
+    },
+    "expenditures": {
+      "default": 0,
+      "description": "The amount currently expended for this budget",
+      "type": "number"
+    },
+    "netTransfers": {
+      "default": 0,
+      "description": "Summing all the transfers on this budget",
+      "type": "number"
+    },
+    "unavailable": {
+      "description": "Unavailable amount for this budget",
+      "type": "number"
+    },
+    "overEncumbrance": {
+      "description": "The amount currently over-encumbered for this budget",
+      "type": "number"
+    },
+    "overExpended": {
+      "description": "Amount the budget is over expended.",
+      "type": "number"
+    },
+    "fundId": {
+      "description": "UUID of fund",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "fiscalYearId": {
+      "description": "UUID of fiscal year",
+      "$ref": "../../common/schemas/uuid.json"
+    },
+    "acqUnitIds": {
+      "description": "acquisition unit ids associated with this budget",
+      "type": "array",
+      "items": {
+        "$ref": "../../common/schemas/uuid.json"
+      }
+    },
+    "tags": {
+      "type": "object",
+      "description": "arbitrary tags associated with this budget",
+      "$ref": "../../../raml-util/schemas/tags.schema"
+    },
+    "metadata": {
+      "type": "object",
+      "$ref": "../../../raml-util/schemas/metadata.schema",
+      "readonly": true
+    },
+    "initialAllocation": {
+      "default": 0,
+      "description": "The amount of the first allocation made to this budget",
+      "type": "number"
+    },
+    "allocationTo": {
+      "default": 0,
+      "description": "The sum of all allocation transaction amounts made TO this budget not including the Initial allocation",
+      "type": "number"
+    },
+    "allocationFrom": {
+      "default": 0,
+      "description": "The sum of all allocation transaction amounts made FROM this budget not including the Initial allocation",
+      "type": "number"
+    },
+    "totalFunding": {
+      "description": "budget.allocated + budget.netTransfers",
+      "type": "number"
+    },
+    "cashBalance": {
+      "description": "Total Funding minus Expended",
+      "type": "number"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "budgetStatus",
+    "name",
+    "fundId",
+    "fiscalYearId"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of orderLineAuditEvents",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "orderLineAuditEvents": {
+      "description": "List of orderLineAuditEvents",
+      "type": "array",
+      "id": "orderLineAuditEventsList",
+      "items": {
+        "type": "object",
+        "$ref": "order_line_audit_event.json"
+      }
+    },
+    "totalItems": {
+      "description": "total records",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "orderLineAuditEvents",
+    "totalItems"
+  ]
+}

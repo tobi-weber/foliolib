@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of the order mapping view",
+  "type": "object",
+  "properties": {
+    "orderMappingsViews": {
+      "description": "Collection of the order mapping view",
+      "type": "array",
+      "id": "orderMappingsViews",
+      "items": {
+        "type": "object",
+        "$ref": "order_mappings_view.json"
+      }
+    },
+    "totalRecords": {
+      "description": "The number of objects contained in this collection",
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "orderMappingsViews",
+    "totalRecords"
+  ]
+}

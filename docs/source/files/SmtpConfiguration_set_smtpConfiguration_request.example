@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n  \"id\": \"65de6432-be11-48ba-9686-a65101634040\",\n  \"host\": \"localhost\",\n  \"port\": 502,\n  \"username\": \"username\",\n  \"password\": \"password\",\n  \"ssl\": true,\n  \"trustAll\": false,\n  \"loginOption\": \"REQUIRED\",\n  \"startTlsOptions\": \"DISABLED\",\n  \"authMethods\": \"CRAM-MD5 LOGIN PLAIN\",\n  \"from\": \"noreply@folio.org\",\n  \"emailHeaders\": [\n    {\n      \"name\": \"Reply-To\",\n      \"value\": \"noreply@folio.org\"\n    }\n  ]\n}"
+}

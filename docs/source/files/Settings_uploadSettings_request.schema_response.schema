@@ -1,0 +1,19 @@
+{
+    "description": "Upload response",
+    "type": "object",
+    "properties": {
+        "inserted": {
+            "type": "integer",
+            "description": "Number of settings inserted"
+        },
+        "updated": {
+            "type": "integer",
+            "description": "Number of settings updated"
+        }
+    },
+    "additionalProperties": true,
+    "required": [
+        "inserted",
+        "updated"
+    ]
+}

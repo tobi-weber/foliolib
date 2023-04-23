@@ -1,0 +1,36 @@
+{
+  "fiscalYears": [
+    {
+      "id": "ac2164c7-ba3d-1bc2-a12c-e35ceccbfaf2",
+      "name": "Fiscal Year 2017",
+      "code": "FY2017",
+      "currency": "USD",
+      "description": "January 1 - December 30",
+      "periodStart": "2017-01-01T00:00:00Z",
+      "periodEnd": "2017-12-30T23:59:59Z",
+      "series": "FY",
+      "metadata": {
+        "createdDate": "2016-12-17T14:12:42.497+0000",
+        "createdByUserId": "bfb64f23-818d-488a-a868-62c40d9510a1",
+        "updatedDate": "2017-12-28T08:37:19.263+0000",
+        "updatedByUserId": "498492aa-f909-42f6-b154-5bf66e6486ba"
+      }
+    },
+    {
+      "id": "517efc6a-f218-4d25-a832-10de4dc32f25",
+      "name": "Fiscal decade 2020-2029",
+      "code": "FY2029",
+      "description": "January 1 - December 30",
+      "periodStart": "2020-01-01T00:00:00Z",
+      "periodEnd": "2029-12-30T23:59:59Z",
+      "series": "FY",
+      "metadata": {
+        "createdDate": "2019-06-17T14:12:42.497+0000",
+        "createdByUserId": "498492aa-f909-42f6-b154-5bf66e6486ba",
+        "updatedDate": "2019-08-28T08:37:19.263+0000",
+        "updatedByUserId": "7ec56c96-e9f2-4079-9509-86b00f8dacd5"
+      }
+    }
+  ],
+  "totalRecords": 2
+}

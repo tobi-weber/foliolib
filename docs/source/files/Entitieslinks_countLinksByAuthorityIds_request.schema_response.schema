@@ -1,0 +1,16 @@
+{
+    "type": "object",
+    "title": "Collection of links count map for authorities",
+    "description": "Collection of links count map for authorities",
+    "properties": {
+        "links": {
+            "type": "array",
+            "items": {
+                "$ref": "#/components/schemas/linksCountDto"
+            }
+        }
+    },
+    "required": [
+        "links"
+    ]
+}

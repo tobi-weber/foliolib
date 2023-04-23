@@ -1,0 +1,15 @@
+{
+  "translators": [
+    {
+      "name": "LOOKUP_LINKED_PACKAGE",
+      "translator": "lookupLinkedPackage",
+      "description": "Lookup purchase order line UUID by order line number"
+    },
+    {
+      "name": "LOOKUP_SUFFIX",
+      "translator": "lookupSuffix",
+      "description": "Lookup suffix UUID for purchase order number"
+    }
+  ],
+  "totalRecords": 2
+}

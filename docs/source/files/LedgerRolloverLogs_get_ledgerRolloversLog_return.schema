@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Rollover log",
+  "type": "object",
+  "properties": {
+    "ledgerRolloverId": {
+      "description": "Ledger fiscal year rollover UUID",
+      "$ref": "../../common/schemas/uuid.json",
+      "readonly": true
+    },
+    "ledgerId": {
+      "description": "Ledger UUID",
+      "$ref": "../../common/schemas/uuid.json",
+      "readonly": true
+    },
+    "startDate": {
+      "description": "This is \"createdDate\" from rollover metadata. ",
+      "type": "string",
+      "format": "date-time",
+      "readonly": true
+    },
+    "endDate": {
+      "description": "This is \"updatedDate\" from rollover metadata. Should be provided only when \"status\" is \"Success\" or \"Error\".  ",
+      "type": "string",
+      "format": "date-time",
+      "readonly": true
+    },
+    "rolloverStatus": {
+      "description": "Final status of the rollover",
+      "type": "object",
+      "$ref": "../../mod-finance/schemas/rollover_status.json"
+    },
+    "ledgerRolloverType": {
+      "description": "Type of rollover. Action Commit means run real rollover",
+      "type": "object",
+      "$ref": "../../mod-finance/schemas/ledger_rollover_type.json",
+      "readonly": true
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "ledgerRolloverId",
+    "startDate",
+    "rolloverStatus",
+    "ledgerRolloverType"
+  ]
+}

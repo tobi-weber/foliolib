@@ -1,0 +1,18 @@
+{
+    "description": "Collection of changes statistic",
+    "type": "object",
+    "properties": {
+        "stats": {
+            "description": "Changes statistic",
+            "type": "array",
+            "items": {
+                "$ref": "schemas/authority/control/bibStatsDto.json"
+            }
+        },
+        "next": {
+            "description": "Next response item date to seek by",
+            "type": "string",
+            "format": "date-time"
+        }
+    }
+}

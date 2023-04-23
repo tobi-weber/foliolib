@@ -1,0 +1,30 @@
+{
+    "description": "match key statistics",
+    "type": "object",
+    "properties": {
+        "totalRecords": {
+            "type": "integer",
+            "description": "total records"
+        },
+        "clustersTotal": {
+            "type": "integer",
+            "description": "number of clusters"
+        },
+        "matchValuesPerCluster": {
+            "type": "object",
+            "description": "key is number of match vales in cluster; value is number of clusters"
+        },
+        "recordsPerCluster": {
+            "type": "object",
+            "description": "key is number of records in a cluster; value is number of clusters of this size (key)"
+        },
+        "recordsPerClusterSample": {
+            "type": "object",
+            "description": "key is number of records in a cluster; value is array of some cluster identifiers with this size"
+        }
+    },
+    "additionalProperties": true,
+    "required": [
+        "totalRecords"
+    ]
+}

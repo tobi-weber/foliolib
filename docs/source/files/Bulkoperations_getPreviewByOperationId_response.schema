@@ -1,0 +1,26 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "Unified table representation of data",
+    "type": "object",
+    "properties": {
+        "header": {
+            "description": "Header",
+            "type": "array",
+            "items": {
+                "$ref": "cell.json"
+            }
+        },
+        "rows": {
+            "description": "Rows",
+            "type": "array",
+            "items": {
+                "$ref": "row.json"
+            }
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "header",
+        "rows"
+    ]
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Contains a list of rollover runs",
+  "type": "object",
+  "properties": {
+    "ledgerFiscalYearRolloverLogs": {
+      "description": "The list of  rollover runs",
+      "type": "array",
+      "items": {
+        "$ref": "ledger_fiscal_year_rollover_log.json"
+      }
+    },
+    "totalRecords": {
+      "description": "The number of records contained in this collection",
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "logs",
+    "totalRecords"
+  ]
+}

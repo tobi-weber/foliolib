@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Fund distribution amount validation request",
+  "type": "object",
+  "properties": {
+    "cost": {
+      "description": "cost details associated with this purchase order line",
+      "type": "object",
+      "$ref": "../../mod-orders-storage/schemas/cost.json"
+    },
+    "fundDistribution": {
+      "description": "fund distribution records for this purchase order line",
+      "id": "fundDistribution",
+      "type": "array",
+      "items": {
+        "description": "a fund distribution record",
+        "type": "object",
+        "$ref": "../../mod-orders-storage/schemas/fund_distribution.json"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "cost",
+    "fundDistribution"
+  ]
+}

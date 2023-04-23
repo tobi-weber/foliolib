@@ -1,0 +1,8 @@
+{
+  "ledgerRolloverId": "56ac60b4-122d-1e1c-9acb-8293df12d16d",
+  "ledgerId": "12ac60b4-122d-1e1c-9acb-8293df12d161",
+  "startDate": "2022-01-01T00:00:00Z",
+  "endDate": "2022-01-01T00:10:12Z",
+  "rolloverStatus": "Success",
+  "ledgerRolloverType": "Commit"
+}

@@ -1,0 +1,30 @@
+{
+    "description": "Paging Slip Template",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "Paging Slip Template id",
+            "type": "string",
+            "format": "UUID"
+        },
+        "centralServerId": {
+            "description": "Central server id",
+            "type": "string",
+            "format": "UUID"
+        },
+        "description": {
+            "description": "Paging Slip Template description",
+            "type": "string"
+        },
+        "template": {
+            "description": "Paging Slip Template template",
+            "type": "string"
+        },
+        "metadata": {
+            "description": "Entity metadata",
+            "type": "object",
+            "$ref": "metadata.json"
+        }
+    },
+    "additionalProperties": false
+}

@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Fund distribution amount validation",
+  "type": "object",
+  "properties": {
+    "subTotal": {
+      "description": "Invoice line amount before adjustments are applied",
+      "type": "number"
+    },
+    "currency": {
+      "description": "An ISO currency code",
+      "type": "string"
+    },
+    "fundDistribution": {
+      "description": "fund distribution records for this purchase order line",
+      "id": "fundDistribution",
+      "type": "array",
+      "items": {
+        "description": "a fund distribution record",
+        "type": "object",
+        "$ref": "../../mod-invoice-storage/schemas/fund_distribution.json"
+      }
+    },
+    "adjustments": {
+      "description": "Defined in settings - the amount field will be editable and pro-rate toggle will be editable if enabled for that adjustment",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "../../mod-invoice-storage/schemas/adjustment.json"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "subTotal",
+    "currency",
+    "fundDistribution"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+    "description": "Global record",
+    "type": "object",
+    "properties": {
+        "globalId": {
+            "type": "string",
+            "description": "Global identifier",
+            "format": "uuid"
+        },
+        "localId": {
+            "type": "string",
+            "description": "Local identifier"
+        },
+        "sourceId": {
+            "type": "string",
+            "description": "Source identifier"
+        },
+        "payload": {
+            "type": "object",
+            "description": "Payload in JSON"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "globalId",
+        "localId",
+        "sourceId"
+    ]
+}

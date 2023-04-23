@@ -1,0 +1,18 @@
+{
+    "description": "Collection of authority changes statistic",
+    "type": "object",
+    "properties": {
+        "stats": {
+            "description": "Authority changes statistic",
+            "type": "array",
+            "items": {
+                "$ref": "schemas/authority/control/authorityStatsDto.json"
+            }
+        },
+        "next": {
+            "description": "Next response item date to seek by",
+            "type": "string",
+            "format": "date-time"
+        }
+    }
+}

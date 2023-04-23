@@ -1,0 +1,22 @@
+{
+    "description": "INN-Reach paging slip templates collection",
+    "type": "object",
+    "properties": {
+        "totalRecords": {
+            "description": "Total records",
+            "type": "integer",
+            "default": 0
+        },
+        "pagingSlipTemplates": {
+            "description": "List of INN-Reach paging slip templates",
+            "type": "array",
+            "items": {
+                "$ref": "pagingSlipTemplateDTO.json"
+            }
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "pagingSlipTemplates"
+    ]
+}

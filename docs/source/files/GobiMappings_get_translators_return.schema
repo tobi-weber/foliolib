@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of pairs translator Java method name and name of translator",
+  "type": "object",
+  "properties": {
+    "translators": {
+      "description": "An array of pairs translator Java method name and name of translator",
+      "id": "translators",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "translator.json"
+      }
+    },
+    "totalRecords": {
+      "description": "total number of records in the array",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "translators",
+    "totalRecords"
+  ]
+}

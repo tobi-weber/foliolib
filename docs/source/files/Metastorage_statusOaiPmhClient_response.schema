@@ -1,0 +1,81 @@
+{
+    "description": "OAI PMH clients status",
+    "type": "object",
+    "properties": {
+        "items": {
+            "description": "Status each PMH client",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "config": {
+                        "description": "configuration",
+                        "type": "object",
+                        "$ref": "oai-pmh-client.json"
+                    },
+                    "error": {
+                        "type": "string",
+                        "description": "Error message for last error"
+                    },
+                    "lastActiveTimestamp": {
+                        "description": "timestamp when the job was last active (last successful ingest)",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "lastRecsPerSec": {
+                        "description": "Average records per second for the last run",
+                        "type": "integer"
+                    },
+                    "lastRunningTime": {
+                        "description": "Last running time, since the job was (re)started",
+                        "type": "string"
+                    },
+                    "lastTotalRecords": {
+                        "description": "Records retrieved during last run",
+                        "type": "integer"
+                    },
+                    "lastStartedTimestamp": {
+                        "description": "Timestamp when the job was last started",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "status": {
+                        "description": "OAI PMH job status",
+                        "type": "string",
+                        "enum": [
+                            "idle",
+                            "running"
+                        ]
+                    },
+                    "totalRecords": {
+                        "description": "Total number of records fetched",
+                        "type": "integer"
+                    },
+                    "totalDeleted": {
+                        "description": "Total number of deleted records",
+                        "type": "integer"
+                    },
+                    "totalInserted": {
+                        "description": "Total number of inserted records",
+                        "type": "integer"
+                    },
+                    "totalUpdated": {
+                        "description": "Total number of updated records",
+                        "type": "integer"
+                    },
+                    "totalRequests": {
+                        "description": "Total HTTP requests",
+                        "type": "integer"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "status",
+                    "config",
+                    "totalRecords",
+                    "totalRequests"
+                ]
+            }
+        }
+    }
+}

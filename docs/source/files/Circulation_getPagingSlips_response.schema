@@ -1,0 +1,134 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "A collection of paging slips",
+    "type": "object",
+    "properties": {
+        "pagingSlips": {
+            "description": "Collection of current paging slips",
+            "id": "pagingSlips",
+            "type": "array",
+            "items": {
+                "title": "Paging slip",
+                "description": "Paging slip representation of item, request and requester",
+                "type": "object",
+                "properties": {
+                    "innReachTransaction": {
+                        "description": "Paging slip representation of an INN-Reach transaction",
+                        "type": "object",
+                        "properties": {
+                            "patronName": {
+                                "description": "Patron name",
+                                "type": "string"
+                            },
+                            "patronAgencyCode": {
+                                "description": "Patron agency code",
+                                "type": "string"
+                            },
+                            "patronAgencyDescription": {
+                                "description": "Patron agency description",
+                                "type": "string"
+                            },
+                            "patronTypeCode": {
+                                "description": "Patron type",
+                                "type": "integer"
+                            },
+                            "patronTypeDescription": {
+                                "description": "Patron type description",
+                                "type": "string"
+                            },
+                            "centralServerCode": {
+                                "description": "Unique code that identifies the central server",
+                                "type": "string"
+                            },
+                            "centralServerId": {
+                                "description": "UUID of the central server configuration",
+                                "type": "string",
+                                "format": "UUID"
+                            },
+                            "localServerCode": {
+                                "description": "Unique code that identifies the local server",
+                                "type": "string"
+                            },
+                            "itemAgencyCode": {
+                                "description": "Item agency code",
+                                "type": "string"
+                            },
+                            "itemAgencyDescription": {
+                                "description": "Item agency description",
+                                "type": "string"
+                            },
+                            "pickupLocationCode": {
+                                "description": "Pickup location code",
+                                "type": "string"
+                            },
+                            "pickupLocationPrintName": {
+                                "description": "Pickup location print name",
+                                "type": "string"
+                            },
+                            "pickupLocationDeliveryStop": {
+                                "description": "Pickup location",
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "item": {
+                        "description": "Paging slip representation of an item",
+                        "type": "object",
+                        "properties": {
+                            "effectiveLocationFolioName": {
+                                "description": "Effective location FOLIO name",
+                                "type": "string"
+                            },
+                            "title": {
+                                "description": "Primary title (or label) associated with an item",
+                                "type": "string"
+                            },
+                            "barcode": {
+                                "description": "Unique inventory control number for physical resources, used largely for circulation purposes",
+                                "type": "string"
+                            },
+                            "author": {
+                                "description": "Author",
+                                "type": "string"
+                            },
+                            "effectiveCallNumber": {
+                                "type": "string",
+                                "description": "Effective call number, an identifier assigned to the item or its holding"
+                            },
+                            "shelvingOrder": {
+                                "type": "string",
+                                "description": "A system generated normalization of the call number that allows for call number sorting in reports and search results"
+                            },
+                            "hrid": {
+                                "type": "string",
+                                "description": "The human readable ID, also called eye readable ID. A system-assigned sequential alternate ID"
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "slip": {
+                        "type": "object",
+                        "description": "Slip info",
+                        "properties": {
+                            "name": {
+                                "description": "Slip name",
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        "totalRecords": {
+            "description": "Total number of paging slips",
+            "type": "integer",
+            "default": 0
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "pagingSlips",
+        "totalRecords"
+    ]
+}

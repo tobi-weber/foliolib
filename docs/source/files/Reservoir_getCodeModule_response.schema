@@ -1,0 +1,35 @@
+{
+    "description": "Reservoir code module (extensibility)",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "string",
+            "description": "local identifier of the module, name"
+        },
+        "type": {
+            "type": "string",
+            "description": "type of the module'",
+            "enum": [
+                "jsonpath",
+                "javascript"
+            ]
+        },
+        "url": {
+            "type": "string",
+            "description": "HTTP URL of the module e.g GitHub url, required if no 'script' specified"
+        },
+        "function": {
+            "type": "string",
+            "description": "DEPRECATED: do not use, specify function during invocation",
+            "deprecated": true
+        },
+        "script": {
+            "type": "string",
+            "description": "inline contents of the code module"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "id"
+    ]
+}

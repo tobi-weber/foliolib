@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of pairs field name and path in the JSON",
+  "type": "object",
+  "properties": {
+    "fields": {
+      "description": "An array of pairs field name and path in the JSON",
+      "id": "fields",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "field.json"
+      }
+    },
+    "totalRecords": {
+      "description": "total number of records in the array",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "fields",
+    "totalRecords"
+  ]
+}
