@@ -12,4 +12,6 @@ Modules
    :recursive:
 
    foliolib.folio.users
+   foliolib.folio.config
+   foliolib.folio.inventoryReferenceData
    foliolib.folio.exceptions

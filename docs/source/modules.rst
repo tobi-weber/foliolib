@@ -6,6 +6,7 @@ API Reference
 
    foliolib.config
    foliolib.okapi
+   foliolib.helper
    foliolib.folio
    foliolib.folio.api
    
