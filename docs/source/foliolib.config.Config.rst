@@ -23,7 +23,7 @@
             ~Config.create_foliolib_conf
         
         
-            ~Config.create_okapi_conf
+            ~Config.create_server_conf
         
         
             ~Config.del_token
@@ -68,10 +68,10 @@
             ~Config.modulescfg
         
         
-            ~Config.okapicfg
+            ~Config.remove_servercfg
         
         
-            ~Config.remove_okapicfg
+            ~Config.servercfg
         
         
             ~Config.set_env
@@ -80,10 +80,10 @@
             ~Config.set_foliolibcfg
         
         
-            ~Config.set_okapicfg
-        
-        
             ~Config.set_server
+        
+        
+            ~Config.set_servercfg
         
         
             ~Config.set_token

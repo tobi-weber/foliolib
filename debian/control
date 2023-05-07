@@ -19,7 +19,9 @@ Build-Depends-Indep:
  python3-yaml,
  python3-magic,
  python3-click,
- python3-tabulate
+ python3-tabulate,
+ python3-kubernetes,
+ libjs-jquery
 Standards-Version: 4.5.0
 Homepage: https://github.com/tobi-weber/foliolib
 
@@ -36,6 +38,8 @@ Description: Okapi/Folio Manager and Library
 Package: python3-foliolib
 Architecture: all
 Depends:
+ ${misc:Depends},
+ ${python3:Depends},
  python3-requests,
  python3-inflection,
  python3-lxml,
@@ -43,12 +47,10 @@ Depends:
  python3-magic,
  python3-click,
  python3-tabulate,
- python3-setuptools
- python3-kubernetes,
- ${misc:Depends},
- ${python3:Depends},
+ python3-setuptools,
+ python3-kubernetes
 Suggests:
- python-foliolib-doc,
+ python-foliolib-doc
 Description: Okapi/Folio Manager and Library
  .
  This package contains the Python 3.x module.

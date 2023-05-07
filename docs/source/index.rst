@@ -13,8 +13,10 @@
    :caption: Contents:
   
    documentation
-   examples
-   apiexamples
+   singleserver
+   kubernetes
+   confref
+   cliref
    modules
 
 
