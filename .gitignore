@@ -68,5 +68,5 @@ temp/
 *.html
 pkg/
 build*
-__*
+_.*
 .bak
