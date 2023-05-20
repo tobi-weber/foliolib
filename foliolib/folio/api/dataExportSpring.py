@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-04-16
+# Generated at 2023-05-20
 
 import logging
 
@@ -9,14 +9,13 @@ log = logging.getLogger("foliolib.folio.api.dataExportSpring")
 
 
 
-class JobsAdmin(FolioAdminApi):
+class Jobs(FolioApi):
     """Data Export Spring Jobs
-    Administration
 
     
     """
 
-    def getJobs(self, **kwargs):
+    def getjobs(self, **kwargs):
         """Get jobs fy filter
 
         ``GET /data-export-spring/jobs``
@@ -35,12 +34,12 @@ class JobsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Jobs_getJobs_response.schema
+            .. literalinclude:: ../files/Jobs_getjobs_response.schema
         """
         return self.call("GET", "/data-export-spring/jobs", query=kwargs)
 
 		
-    def upsertJob(self, job):
+    def upsertjob(self, job):
         """Create or update a job
 
         ``POST /data-export-spring/jobs``
@@ -57,17 +56,14 @@ class JobsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Jobs_upsertJob_request.schema
+            .. literalinclude:: ../files/Jobs_upsertjob_request.schema
         """
-        return self.call("POST", "/data-export-spring/jobs", job)
+        return self.call("POST", f"/data-export-spring/jobs", job)
 
-    def getJobById(self, id_):
+    def getjobbyid(self, id_):
         """Get a job by the job ID
 
         ``GET /data-export-spring/jobs/{id}``
-
-        Args:
-            id_ (str): UUID of the job (format: uuid)
 
         Returns:
             dict: See Schema below.
@@ -79,45 +75,38 @@ class JobsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Jobs_getJobById_response.schema
+            .. literalinclude:: ../files/Jobs_getjobbyid_response.schema
         """
-        return self.call("GET", "/data-export-spring/jobs/{id}", id_)
+        return self.call("GET", f"/data-export-spring/jobs/{id_}")
 
-    def resendExportedFile(self, id_):
+    def resendexportedfile(self, id_):
         """resend exported file by the job ID
 
         ``POST /data-export-spring/jobs/{id}/resend``
-
-        Args:
-            id_ (str): UUID of the job (format: uuid)
 
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: ExportFile with a given Job ID not found
             OkapiFatalError: Internal server errors
         """
-        return self.call("POST", "/data-export-spring/jobs/{id}/resend", id_)
+        return self.call("POST", f"/data-export-spring/jobs/{id_}/resend")
 
-    def downloadExportedFileByJobId(self, id_):
+    def downloadexportedfilebyjobid(self, id_):
         """Download exported file by the job ID
 
         ``GET /data-export-spring/jobs/{id}/download``
-
-        Args:
-            id_ (str): UUID of the job (format: uuid)
         """
-        return self.call("GET", "/data-export-spring/jobs/{id}/download", id_)
+        return self.call("GET", f"/data-export-spring/jobs/{id_}/download")
 
 
 
-class ExportconfigsAdmin(FolioAdminApi):
+class Exportconfigs(FolioApi):
     """Data Export Spring Configurations
-    Administration
 
     
     """
 
-    def getExportConfigs(self, **kwargs):
+    def getexportconfigs(self, **kwargs):
         """Get a list of data export configurations
 
         ``GET /data-export-spring/configs``
@@ -134,12 +123,12 @@ class ExportconfigsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Exportconfigs_getExportConfigs_response.schema
+            .. literalinclude:: ../files/Exportconfigs_getexportconfigs_response.schema
         """
         return self.call("GET", "/data-export-spring/configs", query=kwargs)
 
 		
-    def postExportConfig(self, exportConfig):
+    def postexportconfig(self, exportConfig):
         """Add an export configuration
 
         ``POST /data-export-spring/configs``
@@ -153,17 +142,14 @@ class ExportconfigsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Exportconfigs_postExportConfig_request.schema
+            .. literalinclude:: ../files/Exportconfigs_postexportconfig_request.schema
         """
-        return self.call("POST", "/data-export-spring/configs", exportConfig)
+        return self.call("POST", f"/data-export-spring/configs", exportConfig)
 
-    def getConfigById(self, id_):
+    def getconfigbyid(self, id_):
         """Get a export configuration by the export configuration ID
 
         ``GET /data-export-spring/configs/{id}``
-
-        Args:
-            id_ (str): UUID of the export configuration
 
         Returns:
             dict: See Schema below.
@@ -175,18 +161,17 @@ class ExportconfigsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Exportconfigs_getConfigById_response.schema
+            .. literalinclude:: ../files/Exportconfigs_getconfigbyid_response.schema
         """
-        return self.call("GET", "/data-export-spring/configs/{id}", id_)
+        return self.call("GET", f"/data-export-spring/configs/{id_}")
 
 		
-    def putExportConfig(self, id_, exportConfig):
+    def putexportconfig(self, exportConfig, id_):
         """Change an export configuration
 
         ``PUT /data-export-spring/configs/{id}``
 
         Args:
-            id_ (str): 
             exportConfig (dict): See Schema below.
 
         Raises:
@@ -196,22 +181,19 @@ class ExportconfigsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Exportconfigs_putExportConfig_request.schema
+            .. literalinclude:: ../files/Exportconfigs_putexportconfig_request.schema
         """
-        return self.call("PUT", "/data-export-spring/configs/{id}", id_, exportConfig)
+        return self.call("PUT", f"/data-export-spring/configs/{id_}", exportConfig)
 
 		
-    def deleteExportConfigById(self, id_):
+    def deleteexportconfigbyid(self, id_):
         """Delete export configuration by UUID
 
         ``DELETE /data-export-spring/configs/{id}``
-
-        Args:
-            id_ (str): 
 
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Export config not found
             OkapiFatalError: Internal server errors, e.g. due to misconfiguration
         """
-        return self.call("DELETE", "/data-export-spring/configs/{id}", id_)
+        return self.call("DELETE", f"/data-export-spring/configs/{id_}")

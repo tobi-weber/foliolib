@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Custom field option statistic",
+  "additionalProperties": false,
+  "properties": {
+    "optionId": {
+      "type": "string",
+      "description": "Unique identifier for the option",
+      "pattern": "opt_\\d{1,5}",
+      "example": "opt_1",
+      "readonly": true
+    },
+    "customFieldId": {
+      "type": "string",
+      "description": "Custom field ID",
+      "$ref": "raml-util/schemas/uuid.schema",
+      "example": "62d00c36-a94f-434d-9cd2-c7ea159303da",
+      "readonly": true
+    },
+    "entityType": {
+      "type": "string",
+      "description": "The entity type, the custom field option is assigned to",
+      "example": "user",
+      "readonly": true
+    },
+    "count": {
+      "type": "integer",
+      "description": "The number of usages by entity with the particular type",
+      "example": 3,
+      "readonly": true
+    }
+  },
+  "required": [
+    "fieldId",
+    "entityType",
+    "count"
+  ]
+}

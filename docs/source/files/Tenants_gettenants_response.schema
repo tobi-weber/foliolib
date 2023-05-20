@@ -1,0 +1,21 @@
+{
+    "type": "object",
+    "properties": {
+        "tenants": {
+            "type": "array",
+            "description": "Tenants",
+            "items": {
+                "type": "object",
+                "$ref": "tenant.yaml#/Tenant"
+            }
+        },
+        "totalRecords": {
+            "type": "integer"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "tenants",
+        "totalRecords"
+    ]
+}

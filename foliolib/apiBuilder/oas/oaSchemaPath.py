@@ -6,27 +6,24 @@ import logging
 import os
 import re
 
+from foliolib.apiBuilder.oas.baseoas import BaseOAS
 from foliolib.apiBuilder.oas.oaSchemaMethod import OASchemaMethod
 
 log = logging.getLogger("foliolib.apiBuilder.oas.schemaPath")
 
 
-class OASchemaPath:
+class OASchemaPath(BaseOAS):
 
     def __init__(self, path, data, oaSchema):
-        #print(json.dumps(data, indent=2))
+        super().__init__(data, oaSchema)
+        # print(json.dumps(data, indent=2))
         self._path = path if not path.endswith("/") else path[:-1]
-        self._data = data
-        self._oaSchema = oaSchema
         self._oaSchemaMethods = []
         self._create_oaSchemaMethods()
         log.info("OASchemaPath: %s", self.get_path())
 
     def get_path(self):
         return self._oaSchema.get_basePath() + self._path
-
-    def get_data(self):
-        return self._data
 
     def get_oaSchemaMethods(self):
         return self._oaSchemaMethods

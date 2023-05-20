@@ -1,9 +1,0 @@
-{
-  "id": "7ec2ed06-0504-40dc-bc53-7515955ff0cb",
-  "name": "main",
-  "isDeleted": false,
-  "protectCreate": true,
-  "protectRead": false,
-  "protectUpdate": true,
-  "protectDelete": true
-}

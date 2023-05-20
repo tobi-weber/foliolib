@@ -1,0 +1,24 @@
+{
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "string"
+        },
+        "code": {
+            "type": "string"
+        },
+        "name": {
+            "type": "string"
+        },
+        "isCentral": {
+            "type": "boolean"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "id",
+        "code",
+        "name",
+        "isCentral"
+    ]
+}

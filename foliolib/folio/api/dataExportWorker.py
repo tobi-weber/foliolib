@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-04-16
+# Generated at 2023-05-20
 
 import logging
 
@@ -11,21 +11,45 @@ log = logging.getLogger("foliolib.folio.api.dataExportWorker")
 
 
 
-class BulkeditAdmin(FolioAdminApi):
-    """Bulk edit API
-    Administration
+class Refreshpresignedurl(FolioApi):
+    """Refresh presigned url API
 
     
     """
 
-    def postContentUpdates(self, jobId, contentUpdateCollection, **kwargs):
-        """Upload content updates
+    def getrefreshedpresignedurl(self, **kwargs):
+        """Get presigned Url for export file
 
-        ``POST /bulk-edit/{jobId}/items-content-update/upload``
+        ``GET /refresh-presigned-url``
+
+        Keyword Args:
+            filePath (str): Path to exported file
+
+        Returns:
+            dict: See Schema below.
+
+        Schema:
+
+            .. literalinclude:: ../files/Refreshpresignedurl_getrefreshedpresignedurl_response.schema
+        """
+        return self.call("GET", "/refresh-presigned-url", query=kwargs)
+
+
+
+class Bulkedit(FolioApi):
+    """Bulk edit API
+
+    
+    """
+
+    def postitemcontentupdates(self, jobId, itemContentUpdateCollection, **kwargs):
+        """Upload item content updates
+
+        ``POST /bulk-edit/{jobId}/item-content-update/upload``
 
         Args:
             jobId (str): UUID of the JobCommand (format: uuid)
-            contentUpdateCollection (dict): See Schema below.
+            itemContentUpdateCollection (dict): See Schema below.
 
         Keyword Args:
             limit (int): The numbers of records to return
@@ -40,13 +64,67 @@ class BulkeditAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Bulkedit_postContentUpdates_request.schema
-            .. literalinclude:: ../files/Bulkedit_postContentUpdates_request.schema_response.schema
+            .. literalinclude:: ../files/Bulkedit_postitemcontentupdates_request.schema
+            .. literalinclude:: ../files/Bulkedit_postitemcontentupdates_request.schema_response.schema
         """
-        return self.call("POST", "/bulk-edit/{jobId}/items-content-update/upload", jobId, contentUpdateCollection, query=kwargs)
+        return self.call("POST", f"/bulk-edit/{jobId}/item-content-update/upload", itemContentUpdateCollection, query=kwargs)
 
-    def downloadPreviewByJobId(self, jobId):
-        """Download preview as csv-file
+    def postusercontentupdates(self, jobId, userContentUpdateCollection, **kwargs):
+        """Upload user content updates
+
+        ``POST /bulk-edit/{jobId}/user-content-update/upload``
+
+        Args:
+            jobId (str): UUID of the JobCommand (format: uuid)
+            userContentUpdateCollection (dict): See Schema below.
+
+        Keyword Args:
+            limit (int): The numbers of records to return
+
+        Returns:
+            dict: See Schema below.
+
+        Raises:
+            OkapiRequestError: Bad request
+            OkapiRequestNotFound: Not found
+            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+
+        Schema:
+
+            .. literalinclude:: ../files/Bulkedit_postusercontentupdates_request.schema
+            .. literalinclude:: ../files/Bulkedit_postusercontentupdates_request.schema_response.schema
+        """
+        return self.call("POST", f"/bulk-edit/{jobId}/user-content-update/upload", userContentUpdateCollection, query=kwargs)
+
+    def postholdingscontentupdates(self, jobId, holdingsContentUpdateCollection, **kwargs):
+        """Upload holdings record content updates
+
+        ``POST /bulk-edit/{jobId}/holdings-content-update/upload``
+
+        Args:
+            jobId (str): UUID of the JobCommand (format: uuid)
+            holdingsContentUpdateCollection (dict): See Schema below.
+
+        Keyword Args:
+            limit (int): The numbers of records to return
+
+        Returns:
+            dict: See Schema below.
+
+        Raises:
+            OkapiRequestError: Bad request
+            OkapiRequestNotFound: Not found
+            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+
+        Schema:
+
+            .. literalinclude:: ../files/Bulkedit_postholdingscontentupdates_request.schema
+            .. literalinclude:: ../files/Bulkedit_postholdingscontentupdates_request.schema_response.schema
+        """
+        return self.call("POST", f"/bulk-edit/{jobId}/holdings-content-update/upload", holdingsContentUpdateCollection, query=kwargs)
+
+    def downloaditemspreviewbyjobid(self, jobId):
+        """Download updated items preview as csv-file
 
         ``GET /bulk-edit/{jobId}/preview/updated-items/download``
 
@@ -58,9 +136,39 @@ class BulkeditAdmin(FolioAdminApi):
             OkapiRequestNotFound: Not found
             OkapiFatalError: Internal server errors, e.g. due to misconfiguration
         """
-        return self.call("GET", "/bulk-edit/{jobId}/preview/updated-items/download", jobId)
+        return self.call("GET", f"/bulk-edit/{jobId}/preview/updated-items/download")
 
-    def getPreviewUsersByJobId(self, jobId, **kwargs):
+    def downloaduserspreviewbyjobid(self, jobId):
+        """Download updated users preview as csv-file
+
+        ``GET /bulk-edit/{jobId}/preview/updated-users/download``
+
+        Args:
+            jobId (str): UUID of the JobCommand (format: uuid)
+
+        Raises:
+            OkapiRequestError: Bad request
+            OkapiRequestNotFound: Not found
+            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+        """
+        return self.call("GET", f"/bulk-edit/{jobId}/preview/updated-users/download")
+
+    def downloadholdingspreviewbyjobid(self, jobId):
+        """Download updated holdings records preview as csv-file
+
+        ``GET /bulk-edit/{jobId}/preview/updated-holdings/download``
+
+        Args:
+            jobId (str): UUID of the JobCommand (format: uuid)
+
+        Raises:
+            OkapiRequestError: Bad request
+            OkapiRequestNotFound: Not found
+            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+        """
+        return self.call("GET", f"/bulk-edit/{jobId}/preview/updated-holdings/download")
+
+    def getpreviewusersbyjobid(self, jobId, **kwargs):
         """Get a list of users for preview
 
         ``GET /bulk-edit/{jobId}/preview/users``
@@ -81,11 +189,11 @@ class BulkeditAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Bulkedit_getPreviewUsersByJobId_response.schema
+            .. literalinclude:: ../files/Bulkedit_getpreviewusersbyjobid_response.schema
         """
-        return self.call("GET", "/bulk-edit/{jobId}/preview/users", jobId, query=kwargs)
+        return self.call("GET", f"/bulk-edit/{jobId}/preview/users", query=kwargs)
 
-    def getPreviewItemsByJobId(self, jobId, **kwargs):
+    def getpreviewitemsbyjobid(self, jobId, **kwargs):
         """Get a list of items for preview
 
         ``GET /bulk-edit/{jobId}/preview/items``
@@ -106,11 +214,36 @@ class BulkeditAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Bulkedit_getPreviewItemsByJobId_response.schema
+            .. literalinclude:: ../files/Bulkedit_getpreviewitemsbyjobid_response.schema
         """
-        return self.call("GET", "/bulk-edit/{jobId}/preview/items", jobId, query=kwargs)
+        return self.call("GET", f"/bulk-edit/{jobId}/preview/items", query=kwargs)
 
-    def getErrorsPreviewByJobId(self, jobId, **kwargs):
+    def getpreviewholdingsbyjobid(self, jobId, **kwargs):
+        """Get a list of holdings for preview
+
+        ``GET /bulk-edit/{jobId}/preview/holdings``
+
+        Args:
+            jobId (str): UUID of the JobCommand (format: uuid)
+
+        Keyword Args:
+            limit (int): The numbers of holdings to return
+
+        Returns:
+            dict: See Schema below.
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestNotFound: Not found
+            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+
+        Schema:
+
+            .. literalinclude:: ../files/Bulkedit_getpreviewholdingsbyjobid_response.schema
+        """
+        return self.call("GET", f"/bulk-edit/{jobId}/preview/holdings", query=kwargs)
+
+    def geterrorspreviewbyjobid(self, jobId, **kwargs):
         """Get a list of errors for preview
 
         ``GET /bulk-edit/{jobId}/errors``
@@ -130,11 +263,11 @@ class BulkeditAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Bulkedit_getErrorsPreviewByJobId_response.schema
+            .. literalinclude:: ../files/Bulkedit_geterrorspreviewbyjobid_response.schema
         """
-        return self.call("GET", "/bulk-edit/{jobId}/errors", jobId, query=kwargs)
+        return self.call("GET", f"/bulk-edit/{jobId}/errors", query=kwargs)
 
-    def uploadCsvFile(self, jobId, filePath):
+    def uploadcsvfile(self, jobId, filePath):
         """Upload csv file
 
         ``POST /bulk-edit/{jobId}/upload``
@@ -156,9 +289,9 @@ class BulkeditAdmin(FolioAdminApi):
         with open(filePath, 'rb') as f:
             data = f.read()
         
-        return self.call("POST", "/bulk-edit/{jobId}/upload", jobId, data=data)
+        return self.call("POST", f"/bulk-edit/{jobId}/upload", data=data)
 
-    def startJob(self, jobId):
+    def startjob(self, jobId):
         """Start job
 
         ``POST /bulk-edit/{jobId}/start``
@@ -171,9 +304,9 @@ class BulkeditAdmin(FolioAdminApi):
             OkapiRequestNotFound: Bad Request
             OkapiFatalError: Internal server errors, e.g. due to misconfiguration
         """
-        return self.call("POST", "/bulk-edit/{jobId}/start", jobId)
+        return self.call("POST", f"/bulk-edit/{jobId}/start")
 
-    def rollBackCsvFile(self, jobId):
+    def rollbackcsvfile(self, jobId):
         """Roll back csv file
 
         ``POST /bulk-edit/{jobId}/roll-back``
@@ -184,5 +317,7 @@ class BulkeditAdmin(FolioAdminApi):
         Raises:
             OkapiFatalError: Internal server errors, e.g. due to misconfiguration
         """
-        return self.call("POST", "/bulk-edit/{jobId}/roll-back", jobId)
+        return self.call("POST", f"/bulk-edit/{jobId}/roll-back")
+
+
 

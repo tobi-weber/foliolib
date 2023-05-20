@@ -1,0 +1,22 @@
+{
+    "type": "object",
+    "description": "A JSON schema for the Consortium Collection",
+    "properties": {
+        "consortia": {
+            "type": "array",
+            "description": "The list of consortia",
+            "items": {
+                "type": "object",
+                "$ref": "consortium.yaml#/Consortium"
+            }
+        },
+        "totalRecords": {
+            "type": "integer"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "consortia",
+        "totalRecords"
+    ]
+}

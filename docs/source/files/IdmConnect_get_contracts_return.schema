@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Collection of walk-in contracts",
+  "properties": {
+    "contracts": {
+      "description": "Walk-in contracts",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "contract.json"
+      }
+    },
+    "totalRecords": {
+      "description": "Total count of walk-in contracts",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "contracts",
+    "totalRecords"
+  ]
+}

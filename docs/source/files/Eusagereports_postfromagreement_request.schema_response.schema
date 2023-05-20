@@ -1,0 +1,11 @@
+{
+    "description": "Import from agreement response",
+    "type": "object",
+    "properties": {
+        "reportLinesCreated": {
+            "description": "Number of report lines created",
+            "type": "integer"
+        }
+    },
+    "additionalProperties": false
+}

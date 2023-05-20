@@ -1,0 +1,82 @@
+{
+    "description": "Cost report schema",
+    "type": "object",
+    "properties": {
+        "accessCountPeriods": {
+            "description": "List of reporting periods, either a list of months or a list of years, for example [\"2020-03\", \"2020-04\", \"2020-05\"]",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "amountEncumeredTotal": {
+            "description": "This number is sum of all encumbered amounts in the total access period",
+            "type": "number"
+        },
+        "amountPaidTotal": {
+            "description": "This number is sum of all paid amounts in the total access period",
+            "type": "number"
+        },
+        "costByPeriod": {
+            "type": "array",
+            "description": "Total cost for each period",
+            "items": {
+                "type": "number",
+                "nullable": true
+            }
+        },
+        "items": {
+            "description": "List of items, with access data per item",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "$ref": "reportCostRow.json"
+            }
+        },
+        "titleCountByPeriod": {
+            "type": "array",
+            "description": "Title count per period, total for all items",
+            "items": {
+                "type": "integer",
+                "nullable": true
+            }
+        },
+        "totalItemRequestsByPeriod": {
+            "type": "array",
+            "description": "Total access count per period",
+            "items": {
+                "type": "integer",
+                "nullable": true
+            }
+        },
+        "totalItemCostsPerRequestsByPeriod": {
+            "type": "array",
+            "description": "Cost per period, total for all items",
+            "items": {
+                "type": "number",
+                "nullable": true
+            }
+        },
+        "uniqueItemRequestsByPeriod": {
+            "type": "array",
+            "description": "Unique access count per period",
+            "items": {
+                "type": "integer",
+                "nullable": true
+            }
+        },
+        "uniqueItemCostsPerRequestsByPeriod": {
+            "type": "array",
+            "description": "Unique access count per period, total for all items",
+            "items": {
+                "type": "number",
+                "nullable": true
+            }
+        },
+        "execution": {
+            "description": "Information about execution, such as various timings",
+            "type": "object"
+        }
+    },
+    "additionalProperties": false
+}

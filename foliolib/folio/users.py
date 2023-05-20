@@ -17,11 +17,6 @@ log = logging.getLogger("foliolib.folio.users")
 
 class Users(FolioService):
     """
-    Requirements:
-
-        - mod-login
-        - mod-users
-        - mod-inventory-storage
     """
 
     def __init__(self, tenant: str) -> None:

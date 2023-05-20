@@ -1,0 +1,12 @@
+{
+    "type": "object",
+    "properties": {
+        "url": {
+            "type": "string",
+            "description": "Presigned Url for download"
+        }
+    },
+    "required": [
+        "url"
+    ]
+}

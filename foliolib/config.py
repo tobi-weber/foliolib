@@ -107,6 +107,8 @@ class Config:
     def get_kube_config(self):
         kube_config = os.path.join(self.get_confdir(),
                                    self.get_server(), "kube_config")
+        kube_config = self.__servercfg.get(
+            "Kubernetes", "kube_config", fallback=kube_config)
         if os.path.exists(kube_config):
             return kube_config
         else:
@@ -348,7 +350,13 @@ class Config:
         self.__servercfg.read(fpath)
 
 
-def server(name, logging_level="INFO"):
+def server(name: str, logging_level: str = "INFO"):
+    """ Load server sonfig for given name.
+
+    Args:
+        name (str): Name of the server config.
+        logging_level (str, optional): INFO, WARNING, ERROR or DEBUG. Defaults to "INFO".
+    """
     from foliolib import set_logging
     set_logging(level=logging_level)
     Config().set_server(name)

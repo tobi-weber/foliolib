@@ -58,6 +58,7 @@
   "fiscalYearId": "ac2164c7-ba3d-1bc2-a12c-e35ceccbfaf2",
   "accountNo": "GOBI-HIST-12",
   "manualPayment": true,
+  "nextInvoiceLineNumber": 1,
   "tags": {
     "tagList": [
       "tag"

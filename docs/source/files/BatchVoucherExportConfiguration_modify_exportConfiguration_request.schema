@@ -32,9 +32,24 @@
       "default": "00:00"
     },
     "uploadURI": {
-      "description": "URI batch vouchers should be uploaded to.  Limited to FTP initially",
+      "description": "Host where batch vouchers should be uploaded to. Limited to FTP initially",
+      "type": "string"
+    },
+    "uploadDirectory": {
+      "description": "The upload directory",
+      "type": "string"
+    },
+    "ftpFormat": {
+      "description": "The FTP format",
       "type": "string",
-      "pattern": "^ftp://([\\.\\_\\-a-z0-9]+)(/([\\./\\-\\_\\.a-z0-9]?)+)?$"
+      "enum": [
+        "SFTP",
+        "FTP"
+      ]
+    },
+    "ftpPort": {
+      "description": "The ftp port",
+      "type": "integer"
     },
     "weekdays": {
       "description": "An array of weekdays (enum: Sunday, Monday, etc.) indicating which days to trigger exports on.  If empty, indicates daily exports",

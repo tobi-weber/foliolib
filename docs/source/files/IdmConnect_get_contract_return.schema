@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "A walk-in contract",
+  "properties": {
+    "id": {
+      "description": "The UUID of this contract",
+      "type": "string"
+    },
+    "personal": {
+      "description": "Personal information for this contract",
+      "type": "object",
+      "$ref": "person.json"
+    },
+    "libraryCard": {
+      "description": "Library card number",
+      "type": "string"
+    },
+    "uniLogin": {
+      "description": "University login",
+      "type": "string"
+    },
+    "status": {
+      "description": "Contract status",
+      "type": "string",
+      "$ref": "status.json"
+    },
+    "beginDate": {
+      "description": "Contract begin date",
+      "type": "string"
+    },
+    "endDate": {
+      "description": "Contract end date",
+      "type": "string"
+    },
+    "comment": {
+      "description": "Field for comments",
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object",
+      "$ref": "raml-util/schemas/metadata.schema"
+    },
+    "_version": {
+      "description": "Record version for optimistic locking",
+      "type": "integer"
+    }
+  }
+}

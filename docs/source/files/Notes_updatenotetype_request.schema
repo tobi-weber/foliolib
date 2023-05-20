@@ -1,0 +1,43 @@
+{
+    "type": "object",
+    "title": "Note Type",
+    "description": "Defines type of note",
+    "properties": {
+        "id": {
+            "$ref": "common.yaml#/uuid",
+            "description": "A UUID identifying this note type"
+        },
+        "name": {
+            "type": "string",
+            "description": "The unique name of this type",
+            "maxLength": 255
+        },
+        "usage": {
+            "type": "object",
+            "readOnly": true,
+            "description": "Type usage statistics",
+            "properties": {
+                "isAssigned": {
+                    "type": "boolean",
+                    "readOnly": true,
+                    "description": "Is this note type assigned to any note"
+                }
+            },
+            "required": [
+                "noteTotal"
+            ]
+        },
+        "metadata": {
+            "$ref": "common.yaml#/metadata",
+            "readOnly": true,
+            "description": "The metadata"
+        }
+    },
+    "required": [
+        "name"
+    ],
+    "example": {
+        "id": "118dbd8c-5ba0-47a9-a850-34bbb1dbf3b7",
+        "name": "Important Note"
+    }
+}

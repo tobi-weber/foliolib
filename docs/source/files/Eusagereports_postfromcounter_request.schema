@@ -1,0 +1,16 @@
+{
+    "description": "Specify what counter to report from",
+    "type": "object",
+    "properties": {
+        "counterReportId": {
+            "description": "Counter report identifier",
+            "type": "string",
+            "format": "uuid"
+        },
+        "providerId": {
+            "description": "Counter reports with given usage data provider ID",
+            "type": "string"
+        }
+    },
+    "additionalProperties": false
+}

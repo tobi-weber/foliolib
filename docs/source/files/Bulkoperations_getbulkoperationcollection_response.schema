@@ -1,0 +1,21 @@
+{
+    "type": "object",
+    "properties": {
+        "bulkOperations": {
+            "description": "List of bulk operations",
+            "type": "array",
+            "items": {
+                "$ref": "bulk_operation_dto.json#/BulkOperationDto"
+            },
+            "minItems": 1
+        },
+        "totalRecords": {
+            "type": "integer"
+        }
+    },
+    "required": [
+        "bulkOperations",
+        "totalRecords"
+    ],
+    "additionalProperties": false
+}

@@ -467,8 +467,14 @@ class InventoryReferenceData(FolioService):
                 for fname in os.listdir(fullpath):
                     if fname.endswith((".json")):
                         fpath = os.path.join(fullpath, fname)
-                        with open(fpath, encoding="utf-8") as f:
-                            data = json.load(f)
+                        log.info("Load json %s", fpath)
+                        try:
+                            with open(fpath, encoding="utf-8") as f:
+                                data = json.load(f)
+                        except:
+                            with open(fpath, encoding="utf-8") as f:
+                                log.error("Json error:\n%s", f.read())
+                            raise
                         add(data, replace)
                         count += 1
         log.info("%i files processed", count)

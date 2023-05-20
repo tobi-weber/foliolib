@@ -1,0 +1,34 @@
+{
+    "type": "object",
+    "title": "Field to filed linking rule",
+    "description": "Field to filed linking rule",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "bibField": {
+            "type": "string"
+        },
+        "authorityField": {
+            "type": "string"
+        },
+        "authoritySubfields": {
+            "type": "array",
+            "items": {
+                "$ref": "#/components/schemas/charString"
+            }
+        },
+        "subfieldModifications": {
+            "type": "array",
+            "items": {
+                "$ref": "#/components/schemas/subfieldModification"
+            }
+        },
+        "validation": {
+            "$ref": "#/components/schemas/subfieldValidation"
+        },
+        "autoLinkingEnabled": {
+            "type": "boolean"
+        }
+    }
+}

@@ -187,6 +187,11 @@
         "$ref": "../../common/schemas/uuid.json"
       }
     },
+    "nextInvoiceLineNumber": {
+      "description": "Number that will be used next time an invoice line is created",
+      "type": "integer",
+      "readonly": true
+    },
     "metadata": {
       "type": "object",
       "$ref": "../../../raml-util/schemas/metadata.schema",

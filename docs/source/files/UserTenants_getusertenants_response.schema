@@ -1,0 +1,22 @@
+{
+    "description": "A JSON schema for the User Tenants Collection",
+    "type": "object",
+    "properties": {
+        "userTenants": {
+            "type": "array",
+            "description": "The list of user tenants",
+            "items": {
+                "type": "object",
+                "$ref": "userTenant.yaml#/UserTenant"
+            }
+        },
+        "totalRecords": {
+            "type": "integer"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "userTenants",
+        "totalRecords"
+    ]
+}

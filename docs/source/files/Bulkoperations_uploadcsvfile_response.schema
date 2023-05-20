@@ -1,0 +1,141 @@
+{
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "Bulk Operation UUID",
+            "type": "string",
+            "format": "uuid"
+        },
+        "hrId": {
+            "description": "Bulk Operation human readable ID",
+            "type": "integer",
+            "format": "int64"
+        },
+        "userId": {
+            "description": "User UUID",
+            "type": "string",
+            "format": "uuid"
+        },
+        "operationType": {
+            "description": "Bulk Operation type",
+            "$ref": "operation_type.json#/OperationType"
+        },
+        "entityType": {
+            "description": "Entity type",
+            "$ref": "entity_type.json#/EntityType"
+        },
+        "entityCustomIdentifierType": {
+            "description": "Entity custom identifier type",
+            "$ref": "identifier_type.json#/IdentifierType"
+        },
+        "status": {
+            "description": "Bulk Operation status",
+            "$ref": "operation_status_type.json#/OperationStatusType"
+        },
+        "approach": {
+            "description": "Bulk Operation approach type",
+            "$ref": "approach_type.json#/ApproachType"
+        },
+        "dataExportJobId": {
+            "description": "Data export Job UUID",
+            "type": "string",
+            "format": "uuid"
+        },
+        "linkToTriggeringCsvFile": {
+            "description": "Path to the bulk operation triggering file",
+            "type": "string"
+        },
+        "linkToMatchedRecordsJsonFile": {
+            "description": "Path to the matched (origin) json file",
+            "type": "string"
+        },
+        "linkToMatchedRecordsCsvFile": {
+            "description": "Path to the matched (origin) csv file",
+            "type": "string"
+        },
+        "linkToMatchedRecordsErrorsCsvFile": {
+            "description": "Path to the matching errors csv file",
+            "type": "string"
+        },
+        "linkToModifiedRecordsJsonFile": {
+            "description": "Path to the modified (updated) json file",
+            "type": "string"
+        },
+        "linkToModifiedRecordsCsvFile": {
+            "description": "Path to the modified (updated) csv file",
+            "type": "string"
+        },
+        "linkToCommittedRecordsJsonFile": {
+            "description": "Path to the committed (result) json file",
+            "type": "string"
+        },
+        "linkToCommittedRecordsCsvFile": {
+            "description": "Path to the committed (result) csv file",
+            "type": "string"
+        },
+        "linkToCommittedRecordsErrorsCsvFile": {
+            "description": "Path to the committing errors csv file",
+            "type": "string"
+        },
+        "totalNumOfRecords": {
+            "description": "Total number of records",
+            "type": "integer",
+            "format": "int64",
+            "default": 0
+        },
+        "processedNumOfRecords": {
+            "description": "Number of processed records",
+            "type": "integer",
+            "format": "int64",
+            "default": 0
+        },
+        "matchedNumOfRecords": {
+            "description": "Number of matched records",
+            "type": "integer",
+            "format": "int64",
+            "default": 0
+        },
+        "committedNumOfRecords": {
+            "description": "Number of committed records",
+            "type": "integer",
+            "format": "int64",
+            "default": 0
+        },
+        "matchedNumOfErrors": {
+            "description": "Number of matching errors",
+            "type": "integer",
+            "format": "int64",
+            "default": 0
+        },
+        "committedNumOfErrors": {
+            "description": "Number of committing errors",
+            "type": "integer",
+            "format": "int64",
+            "default": 0
+        },
+        "executionChunkSize": {
+            "description": "Size of chunk",
+            "type": "integer",
+            "format": "int64",
+            "default": 0
+        },
+        "startTime": {
+            "description": "Bulk Operation start time",
+            "type": "string",
+            "format": "date-time"
+        },
+        "endTime": {
+            "description": "Bulk Operation end time",
+            "type": "string",
+            "format": "date-time"
+        },
+        "errorMessage": {
+            "description": "Error message",
+            "type": "string"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "type"
+    ]
+}

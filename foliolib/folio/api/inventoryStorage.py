@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-04-16
+# Generated at 2023-05-20
 
 import logging
 
@@ -1126,20 +1126,59 @@ class AuthoritiesReindex(FolioApi):
     Reindex authorities by generating domain events for them
     """
 
-    def set_reindex(self):
-        """Submit a reindex job
+    def get_reindices(self, **kwargs):
+        """Get all reindex jobs
 
-        ``POST /authority-storage/reindex``
+        ``GET /authority-storage/reindex``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            query (str):  A query expressed as a CQL string
+                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
+                    using valid searchable fields.
+                    The first example below shows the general form of a full CQL query,
+                    but those fields might not be relevant in this context.
+                    
+                    with valid searchable fields
+                    
+                    
+                    Example:
+                    
+                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
+                    
+                     - name=aaa
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
 
         Returns:
             dict: See Schema below
 
         Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiRequestNotFound: Not Found
             OkapiFatalError: Server Error
 
         Schema:
 
-            .. literalinclude:: ../files/AuthoritiesReindex_set_reindex_return.schema 
+            .. literalinclude:: ../files/AuthoritiesReindex_get_reindices_return.schema 
+        """
+        return self.call("GET", "/authority-storage/reindex", query=kwargs)
+
+    def set_reindex(self):
+        """
+
+        ``POST /authority-storage/reindex``
         """
         return self.call("POST", "/authority-storage/reindex")
 
@@ -2975,20 +3014,59 @@ class InstanceReindex(FolioApi):
     Reindex instances by generating domain events for them
     """
 
-    def set_reindex(self):
-        """Submit a reindex job
+    def get_reindices(self, **kwargs):
+        """Get all reindex jobs
 
-        ``POST /instance-storage/reindex``
+        ``GET /instance-storage/reindex``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            query (str):  A query expressed as a CQL string
+                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
+                    using valid searchable fields.
+                    The first example below shows the general form of a full CQL query,
+                    but those fields might not be relevant in this context.
+                    
+                    with valid searchable fields
+                    
+                    
+                    Example:
+                    
+                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
+                    
+                     - name=aaa
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
 
         Returns:
             dict: See Schema below
 
         Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiRequestNotFound: Not Found
             OkapiFatalError: Server Error
 
         Schema:
 
-            .. literalinclude:: ../files/InstanceReindex_set_reindex_return.schema 
+            .. literalinclude:: ../files/InstanceReindex_get_reindices_return.schema 
+        """
+        return self.call("GET", "/instance-storage/reindex", query=kwargs)
+
+    def set_reindex(self):
+        """
+
+        ``POST /instance-storage/reindex``
         """
         return self.call("POST", "/instance-storage/reindex")
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-04-16
+# Generated at 2023-05-20
 
 import logging
 
@@ -9,14 +9,13 @@ log = logging.getLogger("foliolib.folio.api.sharedIndex")
 
 
 
-class SharedindexAdmin(FolioAdminApi):
+class Sharedindex(FolioApi):
     """Shared Index
-    Administration
 
     
     """
 
-    def postConfigMatchKey(self, matchKey):
+    def postconfigmatchkey(self, matchKey):
         """Create match key
 
         ``POST /shared-index/config/matchkeys``
@@ -33,12 +32,12 @@ class SharedindexAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Sharedindex_postConfigMatchKey_request.schema
+            .. literalinclude:: ../files/Sharedindex_postconfigmatchkey_request.schema
         """
-        return self.call("POST", "/shared-index/config/matchkeys", matchKey)
+        return self.call("POST", f"/shared-index/config/matchkeys", matchKey)
 
 		
-    def getConfigMatchKeys(self, **kwargs):
+    def getconfigmatchkeys(self, **kwargs):
         """Get match key configurations
 
         ``GET /shared-index/config/matchkeys``
@@ -57,11 +56,11 @@ class SharedindexAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Sharedindex_getConfigMatchKeys_response.schema
+            .. literalinclude:: ../files/Sharedindex_getconfigmatchkeys_response.schema
         """
         return self.call("GET", "/shared-index/config/matchkeys", query=kwargs)
 
-    def getConfigMatchKey(self):
+    def getconfigmatchkey(self, id_):
         """Get match key configuration
 
         ``GET /shared-index/config/matchkeys/{id}``
@@ -76,12 +75,12 @@ class SharedindexAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Sharedindex_getConfigMatchKey_response.schema
+            .. literalinclude:: ../files/Sharedindex_getconfigmatchkey_response.schema
         """
-        return self.call("GET", "/shared-index/config/matchkeys/{id}")
+        return self.call("GET", f"/shared-index/config/matchkeys/{id_}")
 
 		
-    def putConfigMatchKey(self, matchKey):
+    def putconfigmatchkey(self, matchKey, id_):
         """Update match key configuration.
 
         ``PUT /shared-index/config/matchkeys/{id}``
@@ -96,12 +95,12 @@ class SharedindexAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Sharedindex_putConfigMatchKey_request.schema
+            .. literalinclude:: ../files/Sharedindex_putconfigmatchkey_request.schema
         """
-        return self.call("PUT", "/shared-index/config/matchkeys/{id}", matchKey)
+        return self.call("PUT", f"/shared-index/config/matchkeys/{id_}", matchKey)
 
 		
-    def deleteConfigMatchKey(self):
+    def deleteconfigmatchkey(self, id_):
         """Delete match key configuration
 
         ``DELETE /shared-index/config/matchkeys/{id}``
@@ -111,9 +110,9 @@ class SharedindexAdmin(FolioAdminApi):
             OkapiRequestNotFound: Not Found
             OkapiFatalError: Internal error
         """
-        return self.call("DELETE", "/shared-index/config/matchkeys/{id}")
+        return self.call("DELETE", f"/shared-index/config/matchkeys/{id_}")
 
-    def initializeMatchKey(self):
+    def initializematchkey(self, id_):
         """Recalculate match key across all records.
 
         ``PUT /shared-index/config/matchkeys/{id}/initialize``
@@ -128,11 +127,11 @@ class SharedindexAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Sharedindex_initializeMatchKey_response.schema
+            .. literalinclude:: ../files/Sharedindex_initializematchkey_response.schema
         """
-        return self.call("PUT", "/shared-index/config/matchkeys/{id}/initialize")
+        return self.call("PUT", f"/shared-index/config/matchkeys/{id_}/initialize")
 
-    def postSource(self, source):
+    def postsource(self, source):
         """Create source.
 
         ``POST /shared-index/sources``
@@ -149,12 +148,12 @@ class SharedindexAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Sharedindex_postSource_request.schema
+            .. literalinclude:: ../files/Sharedindex_postsource_request.schema
         """
-        return self.call("POST", "/shared-index/sources", source)
+        return self.call("POST", f"/shared-index/sources", source)
 
 		
-    def getSources(self, **kwargs):
+    def getsources(self, **kwargs):
         """Get sources.
 
         ``GET /shared-index/sources``
@@ -173,11 +172,11 @@ class SharedindexAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Sharedindex_getSources_response.schema
+            .. literalinclude:: ../files/Sharedindex_getsources_response.schema
         """
         return self.call("GET", "/shared-index/sources", query=kwargs)
 
-    def getSource(self):
+    def getsource(self, id_):
         """Get source.
 
         ``GET /shared-index/config/sources/{id}``
@@ -192,12 +191,12 @@ class SharedindexAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Sharedindex_getSource_response.schema
+            .. literalinclude:: ../files/Sharedindex_getsource_response.schema
         """
-        return self.call("GET", "/shared-index/config/sources/{id}")
+        return self.call("GET", f"/shared-index/config/sources/{id_}")
 
 		
-    def deleteSource(self):
+    def deletesource(self, id_):
         """Delete source.
 
         ``DELETE /shared-index/config/sources/{id}``
@@ -207,9 +206,9 @@ class SharedindexAdmin(FolioAdminApi):
             OkapiRequestNotFound: Not Found
             OkapiFatalError: Internal error
         """
-        return self.call("DELETE", "/shared-index/config/sources/{id}")
+        return self.call("DELETE", f"/shared-index/config/sources/{id_}")
 
-    def postIngestJob(self, ingestJobRequest):
+    def postingestjob(self, ingestJobRequest):
         """Create ingest job
 
         ``POST /shared-index/shared-index/ingest-jobs``
@@ -226,11 +225,11 @@ class SharedindexAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Sharedindex_postIngestJob_request.schema
+            .. literalinclude:: ../files/Sharedindex_postingestjob_request.schema
         """
-        return self.call("POST", "/shared-index/shared-index/ingest-jobs", ingestJobRequest)
+        return self.call("POST", f"/shared-index/shared-index/ingest-jobs", ingestJobRequest)
 
-    def ingestJobRecord(self, ingestRecordChunk):
+    def ingestjobrecord(self, ingestRecordChunk, id_):
         """Put records for job.
 
         ``PUT /shared-index/shared-index/ingest-jobs/{id}``
@@ -248,13 +247,13 @@ class SharedindexAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Sharedindex_ingestJobRecord_request.schema
-            .. literalinclude:: ../files/Sharedindex_ingestJobRecord_request.schema_response.schema
+            .. literalinclude:: ../files/Sharedindex_ingestjobrecord_request.schema
+            .. literalinclude:: ../files/Sharedindex_ingestjobrecord_request.schema_response.schema
         """
-        return self.call("PUT", "/shared-index/shared-index/ingest-jobs/{id}", ingestRecordChunk)
+        return self.call("PUT", f"/shared-index/shared-index/ingest-jobs/{id_}", ingestRecordChunk)
 
 		
-    def ingestJobInfo(self):
+    def ingestjobinfo(self, id_):
         """Get ingest job information.
 
         ``GET /shared-index/shared-index/ingest-jobs/{id}``
@@ -269,12 +268,12 @@ class SharedindexAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Sharedindex_ingestJobInfo_response.schema
+            .. literalinclude:: ../files/Sharedindex_ingestjobinfo_response.schema
         """
-        return self.call("GET", "/shared-index/shared-index/ingest-jobs/{id}")
+        return self.call("GET", f"/shared-index/shared-index/ingest-jobs/{id_}")
 
 		
-    def ingestJobFinish(self, **kwargs):
+    def ingestjobfinish(self, id_, **kwargs):
         """Finish ingest job with either rollback of commit.
 
         ``DELETE /shared-index/shared-index/ingest-jobs/{id}``
@@ -287,9 +286,9 @@ class SharedindexAdmin(FolioAdminApi):
             OkapiRequestNotFound: Not Found
             OkapiFatalError: Internal error
         """
-        return self.call("DELETE", "/shared-index/shared-index/ingest-jobs/{id}", query=kwargs)
+        return self.call("DELETE", f"/shared-index/shared-index/ingest-jobs/{id_}", query=kwargs)
 
-    def getGlobalRecords(self):
+    def getglobalrecords(self):
         """Get records that satisfy CQL query with fields localId, sourceId, globalId.
 
         ``GET /shared-index/records``
@@ -303,12 +302,12 @@ class SharedindexAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Sharedindex_getGlobalRecords_response.schema
+            .. literalinclude:: ../files/Sharedindex_getglobalrecords_response.schema
         """
         return self.call("GET", "/shared-index/records")
 
 		
-    def putGlobalRecords(self, ingestRecordRequest):
+    def putglobalrecords(self, ingestRecordRequest):
         """Create or update records.
 
         ``PUT /shared-index/records``
@@ -325,13 +324,13 @@ class SharedindexAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Sharedindex_putGlobalRecords_request.schema
-            .. literalinclude:: ../files/Sharedindex_putGlobalRecords_request.schema_response.schema
+            .. literalinclude:: ../files/Sharedindex_putglobalrecords_request.schema
+            .. literalinclude:: ../files/Sharedindex_putglobalrecords_request.schema_response.schema
         """
-        return self.call("PUT", "/shared-index/records", ingestRecordRequest)
+        return self.call("PUT", f"/shared-index/records", ingestRecordRequest)
 
 		
-    def deleteGlobalRecords(self):
+    def deleteglobalrecords(self):
         """Delete global records.
 
         ``DELETE /shared-index/records``
@@ -342,7 +341,7 @@ class SharedindexAdmin(FolioAdminApi):
         """
         return self.call("DELETE", "/shared-index/records")
 
-    def getGlobalRecord(self):
+    def getglobalrecord(self, globalId):
         """Get record with global identifier.
 
         ``GET /shared-index/records/{globalId}``
@@ -357,11 +356,11 @@ class SharedindexAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Sharedindex_getGlobalRecord_response.schema
+            .. literalinclude:: ../files/Sharedindex_getglobalrecord_response.schema
         """
-        return self.call("GET", "/shared-index/records/{globalId}")
+        return self.call("GET", f"/shared-index/records/{globalId}")
 
-    def getClusters(self):
+    def getclusters(self):
         """Get clusters with matchkeyid. CQL query with matchValue, clusterId fields
 
         ``GET /shared-index/clusters``
@@ -376,11 +375,11 @@ class SharedindexAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Sharedindex_getClusters_response.schema
+            .. literalinclude:: ../files/Sharedindex_getclusters_response.schema
         """
         return self.call("GET", "/shared-index/clusters")
 
-    def getCluster(self):
+    def getcluster(self, clusterId):
         """Get cluster by identifier
 
         ``GET /shared-index/clusters/{clusterId}``
@@ -395,11 +394,11 @@ class SharedindexAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Sharedindex_getCluster_response.schema
+            .. literalinclude:: ../files/Sharedindex_getcluster_response.schema
         """
-        return self.call("GET", "/shared-index/clusters/{clusterId}")
+        return self.call("GET", f"/shared-index/clusters/{clusterId}")
 
-    def oaiService(self):
+    def oaiservice(self):
         """OAI service
 
         ``GET /shared-index/oai``

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-04-16
+# Generated at 2023-05-20
 
 import logging
 
@@ -9,14 +9,13 @@ log = logging.getLogger("foliolib.folio.api.passwordValidator")
 
 
 
-class PasswordvalidatorAdmin(FolioAdminApi):
+class Passwordvalidator(FolioApi):
     """Password validator module
-    Administration
 
     
     """
 
-    def validatePassword(self, password):
+    def validatepassword(self, password):
         """Validate password
 
         ``POST /tenant/password/validate``
@@ -35,21 +34,20 @@ class PasswordvalidatorAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Passwordvalidator_validatePassword_request.schema
-            .. literalinclude:: ../files/Passwordvalidator_validatePassword_request.schema_response.schema
+            .. literalinclude:: ../files/Passwordvalidator_validatepassword_request.schema
+            .. literalinclude:: ../files/Passwordvalidator_validatepassword_request.schema_response.schema
         """
-        return self.call("POST", "/tenant/password/validate", password)
+        return self.call("POST", f"/tenant/password/validate", password)
 
 
 
-class ValidatorregistryAdmin(FolioAdminApi):
+class Validatorregistry(FolioApi):
     """Validator Registry
-    Administration
 
     
     """
 
-    def getTenantRules(self, **kwargs):
+    def gettenantrules(self, **kwargs):
         """Get a list of existing validation rules for a tenant
 
         ``GET /tenant/rules``
@@ -68,12 +66,12 @@ class ValidatorregistryAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Validatorregistry_getTenantRules_response.schema
+            .. literalinclude:: ../files/Validatorregistry_gettenantrules_response.schema
         """
         return self.call("GET", "/tenant/rules", query=kwargs)
 
 		
-    def postTenantRules(self, validationRule):
+    def posttenantrules(self, validationRule):
         """Add a rule to a tenant
 
         ``POST /tenant/rules``
@@ -91,12 +89,12 @@ class ValidatorregistryAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Validatorregistry_postTenantRules_request.schema
+            .. literalinclude:: ../files/Validatorregistry_posttenantrules_request.schema
         """
-        return self.call("POST", "/tenant/rules", validationRule)
+        return self.call("POST", f"/tenant/rules", validationRule)
 
 		
-    def putTenantRule(self, validationRule):
+    def puttenantrule(self, validationRule):
         """Enable/disable/change the rule
 
         ``PUT /tenant/rules``
@@ -114,11 +112,11 @@ class ValidatorregistryAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Validatorregistry_putTenantRule_request.schema
+            .. literalinclude:: ../files/Validatorregistry_puttenantrule_request.schema
         """
-        return self.call("PUT", "/tenant/rules", validationRule)
+        return self.call("PUT", f"/tenant/rules", validationRule)
 
-    def getTenantRuleById(self):
+    def gettenantrulebyid(self, ruleId):
         """
 
         ``GET /tenant/rules/{ruleId}``
@@ -132,6 +130,6 @@ class ValidatorregistryAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Validatorregistry_getTenantRuleById_response.schema
+            .. literalinclude:: ../files/Validatorregistry_gettenantrulebyid_response.schema
         """
-        return self.call("GET", "/tenant/rules/{ruleId}")
+        return self.call("GET", f"/tenant/rules/{ruleId}")

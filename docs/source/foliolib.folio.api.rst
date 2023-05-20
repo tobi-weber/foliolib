@@ -11,11 +11,13 @@ Modules
 	:recursive:
 
 	foliolib.folio.api.audit
+	foliolib.folio.api.authtoken
 	foliolib.folio.api.bulkOperations
 	foliolib.folio.api.calendar
 	foliolib.folio.api.circulation
 	foliolib.folio.api.circulationStorage
 	foliolib.folio.api.configuration
+	foliolib.folio.api.consortia
 	foliolib.folio.api.copycat
 	foliolib.folio.api.courses
 	foliolib.folio.api.dataExport
@@ -23,17 +25,23 @@ Modules
 	foliolib.folio.api.dataExportWorker
 	foliolib.folio.api.dataImport
 	foliolib.folio.api.dataImportConverterStorage
+	foliolib.folio.api.diConverterStorage
 	foliolib.folio.api.ebsconet
 	foliolib.folio.api.email
 	foliolib.folio.api.entitiesLinks
 	foliolib.folio.api.ermUsage
 	foliolib.folio.api.ermUsageHarvester
+	foliolib.folio.api.eusageReports
 	foliolib.folio.api.eventConfig
 	foliolib.folio.api.feesfines
 	foliolib.folio.api.finance
 	foliolib.folio.api.financeStorage
 	foliolib.folio.api.fincConfig
+	foliolib.folio.api.folioCustomFields
+	foliolib.folio.api.folioSpringBase
+	foliolib.folio.api.folioVertxLib
 	foliolib.folio.api.gobi
+	foliolib.folio.api.idmConnect
 	foliolib.folio.api.innReach
 	foliolib.folio.api.inventory
 	foliolib.folio.api.inventoryStorage

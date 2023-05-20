@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-04-16
+# Generated at 2023-05-20
 
 import logging
 
@@ -9,14 +9,13 @@ log = logging.getLogger("foliolib.folio.api.remoteStorage")
 
 
 
-class RemotestorageAdmin(FolioAdminApi):
+class Remotestorage(FolioApi):
     """Remote storages API
-    Administration
 
     
     """
 
-    def getConfigurations(self, **kwargs):
+    def getconfigurations(self, **kwargs):
         """Get a list of remote storage configurations
 
         ``GET /remote-storage/configurations``
@@ -34,12 +33,12 @@ class RemotestorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Remotestorage_getConfigurations_response.schema
+            .. literalinclude:: ../files/Remotestorage_getconfigurations_response.schema
         """
         return self.call("GET", "/remote-storage/configurations", query=kwargs)
 
 		
-    def postConfiguration(self, storageConfiguration):
+    def postconfiguration(self, storageConfiguration):
         """Add new remote storage configuration
 
         ``POST /remote-storage/configurations``
@@ -57,11 +56,11 @@ class RemotestorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Remotestorage_postConfiguration_request.schema
+            .. literalinclude:: ../files/Remotestorage_postconfiguration_request.schema
         """
-        return self.call("POST", "/remote-storage/configurations", storageConfiguration)
+        return self.call("POST", f"/remote-storage/configurations", storageConfiguration)
 
-    def getConfigurationById(self):
+    def getconfigurationbyid(self, configId):
         """
 
         ``GET /remote-storage/configurations/{configId}``
@@ -75,12 +74,12 @@ class RemotestorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Remotestorage_getConfigurationById_response.schema
+            .. literalinclude:: ../files/Remotestorage_getconfigurationbyid_response.schema
         """
-        return self.call("GET", "/remote-storage/configurations/{configId}")
+        return self.call("GET", f"/remote-storage/configurations/{configId}")
 
 		
-    def putConfiguration(self, storageConfiguration):
+    def putconfiguration(self, storageConfiguration, configId):
         """Change the remote storage configuration
 
         ``PUT /remote-storage/configurations/{configId}``
@@ -95,12 +94,12 @@ class RemotestorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Remotestorage_putConfiguration_request.schema
+            .. literalinclude:: ../files/Remotestorage_putconfiguration_request.schema
         """
-        return self.call("PUT", "/remote-storage/configurations/{configId}", storageConfiguration)
+        return self.call("PUT", f"/remote-storage/configurations/{configId}", storageConfiguration)
 
 		
-    def deleteConfigurationById(self):
+    def deleteconfigurationbyid(self, configId):
         """
 
         ``DELETE /remote-storage/configurations/{configId}``
@@ -109,9 +108,9 @@ class RemotestorageAdmin(FolioAdminApi):
             OkapiRequestNotFound: Configuration not found
             OkapiFatalError: Internal server error
         """
-        return self.call("DELETE", "/remote-storage/configurations/{configId}")
+        return self.call("DELETE", f"/remote-storage/configurations/{configId}")
 
-    def postMapping(self, remoteLocationConfigurationMapping):
+    def postmapping(self, remoteLocationConfigurationMapping):
         """Add/update a mapping between remote and Folio locations
 
         ``POST /remote-storage/mappings``
@@ -129,12 +128,12 @@ class RemotestorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Remotestorage_postMapping_request.schema
+            .. literalinclude:: ../files/Remotestorage_postmapping_request.schema
         """
-        return self.call("POST", "/remote-storage/mappings", remoteLocationConfigurationMapping)
+        return self.call("POST", f"/remote-storage/mappings", remoteLocationConfigurationMapping)
 
 		
-    def getMappings(self, **kwargs):
+    def getmappings(self, **kwargs):
         """Get a list of location mappings
 
         ``GET /remote-storage/mappings``
@@ -153,11 +152,11 @@ class RemotestorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Remotestorage_getMappings_response.schema
+            .. literalinclude:: ../files/Remotestorage_getmappings_response.schema
         """
         return self.call("GET", "/remote-storage/mappings", query=kwargs)
 
-    def getMappingById(self):
+    def getmappingbyid(self, folioLocationId):
         """
 
         ``GET /remote-storage/mappings/{folioLocationId}``
@@ -171,12 +170,12 @@ class RemotestorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Remotestorage_getMappingById_response.schema
+            .. literalinclude:: ../files/Remotestorage_getmappingbyid_response.schema
         """
-        return self.call("GET", "/remote-storage/mappings/{folioLocationId}")
+        return self.call("GET", f"/remote-storage/mappings/{folioLocationId}")
 
 		
-    def deleteMappingById(self):
+    def deletemappingbyid(self, folioLocationId):
         """
 
         ``DELETE /remote-storage/mappings/{folioLocationId}``
@@ -185,9 +184,9 @@ class RemotestorageAdmin(FolioAdminApi):
             OkapiRequestNotFound: Mapping not found
             OkapiFatalError: Internal server error
         """
-        return self.call("DELETE", "/remote-storage/mappings/{folioLocationId}")
+        return self.call("DELETE", f"/remote-storage/mappings/{folioLocationId}")
 
-    def postExtendedRemoteLocationConfigurationMapping(self, extendedRemoteLocationConfigurationMapping):
+    def postextendedremotelocationconfigurationmapping(self, extendedRemoteLocationConfigurationMapping):
         """Add/update a mapping between remote and Folio locations
 
         ``POST /remote-storage/extended-mappings``
@@ -205,12 +204,12 @@ class RemotestorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Remotestorage_postExtendedRemoteLocationConfigurationMapping_request.schema
+            .. literalinclude:: ../files/Remotestorage_postextendedremotelocationconfigurationmapping_request.schema
         """
-        return self.call("POST", "/remote-storage/extended-mappings", extendedRemoteLocationConfigurationMapping)
+        return self.call("POST", f"/remote-storage/extended-mappings", extendedRemoteLocationConfigurationMapping)
 
 		
-    def getExtendedRemoteLocationConfigurationMappings(self, **kwargs):
+    def getextendedremotelocationconfigurationmappings(self, **kwargs):
         """Get a list of location mappings
 
         ``GET /remote-storage/extended-mappings``
@@ -230,11 +229,11 @@ class RemotestorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Remotestorage_getExtendedRemoteLocationConfigurationMappings_response.schema
+            .. literalinclude:: ../files/Remotestorage_getextendedremotelocationconfigurationmappings_response.schema
         """
         return self.call("GET", "/remote-storage/extended-mappings", query=kwargs)
 
-    def getExtendedRemoteLocationConfigurationMappingsById(self):
+    def getextendedremotelocationconfigurationmappingsbyid(self, finalLocationId):
         """
 
         ``GET /remote-storage/extended-mappings/{finalLocationId}``
@@ -248,11 +247,11 @@ class RemotestorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Remotestorage_getExtendedRemoteLocationConfigurationMappingsById_response.schema
+            .. literalinclude:: ../files/Remotestorage_getextendedremotelocationconfigurationmappingsbyid_response.schema
         """
-        return self.call("GET", "/remote-storage/extended-mappings/{finalLocationId}")
+        return self.call("GET", f"/remote-storage/extended-mappings/{finalLocationId}")
 
-    def deleteOriginalLocationByRemoteStorageConfigurationIdAndOriginalLocationId(self, remoteStorageConfigurationId, originalLocationId):
+    def deleteoriginallocationbyremotestorageconfigurationidandoriginallocationid(self, remoteStorageConfigurationId, originalLocationId):
         """
 
         ``DELETE /remote-storage/extended-mappings/{remoteStorageConfigurationId}/{originalLocationId}``
@@ -265,9 +264,9 @@ class RemotestorageAdmin(FolioAdminApi):
             OkapiRequestNotFound: Mapping not found
             OkapiFatalError: Internal server error
         """
-        return self.call("DELETE", "/remote-storage/extended-mappings/{remoteStorageConfigurationId}/{originalLocationId}", remoteStorageConfigurationId, originalLocationId)
+        return self.call("DELETE", f"/remote-storage/extended-mappings/{remoteStorageConfigurationId}/{originalLocationId}")
 
-    def getExtendedRemoteLocationConfigurationMappingsLocations(self, **kwargs):
+    def getextendedremotelocationconfigurationmappingslocations(self, **kwargs):
         """Get a list of location mappings
 
         ``GET /remote-storage/extended-mappings/locations``
@@ -285,11 +284,11 @@ class RemotestorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Remotestorage_getExtendedRemoteLocationConfigurationMappingsLocations_response.schema
+            .. literalinclude:: ../files/Remotestorage_getextendedremotelocationconfigurationmappingslocations_response.schema
         """
         return self.call("GET", "/remote-storage/extended-mappings/locations", query=kwargs)
 
-    def getProviders(self):
+    def getproviders(self):
         """Get a list of providers
 
         ``GET /remote-storage/providers``
@@ -302,11 +301,11 @@ class RemotestorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Remotestorage_getProviders_response.schema
+            .. literalinclude:: ../files/Remotestorage_getproviders_response.schema
         """
         return self.call("GET", "/remote-storage/providers")
 
-    def postAccession(self, accessionRequest):
+    def postaccession(self, accessionRequest):
         """Perform remote storage initiated accession
 
         ``POST /remote-storage/accessions``
@@ -324,13 +323,13 @@ class RemotestorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Remotestorage_postAccession_request.schema
-            .. literalinclude:: ../files/Remotestorage_postAccession_request.schema_response.schema
+            .. literalinclude:: ../files/Remotestorage_postaccession_request.schema
+            .. literalinclude:: ../files/Remotestorage_postaccession_request.schema_response.schema
         """
-        return self.call("POST", "/remote-storage/accessions", accessionRequest)
+        return self.call("POST", f"/remote-storage/accessions", accessionRequest)
 
 		
-    def getAccessions(self, **kwargs):
+    def getaccessions(self, **kwargs):
         """Get a list of accession records
 
         ``GET /remote-storage/accessions``
@@ -350,11 +349,11 @@ class RemotestorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Remotestorage_getAccessions_response.schema
+            .. literalinclude:: ../files/Remotestorage_getaccessions_response.schema
         """
         return self.call("GET", "/remote-storage/accessions", query=kwargs)
 
-    def setAccessionedById(self, accessionId):
+    def setaccessionedbyid(self, accessionId):
         """Set accessioned date by accession queue id
 
         ``PUT /remote-storage/accessions/id/{accessionId}``
@@ -362,9 +361,9 @@ class RemotestorageAdmin(FolioAdminApi):
         Args:
             accessionId (str): uuid
         """
-        return self.call("PUT", "/remote-storage/accessions/id/{accessionId}", accessionId)
+        return self.call("PUT", f"/remote-storage/accessions/id/{accessionId}")
 
-    def setAccessionedByBarcode(self, barcode):
+    def setaccessionedbybarcode(self, barcode):
         """Set accessioned date by item barcode
 
         ``PUT /remote-storage/accessions/barcode/{barcode}``
@@ -372,9 +371,9 @@ class RemotestorageAdmin(FolioAdminApi):
         Args:
             barcode (str): 
         """
-        return self.call("PUT", "/remote-storage/accessions/barcode/{barcode}", barcode)
+        return self.call("PUT", f"/remote-storage/accessions/barcode/{barcode}")
 
-    def logRecordEvent(self, pubSubEvent):
+    def logrecordevent(self, pubSubEvent):
         """
 
         ``POST /remote-storage/pub-sub-handlers/log-record-event``
@@ -384,11 +383,11 @@ class RemotestorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Remotestorage_logRecordEvent_request.schema
+            .. literalinclude:: ../files/Remotestorage_logrecordevent_request.schema
         """
-        return self.call("POST", "/remote-storage/pub-sub-handlers/log-record-event", pubSubEvent)
+        return self.call("POST", f"/remote-storage/pub-sub-handlers/log-record-event", pubSubEvent)
 
-    def getRetrievals(self, **kwargs):
+    def getretrievals(self, **kwargs):
         """Get a list of retrieval records
 
         ``GET /remote-storage/retrievals``
@@ -408,11 +407,11 @@ class RemotestorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Remotestorage_getRetrievals_response.schema
+            .. literalinclude:: ../files/Remotestorage_getretrievals_response.schema
         """
         return self.call("GET", "/remote-storage/retrievals", query=kwargs)
 
-    def setRetrievedById(self, retrievalId):
+    def setretrievedbyid(self, retrievalId):
         """Set retrieval date by retrieval queue id
 
         ``PUT /remote-storage/retrievals/id/{retrievalId}``
@@ -420,9 +419,9 @@ class RemotestorageAdmin(FolioAdminApi):
         Args:
             retrievalId (str): uuid
         """
-        return self.call("PUT", "/remote-storage/retrievals/id/{retrievalId}", retrievalId)
+        return self.call("PUT", f"/remote-storage/retrievals/id/{retrievalId}")
 
-    def setRetrievedByBarcode(self, barcode):
+    def setretrievedbybarcode(self, barcode):
         """Set retrieved date by item barcode
 
         ``PUT /remote-storage/retrievals/barcode/{barcode}``
@@ -430,9 +429,9 @@ class RemotestorageAdmin(FolioAdminApi):
         Args:
             barcode (str): 
         """
-        return self.call("PUT", "/remote-storage/retrievals/barcode/{barcode}", barcode)
+        return self.call("PUT", f"/remote-storage/retrievals/barcode/{barcode}")
 
-    def checkInItemByBarcodeWithRemoteStorageConfigurationId(self, remoteStorageConfigurationId, checkInItem):
+    def checkinitembybarcodewithremotestorageconfigurationid(self, remoteStorageConfigurationId, checkInItem):
         """Check-in the item in the primary service by barcode value
 
         ``POST /remote-storage/retrieve/{remoteStorageConfigurationId}/checkInItem``
@@ -448,11 +447,11 @@ class RemotestorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Remotestorage_checkInItemByBarcodeWithRemoteStorageConfigurationId_request.schema
+            .. literalinclude:: ../files/Remotestorage_checkinitembybarcodewithremotestorageconfigurationid_request.schema
         """
-        return self.call("POST", "/remote-storage/retrieve/{remoteStorageConfigurationId}/checkInItem", remoteStorageConfigurationId, checkInItem)
+        return self.call("POST", f"/remote-storage/retrieve/{remoteStorageConfigurationId}/checkInItem", checkInItem)
 
-    def checkInItemByHoldIdWithRemoteStorageConfigurationId(self, remoteStorageConfigurationId, checkInItemByHoldId):
+    def checkinitembyholdidwithremotestorageconfigurationid(self, remoteStorageConfigurationId, checkInItemByHoldId):
         """Check-in the item in the primary service by barcode value
 
         ``POST /remote-storage/retrieve/{remoteStorageConfigurationId}/checkInItemByHoldId``
@@ -468,11 +467,11 @@ class RemotestorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Remotestorage_checkInItemByHoldIdWithRemoteStorageConfigurationId_request.schema
+            .. literalinclude:: ../files/Remotestorage_checkinitembyholdidwithremotestorageconfigurationid_request.schema
         """
-        return self.call("POST", "/remote-storage/retrieve/{remoteStorageConfigurationId}/checkInItemByHoldId", remoteStorageConfigurationId, checkInItemByHoldId)
+        return self.call("POST", f"/remote-storage/retrieve/{remoteStorageConfigurationId}/checkInItemByHoldId", checkInItemByHoldId)
 
-    def returnItemByBarcode(self, remoteStorageConfigurationId, checkInItem):
+    def returnitembybarcode(self, remoteStorageConfigurationId, checkInItem):
         """Return the item by barcode
 
         ``POST /remote-storage/return/{remoteStorageConfigurationId}``
@@ -489,12 +488,12 @@ class RemotestorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Remotestorage_returnItemByBarcode_request.schema
-            .. literalinclude:: ../files/Remotestorage_returnItemByBarcode_request.schema_response.schema
+            .. literalinclude:: ../files/Remotestorage_returnitembybarcode_request.schema
+            .. literalinclude:: ../files/Remotestorage_returnitembybarcode_request.schema_response.schema
         """
-        return self.call("POST", "/remote-storage/return/{remoteStorageConfigurationId}", remoteStorageConfigurationId, checkInItem)
+        return self.call("POST", f"/remote-storage/return/{remoteStorageConfigurationId}", checkInItem)
 
-    def markItemAsMissingByBarcode(self, barcode):
+    def markitemasmissingbybarcode(self, barcode):
         """Mark item as missing
 
         ``POST /remote-storage/items/barcode/{barcode}/markAsMissing``
@@ -506,4 +505,4 @@ class RemotestorageAdmin(FolioAdminApi):
             OkapiRequestError: Bad request
             OkapiFatalError: Internal server error
         """
-        return self.call("POST", "/remote-storage/items/barcode/{barcode}/markAsMissing", barcode)
+        return self.call("POST", f"/remote-storage/items/barcode/{barcode}/markAsMissing")

@@ -1,0 +1,31 @@
+{
+    "allOf": [
+        {
+            "$ref": "#/baseMarcRecord"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "parsedRecordId": {
+                    "description": "MARC record Id",
+                    "$ref": "#/uuid"
+                },
+                "parsedRecordDtoId": {
+                    "description": "ParsedRecordDto identifier",
+                    "$ref": "#/uuid"
+                },
+                "externalId": {
+                    "description": "Identifier of external entity",
+                    "$ref": "#/uuid"
+                },
+                "externalHrid": {
+                    "description": "HRID of external entity",
+                    "type": "string"
+                },
+                "updateInfo": {
+                    "$ref": "#/updateInfo"
+                }
+            }
+        }
+    ]
+}

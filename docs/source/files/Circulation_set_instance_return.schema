@@ -258,7 +258,7 @@
       },
       "additionalProperties": false
     },
-    "fulfilmentPreference": {
+    "fulfillmentPreference": {
       "description": "How should the request be fulfilled (whether the item should be kept on the hold shelf for collection or delivered to the requester)",
       "type": "string",
       "enum": [
@@ -399,6 +399,6 @@
     "requesterId",
     "requestType",
     "requestDate",
-    "fulfilmentPreference"
+    "fulfillmentPreference"
   ]
 }

@@ -9,4 +9,3 @@ API Reference
    foliolib.helper
    foliolib.folio
    foliolib.folio.api
-   

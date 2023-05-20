@@ -1,0 +1,18 @@
+{
+    "type": "object",
+    "properties": {
+        "holdingsRecords": {
+            "description": "List of holdings records",
+            "type": "array",
+            "items": {
+                "$ref": "holdingsRecord.json#/HoldingsRecord"
+            }
+        },
+        "totalRecords": {
+            "type": "integer"
+        },
+        "resultInfo": {
+            "$ref": "../common/resultInfo.json#/ResultInfo"
+        }
+    }
+}

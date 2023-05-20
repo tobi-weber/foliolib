@@ -1,0 +1,53 @@
+{
+    "type": "object",
+    "description": "Notes about all kind of objects",
+    "properties": {
+        "id": {
+            "$ref": "common.yaml#/uuid",
+            "description": "Unique generated identifier for the note"
+        },
+        "typeId": {
+            "$ref": "common.yaml#/uuid",
+            "description": "Type id of note"
+        },
+        "type": {
+            "type": "string",
+            "description": "Type of note (configured in settings)"
+        },
+        "title": {
+            "type": "string",
+            "description": "Note title"
+        },
+        "domain": {
+            "type": "string",
+            "description": "Domain associated with this note"
+        },
+        "content": {
+            "type": "string",
+            "description": "Content of the note"
+        },
+        "popUpOnCheckOut": {
+            "type": "boolean",
+            "description": "Flag that specify need of pop-up on check-out app"
+        },
+        "popUpOnUser": {
+            "type": "boolean",
+            "description": "Flag that specify need of pop-up on users app"
+        },
+        "links": {
+            "type": "array",
+            "description": "Collection of links to associated objects",
+            "items": {
+                "$ref": "link.yaml#/link"
+            }
+        },
+        "metadata": {
+            "$ref": "common.yaml#/metadata"
+        }
+    },
+    "required": [
+        "typeId",
+        "domain",
+        "title"
+    ]
+}

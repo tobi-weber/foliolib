@@ -1,0 +1,21 @@
+{
+    "type": "object",
+    "properties": {
+        "holdingsContentUpdates": {
+            "description": "List of item content updates",
+            "type": "array",
+            "items": {
+                "$ref": "holdingsContentUpdate.json#/HoldingsContentUpdate"
+            },
+            "minItems": 1
+        },
+        "totalRecords": {
+            "type": "integer"
+        }
+    },
+    "required": [
+        "holdingsContentUpdates",
+        "totalRecords"
+    ],
+    "additionalProperties": false
+}

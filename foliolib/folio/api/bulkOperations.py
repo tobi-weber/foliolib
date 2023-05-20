@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-04-16
+# Generated at 2023-05-20
 
 import logging
 
@@ -9,14 +9,13 @@ log = logging.getLogger("foliolib.folio.api.bulkOperations")
 
 
 
-class BulkoperationsAdmin(FolioAdminApi):
+class Bulkoperations(FolioApi):
     """Bulk operations API
-    Administration
 
     Bulk operations API
     """
 
-    def uploadCsvFile(self, filePath, **kwargs):
+    def uploadcsvfile(self, filePath, **kwargs):
         """Upload csv file with identifiers list (barcodes, UUIDs, HRIDs, etc.) or csv-file with already updated entities
 
         ``POST /bulk-operations/upload``
@@ -39,7 +38,7 @@ class BulkoperationsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Bulkoperations_uploadCsvFile_response.schema
+            .. literalinclude:: ../files/Bulkoperations_uploadcsvfile_response.schema
         """
         import os
         headers = {}
@@ -50,9 +49,9 @@ class BulkoperationsAdmin(FolioAdminApi):
         with open(filePath, 'rb') as f:
             data = f.read()
         
-        return self.call("POST", "/bulk-operations/upload", data=data, query=kwargs)
+        return self.call("POST", f"/bulk-operations/upload", data=data, query=kwargs)
 
-    def postContentUpdates(self, operationId, bulkOperationRuleCollection):
+    def postcontentupdates(self, operationId, bulkOperationRuleCollection):
         """Upload content updates
 
         ``POST /bulk-operations/{operationId}/content-update``
@@ -71,11 +70,11 @@ class BulkoperationsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Bulkoperations_postContentUpdates_request.schema
+            .. literalinclude:: ../files/Bulkoperations_postcontentupdates_request.schema
         """
-        return self.call("POST", "/bulk-operations/{operationId}/content-update", operationId, bulkOperationRuleCollection)
+        return self.call("POST", f"/bulk-operations/{operationId}/content-update", bulkOperationRuleCollection)
 
-    def getPreviewByOperationId(self, operationId, **kwargs):
+    def getpreviewbyoperationid(self, operationId, **kwargs):
         """Get preview
 
         ``GET /bulk-operations/{operationId}/preview``
@@ -98,11 +97,11 @@ class BulkoperationsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Bulkoperations_getPreviewByOperationId_response.schema
+            .. literalinclude:: ../files/Bulkoperations_getpreviewbyoperationid_response.schema
         """
-        return self.call("GET", "/bulk-operations/{operationId}/preview", operationId, query=kwargs)
+        return self.call("GET", f"/bulk-operations/{operationId}/preview", query=kwargs)
 
-    def startBulkOperation(self, operationId, bulkOperationStart):
+    def startbulkoperation(self, operationId, bulkOperationStart):
         """Start Bulk Operation
 
         ``POST /bulk-operations/{operationId}/start``
@@ -121,12 +120,12 @@ class BulkoperationsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Bulkoperations_startBulkOperation_request.schema
-            .. literalinclude:: ../files/Bulkoperations_startBulkOperation_request.schema_response.schema
+            .. literalinclude:: ../files/Bulkoperations_startbulkoperation_request.schema
+            .. literalinclude:: ../files/Bulkoperations_startbulkoperation_request.schema_response.schema
         """
-        return self.call("POST", "/bulk-operations/{operationId}/start", operationId, bulkOperationStart)
+        return self.call("POST", f"/bulk-operations/{operationId}/start", bulkOperationStart)
 
-    def getErrorsPreviewByOperationId(self, operationId, **kwargs):
+    def geterrorspreviewbyoperationid(self, operationId, **kwargs):
         """Get a list of errors for preview
 
         ``GET /bulk-operations/{operationId}/errors``
@@ -146,11 +145,11 @@ class BulkoperationsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Bulkoperations_getErrorsPreviewByOperationId_response.schema
+            .. literalinclude:: ../files/Bulkoperations_geterrorspreviewbyoperationid_response.schema
         """
-        return self.call("GET", "/bulk-operations/{operationId}/errors", operationId, query=kwargs)
+        return self.call("GET", f"/bulk-operations/{operationId}/errors", query=kwargs)
 
-    def getBulkOperationCollection(self, **kwargs):
+    def getbulkoperationcollection(self, **kwargs):
         """Get a list of operations
 
         ``GET /bulk-operations``
@@ -168,11 +167,11 @@ class BulkoperationsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Bulkoperations_getBulkOperationCollection_response.schema
+            .. literalinclude:: ../files/Bulkoperations_getbulkoperationcollection_response.schema
         """
         return self.call("GET", "/bulk-operations", query=kwargs)
 
-    def downloadFileByOperationId(self, operationId, **kwargs):
+    def downloadfilebyoperationid(self, operationId, **kwargs):
         """Download file by operation id
 
         ``GET /bulk-operations/{operationId}/download``
@@ -188,9 +187,9 @@ class BulkoperationsAdmin(FolioAdminApi):
             OkapiRequestNotFound: Not found
             OkapiFatalError: Internal server errors, e.g. due to misconfiguration
         """
-        return self.call("GET", "/bulk-operations/{operationId}/download", operationId, query=kwargs)
+        return self.call("GET", f"/bulk-operations/{operationId}/download", query=kwargs)
 
-    def getBulkOperationById(self, operationId):
+    def getbulkoperationbyid(self, operationId):
         """Get bulk operation by id
 
         ``GET /bulk-operations/{operationId}``
@@ -207,6 +206,6 @@ class BulkoperationsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Bulkoperations_getBulkOperationById_response.schema
+            .. literalinclude:: ../files/Bulkoperations_getbulkoperationbyid_response.schema
         """
-        return self.call("GET", "/bulk-operations/{operationId}", operationId)
+        return self.call("GET", f"/bulk-operations/{operationId}")

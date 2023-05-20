@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# Copyright (C) 2022 Tobias Weber <tobi-weber@gmx.de>
+# Copyright (C) 2023 Tobias Weber <tobi-weber@gmx.de>
 
 import logging
 import os
+import shutil
 import sys
 
 from foliolib import set_logging
@@ -12,7 +13,7 @@ from foliolib.apiBuilder.build_api import build_api
 log = logging.getLogger("foliolib.make_api")
 
 API_PATH = "foliolib/folio/api"
-SPHINX_DOC_SRC = "docs/source"
+SPHINX_DOC_SRC = os.path.join(os.getcwd(), "docs/source")
 
 FOLIO_GITURL = "https://github.com/folio-org/"
 
@@ -26,20 +27,21 @@ FOLIO_MODS = [
     # ("edge-patron", "RAML", "ramls"),
     # ("edge-rtac", "RAML", "ramls"),
     # ("edge-sip2", "", ""),  # NO SCHEMA
-    # ("folio-custom-fields", "RAML", "ramls"),
-    # ("folio-spring-base", "OAS", "src/main/resources/swagger.api"), # ERROR
-    # ("folio-vertx-lib", "OAS", "src/main/resources/openapi"), # ERROR
+    ("folio-custom-fields", "RAML", "ramls"),
+    ("folio-spring-base", "OAS", "folio-spring-base/src/main/resources/swagger.api"),
+    ("folio-vertx-lib", "OAS", "core/src/main/resources/openapi"),
     ("mod-agreements", "", ""),  # NO SCHEMA
     ("mod-audit", "RAML", "ramls"),
-    # ("mod-authtoken", "OAS", "src/main/resources/openapi"),
+    ("mod-authtoken", "OAS", "src/main/resources/openapi"),
     ("mod-bulk-operations", "OAS", "src/main/resources/swagger.api"),
-    ("mod-calendar", "RAML", "ramls"),
+    ("mod-calendar", "OAS", "src/main/resources/api"),
     ("mod-circulation", "RAML", "ramls"),
     ("mod-circulation-storage", "RAML", "ramls"),
     ("mod-codex-ekb", "", ""),  # NO SCHEMA
     ("mod-codex-inventory", "", ""),  # NO SCHEMA
     ("mod-codex-mux", "", ""),  # NO SCHEMA
     ("mod-configuration", "RAML", "ramls/configuration"),
+    ("mod-consortia", "OAS", "src/main/resources/swagger.api"),
     ("mod-copycat", "RAML", "ramls"),
     ("mod-courses", "RAML", "ramls"),
     ("mod-data-export", "RAML", "ramls"),
@@ -47,12 +49,13 @@ FOLIO_MODS = [
     ("mod-data-export-worker", "OAS", "src/main/resources/swagger.api"),
     ("mod-data-import", "RAML", "ramls"),
     ("mod-data-import-converter-storage", "RAML", "ramls"),
+    ("mod-di-converter-storage", "RAML", "ramls"),
     ("mod-ebsconet", "OAS", "src/main/resources/swagger.api"),
     ("mod-email", "RAML", "ramls"),
     ("mod-entities-links", "OAS", "src/main/resources/swagger.api"),
     ("mod-erm-usage", "RAML", "ramls"),
     ("mod-erm-usage-harvester", "RAML", "ramls"),
-    # ("mod-eusage-reports", "OAS", "server/src/main/resources/openapi"), # ERROR
+    ("mod-eusage-reports", "OAS", "src/main/resources/openapi"),
     ("mod-event-config", "RAML", "ramls"),
     ("mod-feesfines", "RAML", "ramls"),
     ("mod-finance", "RAML", "ramls"),
@@ -60,6 +63,7 @@ FOLIO_MODS = [
     ("mod-finc-config", "RAML", "ramls"),
     ("mod-gobi", "RAML", "ramls"),
     ("mod-graphql", "", ""),  # NO SCHEMA
+    ("mod-idm-connect", "RAML", "ramls"),
     ("mod-inn-reach", "OAS", "src/main/resources/swagger.api"),
     ("mod-inventory", "RAML", "ramls"),
     ("mod-inventory-storage", "RAML", "ramls"),
@@ -74,7 +78,6 @@ FOLIO_MODS = [
     ("mod-marccat", "RAML", "ramls"),
     ("mod-meta-storage", "OAS", "server/src/main/resources/openapi"),
     ("mod-ncip", "", ""),  # NO SCHEMA
-    # ("mod-notes", "RAML", "ramls"),
     ("mod-notes", "OAS", "src/main/resources/swagger.api"),
     ("mod-notify", "RAML", "ramls"),
     ("mod-oai-pmh", "RAML", "ramls"),
@@ -82,7 +85,6 @@ FOLIO_MODS = [
     ("mod-orders-storage", "RAML", "ramls"),
     ("mod-organizations", "RAML", "ramls"),
     ("mod-organizations-storage", "RAML", "ramls"),
-    # ("mod-password-validator", "RAML", "ramls"),
     ("mod-password-validator",  "OAS", "src/main/resources/swagger.api"),
     ("mod-patron", "RAML", "ramls"),
     ("mod-patron-blocks", "RAML", "ramls"),
@@ -94,12 +96,11 @@ FOLIO_MODS = [
     ("mod-rtac", "RAML", "ramls"),
     ("mod-search", "OAS", "src/main/resources/swagger.api"),
     ("mod-sender", "RAML", "ramls"),
-    ("mod-service-interaction", "", ""),  # NO SCHEMA
+    ("mod-service-interaction", "", ""),
     ("mod-settings", "OAS", "src/main/resources/openapi"),
     ("mod-shared-index", "OAS", "server/src/main/resources/openapi"),
     ("mod-source-record-manager", "RAML", "ramls"),
     ("mod-source-record-storage", "RAML", "ramls"),
-    # ("mod-tags", "RAML", "ramls"),
     ("mod-tags",  "OAS", "src/main/resources/swagger.api"),
     ("mod-template-engine", "RAML", "ramls"),
     ("mod-user-import", "RAML", "ramls"),
@@ -135,7 +136,10 @@ def process():
         if not fname == "__init__.py":
             fpath = os.path.join(API_PATH, fname)
             log.info("Delete %s", fpath)
-            os.remove(fpath)
+            if os.path.isdir(fpath):
+                shutil.rmtree(fpath)
+            else:
+                os.remove(fpath)
     cur_path = os.getcwd()
     for mod in FOLIO_MODS:
         module_name = mod[0]

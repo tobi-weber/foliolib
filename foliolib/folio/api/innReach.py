@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-04-16
+# Generated at 2023-05-20
 
 import logging
 
@@ -9,14 +9,13 @@ log = logging.getLogger("foliolib.folio.api.innReach")
 
 
 
-class ContributionAdmin(FolioAdminApi):
+class Contribution(FolioApi):
     """INN-Reach Contribution API
-    Administration
 
     
     """
 
-    def getCurrentContributionByServerId(self, centralServerId):
+    def getcurrentcontributionbyserverid(self, centralServerId):
         """Get current INN-Reach contribution for the given central server
 
         ``GET /inn-reach/central-servers/{centralServerId}/contributions/current``
@@ -33,12 +32,12 @@ class ContributionAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Contribution_getCurrentContributionByServerId_response.schema
+            .. literalinclude:: ../files/Contribution_getcurrentcontributionbyserverid_response.schema
         """
-        return self.call("GET", "/inn-reach/central-servers/{centralServerId}/contributions/current", centralServerId)
+        return self.call("GET", f"/inn-reach/central-servers/{centralServerId}/contributions/current")
 
 		
-    def cancelCurrentContributionByServerId(self, centralServerId):
+    def cancelcurrentcontributionbyserverid(self, centralServerId):
         """Cancel current INN-Reach contribution for the given central server
 
         ``DELETE /inn-reach/central-servers/{centralServerId}/contributions/current``
@@ -50,9 +49,9 @@ class ContributionAdmin(FolioAdminApi):
             OkapiRequestError: Bad request, e.g. malformed query parameter.
             OkapiFatalError: Internal server error
         """
-        return self.call("DELETE", "/inn-reach/central-servers/{centralServerId}/contributions/current", centralServerId)
+        return self.call("DELETE", f"/inn-reach/central-servers/{centralServerId}/contributions/current")
 
-    def getContributionHistoryByServerId(self, centralServerId, **kwargs):
+    def getcontributionhistorybyserverid(self, centralServerId, **kwargs):
         """Get a list of Inn-Reach contributions for the given central server
 
         ``GET /inn-reach/central-servers/{centralServerId}/contributions/history``
@@ -73,11 +72,11 @@ class ContributionAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Contribution_getContributionHistoryByServerId_response.schema
+            .. literalinclude:: ../files/Contribution_getcontributionhistorybyserverid_response.schema
         """
-        return self.call("GET", "/inn-reach/central-servers/{centralServerId}/contributions/history", centralServerId, query=kwargs)
+        return self.call("GET", f"/inn-reach/central-servers/{centralServerId}/contributions/history", query=kwargs)
 
-    def startInitialContribution(self, centralServerId):
+    def startinitialcontribution(self, centralServerId):
         """Start initial contribution process
 
         ``POST /inn-reach/central-servers/{centralServerId}/contributions``
@@ -89,18 +88,17 @@ class ContributionAdmin(FolioAdminApi):
             OkapiRequestError: Bad request
             OkapiFatalError: Internal server error
         """
-        return self.call("POST", "/inn-reach/central-servers/{centralServerId}/contributions", centralServerId)
+        return self.call("POST", f"/inn-reach/central-servers/{centralServerId}/contributions")
 
 
 
-class SettingsAdmin(FolioAdminApi):
+class Settings(FolioApi):
     """INN-Reach Settings API
-    Administration
 
     
     """
 
-    def postCentralServer(self, centralServerDTO):
+    def postcentralserver(self, centralServerDTO):
         """Add new central server
 
         ``POST /inn-reach/central-servers``
@@ -118,12 +116,12 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_postCentralServer_request.schema
+            .. literalinclude:: ../files/Settings_postcentralserver_request.schema
         """
-        return self.call("POST", "/inn-reach/central-servers", centralServerDTO)
+        return self.call("POST", f"/inn-reach/central-servers", centralServerDTO)
 
 		
-    def getCentralServers(self, **kwargs):
+    def getcentralservers(self, **kwargs):
         """Get a list of central servers
 
         ``GET /inn-reach/central-servers``
@@ -140,17 +138,14 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_getCentralServers_response.schema
+            .. literalinclude:: ../files/Settings_getcentralservers_response.schema
         """
         return self.call("GET", "/inn-reach/central-servers", query=kwargs)
 
-    def getCentralServerById(self, id_):
+    def getcentralserverbyid(self, centralServerId):
         """Get central server by id
 
         ``GET /inn-reach/central-servers/{centralServerId}``
-
-        Args:
-            id_ (str):  (format: uuid)
 
         Returns:
             dict: See Schema below.
@@ -161,18 +156,17 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_getCentralServerById_response.schema
+            .. literalinclude:: ../files/Settings_getcentralserverbyid_response.schema
         """
-        return self.call("GET", "/inn-reach/central-servers/{centralServerId}", id_)
+        return self.call("GET", f"/inn-reach/central-servers/{centralServerId}")
 
 		
-    def updateCentralServer(self, id_, centralServerDTO):
+    def updatecentralserver(self, centralServerDTO, centralServerId):
         """Update central server
 
         ``PUT /inn-reach/central-servers/{centralServerId}``
 
         Args:
-            id_ (str):  (format: uuid)
             centralServerDTO (dict): See Schema below.
 
         Raises:
@@ -182,26 +176,23 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_updateCentralServer_request.schema
+            .. literalinclude:: ../files/Settings_updatecentralserver_request.schema
         """
-        return self.call("PUT", "/inn-reach/central-servers/{centralServerId}", id_, centralServerDTO)
+        return self.call("PUT", f"/inn-reach/central-servers/{centralServerId}", centralServerDTO)
 
 		
-    def deleteCentralServer(self, id_):
+    def deletecentralserver(self, centralServerId):
         """Delete central server
 
         ``DELETE /inn-reach/central-servers/{centralServerId}``
-
-        Args:
-            id_ (str):  (format: uuid)
 
         Raises:
             OkapiRequestNotFound: Item not found
             OkapiFatalError: Internal server error
         """
-        return self.call("DELETE", "/inn-reach/central-servers/{centralServerId}", id_)
+        return self.call("DELETE", f"/inn-reach/central-servers/{centralServerId}")
 
-    def getMaterialTypeMappingsByServerId(self, centralServerId, **kwargs):
+    def getmaterialtypemappingsbyserverid(self, centralServerId, **kwargs):
         """Get a list of material type mappings for the given central server
 
         ``GET /inn-reach/central-servers/{centralServerId}/material-type-mappings``
@@ -222,12 +213,12 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_getMaterialTypeMappingsByServerId_response.schema
+            .. literalinclude:: ../files/Settings_getmaterialtypemappingsbyserverid_response.schema
         """
-        return self.call("GET", "/inn-reach/central-servers/{centralServerId}/material-type-mappings", centralServerId, query=kwargs)
+        return self.call("GET", f"/inn-reach/central-servers/{centralServerId}/material-type-mappings", query=kwargs)
 
 		
-    def postMaterialTypeMapping(self, centralServerId, materialTypeMappingDTO):
+    def postmaterialtypemapping(self, centralServerId, materialTypeMappingDTO):
         """Add new material type mapping associated with the central server
 
         ``POST /inn-reach/central-servers/{centralServerId}/material-type-mappings``
@@ -246,12 +237,12 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_postMaterialTypeMapping_request.schema
+            .. literalinclude:: ../files/Settings_postmaterialtypemapping_request.schema
         """
-        return self.call("POST", "/inn-reach/central-servers/{centralServerId}/material-type-mappings", centralServerId, materialTypeMappingDTO)
+        return self.call("POST", f"/inn-reach/central-servers/{centralServerId}/material-type-mappings", materialTypeMappingDTO)
 
 		
-    def updateMaterialTypeMappings(self, centralServerId, materialTypeMappingsDTO):
+    def updatematerialtypemappings(self, centralServerId, materialTypeMappingsDTO):
         """Update (replace) the entire collection of material type mappings associated with the central server
 
         ``PUT /inn-reach/central-servers/{centralServerId}/material-type-mappings``
@@ -267,18 +258,17 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_updateMaterialTypeMappings_request.schema
+            .. literalinclude:: ../files/Settings_updatematerialtypemappings_request.schema
         """
-        return self.call("PUT", "/inn-reach/central-servers/{centralServerId}/material-type-mappings", centralServerId, materialTypeMappingsDTO)
+        return self.call("PUT", f"/inn-reach/central-servers/{centralServerId}/material-type-mappings", materialTypeMappingsDTO)
 
-    def getMaterialTypeMappingById(self, centralServerId, id_):
+    def getmaterialtypemappingbyid(self, centralServerId, id_):
         """Get material type mapping by id
 
         ``GET /inn-reach/central-servers/{centralServerId}/material-type-mappings/{id}``
 
         Args:
             centralServerId (str):  (format: uuid)
-            id_ (str):  (format: uuid)
 
         Returns:
             dict: See Schema below.
@@ -289,19 +279,18 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_getMaterialTypeMappingById_response.schema
+            .. literalinclude:: ../files/Settings_getmaterialtypemappingbyid_response.schema
         """
-        return self.call("GET", "/inn-reach/central-servers/{centralServerId}/material-type-mappings/{id}", centralServerId, id_)
+        return self.call("GET", f"/inn-reach/central-servers/{centralServerId}/material-type-mappings/{id_}")
 
 		
-    def updateMaterialTypeMapping(self, centralServerId, id_, materialTypeMappingDTO):
+    def updatematerialtypemapping(self, centralServerId, materialTypeMappingDTO, id_):
         """Update material type mapping
 
         ``PUT /inn-reach/central-servers/{centralServerId}/material-type-mappings/{id}``
 
         Args:
             centralServerId (str):  (format: uuid)
-            id_ (str):  (format: uuid)
             materialTypeMappingDTO (dict): See Schema below.
 
         Raises:
@@ -311,27 +300,26 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_updateMaterialTypeMapping_request.schema
+            .. literalinclude:: ../files/Settings_updatematerialtypemapping_request.schema
         """
-        return self.call("PUT", "/inn-reach/central-servers/{centralServerId}/material-type-mappings/{id}", centralServerId, id_, materialTypeMappingDTO)
+        return self.call("PUT", f"/inn-reach/central-servers/{centralServerId}/material-type-mappings/{id_}", materialTypeMappingDTO)
 
 		
-    def deleteMaterialTypeMapping(self, centralServerId, id_):
+    def deletematerialtypemapping(self, centralServerId, id_):
         """Delete material type mapping
 
         ``DELETE /inn-reach/central-servers/{centralServerId}/material-type-mappings/{id}``
 
         Args:
             centralServerId (str):  (format: uuid)
-            id_ (str):  (format: uuid)
 
         Raises:
             OkapiRequestNotFound: Item not found
             OkapiFatalError: Internal server error
         """
-        return self.call("DELETE", "/inn-reach/central-servers/{centralServerId}/material-type-mappings/{id}", centralServerId, id_)
+        return self.call("DELETE", f"/inn-reach/central-servers/{centralServerId}/material-type-mappings/{id_}")
 
-    def postInnReachLocation(self, innReachLocationDTO):
+    def postinnreachlocation(self, innReachLocationDTO):
         """Add new InnReach location
 
         ``POST /inn-reach/locations``
@@ -348,12 +336,12 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_postInnReachLocation_request.schema
+            .. literalinclude:: ../files/Settings_postinnreachlocation_request.schema
         """
-        return self.call("POST", "/inn-reach/locations", innReachLocationDTO)
+        return self.call("POST", f"/inn-reach/locations", innReachLocationDTO)
 
 		
-    def getLocations(self, **kwargs):
+    def getlocations(self, **kwargs):
         """Get a list of InnReach locations
 
         ``GET /inn-reach/locations``
@@ -370,17 +358,14 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_getLocations_response.schema
+            .. literalinclude:: ../files/Settings_getlocations_response.schema
         """
         return self.call("GET", "/inn-reach/locations", query=kwargs)
 
-    def getLocationById(self, id_):
+    def getlocationbyid(self, locationId):
         """Get InnReach location by id
 
         ``GET /inn-reach/locations/{locationId}``
-
-        Args:
-            id_ (str):  (format: uuid)
 
         Returns:
             dict: See Schema below.
@@ -391,18 +376,17 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_getLocationById_response.schema
+            .. literalinclude:: ../files/Settings_getlocationbyid_response.schema
         """
-        return self.call("GET", "/inn-reach/locations/{locationId}", id_)
+        return self.call("GET", f"/inn-reach/locations/{locationId}")
 
 		
-    def updateLocation(self, id_, innReachLocationDTO):
+    def updatelocation(self, innReachLocationDTO, locationId):
         """Update InnReach location
 
         ``PUT /inn-reach/locations/{locationId}``
 
         Args:
-            id_ (str):  (format: uuid)
             innReachLocationDTO (dict): See Schema below.
 
         Raises:
@@ -412,26 +396,23 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_updateLocation_request.schema
+            .. literalinclude:: ../files/Settings_updatelocation_request.schema
         """
-        return self.call("PUT", "/inn-reach/locations/{locationId}", id_, innReachLocationDTO)
+        return self.call("PUT", f"/inn-reach/locations/{locationId}", innReachLocationDTO)
 
 		
-    def deleteLocation(self, id_):
+    def deletelocation(self, locationId):
         """Delete InnReach location
 
         ``DELETE /inn-reach/locations/{locationId}``
-
-        Args:
-            id_ (str):  (format: uuid)
 
         Raises:
             OkapiRequestNotFound: Item not found
             OkapiFatalError: Internal server error
         """
-        return self.call("DELETE", "/inn-reach/locations/{locationId}", id_)
+        return self.call("DELETE", f"/inn-reach/locations/{locationId}")
 
-    def getLibraryMappingsByServerId(self, centralServerId, **kwargs):
+    def getlibrarymappingsbyserverid(self, centralServerId, **kwargs):
         """Get a list of library to Inn-Reach location mappings for the given central server
 
         ``GET /inn-reach/central-servers/{centralServerId}/libraries/location-mappings``
@@ -452,12 +433,12 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_getLibraryMappingsByServerId_response.schema
+            .. literalinclude:: ../files/Settings_getlibrarymappingsbyserverid_response.schema
         """
-        return self.call("GET", "/inn-reach/central-servers/{centralServerId}/libraries/location-mappings", centralServerId, query=kwargs)
+        return self.call("GET", f"/inn-reach/central-servers/{centralServerId}/libraries/location-mappings", query=kwargs)
 
 		
-    def putLibraryMappings(self, centralServerId, libraryMappingsDTO):
+    def putlibrarymappings(self, centralServerId, libraryMappingsDTO):
         """Update (replace) the entire collection of library to Inn-Reach location mappings associated with the central server
 
         ``PUT /inn-reach/central-servers/{centralServerId}/libraries/location-mappings``
@@ -473,11 +454,11 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_putLibraryMappings_request.schema
+            .. literalinclude:: ../files/Settings_putlibrarymappings_request.schema
         """
-        return self.call("PUT", "/inn-reach/central-servers/{centralServerId}/libraries/location-mappings", centralServerId, libraryMappingsDTO)
+        return self.call("PUT", f"/inn-reach/central-servers/{centralServerId}/libraries/location-mappings", libraryMappingsDTO)
 
-    def getLocationMappingsByServerId(self, centralServerId, libraryId, **kwargs):
+    def getlocationmappingsbyserverid(self, centralServerId, libraryId, **kwargs):
         """Get a list of library location to Inn-Reach location mappings for the given central server
 
         ``GET /inn-reach/central-servers/{centralServerId}/libraries/{libraryId}/locations/location-mappings``
@@ -499,12 +480,12 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_getLocationMappingsByServerId_response.schema
+            .. literalinclude:: ../files/Settings_getlocationmappingsbyserverid_response.schema
         """
-        return self.call("GET", "/inn-reach/central-servers/{centralServerId}/libraries/{libraryId}/locations/location-mappings", centralServerId, libraryId, query=kwargs)
+        return self.call("GET", f"/inn-reach/central-servers/{centralServerId}/libraries/{libraryId}/locations/location-mappings", query=kwargs)
 
 		
-    def putLocationMappings(self, centralServerId, libraryId, locationMappingsDTO):
+    def putlocationmappings(self, centralServerId, libraryId, locationMappingsDTO):
         """Update (replace) the entire collection of library location to Inn-Reach location mappings associated with the central server
 
         ``PUT /inn-reach/central-servers/{centralServerId}/libraries/{libraryId}/locations/location-mappings``
@@ -521,11 +502,11 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_putLocationMappings_request.schema
+            .. literalinclude:: ../files/Settings_putlocationmappings_request.schema
         """
-        return self.call("PUT", "/inn-reach/central-servers/{centralServerId}/libraries/{libraryId}/locations/location-mappings", centralServerId, libraryId, locationMappingsDTO)
+        return self.call("PUT", f"/inn-reach/central-servers/{centralServerId}/libraries/{libraryId}/locations/location-mappings", locationMappingsDTO)
 
-    def getLocationMappingsForAllLibrariesByServerId(self, centralServerId):
+    def getlocationmappingsforalllibrariesbyserverid(self, centralServerId):
         """Get a list of libraries locations to Inn-Reach location mappings for the given central server
 
         ``GET /inn-reach/central-servers/{centralServerId}/libraries/locations/location-mappings``
@@ -537,9 +518,9 @@ class SettingsAdmin(FolioAdminApi):
             OkapiRequestError: Bad request, e.g. malformed query parameter.
             OkapiFatalError: Internal server error
         """
-        return self.call("GET", "/inn-reach/central-servers/{centralServerId}/libraries/locations/location-mappings", centralServerId)
+        return self.call("GET", f"/inn-reach/central-servers/{centralServerId}/libraries/locations/location-mappings")
 
-    def getCriteriaByServerId(self, centralServerId):
+    def getcriteriabyserverid(self, centralServerId):
         """Get Contribution Criteria by Central Server id
 
         ``GET /inn-reach/central-servers/{centralServerId}/contribution-criteria``
@@ -556,12 +537,12 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_getCriteriaByServerId_response.schema
+            .. literalinclude:: ../files/Settings_getcriteriabyserverid_response.schema
         """
-        return self.call("GET", "/inn-reach/central-servers/{centralServerId}/contribution-criteria", centralServerId)
+        return self.call("GET", f"/inn-reach/central-servers/{centralServerId}/contribution-criteria")
 
 		
-    def postContributionCriteria(self, centralServerId, contributionCriteriaDTO):
+    def postcontributioncriteria(self, centralServerId, contributionCriteriaDTO):
         """Create new contribution criteria for Central Server
 
         ``POST /inn-reach/central-servers/{centralServerId}/contribution-criteria``
@@ -580,12 +561,12 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_postContributionCriteria_request.schema
+            .. literalinclude:: ../files/Settings_postcontributioncriteria_request.schema
         """
-        return self.call("POST", "/inn-reach/central-servers/{centralServerId}/contribution-criteria", centralServerId, contributionCriteriaDTO)
+        return self.call("POST", f"/inn-reach/central-servers/{centralServerId}/contribution-criteria", contributionCriteriaDTO)
 
 		
-    def deleteCriteria(self, centralServerId):
+    def deletecriteria(self, centralServerId):
         """Delete Contribution Criteria Configuration
 
         ``DELETE /inn-reach/central-servers/{centralServerId}/contribution-criteria``
@@ -597,10 +578,10 @@ class SettingsAdmin(FolioAdminApi):
             OkapiRequestNotFound: Item not found
             OkapiFatalError: Internal server error
         """
-        return self.call("DELETE", "/inn-reach/central-servers/{centralServerId}/contribution-criteria", centralServerId)
+        return self.call("DELETE", f"/inn-reach/central-servers/{centralServerId}/contribution-criteria")
 
 		
-    def updateCriteria(self, centralServerId, contributionCriteriaDTO):
+    def updatecriteria(self, centralServerId, contributionCriteriaDTO):
         """Update Contribution Criteria Configuration
 
         ``PUT /inn-reach/central-servers/{centralServerId}/contribution-criteria``
@@ -617,11 +598,11 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_updateCriteria_request.schema
+            .. literalinclude:: ../files/Settings_updatecriteria_request.schema
         """
-        return self.call("PUT", "/inn-reach/central-servers/{centralServerId}/contribution-criteria", centralServerId, contributionCriteriaDTO)
+        return self.call("PUT", f"/inn-reach/central-servers/{centralServerId}/contribution-criteria", contributionCriteriaDTO)
 
-    def authenticateLocalServerKeySecret(self, authenticationRequest):
+    def authenticatelocalserverkeysecret(self, authenticationRequest):
         """Authenticate InnReach local server key/secret pair
 
         ``POST /inn-reach/authentication``
@@ -636,11 +617,11 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_authenticateLocalServerKeySecret_request.schema
+            .. literalinclude:: ../files/Settings_authenticatelocalserverkeysecret_request.schema
         """
-        return self.call("POST", "/inn-reach/authentication", authenticationRequest)
+        return self.call("POST", f"/inn-reach/authentication", authenticationRequest)
 
-    def getItemContributionOptionsConfigurationById(self, centralServerId):
+    def getitemcontributionoptionsconfigurationbyid(self, centralServerId):
         """Get Item Contribution Options Configuration by id
 
         ``GET /inn-reach/central-servers/{centralServerId}/item-contribution-options``
@@ -657,12 +638,12 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_getItemContributionOptionsConfigurationById_response.schema
+            .. literalinclude:: ../files/Settings_getitemcontributionoptionsconfigurationbyid_response.schema
         """
-        return self.call("GET", "/inn-reach/central-servers/{centralServerId}/item-contribution-options", centralServerId)
+        return self.call("GET", f"/inn-reach/central-servers/{centralServerId}/item-contribution-options")
 
 		
-    def updateItemContributionOptionsConfiguration(self, centralServerId, itemContributionOptionsConfigurationDTO):
+    def updateitemcontributionoptionsconfiguration(self, centralServerId, itemContributionOptionsConfigurationDTO):
         """Update Item Contribution Options Configuration
 
         ``PUT /inn-reach/central-servers/{centralServerId}/item-contribution-options``
@@ -678,12 +659,12 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_updateItemContributionOptionsConfiguration_request.schema
+            .. literalinclude:: ../files/Settings_updateitemcontributionoptionsconfiguration_request.schema
         """
-        return self.call("PUT", "/inn-reach/central-servers/{centralServerId}/item-contribution-options", centralServerId, itemContributionOptionsConfigurationDTO)
+        return self.call("PUT", f"/inn-reach/central-servers/{centralServerId}/item-contribution-options", itemContributionOptionsConfigurationDTO)
 
 		
-    def createItemContributionOptionsConfiguration(self, centralServerId, itemContributionOptionsConfigurationDTO):
+    def createitemcontributionoptionsconfiguration(self, centralServerId, itemContributionOptionsConfigurationDTO):
         """Add new item contribution options configuration associated with the central server
 
         ``POST /inn-reach/central-servers/{centralServerId}/item-contribution-options``
@@ -701,11 +682,11 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_createItemContributionOptionsConfiguration_request.schema
+            .. literalinclude:: ../files/Settings_createitemcontributionoptionsconfiguration_request.schema
         """
-        return self.call("POST", "/inn-reach/central-servers/{centralServerId}/item-contribution-options", centralServerId, itemContributionOptionsConfigurationDTO)
+        return self.call("POST", f"/inn-reach/central-servers/{centralServerId}/item-contribution-options", itemContributionOptionsConfigurationDTO)
 
-    def getAgencyMappingsByServerId(self, centralServerId):
+    def getagencymappingsbyserverid(self, centralServerId):
         """Get a list of Inn-Reach Agency to FOLIO location mappings for the given central server
 
         ``GET /inn-reach/central-servers/{centralServerId}/agency-mappings``
@@ -722,12 +703,12 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_getAgencyMappingsByServerId_response.schema
+            .. literalinclude:: ../files/Settings_getagencymappingsbyserverid_response.schema
         """
-        return self.call("GET", "/inn-reach/central-servers/{centralServerId}/agency-mappings", centralServerId)
+        return self.call("GET", f"/inn-reach/central-servers/{centralServerId}/agency-mappings")
 
 		
-    def putAgencyMappings(self, centralServerId, agencyLocationMappingDTO):
+    def putagencymappings(self, centralServerId, agencyLocationMappingDTO):
         """Update (add) INN-Reach Agency to FOLIO location mappings associated with the central server
 
         ``PUT /inn-reach/central-servers/{centralServerId}/agency-mappings``
@@ -743,11 +724,11 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_putAgencyMappings_request.schema
+            .. literalinclude:: ../files/Settings_putagencymappings_request.schema
         """
-        return self.call("PUT", "/inn-reach/central-servers/{centralServerId}/agency-mappings", centralServerId, agencyLocationMappingDTO)
+        return self.call("PUT", f"/inn-reach/central-servers/{centralServerId}/agency-mappings", agencyLocationMappingDTO)
 
-    def getMARCTransformationOptionsSettingsById(self, centralServerId):
+    def getmarctransformationoptionssettingsbyid(self, centralServerId):
         """Get MARC Transformation Options Settings by id
 
         ``GET /inn-reach/central-servers/{centralServerId}/marc-transformation-options``
@@ -764,19 +745,19 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_getMARCTransformationOptionsSettingsById_response.schema
+            .. literalinclude:: ../files/Settings_getmarctransformationoptionssettingsbyid_response.schema
         """
-        return self.call("GET", "/inn-reach/central-servers/{centralServerId}/marc-transformation-options", centralServerId)
+        return self.call("GET", f"/inn-reach/central-servers/{centralServerId}/marc-transformation-options")
 
 		
-    def updateMARCTransformationOptionsSettings(self, centralServerId, MARCTransformationOptionsSettingsDTO):
+    def updatemarctransformationoptionssettings(self, centralServerId, mARCTransformationOptionsSettingsDTO):
         """Update MARC Transformation Options Settings
 
         ``PUT /inn-reach/central-servers/{centralServerId}/marc-transformation-options``
 
         Args:
             centralServerId (str):  (format: uuid)
-            MARCTransformationOptionsSettingsDTO (dict): See Schema below.
+            mARCTransformationOptionsSettingsDTO (dict): See Schema below.
 
         Raises:
             OkapiRequestError: Bad request
@@ -785,19 +766,19 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_updateMARCTransformationOptionsSettings_request.schema
+            .. literalinclude:: ../files/Settings_updatemarctransformationoptionssettings_request.schema
         """
-        return self.call("PUT", "/inn-reach/central-servers/{centralServerId}/marc-transformation-options", centralServerId, MARCTransformationOptionsSettingsDTO)
+        return self.call("PUT", f"/inn-reach/central-servers/{centralServerId}/marc-transformation-options", mARCTransformationOptionsSettingsDTO)
 
 		
-    def createMARCTransformationOptionsSettings(self, centralServerId, MARCTransformationOptionsSettingsDTO):
+    def createmarctransformationoptionssettings(self, centralServerId, mARCTransformationOptionsSettingsDTO):
         """Add new MARC Transformation Options Settings associated with the central server
 
         ``POST /inn-reach/central-servers/{centralServerId}/marc-transformation-options``
 
         Args:
             centralServerId (str):  (format: uuid)
-            MARCTransformationOptionsSettingsDTO (dict): See Schema below.
+            mARCTransformationOptionsSettingsDTO (dict): See Schema below.
 
         Returns:
             dict: See Schema below.
@@ -808,12 +789,12 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_createMARCTransformationOptionsSettings_request.schema
+            .. literalinclude:: ../files/Settings_createmarctransformationoptionssettings_request.schema
         """
-        return self.call("POST", "/inn-reach/central-servers/{centralServerId}/marc-transformation-options", centralServerId, MARCTransformationOptionsSettingsDTO)
+        return self.call("POST", f"/inn-reach/central-servers/{centralServerId}/marc-transformation-options", mARCTransformationOptionsSettingsDTO)
 
 		
-    def deleteMARCTransformationOptionsSettings(self, centralServerId):
+    def deletemarctransformationoptionssettings(self, centralServerId):
         """Delete Marc Transformation Options Settings
 
         ``DELETE /inn-reach/central-servers/{centralServerId}/marc-transformation-options``
@@ -825,9 +806,9 @@ class SettingsAdmin(FolioAdminApi):
             OkapiRequestNotFound: Item not found
             OkapiFatalError: Internal server error
         """
-        return self.call("DELETE", "/inn-reach/central-servers/{centralServerId}/marc-transformation-options", centralServerId)
+        return self.call("DELETE", f"/inn-reach/central-servers/{centralServerId}/marc-transformation-options")
 
-    def getAllMARCTransformationOptionsSettings(self, **kwargs):
+    def getallmarctransformationoptionssettings(self, **kwargs):
         """Get a list of Marc Transformation Options Settings
 
         ``GET /inn-reach/central-servers/marc-transformation-options``
@@ -844,11 +825,11 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_getAllMARCTransformationOptionsSettings_response.schema
+            .. literalinclude:: ../files/Settings_getallmarctransformationoptionssettings_response.schema
         """
         return self.call("GET", "/inn-reach/central-servers/marc-transformation-options", query=kwargs)
 
-    def getPatronTypeMappingsByServerId(self, centralServerId, **kwargs):
+    def getpatrontypemappingsbyserverid(self, centralServerId, **kwargs):
         """Get a list of Patron Type Mappings
 
         ``GET /inn-reach/central-servers/{centralServerId}/patron-type-mappings``
@@ -868,12 +849,12 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_getPatronTypeMappingsByServerId_response.schema
+            .. literalinclude:: ../files/Settings_getpatrontypemappingsbyserverid_response.schema
         """
-        return self.call("GET", "/inn-reach/central-servers/{centralServerId}/patron-type-mappings", centralServerId, query=kwargs)
+        return self.call("GET", f"/inn-reach/central-servers/{centralServerId}/patron-type-mappings", query=kwargs)
 
 		
-    def updatePatronTypeMappings(self, centralServerId, patronTypeMappingsDTO):
+    def updatepatrontypemappings(self, centralServerId, patronTypeMappingsDTO):
         """Update Patron Type Mappings
 
         ``PUT /inn-reach/central-servers/{centralServerId}/patron-type-mappings``
@@ -889,11 +870,11 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_updatePatronTypeMappings_request.schema
+            .. literalinclude:: ../files/Settings_updatepatrontypemappings_request.schema
         """
-        return self.call("PUT", "/inn-reach/central-servers/{centralServerId}/patron-type-mappings", centralServerId, patronTypeMappingsDTO)
+        return self.call("PUT", f"/inn-reach/central-servers/{centralServerId}/patron-type-mappings", patronTypeMappingsDTO)
 
-    def transformMARCRecord(self, centralServerId, inventoryInstanceId):
+    def transformmarcrecord(self, centralServerId, inventoryInstanceId):
         """Transform MARC record by Id according to CentralServer settings
 
         ``GET /inn-reach/central-servers/{centralServerId}/marc-record-transformation/{inventoryInstanceId}``
@@ -911,11 +892,11 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_transformMARCRecord_response.schema
+            .. literalinclude:: ../files/Settings_transformmarcrecord_response.schema
         """
-        return self.call("GET", "/inn-reach/central-servers/{centralServerId}/marc-record-transformation/{inventoryInstanceId}", centralServerId, inventoryInstanceId)
+        return self.call("GET", f"/inn-reach/central-servers/{centralServerId}/marc-record-transformation/{inventoryInstanceId}")
 
-    def getItemTypeMappingsByServerId(self, centralServerId, **kwargs):
+    def getitemtypemappingsbyserverid(self, centralServerId, **kwargs):
         """Get a list of Item Type Mappings
 
         ``GET /inn-reach/central-servers/{centralServerId}/item-type-mappings``
@@ -935,12 +916,12 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_getItemTypeMappingsByServerId_response.schema
+            .. literalinclude:: ../files/Settings_getitemtypemappingsbyserverid_response.schema
         """
-        return self.call("GET", "/inn-reach/central-servers/{centralServerId}/item-type-mappings", centralServerId, query=kwargs)
+        return self.call("GET", f"/inn-reach/central-servers/{centralServerId}/item-type-mappings", query=kwargs)
 
 		
-    def updateItemTypeMappings(self, centralServerId, itemTypeMappingsDTO):
+    def updateitemtypemappings(self, centralServerId, itemTypeMappingsDTO):
         """Update Item Type Mappings
 
         ``PUT /inn-reach/central-servers/{centralServerId}/item-type-mappings``
@@ -956,11 +937,11 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_updateItemTypeMappings_request.schema
+            .. literalinclude:: ../files/Settings_updateitemtypemappings_request.schema
         """
-        return self.call("PUT", "/inn-reach/central-servers/{centralServerId}/item-type-mappings", centralServerId, itemTypeMappingsDTO)
+        return self.call("PUT", f"/inn-reach/central-servers/{centralServerId}/item-type-mappings", itemTypeMappingsDTO)
 
-    def getUserCustomFieldMapping(self, centralServerId):
+    def getusercustomfieldmapping(self, centralServerId):
         """Get a User Custom Field Mapping
 
         ``GET /inn-reach/central-servers/{centralServerId}/user-custom-field-mappings``
@@ -976,12 +957,12 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_getUserCustomFieldMapping_response.schema
+            .. literalinclude:: ../files/Settings_getusercustomfieldmapping_response.schema
         """
-        return self.call("GET", "/inn-reach/central-servers/{centralServerId}/user-custom-field-mappings", centralServerId)
+        return self.call("GET", f"/inn-reach/central-servers/{centralServerId}/user-custom-field-mappings")
 
 		
-    def updateUserCustomFieldMapping(self, centralServerId, userCustomFieldMappingDTO):
+    def updateusercustomfieldmapping(self, centralServerId, userCustomFieldMappingDTO):
         """Update User Custom Field Mapping
 
         ``PUT /inn-reach/central-servers/{centralServerId}/user-custom-field-mappings``
@@ -997,12 +978,12 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_updateUserCustomFieldMapping_request.schema
+            .. literalinclude:: ../files/Settings_updateusercustomfieldmapping_request.schema
         """
-        return self.call("PUT", "/inn-reach/central-servers/{centralServerId}/user-custom-field-mappings", centralServerId, userCustomFieldMappingDTO)
+        return self.call("PUT", f"/inn-reach/central-servers/{centralServerId}/user-custom-field-mappings", userCustomFieldMappingDTO)
 
 		
-    def createUserCustomFieldMapping(self, centralServerId, userCustomFieldMappingDTO):
+    def createusercustomfieldmapping(self, centralServerId, userCustomFieldMappingDTO):
         """Add new User Custom Field Mapping associated with the central server
 
         ``POST /inn-reach/central-servers/{centralServerId}/user-custom-field-mappings``
@@ -1020,11 +1001,11 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_createUserCustomFieldMapping_request.schema
+            .. literalinclude:: ../files/Settings_createusercustomfieldmapping_request.schema
         """
-        return self.call("POST", "/inn-reach/central-servers/{centralServerId}/user-custom-field-mappings", centralServerId, userCustomFieldMappingDTO)
+        return self.call("POST", f"/inn-reach/central-servers/{centralServerId}/user-custom-field-mappings", userCustomFieldMappingDTO)
 
-    def getCentralPatronTypeMappings(self, centralServerId, **kwargs):
+    def getcentralpatrontypemappings(self, centralServerId, **kwargs):
         """Get a list of Central Patron Type Mappings
 
         ``GET /inn-reach/central-servers/{centralServerId}/central-patron-type-mappings``
@@ -1044,12 +1025,12 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_getCentralPatronTypeMappings_response.schema
+            .. literalinclude:: ../files/Settings_getcentralpatrontypemappings_response.schema
         """
-        return self.call("GET", "/inn-reach/central-servers/{centralServerId}/central-patron-type-mappings", centralServerId, query=kwargs)
+        return self.call("GET", f"/inn-reach/central-servers/{centralServerId}/central-patron-type-mappings", query=kwargs)
 
 		
-    def updateCentralPatronTypeMappings(self, centralServerId, centralPatronTypeMappingsDTO):
+    def updatecentralpatrontypemappings(self, centralServerId, centralPatronTypeMappingsDTO):
         """Update Central Patron Type Mappings
 
         ``PUT /inn-reach/central-servers/{centralServerId}/central-patron-type-mappings``
@@ -1065,11 +1046,11 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_updateCentralPatronTypeMappings_request.schema
+            .. literalinclude:: ../files/Settings_updatecentralpatrontypemappings_request.schema
         """
-        return self.call("PUT", "/inn-reach/central-servers/{centralServerId}/central-patron-type-mappings", centralServerId, centralPatronTypeMappingsDTO)
+        return self.call("PUT", f"/inn-reach/central-servers/{centralServerId}/central-patron-type-mappings", centralPatronTypeMappingsDTO)
 
-    def saveInnReachRecallUser(self, centralServerId, innReachRecallUserDTO):
+    def saveinnreachrecalluser(self, centralServerId, innReachRecallUserDTO):
         """Add new Inn-Reach recall user to central server
 
         ``POST /inn-reach/central-servers/{centralServerId}/inn-reach-recall-user``
@@ -1087,12 +1068,12 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_saveInnReachRecallUser_request.schema
+            .. literalinclude:: ../files/Settings_saveinnreachrecalluser_request.schema
         """
-        return self.call("POST", "/inn-reach/central-servers/{centralServerId}/inn-reach-recall-user", centralServerId, innReachRecallUserDTO)
+        return self.call("POST", f"/inn-reach/central-servers/{centralServerId}/inn-reach-recall-user", innReachRecallUserDTO)
 
 		
-    def getCentralServerRecallUser(self, centralServerId):
+    def getcentralserverrecalluser(self, centralServerId):
         """Get Inn-Reach Central server recall user
 
         ``GET /inn-reach/central-servers/{centralServerId}/inn-reach-recall-user``
@@ -1108,12 +1089,12 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_getCentralServerRecallUser_response.schema
+            .. literalinclude:: ../files/Settings_getcentralserverrecalluser_response.schema
         """
-        return self.call("GET", "/inn-reach/central-servers/{centralServerId}/inn-reach-recall-user", centralServerId)
+        return self.call("GET", f"/inn-reach/central-servers/{centralServerId}/inn-reach-recall-user")
 
 		
-    def updateCentralServerRecallUser(self, centralServerId, innReachRecallUserDTO):
+    def updatecentralserverrecalluser(self, centralServerId, innReachRecallUserDTO):
         """Update Inn-Reach Central server recall user
 
         ``PUT /inn-reach/central-servers/{centralServerId}/inn-reach-recall-user``
@@ -1129,11 +1110,11 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_updateCentralServerRecallUser_request.schema
+            .. literalinclude:: ../files/Settings_updatecentralserverrecalluser_request.schema
         """
-        return self.call("PUT", "/inn-reach/central-servers/{centralServerId}/inn-reach-recall-user", centralServerId, innReachRecallUserDTO)
+        return self.call("PUT", f"/inn-reach/central-servers/{centralServerId}/inn-reach-recall-user", innReachRecallUserDTO)
 
-    def getConfigurationByCentralServerId(self, centralServerId):
+    def getconfigurationbycentralserverid(self, centralServerId):
         """Get Visible Patron Field Configuration by Central Server id
 
         ``GET /inn-reach/central-servers/{centralServerId}/visible-patron-field-configuration``
@@ -1150,12 +1131,12 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_getConfigurationByCentralServerId_response.schema
+            .. literalinclude:: ../files/Settings_getconfigurationbycentralserverid_response.schema
         """
-        return self.call("GET", "/inn-reach/central-servers/{centralServerId}/visible-patron-field-configuration", centralServerId)
+        return self.call("GET", f"/inn-reach/central-servers/{centralServerId}/visible-patron-field-configuration")
 
 		
-    def updateConfiguration(self, centralServerId, visiblePatronFieldConfigurationDTO):
+    def updateconfiguration(self, centralServerId, visiblePatronFieldConfigurationDTO):
         """Update Visible Patron Field Configuration
 
         ``PUT /inn-reach/central-servers/{centralServerId}/visible-patron-field-configuration``
@@ -1171,12 +1152,12 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_updateConfiguration_request.schema
+            .. literalinclude:: ../files/Settings_updateconfiguration_request.schema
         """
-        return self.call("PUT", "/inn-reach/central-servers/{centralServerId}/visible-patron-field-configuration", centralServerId, visiblePatronFieldConfigurationDTO)
+        return self.call("PUT", f"/inn-reach/central-servers/{centralServerId}/visible-patron-field-configuration", visiblePatronFieldConfigurationDTO)
 
 		
-    def createConfiguration(self, centralServerId, visiblePatronFieldConfigurationDTO):
+    def createconfiguration(self, centralServerId, visiblePatronFieldConfigurationDTO):
         """Add new Visible Patron Field Configuration associated with the central server
 
         ``POST /inn-reach/central-servers/{centralServerId}/visible-patron-field-configuration``
@@ -1194,11 +1175,11 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_createConfiguration_request.schema
+            .. literalinclude:: ../files/Settings_createconfiguration_request.schema
         """
-        return self.call("POST", "/inn-reach/central-servers/{centralServerId}/visible-patron-field-configuration", centralServerId, visiblePatronFieldConfigurationDTO)
+        return self.call("POST", f"/inn-reach/central-servers/{centralServerId}/visible-patron-field-configuration", visiblePatronFieldConfigurationDTO)
 
-    def getPagingSlipTemplate(self, centralServerId):
+    def getpagingsliptemplate(self, centralServerId):
         """Get Paging Slip Template
 
         ``GET /inn-reach/central-servers/{centralServerId}/paging-slip-template``
@@ -1215,12 +1196,12 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_getPagingSlipTemplate_response.schema
+            .. literalinclude:: ../files/Settings_getpagingsliptemplate_response.schema
         """
-        return self.call("GET", "/inn-reach/central-servers/{centralServerId}/paging-slip-template", centralServerId)
+        return self.call("GET", f"/inn-reach/central-servers/{centralServerId}/paging-slip-template")
 
 		
-    def updatePagingSlipTemplate(self, centralServerId, pagingSlipTemplateDTO):
+    def updatepagingsliptemplate(self, centralServerId, pagingSlipTemplateDTO):
         """Update Paging Slip Template
 
         ``PUT /inn-reach/central-servers/{centralServerId}/paging-slip-template``
@@ -1236,11 +1217,11 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_updatePagingSlipTemplate_request.schema
+            .. literalinclude:: ../files/Settings_updatepagingsliptemplate_request.schema
         """
-        return self.call("PUT", "/inn-reach/central-servers/{centralServerId}/paging-slip-template", centralServerId, pagingSlipTemplateDTO)
+        return self.call("PUT", f"/inn-reach/central-servers/{centralServerId}/paging-slip-template", pagingSlipTemplateDTO)
 
-    def getAllPagingSlipTemplates(self):
+    def getallpagingsliptemplates(self):
         """Get list of Paging Slip Templates
 
         ``GET /inn-reach/central-servers/paging-slip-template``
@@ -1254,21 +1235,20 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_getAllPagingSlipTemplates_response.schema
+            .. literalinclude:: ../files/Settings_getallpagingsliptemplates_response.schema
         """
         return self.call("GET", "/inn-reach/central-servers/paging-slip-template")
 
 
 
 
-class CirculationAdmin(FolioAdminApi):
+class Circulation(FolioApi):
     """INN-Reach Circulation API
-    Administration
 
     
     """
 
-    def getCentralServerAgencies(self):
+    def getcentralserveragencies(self):
         """Get a combined list of agencies available from all configured central servers
 
         ``GET /inn-reach/central-servers/agencies``
@@ -1281,11 +1261,11 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_getCentralServerAgencies_response.schema
+            .. literalinclude:: ../files/Circulation_getcentralserveragencies_response.schema
         """
         return self.call("GET", "/inn-reach/central-servers/agencies")
 
-    def getCentralServerItemTypes(self):
+    def getcentralserveritemtypes(self):
         """Get a combined list of item types available from all configured central servers
 
         ``GET /inn-reach/central-servers/item-types``
@@ -1298,11 +1278,11 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_getCentralServerItemTypes_response.schema
+            .. literalinclude:: ../files/Circulation_getcentralserveritemtypes_response.schema
         """
         return self.call("GET", "/inn-reach/central-servers/item-types")
 
-    def getCentralServerPatronTypes(self):
+    def getcentralserverpatrontypes(self):
         """Get a combined list of patron types available from all configured central servers
 
         ``GET /inn-reach/central-servers/patron-types``
@@ -1315,11 +1295,11 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_getCentralServerPatronTypes_response.schema
+            .. literalinclude:: ../files/Circulation_getcentralserverpatrontypes_response.schema
         """
         return self.call("GET", "/inn-reach/central-servers/patron-types")
 
-    def getBibRecord(self, bibId, centralCode):
+    def getbibrecord(self, bibId, centralCode):
         """Handles D2IR request from central server for an already-contributed Bib record.
 
         ``POST /inn-reach/d2ir/getbibrecord/{bibId}/{centralCode}``
@@ -1336,11 +1316,11 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_getBibRecord_response.schema
+            .. literalinclude:: ../files/Circulation_getbibrecord_response.schema
         """
-        return self.call("POST", "/inn-reach/d2ir/getbibrecord/{bibId}/{centralCode}", bibId, centralCode)
+        return self.call("POST", f"/inn-reach/d2ir/getbibrecord/{bibId}/{centralCode}")
 
-    def createInnReachTransactionItemHold(self, trackingId, centralCode, transactionHoldDTO):
+    def createinnreachtransactionitemhold(self, trackingId, centralCode, transactionHoldDTO):
         """Originates an item hold at the owning site
 
         ``POST /inn-reach/d2ir/circ/itemhold/{trackingId}/{centralCode}``
@@ -1359,12 +1339,12 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_createInnReachTransactionItemHold_request.schema
-            .. literalinclude:: ../files/Circulation_createInnReachTransactionItemHold_request.schema_response.schema
+            .. literalinclude:: ../files/Circulation_createinnreachtransactionitemhold_request.schema
+            .. literalinclude:: ../files/Circulation_createinnreachtransactionitemhold_request.schema_response.schema
         """
-        return self.call("POST", "/inn-reach/d2ir/circ/itemhold/{trackingId}/{centralCode}", trackingId, centralCode, transactionHoldDTO)
+        return self.call("POST", f"/inn-reach/d2ir/circ/itemhold/{trackingId}/{centralCode}", transactionHoldDTO)
 
-    def getAllTransactions(self, **kwargs):
+    def getalltransactions(self, **kwargs):
         """Get a list of transactions for the given central server
 
         ``GET /inn-reach/transactions``
@@ -1383,17 +1363,14 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_getAllTransactions_response.schema
+            .. literalinclude:: ../files/Circulation_getalltransactions_response.schema
         """
         return self.call("GET", "/inn-reach/transactions", query=kwargs)
 
-    def getInnReachTransaction(self, id_):
+    def getinnreachtransaction(self, id_):
         """get inn-reach transaction by id
 
         ``GET /inn-reach/transactions/{id}``
-
-        Args:
-            id_ (str):  (format: uuid)
 
         Returns:
             dict: See Schema below.
@@ -1404,18 +1381,17 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_getInnReachTransaction_response.schema
+            .. literalinclude:: ../files/Circulation_getinnreachtransaction_response.schema
         """
-        return self.call("GET", "/inn-reach/transactions/{id}", id_)
+        return self.call("GET", f"/inn-reach/transactions/{id_}")
 
 		
-    def updateInnReachTransaction(self, id_, innReachTransactionDTO):
+    def updateinnreachtransaction(self, innReachTransactionDTO, id_):
         """update inn-reach transaction by id
 
         ``PUT /inn-reach/transactions/{id}``
 
         Args:
-            id_ (str):  (format: uuid)
             innReachTransactionDTO (dict): See Schema below.
 
         Raises:
@@ -1424,17 +1400,16 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_updateInnReachTransaction_request.schema
+            .. literalinclude:: ../files/Circulation_updateinnreachtransaction_request.schema
         """
-        return self.call("PUT", "/inn-reach/transactions/{id}", id_, innReachTransactionDTO)
+        return self.call("PUT", f"/inn-reach/transactions/{id_}", innReachTransactionDTO)
 
-    def checkInPatronHoldItem(self, id_, servicePointId):
+    def checkinpatronholditem(self, servicePointId, id_):
         """receive item for patron hold transaction
 
         ``POST /inn-reach/transactions/{id}/receive-item/{servicePointId}``
 
         Args:
-            id_ (str):  (format: uuid)
             servicePointId (str):  (format: uuid)
 
         Returns:
@@ -1446,17 +1421,16 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_checkInPatronHoldItem_response.schema
+            .. literalinclude:: ../files/Circulation_checkinpatronholditem_response.schema
         """
-        return self.call("POST", "/inn-reach/transactions/{id}/receive-item/{servicePointId}", id_, servicePointId)
+        return self.call("POST", f"/inn-reach/transactions/{id_}/receive-item/{servicePointId}")
 
-    def checkInPatronHoldUnshippedItem(self, id_, servicePointId, itemBarcode):
+    def checkinpatronholdunshippeditem(self, servicePointId, itemBarcode, id_):
         """receive un-shipped/unannounced item for patron hold transaction
 
         ``POST /inn-reach/transactions/{id}/receive-unshipped-item/{servicePointId}/{itemBarcode}``
 
         Args:
-            id_ (str):  (format: uuid)
             servicePointId (str):  (format: uuid)
             itemBarcode (str): Barcode of the item
 
@@ -1469,47 +1443,44 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_checkInPatronHoldUnshippedItem_response.schema
+            .. literalinclude:: ../files/Circulation_checkinpatronholdunshippeditem_response.schema
         """
-        return self.call("POST", "/inn-reach/transactions/{id}/receive-unshipped-item/{servicePointId}/{itemBarcode}", id_, servicePointId, itemBarcode)
+        return self.call("POST", f"/inn-reach/transactions/{id_}/receive-unshipped-item/{servicePointId}/{itemBarcode}")
 
-    def finalCheckInItemHold(self, id_, servicePointId):
+    def finalcheckinitemhold(self, servicePointId, id_):
         """Final check-in of an item loaned through INN-Reach
 
         ``POST /inn-reach/transactions/{id}/itemhold/finalcheckin/{servicePointId}``
 
         Args:
-            id_ (str):  (format: uuid)
             servicePointId (str):  (format: uuid)
 
         Raises:
             OkapiRequestNotFound: Item not found
             OkapiFatalError: Internal server error
         """
-        return self.call("POST", "/inn-reach/transactions/{id}/itemhold/finalcheckin/{servicePointId}", id_, servicePointId)
+        return self.call("POST", f"/inn-reach/transactions/{id_}/itemhold/finalcheckin/{servicePointId}")
 
-    def transferItemHold(self, id_, itemId):
+    def transferitemhold(self, itemId, id_):
         """Transfer item hold to another item
 
         ``POST /inn-reach/transactions/{id}/itemhold/transfer-item/{itemId}``
 
         Args:
-            id_ (str):  (format: uuid)
             itemId (str):  (format: uuid)
 
         Raises:
             OkapiRequestNotFound: Item not found
             OkapiFatalError: Internal server error
         """
-        return self.call("POST", "/inn-reach/transactions/{id}/itemhold/transfer-item/{itemId}", id_, itemId)
+        return self.call("POST", f"/inn-reach/transactions/{id_}/itemhold/transfer-item/{itemId}")
 
-    def checkOutPatronHoldItem(self, id_, servicePointId):
+    def checkoutpatronholditem(self, servicePointId, id_):
         """Checks out to requesting patron
 
         ``POST /inn-reach/transactions/{id}/patronhold/check-out-item/{servicePointId}``
 
         Args:
-            id_ (str):  (format: uuid)
             servicePointId (str):  (format: uuid)
 
         Returns:
@@ -1521,17 +1492,16 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_checkOutPatronHoldItem_response.schema
+            .. literalinclude:: ../files/Circulation_checkoutpatronholditem_response.schema
         """
-        return self.call("POST", "/inn-reach/transactions/{id}/patronhold/check-out-item/{servicePointId}", id_, servicePointId)
+        return self.call("POST", f"/inn-reach/transactions/{id_}/patronhold/check-out-item/{servicePointId}")
 
-    def checkOutLocalHoldItem(self, id_, servicePointId):
+    def checkoutlocalholditem(self, servicePointId, id_):
         """Checks out Local Hold item to requesting patron
 
         ``POST /inn-reach/transactions/{id}/localhold/check-out-item/{servicePointId}``
 
         Args:
-            id_ (str):  (format: uuid)
             servicePointId (str):  (format: uuid)
 
         Returns:
@@ -1543,11 +1513,11 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_checkOutLocalHoldItem_response.schema
+            .. literalinclude:: ../files/Circulation_checkoutlocalholditem_response.schema
         """
-        return self.call("POST", "/inn-reach/transactions/{id}/localhold/check-out-item/{servicePointId}", id_, servicePointId)
+        return self.call("POST", f"/inn-reach/transactions/{id_}/localhold/check-out-item/{servicePointId}")
 
-    def checkOutItemHoldItem(self, itemBarcode, servicePointId):
+    def checkoutitemholditem(self, itemBarcode, servicePointId):
         """checks out an item from the owning site to the borrowing site for an Item Hold transaction
 
         ``PUT /inn-reach/transactions/{itemBarcode}/check-out-item/{servicePointId}``
@@ -1565,17 +1535,16 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_checkOutItemHoldItem_response.schema
+            .. literalinclude:: ../files/Circulation_checkoutitemholditem_response.schema
         """
-        return self.call("PUT", "/inn-reach/transactions/{itemBarcode}/check-out-item/{servicePointId}", itemBarcode, servicePointId)
+        return self.call("PUT", f"/inn-reach/transactions/{itemBarcode}/check-out-item/{servicePointId}")
 
-    def cancelPatronHoldTransaction(self, id_, cancelTransactionHoldDTO):
+    def cancelpatronholdtransaction(self, cancelTransactionHoldDTO, id_):
         """Cancel patron hold transaction with the reason provided
 
         ``POST /inn-reach/transactions/{id}/patronhold/cancel``
 
         Args:
-            id_ (str):  (format: uuid)
             cancelTransactionHoldDTO (dict): See Schema below.
 
         Returns:
@@ -1587,47 +1556,42 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_cancelPatronHoldTransaction_request.schema
-            .. literalinclude:: ../files/Circulation_cancelPatronHoldTransaction_request.schema_response.schema
+            .. literalinclude:: ../files/Circulation_cancelpatronholdtransaction_request.schema
+            .. literalinclude:: ../files/Circulation_cancelpatronholdtransaction_request.schema_response.schema
         """
-        return self.call("POST", "/inn-reach/transactions/{id}/patronhold/cancel", id_, cancelTransactionHoldDTO)
+        return self.call("POST", f"/inn-reach/transactions/{id_}/patronhold/cancel", cancelTransactionHoldDTO)
 
-    def recallItemHoldTransaction(self, id_):
+    def recallitemholdtransaction(self, id_):
         """Recall item hold transaction
 
         ``POST /inn-reach/transactions/{id}/itemhold/recall``
-
-        Args:
-            id_ (str):  (format: uuid)
 
         Raises:
             OkapiRequestNotFound: Item not found
             OkapiFatalError: Internal server error
         """
-        return self.call("POST", "/inn-reach/transactions/{id}/itemhold/recall", id_)
+        return self.call("POST", f"/inn-reach/transactions/{id_}/itemhold/recall")
 
-    def returnPatronHoldItem(self, id_, servicePointId):
+    def returnpatronholditem(self, servicePointId, id_):
         """Returns Patron Hold item
 
         ``POST /inn-reach/transactions/{id}/patronhold/return-item/{servicePointId}``
 
         Args:
-            id_ (str):  (format: uuid)
             servicePointId (str):  (format: uuid)
 
         Raises:
             OkapiRequestNotFound: Item not found
             OkapiFatalError: Internal server error
         """
-        return self.call("POST", "/inn-reach/transactions/{id}/patronhold/return-item/{servicePointId}", id_, servicePointId)
+        return self.call("POST", f"/inn-reach/transactions/{id_}/patronhold/return-item/{servicePointId}")
 
-    def cancelItemHoldTransaction(self, id_, cancelTransactionHoldDTO):
+    def cancelitemholdtransaction(self, cancelTransactionHoldDTO, id_):
         """Cancel item hold transaction with the reason provided
 
         ``POST /inn-reach/transactions/{id}/itemhold/cancel``
 
         Args:
-            id_ (str):  (format: uuid)
             cancelTransactionHoldDTO (dict): See Schema below.
 
         Raises:
@@ -1636,17 +1600,16 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_cancelItemHoldTransaction_request.schema
+            .. literalinclude:: ../files/Circulation_cancelitemholdtransaction_request.schema
         """
-        return self.call("POST", "/inn-reach/transactions/{id}/itemhold/cancel", id_, cancelTransactionHoldDTO)
+        return self.call("POST", f"/inn-reach/transactions/{id_}/itemhold/cancel", cancelTransactionHoldDTO)
 
-    def cancelLocalHoldTransaction(self, id_, cancelTransactionHoldDTO):
+    def cancellocalholdtransaction(self, cancelTransactionHoldDTO, id_):
         """Cancel local hold transaction with the reason provided
 
         ``POST /inn-reach/transactions/{id}/localhold/cancel``
 
         Args:
-            id_ (str):  (format: uuid)
             cancelTransactionHoldDTO (dict): See Schema below.
 
         Returns:
@@ -1658,12 +1621,12 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_cancelLocalHoldTransaction_request.schema
-            .. literalinclude:: ../files/Circulation_cancelLocalHoldTransaction_request.schema_response.schema
+            .. literalinclude:: ../files/Circulation_cancellocalholdtransaction_request.schema
+            .. literalinclude:: ../files/Circulation_cancellocalholdtransaction_request.schema_response.schema
         """
-        return self.call("POST", "/inn-reach/transactions/{id}/localhold/cancel", id_, cancelTransactionHoldDTO)
+        return self.call("POST", f"/inn-reach/transactions/{id_}/localhold/cancel", cancelTransactionHoldDTO)
 
-    def verifyPatron(self, patronInfoRequestDTO):
+    def verifypatron(self, patronInfoRequestDTO):
         """Handles D2IR request from central server for patron verification.
 
         ``POST /inn-reach/d2ir/circ/verifypatron``
@@ -1679,12 +1642,12 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_verifyPatron_request.schema
-            .. literalinclude:: ../files/Circulation_verifyPatron_request.schema_response.schema
+            .. literalinclude:: ../files/Circulation_verifypatron_request.schema
+            .. literalinclude:: ../files/Circulation_verifypatron_request.schema_response.schema
         """
-        return self.call("POST", "/inn-reach/d2ir/circ/verifypatron", patronInfoRequestDTO)
+        return self.call("POST", f"/inn-reach/d2ir/circ/verifypatron", patronInfoRequestDTO)
 
-    def patronHold(self, trackingId, centralCode, patronHoldDTO):
+    def patronhold(self, trackingId, centralCode, patronHoldDTO):
         """Originate a patron hold
 
         ``POST /inn-reach/d2ir/circ/patronhold/{trackingId}/{centralCode}``
@@ -1703,12 +1666,12 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_patronHold_request.schema
-            .. literalinclude:: ../files/Circulation_patronHold_request.schema_response.schema
+            .. literalinclude:: ../files/Circulation_patronhold_request.schema
+            .. literalinclude:: ../files/Circulation_patronhold_request.schema_response.schema
         """
-        return self.call("POST", "/inn-reach/d2ir/circ/patronhold/{trackingId}/{centralCode}", trackingId, centralCode, patronHoldDTO)
+        return self.call("POST", f"/inn-reach/d2ir/circ/patronhold/{trackingId}/{centralCode}", patronHoldDTO)
 
-    def itemShipped(self, trackingId, centralCode, itemShippedDTO):
+    def itemshipped(self, trackingId, centralCode, itemShippedDTO):
         """Process shipped item
 
         ``PUT /inn-reach/d2ir/circ/itemshipped/{trackingId}/{centralCode}``
@@ -1727,12 +1690,12 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_itemShipped_request.schema
-            .. literalinclude:: ../files/Circulation_itemShipped_request.schema_response.schema
+            .. literalinclude:: ../files/Circulation_itemshipped_request.schema
+            .. literalinclude:: ../files/Circulation_itemshipped_request.schema_response.schema
         """
-        return self.call("PUT", "/inn-reach/d2ir/circ/itemshipped/{trackingId}/{centralCode}", trackingId, centralCode, itemShippedDTO)
+        return self.call("PUT", f"/inn-reach/d2ir/circ/itemshipped/{trackingId}/{centralCode}", itemShippedDTO)
 
-    def cancelPatronHold(self, trackingId, centralCode, cancelRequestDTO):
+    def cancelpatronhold(self, trackingId, centralCode, cancelRequestDTO):
         """Cancel Patron Hold transaction
 
         ``PUT /inn-reach/d2ir/circ/cancelrequest/{trackingId}/{centralCode}``
@@ -1751,12 +1714,12 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_cancelPatronHold_request.schema
-            .. literalinclude:: ../files/Circulation_cancelPatronHold_request.schema_response.schema
+            .. literalinclude:: ../files/Circulation_cancelpatronhold_request.schema
+            .. literalinclude:: ../files/Circulation_cancelpatronhold_request.schema_response.schema
         """
-        return self.call("PUT", "/inn-reach/d2ir/circ/cancelrequest/{trackingId}/{centralCode}", trackingId, centralCode, cancelRequestDTO)
+        return self.call("PUT", f"/inn-reach/d2ir/circ/cancelrequest/{trackingId}/{centralCode}", cancelRequestDTO)
 
-    def transferRequest(self, trackingId, centralCode, transferRequestDTO):
+    def transferrequest(self, trackingId, centralCode, transferRequestDTO):
         """Put transfer request
 
         ``PUT /inn-reach/d2ir/circ/transferrequest/{trackingId}/{centralCode}``
@@ -1775,12 +1738,12 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_transferRequest_request.schema
-            .. literalinclude:: ../files/Circulation_transferRequest_request.schema_response.schema
+            .. literalinclude:: ../files/Circulation_transferrequest_request.schema
+            .. literalinclude:: ../files/Circulation_transferrequest_request.schema_response.schema
         """
-        return self.call("PUT", "/inn-reach/d2ir/circ/transferrequest/{trackingId}/{centralCode}", trackingId, centralCode, transferRequestDTO)
+        return self.call("PUT", f"/inn-reach/d2ir/circ/transferrequest/{trackingId}/{centralCode}", transferRequestDTO)
 
-    def cancelItemHold(self, trackingId, centralCode, baseCircRequestDTO):
+    def cancelitemhold(self, trackingId, centralCode, baseCircRequestDTO):
         """Cancel an item request
 
         ``PUT /inn-reach/d2ir/circ/cancelitemhold/{trackingId}/{centralCode}``
@@ -1799,12 +1762,12 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_cancelItemHold_request.schema
-            .. literalinclude:: ../files/Circulation_cancelItemHold_request.schema_response.schema
+            .. literalinclude:: ../files/Circulation_cancelitemhold_request.schema
+            .. literalinclude:: ../files/Circulation_cancelitemhold_request.schema_response.schema
         """
-        return self.call("PUT", "/inn-reach/d2ir/circ/cancelitemhold/{trackingId}/{centralCode}", trackingId, centralCode, baseCircRequestDTO)
+        return self.call("PUT", f"/inn-reach/d2ir/circ/cancelitemhold/{trackingId}/{centralCode}", baseCircRequestDTO)
 
-    def receiveUnshipped(self, trackingId, centralCode, baseCircRequestDTO):
+    def receiveunshipped(self, trackingId, centralCode, baseCircRequestDTO):
         """Report unshipped item received to owning site for item hold
 
         ``PUT /inn-reach/d2ir/circ/receiveunshipped/{trackingId}/{centralCode}``
@@ -1822,12 +1785,12 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_receiveUnshipped_request.schema
-            .. literalinclude:: ../files/Circulation_receiveUnshipped_request.schema_response.schema
+            .. literalinclude:: ../files/Circulation_receiveunshipped_request.schema
+            .. literalinclude:: ../files/Circulation_receiveunshipped_request.schema_response.schema
         """
-        return self.call("PUT", "/inn-reach/d2ir/circ/receiveunshipped/{trackingId}/{centralCode}", trackingId, centralCode, baseCircRequestDTO)
+        return self.call("PUT", f"/inn-reach/d2ir/circ/receiveunshipped/{trackingId}/{centralCode}", baseCircRequestDTO)
 
-    def itemInTransit(self, trackingId, centralCode, baseCircRequestDTO):
+    def itemintransit(self, trackingId, centralCode, baseCircRequestDTO):
         """Receives message from central server to owning site indicating that a loaned item is being returned after being loaned to the borrowing patron.
 
         ``PUT /inn-reach/d2ir/circ/intransit/{trackingId}/{centralCode}``
@@ -1846,12 +1809,12 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_itemInTransit_request.schema
-            .. literalinclude:: ../files/Circulation_itemInTransit_request.schema_response.schema
+            .. literalinclude:: ../files/Circulation_itemintransit_request.schema
+            .. literalinclude:: ../files/Circulation_itemintransit_request.schema_response.schema
         """
-        return self.call("PUT", "/inn-reach/d2ir/circ/intransit/{trackingId}/{centralCode}", trackingId, centralCode, baseCircRequestDTO)
+        return self.call("PUT", f"/inn-reach/d2ir/circ/intransit/{trackingId}/{centralCode}", baseCircRequestDTO)
 
-    def returnUncirculated(self, trackingId, centralCode, returnUncirculatedDTO):
+    def returnuncirculated(self, trackingId, centralCode, returnUncirculatedDTO):
         """Return uncirculated message for item hold
 
         ``PUT /inn-reach/d2ir/circ/returnuncirculated/{trackingId}/{centralCode}``
@@ -1870,12 +1833,12 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_returnUncirculated_request.schema
-            .. literalinclude:: ../files/Circulation_returnUncirculated_request.schema_response.schema
+            .. literalinclude:: ../files/Circulation_returnuncirculated_request.schema
+            .. literalinclude:: ../files/Circulation_returnuncirculated_request.schema_response.schema
         """
-        return self.call("PUT", "/inn-reach/d2ir/circ/returnuncirculated/{trackingId}/{centralCode}", trackingId, centralCode, returnUncirculatedDTO)
+        return self.call("PUT", f"/inn-reach/d2ir/circ/returnuncirculated/{trackingId}/{centralCode}", returnUncirculatedDTO)
 
-    def createLocalHold(self, trackingId, centralCode, localHoldDTO):
+    def createlocalhold(self, trackingId, centralCode, localHoldDTO):
         """Create Local Hold - Central server to owning site when a local patron of that site requests an item through central.
 
         ``PUT /inn-reach/d2ir/circ/localhold/{trackingId}/{centralCode}``
@@ -1894,12 +1857,12 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_createLocalHold_request.schema
-            .. literalinclude:: ../files/Circulation_createLocalHold_request.schema_response.schema
+            .. literalinclude:: ../files/Circulation_createlocalhold_request.schema
+            .. literalinclude:: ../files/Circulation_createlocalhold_request.schema_response.schema
         """
-        return self.call("PUT", "/inn-reach/d2ir/circ/localhold/{trackingId}/{centralCode}", trackingId, centralCode, localHoldDTO)
+        return self.call("PUT", f"/inn-reach/d2ir/circ/localhold/{trackingId}/{centralCode}", localHoldDTO)
 
-    def itemReceived(self, trackingId, centralCode, itemReceivedDTO):
+    def itemreceived(self, trackingId, centralCode, itemReceivedDTO):
         """Shipped item has been received
 
         ``PUT /inn-reach/d2ir/circ/itemreceived/{trackingId}/{centralCode}``
@@ -1918,10 +1881,10 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_itemReceived_request.schema
-            .. literalinclude:: ../files/Circulation_itemReceived_request.schema_response.schema
+            .. literalinclude:: ../files/Circulation_itemreceived_request.schema
+            .. literalinclude:: ../files/Circulation_itemreceived_request.schema_response.schema
         """
-        return self.call("PUT", "/inn-reach/d2ir/circ/itemreceived/{trackingId}/{centralCode}", trackingId, centralCode, itemReceivedDTO)
+        return self.call("PUT", f"/inn-reach/d2ir/circ/itemreceived/{trackingId}/{centralCode}", itemReceivedDTO)
 
     def recall(self, trackingId, centralCode, recallDTO):
         """Item has been recalled
@@ -1945,9 +1908,9 @@ class CirculationAdmin(FolioAdminApi):
             .. literalinclude:: ../files/Circulation_recall_request.schema
             .. literalinclude:: ../files/Circulation_recall_request.schema_response.schema
         """
-        return self.call("PUT", "/inn-reach/d2ir/circ/recall/{trackingId}/{centralCode}", trackingId, centralCode, recallDTO)
+        return self.call("PUT", f"/inn-reach/d2ir/circ/recall/{trackingId}/{centralCode}", recallDTO)
 
-    def borrowerRenew(self, trackingId, centralCode, renewLoanDTO):
+    def borrowerrenew(self, trackingId, centralCode, renewLoanDTO):
         """Borrower Renew Message for Item Hold
 
         ``PUT /inn-reach/d2ir/circ/borrowerrenew/{trackingId}/{centralCode}``
@@ -1966,12 +1929,12 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_borrowerRenew_request.schema
-            .. literalinclude:: ../files/Circulation_borrowerRenew_request.schema_response.schema
+            .. literalinclude:: ../files/Circulation_borrowerrenew_request.schema
+            .. literalinclude:: ../files/Circulation_borrowerrenew_request.schema_response.schema
         """
-        return self.call("PUT", "/inn-reach/d2ir/circ/borrowerrenew/{trackingId}/{centralCode}", trackingId, centralCode, renewLoanDTO)
+        return self.call("PUT", f"/inn-reach/d2ir/circ/borrowerrenew/{trackingId}/{centralCode}", renewLoanDTO)
 
-    def finalCheckIn(self, trackingId, centralCode, baseCircRequestDTO):
+    def finalcheckin(self, trackingId, centralCode, baseCircRequestDTO):
         """Indicating that a returned item has been received by its owning site. This is a terminating transaction.
 
         ``PUT /inn-reach/d2ir/circ/finalcheckin/{trackingId}/{centralCode}``
@@ -1990,12 +1953,12 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_finalCheckIn_request.schema
-            .. literalinclude:: ../files/Circulation_finalCheckIn_request.schema_response.schema
+            .. literalinclude:: ../files/Circulation_finalcheckin_request.schema
+            .. literalinclude:: ../files/Circulation_finalcheckin_request.schema_response.schema
         """
-        return self.call("PUT", "/inn-reach/d2ir/circ/finalcheckin/{trackingId}/{centralCode}", trackingId, centralCode, baseCircRequestDTO)
+        return self.call("PUT", f"/inn-reach/d2ir/circ/finalcheckin/{trackingId}/{centralCode}", baseCircRequestDTO)
 
-    def ownerRenew(self, trackingId, centralCode, renewLoanDTO):
+    def ownerrenew(self, trackingId, centralCode, renewLoanDTO):
         """Owner Renew loan
 
         ``PUT /inn-reach/d2ir/circ/ownerrenew/{trackingId}/{centralCode}``
@@ -2014,12 +1977,12 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_ownerRenew_request.schema
-            .. literalinclude:: ../files/Circulation_ownerRenew_request.schema_response.schema
+            .. literalinclude:: ../files/Circulation_ownerrenew_request.schema
+            .. literalinclude:: ../files/Circulation_ownerrenew_request.schema_response.schema
         """
-        return self.call("PUT", "/inn-reach/d2ir/circ/ownerrenew/{trackingId}/{centralCode}", trackingId, centralCode, renewLoanDTO)
+        return self.call("PUT", f"/inn-reach/d2ir/circ/ownerrenew/{trackingId}/{centralCode}", renewLoanDTO)
 
-    def claimsReturned(self, trackingId, centralCode, claimsItemReturnedDTO):
+    def claimsreturned(self, trackingId, centralCode, claimsItemReturnedDTO):
         """Borrower claims item returned
 
         ``PUT /inn-reach/d2ir/circ/claimsreturned/{trackingId}/{centralCode}``
@@ -2038,18 +2001,17 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_claimsReturned_request.schema
-            .. literalinclude:: ../files/Circulation_claimsReturned_request.schema_response.schema
+            .. literalinclude:: ../files/Circulation_claimsreturned_request.schema
+            .. literalinclude:: ../files/Circulation_claimsreturned_request.schema_response.schema
         """
-        return self.call("PUT", "/inn-reach/d2ir/circ/claimsreturned/{trackingId}/{centralCode}", trackingId, centralCode, claimsItemReturnedDTO)
+        return self.call("PUT", f"/inn-reach/d2ir/circ/claimsreturned/{trackingId}/{centralCode}", claimsItemReturnedDTO)
 
-    def transferLocalHold(self, id_, itemId):
+    def transferlocalhold(self, itemId, id_):
         """Transfer local hold to another item
 
         ``POST /inn-reach/transactions/{id}/localhold/transfer-item/{itemId}``
 
         Args:
-            id_ (str):  (format: uuid)
             itemId (str):  (format: uuid)
 
         Returns:
@@ -2061,11 +2023,11 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_transferLocalHold_response.schema
+            .. literalinclude:: ../files/Circulation_transferlocalhold_response.schema
         """
-        return self.call("POST", "/inn-reach/transactions/{id}/localhold/transfer-item/{itemId}", id_, itemId)
+        return self.call("POST", f"/inn-reach/transactions/{id_}/localhold/transfer-item/{itemId}")
 
-    def getPagingSlips(self, servicePointId):
+    def getpagingslips(self, servicePointId):
         """Get a list of available tokens for INN-Reach paging slips
 
         ``GET /inn-reach/paging-slips/{servicePointId}``
@@ -2082,6 +2044,6 @@ class CirculationAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Circulation_getPagingSlips_response.schema
+            .. literalinclude:: ../files/Circulation_getpagingslips_response.schema
         """
-        return self.call("GET", "/inn-reach/paging-slips/{servicePointId}", servicePointId)
+        return self.call("GET", f"/inn-reach/paging-slips/{servicePointId}")

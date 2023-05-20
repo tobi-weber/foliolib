@@ -1,0 +1,24 @@
+{
+    "description": "return title data entries",
+    "type": "object",
+    "properties": {
+        "data": {
+            "description": "List of title data entries",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "$ref": "titleDataEntry.json"
+            }
+        },
+        "resultInfo": {
+            "description": "Common result set information",
+            "type": "object",
+            "$ref": "resultInfo.json"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "data",
+        "resultInfo"
+    ]
+}

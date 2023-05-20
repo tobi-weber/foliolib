@@ -1,0 +1,31 @@
+{
+    "description": "A JSON schema for the User Tenant",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "string",
+            "format": "uuid"
+        },
+        "userId": {
+            "type": "string",
+            "format": "uuid"
+        },
+        "username": {
+            "type": "string"
+        },
+        "tenantId": {
+            "type": "string"
+        },
+        "tenantName": {
+            "type": "string"
+        },
+        "isPrimary": {
+            "type": "boolean"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "userId",
+        "tenantId"
+    ]
+}

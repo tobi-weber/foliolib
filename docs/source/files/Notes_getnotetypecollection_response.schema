@@ -1,0 +1,34 @@
+{
+    "type": "object",
+    "title": "Collection of note types",
+    "description": "Collection of note types",
+    "properties": {
+        "noteTypes": {
+            "type": "array",
+            "items": {
+                "$ref": "#/noteType"
+            }
+        },
+        "totalRecords": {
+            "type": "integer",
+            "readOnly": true,
+            "description": "Total amount of note types"
+        }
+    },
+    "required": [
+        "noteTypes"
+    ],
+    "example": {
+        "noteTypes": [
+            {
+                "id": "118dbd8c-5ba0-47a9-a850-34bbb1dbf3b7",
+                "name": "Important Note"
+            },
+            {
+                "id": "46669e09-8b45-4ede-afbd-ca73bb89cdb3",
+                "label": "Urgent Note"
+            }
+        ],
+        "totalRecords": 2
+    }
+}

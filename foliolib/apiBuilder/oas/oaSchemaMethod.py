@@ -8,6 +8,7 @@ import re
 from types import MethodType
 
 import inflection
+from foliolib.apiBuilder.oas.baseoas import BaseOAS
 from foliolib.apiBuilder.oas.operationIds import operationIds
 from foliolib.okapi.exceptions import (OkapiFatalError, OkapiMoved,
                                        OkapiRequestConflict, OkapiRequestError,
@@ -56,18 +57,20 @@ FILEUPLOAD_CODE = """
         """
 
 
-class OASchemaMethod:
+class OASchemaMethod(BaseOAS):
 
     def __init__(self, method, data, oaSchemaPath, oaSchema):
+        super().__init__(data, oaSchema, oaSchemaPath)
         self._method = method
         self._data = data
         self._oaSchemaPath = oaSchemaPath
         self._path = oaSchemaPath.get_path()
-        self._oaSchema = oaSchema
         log.info("OASchemaMethod: %s: %s - %s", method,
                  oaSchemaPath.get_path(), self.get_operationId())
 
     def isAdminMethod(self):
+        if not self._oaSchema.hasAdminMethods():
+            return False
         for oaParameter in self.get_oaParameters():
             if oaParameter.get_name() == "x-okapi-tenant":
                 return False
@@ -94,10 +97,14 @@ class OASchemaMethod:
         operationId = self._data["operationId"] if "operationId" in self._data else None
         if operationId is None:
             if self._path in operationIds:
-                return operationIds[self._path]
+                operationId = operationIds[self._path]
             else:
-                raise Exception("No operationId available- %s" % self._path)
-        return operationId
+                # raise Exception("No operationId available- %s" % self._path)
+                operationId = os.path.basename(self._path)
+        if operationId is not None:
+            return operationId.lower().replace("-", "_")
+        else:
+            return None
 
     def get_description(self):
         return self._data["description"]if "description" in self._data else ""
@@ -114,19 +121,33 @@ class OASchemaMethod:
 
         return []
 
+    def getPathParameters(self):
+        params = []
+        for name in re.findall("/{(.+?)}", self._path):
+            if name == "id":
+                name = "id_"
+            if name == "type":
+                name = "type_"
+            params.append(name)
+
+        return params
+
     def get_requestContent(self):
         if "requestBody" in self._data:
-            if "content" in self._data["requestBody"]:
-                content = self._data["requestBody"]["content"]
+            requestBody = self._data["requestBody"]
+            if "$ref" in requestBody:
+                requestBody = self.get_ref(requestBody["$ref"])
+            if "content" in requestBody:
+                content = requestBody["content"]
 
-                return [OAContent(k, v, self._oaSchema)
+                return [OAContent(k, v, self._oaSchema, self)
                         for k, v in content.items()][0]
 
         return None
 
     def get_oaResponses(self):
         if "responses" in self._data:
-            responses = [OAResponse(k, v, self._oaSchema)
+            responses = [OAResponse(k, v, self._oaSchema, self)
                          for k, v in self._data["responses"].items()]
 
             return responses
@@ -139,37 +160,54 @@ class OASchemaMethod:
             return ""
         params = []
         code = ""
+        call_path = self._path.replace(
+            "{id}", "{id_}").replace("{type}", "{type_}")
         requestContent = self.get_requestContent()
+
         for oaParameter in self.get_oaParameters():
-            if oaParameter.get_in() == "path" and oaParameter.get_name() != "x-okapi-tenant":
+            if oaParameter.get_in() == "path" and \
+                    oaParameter.get_name() != "x-okapi-tenant" and \
+                    "{%s}" % oaParameter.get_name() in self._path:
                 params.append(oaParameter.get_name())
         if requestContent is not None and requestContent.get_schema_name() is not None:
             params.append(requestContent.get_schema_name())
+
         params = [p.replace("-", "_") for p in params]
-        request_parameters = ", " + ", ".join(params) if params else ""
-        methodParams = request_parameters
+        pathParams = [p for p in self.getPathParameters()
+                      if not p in params]
+        params += pathParams
+        methodParams = ", " + ", ".join(params) if params else ""
+
+        rp = [
+            p for p in params if not "{%s}" % p in call_path]
+        request_parameters = ", " + ", ".join(rp) if rp else ""
+
         if requestContent is not None and requestContent.get_mime_type() == "multipart/form-data":
             methodParams += ", filePath"
             request_parameters += ", data=data"
             code = FILEUPLOAD_CODE
+
         methodType = self._method.upper()
-        f = ""
+        f = "f" if methodParams else ""
+
         if self.hasQuery():
             methodParams += ", " + "**kwargs"
             request_parameters += ", query=kwargs"
+
         doc = self.__get_parameter_doc()
 
         return f'''
     def {methodName}(self{methodParams}):
         """{doc}
         """{code}
-        return self.call("{methodType.upper()}", {f}"{self._path}"{request_parameters})
+        return self.call("{methodType.upper()}", {f}"{call_path}"{request_parameters})
 '''
 
     def __get_parameter_doc(self):
         doc = self.get_description()
         args_oaParameters = [oap for oap in self.get_oaParameters()
-                             if oap.get_in() == "path"]
+                             if oap.get_in() == "path" and
+                             "{%s}" % oap.get_name() in self._path]
         kwargs_oaParameters = [oap for oap in self.get_oaParameters()
                                if oap.get_in() == "query"]
         doc += f"\n\n\t\t``{self._method.upper()} {self._path}``"
@@ -194,7 +232,7 @@ class OASchemaMethod:
             doc += "\n\n\t\tKeyword Args:"
 
             for oaParameter in kwargs_oaParameters:
-                doc += "\n\t\t\t" + oaParameter.get_doc()
+                doc += "\n\t\t\t" + oaParameter.get_doc(isQuery=True)
 
         # Returns:
         if responseSchema is not None:
@@ -247,7 +285,7 @@ class OASchemaMethod:
         return requestSchema, responseSchema
 
 
-class OAParameter:
+class OAParameter(BaseOAS):
 
     def __init__(self, data, oaSchema, oaSchemaMethod):
         """[summary]
@@ -256,7 +294,7 @@ class OAParameter:
             data ([type]): [description]
             oaSchema ([type]): [description]
         """
-        self._oaSchema = oaSchema
+        super().__init__(data, oaSchema, oaSchemaMethod)
         self._oaSchemaMethod = oaSchemaMethod
         if "$ref" in data:
             data = self._oaSchema.get_ref(data["$ref"])
@@ -264,12 +302,13 @@ class OAParameter:
         else:
             self._data = data
 
-    def get_name(self):
+    def get_name(self, isQuery=False):
         name = self._data["name"]
-        if name == "id":
-            name = "id_"
-        if name == "type":
-            name = "type_"
+        if not isQuery:
+            if name == "id":
+                name = "id_"
+            if name == "type":
+                name = "type_"
         return name
 
     def get_in(self):
@@ -301,7 +340,7 @@ class OAParameter:
             return self._oaSchema.get_component(schema["$ref"])
         return schema
 
-    def get_doc(self):
+    def get_doc(self, isQuery=False):
         try:
             type_ = self.get_schema()["type"]
         except:
@@ -310,7 +349,7 @@ class OAParameter:
             type_ = TYPES[type_]
         else:
             raise Exception(f"Type {type_} not found")
-        doc = f"{self.get_name()} ({type_}):"
+        doc = f"{self.get_name(isQuery)} ({type_}):"
         try:
             doc += " " + self.__get_type_doc()
         except:
@@ -343,11 +382,10 @@ class OAParameter:
         return doc
 
 
-class OAResponse:
+class OAResponse(BaseOAS):
 
-    def __init__(self, code, data, oaSchema):
-        self._data = data
-        self._oaSchema = oaSchema
+    def __init__(self, code, data, oaSchema, oaSchemaMethod):
+        super().__init__(data, oaSchema, oaSchemaMethod)
         self._code = int(code)
 
     def get_code(self):
@@ -366,7 +404,7 @@ class OAResponse:
 
     def get_content(self):
         if "content" in self._data:
-            return [OAContent(k, v, self._oaSchema)
+            return [OAContent(k, v, self._oaSchema, self)
                     for k, v in self._data["content"].items()][0]
 
 
@@ -390,12 +428,11 @@ class RequestParameter:
         return self._data["description"]
 
 
-class OAContent:
+class OAContent(BaseOAS):
 
-    def __init__(self, mime_type, data, oaSchema):
+    def __init__(self, mime_type, data, oaSchema, oaSchemaMethod):
+        super().__init__(data, oaSchema, oaSchemaMethod)
         self._mime_type = mime_type
-        self._oaSchema = oaSchema
-        self._data = data
 
     def get_mime_type(self):
         return self._mime_type
@@ -406,14 +443,14 @@ class OAContent:
             if "$ref" in schema:
                 schema_name = os.path.basename(schema["$ref"].replace("#", ""))
                 schema_name = os.path.splitext(schema_name)[0]
-                return schema_name
+                return schema_name[0].lower() + schema_name[1:]
         return None
 
     def get_schema(self):
         if "schema" in self._data:
             schema = self._data["schema"]
             if "$ref" in schema:
-                schema = self._oaSchema.get_ref(schema["$ref"])
+                schema = self.get_ref(schema["$ref"])
                 return schema
         return None
 

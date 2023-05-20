@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of stripped parsed record DTO",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "records": {
+      "description": "List of stripped parsed records",
+      "type": "array",
+      "id": "strippedParsedRecordList",
+      "items": {
+        "type": "object",
+        "$ref": "./strippedParsedRecord.json"
+      }
+    },
+    "totalRecords": {
+      "description": "Total number of records",
+      "type": "integer"
+    }
+  },
+  "excludedFromEqualsAndHashCode": [
+    "totalRecords"
+  ],
+  "required": [
+    "records",
+    "totalRecords"
+  ]
+}

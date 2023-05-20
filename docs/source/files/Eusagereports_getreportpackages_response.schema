@@ -1,0 +1,23 @@
+{
+    "description": "get KB packages",
+    "type": "object",
+    "properties": {
+        "packages": {
+            "description": "List of packages",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "$ref": "reportPackage.json"
+            }
+        },
+        "resultInfo": {
+            "description": "Common result set information",
+            "type": "object",
+            "$ref": "resultInfo.json"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "packages"
+    ]
+}

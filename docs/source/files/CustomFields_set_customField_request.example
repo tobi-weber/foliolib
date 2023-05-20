@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n  \"name\": \"Department\",\n  \"refId\": \"department\",\n  \"visible\": true,\n  \"required\": true,\n  \"helpText\": \"Provide a department\",\n  \"entityType\": \"package\",\n  \"type\": \"SINGLE_SELECT_DROPDOWN\"\n}\n"
+}

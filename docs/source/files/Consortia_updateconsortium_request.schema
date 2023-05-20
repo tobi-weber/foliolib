@@ -1,0 +1,18 @@
+{
+    "type": "object",
+    "description": "Consortium",
+    "properties": {
+        "id": {
+            "type": "string",
+            "format": "uuid"
+        },
+        "name": {
+            "type": "string"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "id",
+        "name"
+    ]
+}

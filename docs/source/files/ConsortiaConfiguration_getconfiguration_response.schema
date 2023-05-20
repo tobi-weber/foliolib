@@ -1,0 +1,17 @@
+{
+    "type": "object",
+    "description": "Consortia Configuration",
+    "properties": {
+        "id": {
+            "type": "string",
+            "format": "uuid"
+        },
+        "centralTenantId": {
+            "type": "string"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "centralTenantId"
+    ]
+}

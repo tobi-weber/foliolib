@@ -1,0 +1,21 @@
+{
+    "type": "object",
+    "properties": {
+        "bulkOperationRules": {
+            "description": "List of bulk operation rules",
+            "type": "array",
+            "items": {
+                "$ref": "bulk_operation_rule.json#/BulkOperationRule"
+            },
+            "minItems": 1
+        },
+        "totalRecords": {
+            "type": "integer"
+        }
+    },
+    "required": [
+        "bulkOperationRules",
+        "totalRecords"
+    ],
+    "additionalProperties": false
+}

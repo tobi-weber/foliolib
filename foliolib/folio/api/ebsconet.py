@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-04-16
+# Generated at 2023-05-20
 
 import logging
 
@@ -9,14 +9,13 @@ log = logging.getLogger("foliolib.folio.api.ebsconet")
 
 
 
-class EbsconetAdmin(FolioAdminApi):
+class Ebsconet(FolioApi):
     """Ebsconet integration API
-    Administration
 
     Ebsconet integration API
     """
 
-    def getValidation(self):
+    def getvalidation(self):
         """
 
         ``GET /ebsconet/validate``
@@ -26,11 +25,11 @@ class EbsconetAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Ebsconet_getValidation_response.schema
+            .. literalinclude:: ../files/Ebsconet_getvalidation_response.schema
         """
         return self.call("GET", "/ebsconet/validate")
 
-    def getEbsconetOrderLine(self, poLineNumber):
+    def getebsconetorderline(self, poLineNumber):
         """
 
         ``GET /ebsconet/orders/order-lines/{poLineNumber}``
@@ -48,12 +47,12 @@ class EbsconetAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Ebsconet_getEbsconetOrderLine_response.schema
+            .. literalinclude:: ../files/Ebsconet_getebsconetorderline_response.schema
         """
-        return self.call("GET", "/ebsconet/orders/order-lines/{poLineNumber}", poLineNumber)
+        return self.call("GET", f"/ebsconet/orders/order-lines/{poLineNumber}")
 
 		
-    def putEbsconetOrderLine(self, poLineNumber, ebsconetOrderLine):
+    def putebsconetorderline(self, poLineNumber, ebsconetOrderLine):
         """
 
         ``PUT /ebsconet/orders/order-lines/{poLineNumber}``
@@ -68,6 +67,6 @@ class EbsconetAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Ebsconet_putEbsconetOrderLine_request.schema
+            .. literalinclude:: ../files/Ebsconet_putebsconetorderline_request.schema
         """
-        return self.call("PUT", "/ebsconet/orders/order-lines/{poLineNumber}", poLineNumber, ebsconetOrderLine)
+        return self.call("PUT", f"/ebsconet/orders/order-lines/{poLineNumber}", ebsconetOrderLine)

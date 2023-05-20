@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-04-16
+# Generated at 2023-05-20
 
 import logging
 
@@ -9,14 +9,13 @@ log = logging.getLogger("foliolib.folio.api.reservoir")
 
 
 
-class ReservoirAdmin(FolioAdminApi):
+class Reservoir(FolioApi):
     """Reservoir
-    Administration
 
     
     """
 
-    def getOaiConfig(self):
+    def getoaiconfig(self):
         """Get OAI configuration
 
         ``GET /reservoir/config/oai``
@@ -31,12 +30,12 @@ class ReservoirAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_getOaiConfig_response.schema
+            .. literalinclude:: ../files/Reservoir_getoaiconfig_response.schema
         """
         return self.call("GET", "/reservoir/config/oai")
 
 		
-    def putOaiConfig(self, oaiConfig):
+    def putoaiconfig(self, oaiConfig):
         """Update OAI configuration.
 
         ``PUT /reservoir/config/oai``
@@ -51,12 +50,12 @@ class ReservoirAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_putOaiConfig_request.schema
+            .. literalinclude:: ../files/Reservoir_putoaiconfig_request.schema
         """
-        return self.call("PUT", "/reservoir/config/oai", oaiConfig)
+        return self.call("PUT", f"/reservoir/config/oai", oaiConfig)
 
 		
-    def deleteOaiConfig(self):
+    def deleteoaiconfig(self):
         """Update OAI configuration.
 
         ``DELETE /reservoir/config/oai``
@@ -67,7 +66,7 @@ class ReservoirAdmin(FolioAdminApi):
         """
         return self.call("DELETE", "/reservoir/config/oai")
 
-    def postConfigMatchKey(self, matchKey):
+    def postconfigmatchkey(self, matchKey):
         """Create match key
 
         ``POST /reservoir/config/matchkeys``
@@ -84,12 +83,12 @@ class ReservoirAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_postConfigMatchKey_request.schema
+            .. literalinclude:: ../files/Reservoir_postconfigmatchkey_request.schema
         """
-        return self.call("POST", "/reservoir/config/matchkeys", matchKey)
+        return self.call("POST", f"/reservoir/config/matchkeys", matchKey)
 
 		
-    def getConfigMatchKeys(self, **kwargs):
+    def getconfigmatchkeys(self, **kwargs):
         """Get match key configurations
 
         ``GET /reservoir/config/matchkeys``
@@ -109,11 +108,11 @@ class ReservoirAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_getConfigMatchKeys_response.schema
+            .. literalinclude:: ../files/Reservoir_getconfigmatchkeys_response.schema
         """
         return self.call("GET", "/reservoir/config/matchkeys", query=kwargs)
 
-    def getConfigMatchKey(self):
+    def getconfigmatchkey(self, id_):
         """Get match key configuration
 
         ``GET /reservoir/config/matchkeys/{id}``
@@ -128,12 +127,12 @@ class ReservoirAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_getConfigMatchKey_response.schema
+            .. literalinclude:: ../files/Reservoir_getconfigmatchkey_response.schema
         """
-        return self.call("GET", "/reservoir/config/matchkeys/{id}")
+        return self.call("GET", f"/reservoir/config/matchkeys/{id_}")
 
 		
-    def deleteConfigMatchKey(self):
+    def deleteconfigmatchkey(self, id_):
         """Delete match key configuration
 
         ``DELETE /reservoir/config/matchkeys/{id}``
@@ -143,10 +142,10 @@ class ReservoirAdmin(FolioAdminApi):
             OkapiRequestNotFound: Not Found
             OkapiFatalError: Internal error
         """
-        return self.call("DELETE", "/reservoir/config/matchkeys/{id}")
+        return self.call("DELETE", f"/reservoir/config/matchkeys/{id_}")
 
 		
-    def putConfigMatchKey(self, matchKey):
+    def putconfigmatchkey(self, matchKey, id_):
         """Update match key configuration.
 
         ``PUT /reservoir/config/matchkeys/{id}``
@@ -161,11 +160,11 @@ class ReservoirAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_putConfigMatchKey_request.schema
+            .. literalinclude:: ../files/Reservoir_putconfigmatchkey_request.schema
         """
-        return self.call("PUT", "/reservoir/config/matchkeys/{id}", matchKey)
+        return self.call("PUT", f"/reservoir/config/matchkeys/{id_}", matchKey)
 
-    def initializeMatchKey(self):
+    def initializematchkey(self, id_):
         """Recalculate match key across all records.
 
         ``PUT /reservoir/config/matchkeys/{id}/initialize``
@@ -180,11 +179,11 @@ class ReservoirAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_initializeMatchKey_response.schema
+            .. literalinclude:: ../files/Reservoir_initializematchkey_response.schema
         """
-        return self.call("PUT", "/reservoir/config/matchkeys/{id}/initialize")
+        return self.call("PUT", f"/reservoir/config/matchkeys/{id_}/initialize")
 
-    def statsMatchKey(self):
+    def statsmatchkey(self, id_):
         """Get statistics for match key configuration
 
         ``GET /reservoir/config/matchkeys/{id}/stats``
@@ -199,11 +198,11 @@ class ReservoirAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_statsMatchKey_response.schema
+            .. literalinclude:: ../files/Reservoir_statsmatchkey_response.schema
         """
-        return self.call("GET", "/reservoir/config/matchkeys/{id}/stats")
+        return self.call("GET", f"/reservoir/config/matchkeys/{id_}/stats")
 
-    def postCodeModule(self, codeModule):
+    def postcodemodule(self, codeModule):
         """Create a new code module
 
         ``POST /reservoir/config/modules``
@@ -220,12 +219,12 @@ class ReservoirAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_postCodeModule_request.schema
+            .. literalinclude:: ../files/Reservoir_postcodemodule_request.schema
         """
-        return self.call("POST", "/reservoir/config/modules", codeModule)
+        return self.call("POST", f"/reservoir/config/modules", codeModule)
 
 		
-    def getCodeModules(self, **kwargs):
+    def getcodemodules(self, **kwargs):
         """Retrieve all code modules
 
         ``GET /reservoir/config/modules``
@@ -245,11 +244,11 @@ class ReservoirAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_getCodeModules_response.schema
+            .. literalinclude:: ../files/Reservoir_getcodemodules_response.schema
         """
         return self.call("GET", "/reservoir/config/modules", query=kwargs)
 
-    def getCodeModule(self):
+    def getcodemodule(self, id_):
         """Retrieve a code module by id
 
         ``GET /reservoir/config/modules/{id}``
@@ -264,12 +263,12 @@ class ReservoirAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_getCodeModule_response.schema
+            .. literalinclude:: ../files/Reservoir_getcodemodule_response.schema
         """
-        return self.call("GET", "/reservoir/config/modules/{id}")
+        return self.call("GET", f"/reservoir/config/modules/{id_}")
 
 		
-    def putCodeModule(self, codeModule):
+    def putcodemodule(self, codeModule, id_):
         """Update code module by id
 
         ``PUT /reservoir/config/modules/{id}``
@@ -284,12 +283,12 @@ class ReservoirAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_putCodeModule_request.schema
+            .. literalinclude:: ../files/Reservoir_putcodemodule_request.schema
         """
-        return self.call("PUT", "/reservoir/config/modules/{id}", codeModule)
+        return self.call("PUT", f"/reservoir/config/modules/{id_}", codeModule)
 
 		
-    def deleteCodeModule(self):
+    def deletecodemodule(self, id_):
         """Delete code module by id
 
         ``DELETE /reservoir/config/modules/{id}``
@@ -299,9 +298,9 @@ class ReservoirAdmin(FolioAdminApi):
             OkapiRequestNotFound: Not Found
             OkapiFatalError: Internal error
         """
-        return self.call("DELETE", "/reservoir/config/modules/{id}")
+        return self.call("DELETE", f"/reservoir/config/modules/{id_}")
 
-    def reloadCodeModule(self):
+    def reloadcodemodule(self, id_):
         """Force module to be reloaded
 
         ``PUT /reservoir/config/modules/{id}/reload``
@@ -311,9 +310,9 @@ class ReservoirAdmin(FolioAdminApi):
             OkapiRequestNotFound: Not Found
             OkapiFatalError: Internal error
         """
-        return self.call("PUT", "/reservoir/config/modules/{id}/reload")
+        return self.call("PUT", f"/reservoir/config/modules/{id_}/reload")
 
-    def postSource(self, source):
+    def postsource(self, source):
         """Create source.
 
         ``POST /reservoir/sources``
@@ -330,12 +329,12 @@ class ReservoirAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_postSource_request.schema
+            .. literalinclude:: ../files/Reservoir_postsource_request.schema
         """
-        return self.call("POST", "/reservoir/sources", source)
+        return self.call("POST", f"/reservoir/sources", source)
 
 		
-    def getSources(self, **kwargs):
+    def getsources(self, **kwargs):
         """Get sources.
 
         ``GET /reservoir/sources``
@@ -354,11 +353,11 @@ class ReservoirAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_getSources_response.schema
+            .. literalinclude:: ../files/Reservoir_getsources_response.schema
         """
         return self.call("GET", "/reservoir/sources", query=kwargs)
 
-    def getSource(self):
+    def getsource(self, id_):
         """Get source.
 
         ``GET /reservoir/config/sources/{id}``
@@ -373,12 +372,12 @@ class ReservoirAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_getSource_response.schema
+            .. literalinclude:: ../files/Reservoir_getsource_response.schema
         """
-        return self.call("GET", "/reservoir/config/sources/{id}")
+        return self.call("GET", f"/reservoir/config/sources/{id_}")
 
 		
-    def deleteSource(self):
+    def deletesource(self, id_):
         """Delete source.
 
         ``DELETE /reservoir/config/sources/{id}``
@@ -388,9 +387,9 @@ class ReservoirAdmin(FolioAdminApi):
             OkapiRequestNotFound: Not Found
             OkapiFatalError: Internal error
         """
-        return self.call("DELETE", "/reservoir/config/sources/{id}")
+        return self.call("DELETE", f"/reservoir/config/sources/{id_}")
 
-    def postIngestJob(self, ingestJobRequest):
+    def postingestjob(self, ingestJobRequest):
         """Create ingest job
 
         ``POST /reservoir/ingest-jobs``
@@ -407,11 +406,11 @@ class ReservoirAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_postIngestJob_request.schema
+            .. literalinclude:: ../files/Reservoir_postingestjob_request.schema
         """
-        return self.call("POST", "/reservoir/ingest-jobs", ingestJobRequest)
+        return self.call("POST", f"/reservoir/ingest-jobs", ingestJobRequest)
 
-    def ingestJobRecord(self, ingestRecordChunk):
+    def ingestjobrecord(self, ingestRecordChunk, id_):
         """Put records for job.
 
         ``PUT /reservoir/ingest-jobs/{id}``
@@ -429,13 +428,13 @@ class ReservoirAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_ingestJobRecord_request.schema
-            .. literalinclude:: ../files/Reservoir_ingestJobRecord_request.schema_response.schema
+            .. literalinclude:: ../files/Reservoir_ingestjobrecord_request.schema
+            .. literalinclude:: ../files/Reservoir_ingestjobrecord_request.schema_response.schema
         """
-        return self.call("PUT", "/reservoir/ingest-jobs/{id}", ingestRecordChunk)
+        return self.call("PUT", f"/reservoir/ingest-jobs/{id_}", ingestRecordChunk)
 
 		
-    def ingestJobInfo(self):
+    def ingestjobinfo(self, id_):
         """Get ingest job information.
 
         ``GET /reservoir/ingest-jobs/{id}``
@@ -450,12 +449,12 @@ class ReservoirAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_ingestJobInfo_response.schema
+            .. literalinclude:: ../files/Reservoir_ingestjobinfo_response.schema
         """
-        return self.call("GET", "/reservoir/ingest-jobs/{id}")
+        return self.call("GET", f"/reservoir/ingest-jobs/{id_}")
 
 		
-    def ingestJobFinish(self, **kwargs):
+    def ingestjobfinish(self, id_, **kwargs):
         """Finish ingest job with either rollback of commit.
 
         ``DELETE /reservoir/ingest-jobs/{id}``
@@ -468,9 +467,9 @@ class ReservoirAdmin(FolioAdminApi):
             OkapiRequestNotFound: Not Found
             OkapiFatalError: Internal error
         """
-        return self.call("DELETE", "/reservoir/ingest-jobs/{id}", query=kwargs)
+        return self.call("DELETE", f"/reservoir/ingest-jobs/{id_}", query=kwargs)
 
-    def uploadRecords(self, filePath):
+    def uploadrecords(self, filePath):
         """Upload MARC binary and MARCXML records.
 
         ``POST /reservoir/upload``
@@ -488,7 +487,7 @@ class ReservoirAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_uploadRecords_response.schema
+            .. literalinclude:: ../files/Reservoir_uploadrecords_response.schema
         """
         import os
         headers = {}
@@ -499,9 +498,9 @@ class ReservoirAdmin(FolioAdminApi):
         with open(filePath, 'rb') as f:
             data = f.read()
         
-        return self.call("POST", "/reservoir/upload", data=data)
+        return self.call("POST", f"/reservoir/upload", data=data)
 
-    def getGlobalRecords(self, **kwargs):
+    def getglobalrecords(self, **kwargs):
         """Get records that satisfy CQL query with fields localId, sourceId, globalId.
 
         ``GET /reservoir/records``
@@ -521,12 +520,12 @@ class ReservoirAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_getGlobalRecords_response.schema
+            .. literalinclude:: ../files/Reservoir_getglobalrecords_response.schema
         """
         return self.call("GET", "/reservoir/records", query=kwargs)
 
 		
-    def putGlobalRecords(self, ingestRecordRequest):
+    def putglobalrecords(self, ingestRecordRequest):
         """Create or update records.
 
         ``PUT /reservoir/records``
@@ -543,13 +542,13 @@ class ReservoirAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_putGlobalRecords_request.schema
-            .. literalinclude:: ../files/Reservoir_putGlobalRecords_request.schema_response.schema
+            .. literalinclude:: ../files/Reservoir_putglobalrecords_request.schema
+            .. literalinclude:: ../files/Reservoir_putglobalrecords_request.schema_response.schema
         """
-        return self.call("PUT", "/reservoir/records", ingestRecordRequest)
+        return self.call("PUT", f"/reservoir/records", ingestRecordRequest)
 
 		
-    def deleteGlobalRecords(self, **kwargs):
+    def deleteglobalrecords(self, **kwargs):
         """Delete global records.
 
         ``DELETE /reservoir/records``
@@ -563,7 +562,7 @@ class ReservoirAdmin(FolioAdminApi):
         """
         return self.call("DELETE", "/reservoir/records", query=kwargs)
 
-    def getGlobalRecord(self):
+    def getglobalrecord(self, globalId):
         """Get record with global identifier.
 
         ``GET /reservoir/records/{globalId}``
@@ -578,11 +577,11 @@ class ReservoirAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_getGlobalRecord_response.schema
+            .. literalinclude:: ../files/Reservoir_getglobalrecord_response.schema
         """
-        return self.call("GET", "/reservoir/records/{globalId}")
+        return self.call("GET", f"/reservoir/records/{globalId}")
 
-    def getClusters(self):
+    def getclusters(self):
         """Get clusters based on matchkeyid. Query is CQL with the following fields supported: matchValue, clusterId, globalId, localId, sourceId, sourceVersion.
 
 
@@ -598,11 +597,11 @@ class ReservoirAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_getClusters_response.schema
+            .. literalinclude:: ../files/Reservoir_getclusters_response.schema
         """
         return self.call("GET", "/reservoir/clusters")
 
-    def touchClusters(self, **kwargs):
+    def touchclusters(self, **kwargs):
         """Update cluster timestamps. CQL must specify at least matchkeyId and sourceId. The sourceVersion and clusterId are optional.
 
         ``POST /reservoir/clusters/touch``
@@ -620,11 +619,11 @@ class ReservoirAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_touchClusters_response.schema
+            .. literalinclude:: ../files/Reservoir_touchclusters_response.schema
         """
         return self.call("POST", "/reservoir/clusters/touch", query=kwargs)
 
-    def getCluster(self):
+    def getcluster(self, clusterId):
         """Get cluster by identifier
 
         ``GET /reservoir/clusters/{clusterId}``
@@ -639,11 +638,11 @@ class ReservoirAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_getCluster_response.schema
+            .. literalinclude:: ../files/Reservoir_getcluster_response.schema
         """
-        return self.call("GET", "/reservoir/clusters/{clusterId}")
+        return self.call("GET", f"/reservoir/clusters/{clusterId}")
 
-    def oaiService(self):
+    def oaiservice(self):
         """OAI service
 
         ``GET /reservoir/oai``
@@ -654,7 +653,7 @@ class ReservoirAdmin(FolioAdminApi):
         """
         return self.call("GET", "/reservoir/oai")
 
-    def postOaiPmhClient(self, oaiPmhClient):
+    def postoaipmhclient(self, oaiPmhClient):
         """Create OAI PMH client job
 
         ``POST /reservoir/pmh-clients``
@@ -671,12 +670,12 @@ class ReservoirAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_postOaiPmhClient_request.schema
+            .. literalinclude:: ../files/Reservoir_postoaipmhclient_request.schema
         """
-        return self.call("POST", "/reservoir/pmh-clients", oaiPmhClient)
+        return self.call("POST", f"/reservoir/pmh-clients", oaiPmhClient)
 
 		
-    def getCollectionOaiPmhClient(self):
+    def getcollectionoaipmhclient(self):
         """Get all OAI PMH client jobs
 
         ``GET /reservoir/pmh-clients``
@@ -690,11 +689,11 @@ class ReservoirAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_getCollectionOaiPmhClient_response.schema
+            .. literalinclude:: ../files/Reservoir_getcollectionoaipmhclient_response.schema
         """
         return self.call("GET", "/reservoir/pmh-clients")
 
-    def getOaiPmhClient(self):
+    def getoaipmhclient(self, id_):
         """Get OAI-PMH client
 
         ``GET /reservoir/pmh-clients/{id}``
@@ -709,12 +708,12 @@ class ReservoirAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_getOaiPmhClient_response.schema
+            .. literalinclude:: ../files/Reservoir_getoaipmhclient_response.schema
         """
-        return self.call("GET", "/reservoir/pmh-clients/{id}")
+        return self.call("GET", f"/reservoir/pmh-clients/{id_}")
 
 		
-    def putOaiPmhClient(self, oaiPmhClient):
+    def putoaipmhclient(self, oaiPmhClient, id_):
         """Update OAI-PMH client
 
         ``PUT /reservoir/pmh-clients/{id}``
@@ -729,12 +728,12 @@ class ReservoirAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_putOaiPmhClient_request.schema
+            .. literalinclude:: ../files/Reservoir_putoaipmhclient_request.schema
         """
-        return self.call("PUT", "/reservoir/pmh-clients/{id}", oaiPmhClient)
+        return self.call("PUT", f"/reservoir/pmh-clients/{id_}", oaiPmhClient)
 
 		
-    def deleteOaiPmhClient(self):
+    def deleteoaipmhclient(self, id_):
         """Delete OAI-PMH client
 
         ``DELETE /reservoir/pmh-clients/{id}``
@@ -744,9 +743,9 @@ class ReservoirAdmin(FolioAdminApi):
             OkapiRequestNotFound: Not Found
             OkapiFatalError: Internal error
         """
-        return self.call("DELETE", "/reservoir/pmh-clients/{id}")
+        return self.call("DELETE", f"/reservoir/pmh-clients/{id_}")
 
-    def startOaiPmhClient(self):
+    def startoaipmhclient(self, id_):
         """Start OAI PMH client job
 
         ``POST /reservoir/pmh-clients/{id}/start``
@@ -756,9 +755,9 @@ class ReservoirAdmin(FolioAdminApi):
             OkapiRequestNotFound: Not Found
             OkapiFatalError: Internal error
         """
-        return self.call("POST", "/reservoir/pmh-clients/{id}/start")
+        return self.call("POST", f"/reservoir/pmh-clients/{id_}/start")
 
-    def stopOaiPmhClient(self):
+    def stopoaipmhclient(self, id_):
         """Stop OAI PMH client job
 
         ``POST /reservoir/pmh-clients/{id}/stop``
@@ -768,9 +767,9 @@ class ReservoirAdmin(FolioAdminApi):
             OkapiRequestNotFound: Not Found
             OkapiFatalError: Internal error
         """
-        return self.call("POST", "/reservoir/pmh-clients/{id}/stop")
+        return self.call("POST", f"/reservoir/pmh-clients/{id_}/stop")
 
-    def statusOaiPmhClient(self):
+    def statusoaipmhclient(self, id_):
         """Get OAI PMH client status
 
         ``GET /reservoir/pmh-clients/{id}/status``
@@ -785,6 +784,6 @@ class ReservoirAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_statusOaiPmhClient_response.schema
+            .. literalinclude:: ../files/Reservoir_statusoaipmhclient_response.schema
         """
-        return self.call("GET", "/reservoir/pmh-clients/{id}/status")
+        return self.call("GET", f"/reservoir/pmh-clients/{id_}/status")

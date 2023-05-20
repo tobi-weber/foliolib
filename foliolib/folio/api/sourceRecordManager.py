@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-04-16
+# Generated at 2023-05-20
 
 import logging
 
@@ -150,6 +150,7 @@ class ChangeManager(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
@@ -174,6 +175,11 @@ class ChangeManager(FolioApi):
                     Example:
                     
                      - 10
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -392,6 +398,11 @@ class MetadataProvider(FolioApi):
                     Example:
                     
                      - ['completed_date,asc']
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -479,6 +490,11 @@ class MetadataProvider(FolioApi):
                     Example:
                     
                      - MARC
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -553,6 +569,11 @@ class MetadataProvider(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -585,6 +606,11 @@ class MetadataProvider(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:

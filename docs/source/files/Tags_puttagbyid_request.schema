@@ -1,0 +1,32 @@
+{
+    "type": "object",
+    "title": "Tag",
+    "description": "Tag that can be attached to various objects",
+    "properties": {
+        "id": {
+            "$ref": "#/components/schemas/uuid",
+            "description": "The UUID of this tag"
+        },
+        "label": {
+            "type": "string",
+            "description": "The short label of this tag"
+        },
+        "description": {
+            "type": "string",
+            "description": "The description of this tag"
+        },
+        "metadata": {
+            "$ref": "#/components/schemas/metadata",
+            "readOnly": true,
+            "description": "The metadata of this tag"
+        }
+    },
+    "required": [
+        "label"
+    ],
+    "example": {
+        "id": "118dbd8c-5ba0-47a9-a850-34bbb1dbf3b7",
+        "label": "important",
+        "description": "This is important stuff."
+    }
+}

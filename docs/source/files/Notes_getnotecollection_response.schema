@@ -1,0 +1,21 @@
+{
+    "type": "object",
+    "title": "Collection of notes",
+    "description": "Collection of notes",
+    "properties": {
+        "notes": {
+            "type": "array",
+            "items": {
+                "$ref": "#/note"
+            }
+        },
+        "totalRecords": {
+            "type": "integer",
+            "readOnly": true,
+            "description": "Total amount of notes"
+        }
+    },
+    "required": [
+        "notes"
+    ]
+}

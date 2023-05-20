@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-04-16
+# Generated at 2023-05-20
 
 import logging
 
@@ -9,14 +9,13 @@ log = logging.getLogger("foliolib.folio.api.settings")
 
 
 
-class SettingsAdmin(FolioAdminApi):
+class Settings(FolioApi):
     """Settings
-    Administration
 
     
     """
 
-    def getSettings(self):
+    def getsettings(self):
         """Get settings with optional CQL query. If X-Okapi-Permissions includes settings.global.read then settings without a userId are returned. If X-Okapi-Permissions includes settings.users.read then settings with a userId are returned. If X-Okapi-Permissions includes settings.owner.read then settings with userId = current-user are returned.
 
 
@@ -32,12 +31,12 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_getSettings_response.schema
+            .. literalinclude:: ../files/Settings_getsettings_response.schema
         """
         return self.call("GET", "/settings/entries")
 
 		
-    def postSetting(self, entry):
+    def postsetting(self, entry):
         """Create setting entry. If X-Okapi-Permissions includes settings.global.write, then a setting without a userId may be created. If X-Okapi-Permissions includes settings.users.write, then a setting with a userId may be created. If X-Okapi-Permissions includes settings.owner.write, then a setting with userId = current-user may be created.
 
 
@@ -54,11 +53,11 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_postSetting_request.schema
+            .. literalinclude:: ../files/Settings_postsetting_request.schema
         """
-        return self.call("POST", "/settings/entries", entry)
+        return self.call("POST", f"/settings/entries", entry)
 
-    def getSetting(self):
+    def getsetting(self, id_):
         """Get setting. If X-Okapi-Permissions includes settings.global.read, then a setting without a userId may be retrieved. If X-Okapi-Permissions includes settings.users.read, then a setting with a userId may be retrieved. If X-Okapi-Permissions includes settings.owner.read, then a setting with userId = current-user may be retrieved.
 
 
@@ -75,12 +74,12 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_getSetting_response.schema
+            .. literalinclude:: ../files/Settings_getsetting_response.schema
         """
-        return self.call("GET", "/settings/entries/{id}")
+        return self.call("GET", f"/settings/entries/{id_}")
 
 		
-    def putSetting(self, entry):
+    def putsetting(self, entry, id_):
         """Update setting. If X-Okapi-Permissions includes settings.global.write, then a setting without a userId may be updated. If X-Okapi-Permissions includes settings.users.write, then a setting with a userId may be updated. If X-Okapi-Permissions includes settings.owner.write, then a setting with userId = current-user may be updated.
 
 
@@ -98,12 +97,12 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_putSetting_request.schema
+            .. literalinclude:: ../files/Settings_putsetting_request.schema
         """
-        return self.call("PUT", "/settings/entries/{id}", entry)
+        return self.call("PUT", f"/settings/entries/{id_}", entry)
 
 		
-    def deleteSetting(self):
+    def deletesetting(self, id_):
         """Delete setting. If X-Okapi-Permissions includes settings.global.write, then a setting without a userId may be deleted. If X-Okapi-Permissions includes settings.users.write, then a setting with a userId may be deleted. If X-Okapi-Permissions includes settings.owner.write, then a setting with userId = current-user may be deleted.
 
 
@@ -114,9 +113,9 @@ class SettingsAdmin(FolioAdminApi):
             OkapiRequestNotFound: Not Found
             OkapiFatalError: Internal error
         """
-        return self.call("DELETE", "/settings/entries/{id}")
+        return self.call("DELETE", f"/settings/entries/{id_}")
 
-    def uploadSettings(self, uploadRequest):
+    def uploadsettings(self, uploadRequest):
         """Upload settings. The entries are inserted or updated depending on whether key, scope, userId already. Each entry gets a unique identifier assigned if it's a new setting. The id must not be supplied. If X-Okapi-Permissions includes settings.global.write, then a setting without a userId may be created/updated. If X-Okapi-Permissions includes settings.users.write, then a setting with a userId may be created/updated. If X-Okapi-Permissions includes settings.owner.write, then a setting with userId = current-user may be created/updated.
 
 
@@ -135,7 +134,7 @@ class SettingsAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Settings_uploadSettings_request.schema
-            .. literalinclude:: ../files/Settings_uploadSettings_request.schema_response.schema
+            .. literalinclude:: ../files/Settings_uploadsettings_request.schema
+            .. literalinclude:: ../files/Settings_uploadsettings_request.schema_response.schema
         """
-        return self.call("PUT", "/settings/upload", uploadRequest)
+        return self.call("PUT", f"/settings/upload", uploadRequest)

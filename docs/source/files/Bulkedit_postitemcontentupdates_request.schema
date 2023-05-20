@@ -1,0 +1,21 @@
+{
+    "type": "object",
+    "properties": {
+        "itemContentUpdates": {
+            "description": "List of item content updates",
+            "type": "array",
+            "items": {
+                "$ref": "itemContentUpdate.json#/ItemContentUpdate"
+            },
+            "minItems": 1
+        },
+        "totalRecords": {
+            "type": "integer"
+        }
+    },
+    "required": [
+        "itemContentUpdates",
+        "totalRecords"
+    ],
+    "additionalProperties": false
+}

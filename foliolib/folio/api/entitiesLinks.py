@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-04-16
+# Generated at 2023-05-20
 
 import logging
 
@@ -9,14 +9,13 @@ log = logging.getLogger("foliolib.folio.api.entitiesLinks")
 
 
 
-class EntitieslinksAdmin(FolioAdminApi):
+class Entitieslinks(FolioApi):
     """Entities Links API
-    Administration
 
     Entity Links API
     """
 
-    def updateInstanceLinks(self, instanceId, instanceLinkDtoCollection):
+    def updateinstancelinks(self, instanceId, instanceLinkDtoCollection):
         """Update links collection related to Instance
 
         ``PUT /links/instances/{instanceId}``
@@ -32,12 +31,12 @@ class EntitieslinksAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Entitieslinks_updateInstanceLinks_request.schema
+            .. literalinclude:: ../files/Entitieslinks_updateinstancelinks_request.schema
         """
-        return self.call("PUT", "/links/instances/{instanceId}", instanceId, instanceLinkDtoCollection)
+        return self.call("PUT", f"/links/instances/{instanceId}", instanceLinkDtoCollection)
 
 		
-    def getInstanceLinks(self, instanceId):
+    def getinstancelinks(self, instanceId):
         """Get links collection related to Instance
 
         ``GET /links/instances/{instanceId}``
@@ -54,11 +53,11 @@ class EntitieslinksAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Entitieslinks_getInstanceLinks_response.schema
+            .. literalinclude:: ../files/Entitieslinks_getinstancelinks_response.schema
         """
-        return self.call("GET", "/links/instances/{instanceId}", instanceId)
+        return self.call("GET", f"/links/instances/{instanceId}")
 
-    def countLinksByAuthorityIds(self, uuidCollection):
+    def countlinksbyauthorityids(self, uuidCollection):
         """Retrieve number of links by authority IDs
 
         ``POST /links/authorities/bulk/count``
@@ -75,12 +74,12 @@ class EntitieslinksAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Entitieslinks_countLinksByAuthorityIds_request.schema
-            .. literalinclude:: ../files/Entitieslinks_countLinksByAuthorityIds_request.schema_response.schema
+            .. literalinclude:: ../files/Entitieslinks_countlinksbyauthorityids_request.schema
+            .. literalinclude:: ../files/Entitieslinks_countlinksbyauthorityids_request.schema_response.schema
         """
-        return self.call("POST", "/links/authorities/bulk/count", uuidCollection)
+        return self.call("POST", f"/links/authorities/bulk/count", uuidCollection)
 
-    def getInstanceAuthorityLinkingRules(self):
+    def getinstanceauthoritylinkingrules(self):
         """Retrieve instance-authority linking rules
 
         ``GET /linking-rules/instance-authority``
@@ -91,7 +90,26 @@ class EntitieslinksAdmin(FolioAdminApi):
         """
         return self.call("GET", "/linking-rules/instance-authority")
 
-    def getAuthorityLinksStats(self, **kwargs):
+    def getinstanceauthoritylinkingrulebyid(self, ruleId):
+        """Retrieve instance-authority linking rule by ID
+
+        ``GET /linking-rules/instance-authority/{ruleId}``
+
+        Returns:
+            dict: See Schema below.
+
+        Raises:
+            OkapiRequestError: Validation errors.
+            OkapiRequestNotFound: Validation error for the request.
+            OkapiFatalError: Internal server error.
+
+        Schema:
+
+            .. literalinclude:: ../files/Entitieslinks_getinstanceauthoritylinkingrulebyid_response.schema
+        """
+        return self.call("GET", f"/linking-rules/instance-authority/{ruleId}")
+
+    def getauthoritylinksstats(self, **kwargs):
         """Retrieve authority updates (related to links) statistics
 
         ``GET /links/stats/authority``
@@ -111,11 +129,11 @@ class EntitieslinksAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Entitieslinks_getAuthorityLinksStats_response.schema
+            .. literalinclude:: ../files/Entitieslinks_getauthoritylinksstats_response.schema
         """
         return self.call("GET", "/links/stats/authority", query=kwargs)
 
-    def getLinkedBibUpdateStats(self, **kwargs):
+    def getlinkedbibupdatestats(self, **kwargs):
         """Retrieve linked bib update statistics
 
         ``GET /links/stats/instance``
@@ -135,6 +153,6 @@ class EntitieslinksAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Entitieslinks_getLinkedBibUpdateStats_response.schema
+            .. literalinclude:: ../files/Entitieslinks_getlinkedbibupdatestats_response.schema
         """
         return self.call("GET", "/links/stats/instance", query=kwargs)

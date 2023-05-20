@@ -8,9 +8,10 @@ Modules
 
 .. autosummary::
    :toctree: generated
-   :template: module2.rst
+   :template: module.rst
    :recursive:
 
+   foliolib.helper
    foliolib.helper.folio
    foliolib.helper.modules
    foliolib.helper.okapi

@@ -12,6 +12,7 @@
    "action":"CREATE",
    "folioRecord":"INSTANCE",
    "deleted":false,
+   "remove9Subfields":false,
    "userInfo":{
       "firstName":"DIKU",
       "lastName":"ADMINISTRATOR",

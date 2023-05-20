@@ -1,0 +1,5 @@
+{
+    "description": "Parse counter report response",
+    "type": "object",
+    "additionalProperties": false
+}

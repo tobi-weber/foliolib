@@ -8,27 +8,28 @@ from urllib.parse import urlparse
 
 import inflection
 import yaml
+from foliolib.apiBuilder.oas.baseoas import BaseOAS
 from foliolib.apiBuilder.oas.oaSchemaPath import OASchemaPath
 
 log = logging.getLogger("foliolib.oas.oaSchemaPath")
 
 
-class OASchema:
+class OASchema(BaseOAS):
 
-    def __init__(self, data, title, fname, sphinx_doc_src="docs/source"):
-        log.debug("OASchema: %s", title)
-        self._data = data
-        self._referencedData = {fname: data}
-        self._ref_data = self._load_refs(data)
-        title = ''.join(
+    def __init__(self, fname, sphinx_doc_src="docs/source", hasAdminMethods=False):
+        super().__init__(fname, self)
+        title = os.path.splitext(fname)[0].replace("mod-", "")
+        log.info("OASchema: %s", title)
+        self.spath = os.getcwd()
+        self._referencedData = {fname: self._data}
+        self._title = ''.join(
             [i for i in title if not i.isdigit() and i not in [".", "-"]])
-        self._title = title
         self._sphinx_doc_src = sphinx_doc_src
-        self._info = data["info"] if "info" in data else ""
-        self._components = self._data["components"]
-        if "paths" in data:
+        self._hasAdminMethods = hasAdminMethods
+        self._info = self._data["info"] if "info" in self._data else ""
+        if "paths" in self._data:
             self._oaSchemaPaths = [OASchemaPath(k, v, self)
-                                   for k, v in data["paths"].items()]
+                                   for k, v in self._data["paths"].items()]
         else:
             self._oaSchemaPaths = []
         self._doc_include_fles = {}
@@ -37,7 +38,7 @@ class OASchema:
         return self._title
 
     def get_basePath(self):
-        #print(json.dumps(self._data, indent=2))
+        # print(json.dumps(self._data, indent=2))
         basePath = ""
         if "servers" in self._data:
             # print(self._data["servers"][0]["url"])
@@ -57,39 +58,11 @@ class OASchema:
     def get_info(self):
         return self._info
 
+    def hasAdminMethods(self):
+        return self._hasAdminMethods
+
     def get_oaSchemaPaths(self):
         return self._oaSchemaPaths
-
-    def get_component(self, path):
-        if path.startswith("#/components"):
-            path = path.replace("#/components/", "").split("/")
-            return self._components[path[0]][path[1]]
-        elif "#/components" in path:
-            path = path.split("#/components/")
-            data = self._referencedData[path[0]]
-            path = path[1].split("/")
-            return data["components"][path[0]][path[1]]
-        return None
-
-    def get_ref(self, path):
-        if "#/components" in path:
-            ref = self.get_component(path)
-            if "$ref" in ref:
-                if "#/" in ref["$ref"]:
-                    ref = ref["$ref"].split("#/")
-                    schema = self._ref_data[ref[0]]
-                    example = self._ref_data[ref[1]]
-                else:
-                    schema = self._ref_data[ref["$ref"]]
-                    example = None
-                return schema
-            return ref
-        else:
-            try:
-                return self._ref_data[path]
-            except:
-                log.error(self._ref_data.keys())
-                raise
 
     def write_doc_include_file(self, filename, data):
         if self._sphinx_doc_src is not None:
@@ -102,56 +75,6 @@ class OASchema:
                     json.dump(data, f, indent=4)
                 else:
                     f.write(data)
-
-    def _load_refs(self, data):
-        ref_data = {}
-
-        def get_data(path):
-            if os.path.exists(path):
-                with open(path, encoding="utf-8") as f:
-                    if path.endswith(".json"):
-                        try:
-                            data = json.load(f)
-                            return data
-                        except json.JSONDecodeError:
-                            pass
-                    if path.endswith(".yaml"):
-                        try:
-                            data = yaml.load(f, Loader=yaml.Loader)
-                            return data
-                        except json.JSONDecodeError:
-                            pass
-                    return f.read()
-            else:
-                log.error("File not found %s", path)
-
-        def walk(d):
-            if isinstance(d, dict):
-                for k, v in d.items():
-                    if isinstance(v, dict):
-                        walk(v)
-                    elif isinstance(v, list):
-                        for e in v:
-                            walk(e)
-                    elif k == "$ref":
-                        if not v.startswith("#"):
-                            if "#/" in v:
-                                ref = v.split("#/")
-                                data = get_data(ref[0])
-                                if ref[0].endswith(".yaml"):
-                                    self._referencedData[ref[0]] = data
-                                else:
-                                    ref_data[ref[0]] = data
-                                    ref_data[ref[1]] = data[ref[1]]
-                            else:
-                                ref_data[v] = get_data(v)
-                    elif k == "example":
-                        if not v.startswith("#"):
-                            ref_data[v] = get_data(v)
-
-        walk(data)
-
-        return ref_data
 
     def get_code(self):
         if not self._oaSchemaPaths:

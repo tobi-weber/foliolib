@@ -1,0 +1,88 @@
+{
+    "description": "Usage report schema",
+    "type": "object",
+    "properties": {
+        "agreementId": {
+            "type": "string",
+            "description": "Agreement identifier (UUID)"
+        },
+        "accessCountPeriods": {
+            "description": "List of reporting periods, either a list of months or a list of years, for example [\"2020-03\", \"2020-04\", \"2020-05\"]",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "totalItemRequestsTotal": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Access count total for all periods and all items"
+        },
+        "totalItemRequestsByPeriod": {
+            "type": "array",
+            "description": "Access count per period, total for all items",
+            "items": {
+                "type": "integer",
+                "nullable": true
+            }
+        },
+        "totalRequestsPublicationYearsByPeriod": {
+            "type": "array",
+            "description": "Access count per period for each publication year, total for all items",
+            "items": {
+                "type": "object",
+                "description": "object with publication year as key and count as value"
+            }
+        },
+        "totalRequestsPeriodsOfUseByPeriod": {
+            "type": "array",
+            "description": "Access count per period for each publication period, total for all items",
+            "items": {
+                "type": "object",
+                "description": "object with publication year as key and count as value"
+            }
+        },
+        "uniqueItemRequestsTotal": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Unique access count total for all periods and all items"
+        },
+        "uniqueItemRequestsByPeriod": {
+            "type": "array",
+            "description": "Unique access count per period, total for all items",
+            "items": {
+                "type": "integer",
+                "nullable": true
+            }
+        },
+        "uniqueRequestsPublicationYearsByPeriod": {
+            "type": "array",
+            "description": "Unique count per period for each publication year, total for all items",
+            "items": {
+                "type": "object",
+                "description": "object with publication year as key and count as value"
+            }
+        },
+        "uniqueRequestsPeriodsOfUseByPeriod": {
+            "type": "array",
+            "description": "Unique access count per period for each publication period, total for all items",
+            "items": {
+                "type": "object",
+                "description": "object with publication year as key and count as value"
+            }
+        },
+        "items": {
+            "description": "List of items, with access data per item",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "$ref": "reportRow.json"
+            }
+        },
+        "execution": {
+            "description": "Information about execution, such as various timings",
+            "type": "object"
+        }
+    },
+    "additionalProperties": false
+}

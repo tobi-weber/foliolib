@@ -1,0 +1,11 @@
+{
+  "userTenants": [
+    {
+      "id": "0d6a9156-25b9-4bee-ab4d-dbb31afba0bd",
+      "userId": "11484f66-5121-43ea-81e7-6d9e3711495f",
+      "username": "folio_user",
+      "tenantId": "sfs000"
+    }
+  ],
+  "totalRecords": 1
+}

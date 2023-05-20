@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-04-16
+# Generated at 2023-05-20
 
 import logging
 
@@ -9,14 +9,13 @@ log = logging.getLogger("foliolib.folio.api.metaStorage")
 
 
 
-class MetastorageAdmin(FolioAdminApi):
+class Metastorage(FolioApi):
     """Meta Storage
-    Administration
 
     
     """
 
-    def getOaiConfig(self):
+    def getoaiconfig(self):
         """Get OAI configuration
 
         ``GET /meta-storage/config/oai``
@@ -31,12 +30,12 @@ class MetastorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Metastorage_getOaiConfig_response.schema
+            .. literalinclude:: ../files/Metastorage_getoaiconfig_response.schema
         """
         return self.call("GET", "/meta-storage/config/oai")
 
 		
-    def putOaiConfig(self, oaiConfig):
+    def putoaiconfig(self, oaiConfig):
         """Update OAI configuration.
 
         ``PUT /meta-storage/config/oai``
@@ -51,12 +50,12 @@ class MetastorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Metastorage_putOaiConfig_request.schema
+            .. literalinclude:: ../files/Metastorage_putoaiconfig_request.schema
         """
-        return self.call("PUT", "/meta-storage/config/oai", oaiConfig)
+        return self.call("PUT", f"/meta-storage/config/oai", oaiConfig)
 
 		
-    def deleteOaiConfig(self):
+    def deleteoaiconfig(self):
         """Update OAI configuration.
 
         ``DELETE /meta-storage/config/oai``
@@ -67,7 +66,7 @@ class MetastorageAdmin(FolioAdminApi):
         """
         return self.call("DELETE", "/meta-storage/config/oai")
 
-    def postConfigMatchKey(self, matchKey):
+    def postconfigmatchkey(self, matchKey):
         """Create match key
 
         ``POST /meta-storage/config/matchkeys``
@@ -84,12 +83,12 @@ class MetastorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Metastorage_postConfigMatchKey_request.schema
+            .. literalinclude:: ../files/Metastorage_postconfigmatchkey_request.schema
         """
-        return self.call("POST", "/meta-storage/config/matchkeys", matchKey)
+        return self.call("POST", f"/meta-storage/config/matchkeys", matchKey)
 
 		
-    def getConfigMatchKeys(self, **kwargs):
+    def getconfigmatchkeys(self, **kwargs):
         """Get match key configurations
 
         ``GET /meta-storage/config/matchkeys``
@@ -109,11 +108,11 @@ class MetastorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Metastorage_getConfigMatchKeys_response.schema
+            .. literalinclude:: ../files/Metastorage_getconfigmatchkeys_response.schema
         """
         return self.call("GET", "/meta-storage/config/matchkeys", query=kwargs)
 
-    def getConfigMatchKey(self):
+    def getconfigmatchkey(self, id_):
         """Get match key configuration
 
         ``GET /meta-storage/config/matchkeys/{id}``
@@ -128,12 +127,12 @@ class MetastorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Metastorage_getConfigMatchKey_response.schema
+            .. literalinclude:: ../files/Metastorage_getconfigmatchkey_response.schema
         """
-        return self.call("GET", "/meta-storage/config/matchkeys/{id}")
+        return self.call("GET", f"/meta-storage/config/matchkeys/{id_}")
 
 		
-    def deleteConfigMatchKey(self):
+    def deleteconfigmatchkey(self, id_):
         """Delete match key configuration
 
         ``DELETE /meta-storage/config/matchkeys/{id}``
@@ -143,10 +142,10 @@ class MetastorageAdmin(FolioAdminApi):
             OkapiRequestNotFound: Not Found
             OkapiFatalError: Internal error
         """
-        return self.call("DELETE", "/meta-storage/config/matchkeys/{id}")
+        return self.call("DELETE", f"/meta-storage/config/matchkeys/{id_}")
 
 		
-    def putConfigMatchKey(self, matchKey):
+    def putconfigmatchkey(self, matchKey, id_):
         """Update match key configuration.
 
         ``PUT /meta-storage/config/matchkeys/{id}``
@@ -161,11 +160,11 @@ class MetastorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Metastorage_putConfigMatchKey_request.schema
+            .. literalinclude:: ../files/Metastorage_putconfigmatchkey_request.schema
         """
-        return self.call("PUT", "/meta-storage/config/matchkeys/{id}", matchKey)
+        return self.call("PUT", f"/meta-storage/config/matchkeys/{id_}", matchKey)
 
-    def initializeMatchKey(self):
+    def initializematchkey(self, id_):
         """Recalculate match key across all records.
 
         ``PUT /meta-storage/config/matchkeys/{id}/initialize``
@@ -180,11 +179,11 @@ class MetastorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Metastorage_initializeMatchKey_response.schema
+            .. literalinclude:: ../files/Metastorage_initializematchkey_response.schema
         """
-        return self.call("PUT", "/meta-storage/config/matchkeys/{id}/initialize")
+        return self.call("PUT", f"/meta-storage/config/matchkeys/{id_}/initialize")
 
-    def statsMatchKey(self):
+    def statsmatchkey(self, id_):
         """Get statistics for match key configuration
 
         ``GET /meta-storage/config/matchkeys/{id}/stats``
@@ -199,11 +198,11 @@ class MetastorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Metastorage_statsMatchKey_response.schema
+            .. literalinclude:: ../files/Metastorage_statsmatchkey_response.schema
         """
-        return self.call("GET", "/meta-storage/config/matchkeys/{id}/stats")
+        return self.call("GET", f"/meta-storage/config/matchkeys/{id_}/stats")
 
-    def postCodeModule(self, codeModule):
+    def postcodemodule(self, codeModule):
         """Create a new code module
 
         ``POST /meta-storage/config/modules``
@@ -220,12 +219,12 @@ class MetastorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Metastorage_postCodeModule_request.schema
+            .. literalinclude:: ../files/Metastorage_postcodemodule_request.schema
         """
-        return self.call("POST", "/meta-storage/config/modules", codeModule)
+        return self.call("POST", f"/meta-storage/config/modules", codeModule)
 
 		
-    def getCodeModules(self, **kwargs):
+    def getcodemodules(self, **kwargs):
         """Retrieve all code modules
 
         ``GET /meta-storage/config/modules``
@@ -245,11 +244,11 @@ class MetastorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Metastorage_getCodeModules_response.schema
+            .. literalinclude:: ../files/Metastorage_getcodemodules_response.schema
         """
         return self.call("GET", "/meta-storage/config/modules", query=kwargs)
 
-    def getCodeModule(self):
+    def getcodemodule(self, id_):
         """Retrieve a code module by id
 
         ``GET /meta-storage/config/modules/{id}``
@@ -264,12 +263,12 @@ class MetastorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Metastorage_getCodeModule_response.schema
+            .. literalinclude:: ../files/Metastorage_getcodemodule_response.schema
         """
-        return self.call("GET", "/meta-storage/config/modules/{id}")
+        return self.call("GET", f"/meta-storage/config/modules/{id_}")
 
 		
-    def putCodeModule(self, codeModule):
+    def putcodemodule(self, codeModule, id_):
         """Update code module by id
 
         ``PUT /meta-storage/config/modules/{id}``
@@ -284,12 +283,12 @@ class MetastorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Metastorage_putCodeModule_request.schema
+            .. literalinclude:: ../files/Metastorage_putcodemodule_request.schema
         """
-        return self.call("PUT", "/meta-storage/config/modules/{id}", codeModule)
+        return self.call("PUT", f"/meta-storage/config/modules/{id_}", codeModule)
 
 		
-    def deleteCodeModule(self):
+    def deletecodemodule(self, id_):
         """Delete code module by id
 
         ``DELETE /meta-storage/config/modules/{id}``
@@ -299,9 +298,9 @@ class MetastorageAdmin(FolioAdminApi):
             OkapiRequestNotFound: Not Found
             OkapiFatalError: Internal error
         """
-        return self.call("DELETE", "/meta-storage/config/modules/{id}")
+        return self.call("DELETE", f"/meta-storage/config/modules/{id_}")
 
-    def reloadCodeModule(self):
+    def reloadcodemodule(self, id_):
         """Force module to be reloaded
 
         ``PUT /meta-storage/config/modules/{id}/reload``
@@ -311,9 +310,9 @@ class MetastorageAdmin(FolioAdminApi):
             OkapiRequestNotFound: Not Found
             OkapiFatalError: Internal error
         """
-        return self.call("PUT", "/meta-storage/config/modules/{id}/reload")
+        return self.call("PUT", f"/meta-storage/config/modules/{id_}/reload")
 
-    def postSource(self, source):
+    def postsource(self, source):
         """Create source.
 
         ``POST /meta-storage/sources``
@@ -330,12 +329,12 @@ class MetastorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Metastorage_postSource_request.schema
+            .. literalinclude:: ../files/Metastorage_postsource_request.schema
         """
-        return self.call("POST", "/meta-storage/sources", source)
+        return self.call("POST", f"/meta-storage/sources", source)
 
 		
-    def getSources(self, **kwargs):
+    def getsources(self, **kwargs):
         """Get sources.
 
         ``GET /meta-storage/sources``
@@ -354,11 +353,11 @@ class MetastorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Metastorage_getSources_response.schema
+            .. literalinclude:: ../files/Metastorage_getsources_response.schema
         """
         return self.call("GET", "/meta-storage/sources", query=kwargs)
 
-    def getSource(self):
+    def getsource(self, id_):
         """Get source.
 
         ``GET /meta-storage/config/sources/{id}``
@@ -373,12 +372,12 @@ class MetastorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Metastorage_getSource_response.schema
+            .. literalinclude:: ../files/Metastorage_getsource_response.schema
         """
-        return self.call("GET", "/meta-storage/config/sources/{id}")
+        return self.call("GET", f"/meta-storage/config/sources/{id_}")
 
 		
-    def deleteSource(self):
+    def deletesource(self, id_):
         """Delete source.
 
         ``DELETE /meta-storage/config/sources/{id}``
@@ -388,9 +387,9 @@ class MetastorageAdmin(FolioAdminApi):
             OkapiRequestNotFound: Not Found
             OkapiFatalError: Internal error
         """
-        return self.call("DELETE", "/meta-storage/config/sources/{id}")
+        return self.call("DELETE", f"/meta-storage/config/sources/{id_}")
 
-    def postIngestJob(self, ingestJobRequest):
+    def postingestjob(self, ingestJobRequest):
         """Create ingest job
 
         ``POST /meta-storage/ingest-jobs``
@@ -407,11 +406,11 @@ class MetastorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Metastorage_postIngestJob_request.schema
+            .. literalinclude:: ../files/Metastorage_postingestjob_request.schema
         """
-        return self.call("POST", "/meta-storage/ingest-jobs", ingestJobRequest)
+        return self.call("POST", f"/meta-storage/ingest-jobs", ingestJobRequest)
 
-    def ingestJobRecord(self, ingestRecordChunk):
+    def ingestjobrecord(self, ingestRecordChunk, id_):
         """Put records for job.
 
         ``PUT /meta-storage/ingest-jobs/{id}``
@@ -429,13 +428,13 @@ class MetastorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Metastorage_ingestJobRecord_request.schema
-            .. literalinclude:: ../files/Metastorage_ingestJobRecord_request.schema_response.schema
+            .. literalinclude:: ../files/Metastorage_ingestjobrecord_request.schema
+            .. literalinclude:: ../files/Metastorage_ingestjobrecord_request.schema_response.schema
         """
-        return self.call("PUT", "/meta-storage/ingest-jobs/{id}", ingestRecordChunk)
+        return self.call("PUT", f"/meta-storage/ingest-jobs/{id_}", ingestRecordChunk)
 
 		
-    def ingestJobInfo(self):
+    def ingestjobinfo(self, id_):
         """Get ingest job information.
 
         ``GET /meta-storage/ingest-jobs/{id}``
@@ -450,12 +449,12 @@ class MetastorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Metastorage_ingestJobInfo_response.schema
+            .. literalinclude:: ../files/Metastorage_ingestjobinfo_response.schema
         """
-        return self.call("GET", "/meta-storage/ingest-jobs/{id}")
+        return self.call("GET", f"/meta-storage/ingest-jobs/{id_}")
 
 		
-    def ingestJobFinish(self, **kwargs):
+    def ingestjobfinish(self, id_, **kwargs):
         """Finish ingest job with either rollback of commit.
 
         ``DELETE /meta-storage/ingest-jobs/{id}``
@@ -468,9 +467,9 @@ class MetastorageAdmin(FolioAdminApi):
             OkapiRequestNotFound: Not Found
             OkapiFatalError: Internal error
         """
-        return self.call("DELETE", "/meta-storage/ingest-jobs/{id}", query=kwargs)
+        return self.call("DELETE", f"/meta-storage/ingest-jobs/{id_}", query=kwargs)
 
-    def getGlobalRecords(self, **kwargs):
+    def getglobalrecords(self, **kwargs):
         """Get records that satisfy CQL query with fields localId, sourceId, globalId.
 
         ``GET /meta-storage/records``
@@ -490,12 +489,12 @@ class MetastorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Metastorage_getGlobalRecords_response.schema
+            .. literalinclude:: ../files/Metastorage_getglobalrecords_response.schema
         """
         return self.call("GET", "/meta-storage/records", query=kwargs)
 
 		
-    def putGlobalRecords(self, ingestRecordRequest):
+    def putglobalrecords(self, ingestRecordRequest):
         """Create or update records.
 
         ``PUT /meta-storage/records``
@@ -512,13 +511,13 @@ class MetastorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Metastorage_putGlobalRecords_request.schema
-            .. literalinclude:: ../files/Metastorage_putGlobalRecords_request.schema_response.schema
+            .. literalinclude:: ../files/Metastorage_putglobalrecords_request.schema
+            .. literalinclude:: ../files/Metastorage_putglobalrecords_request.schema_response.schema
         """
-        return self.call("PUT", "/meta-storage/records", ingestRecordRequest)
+        return self.call("PUT", f"/meta-storage/records", ingestRecordRequest)
 
 		
-    def deleteGlobalRecords(self, **kwargs):
+    def deleteglobalrecords(self, **kwargs):
         """Delete global records.
 
         ``DELETE /meta-storage/records``
@@ -532,7 +531,7 @@ class MetastorageAdmin(FolioAdminApi):
         """
         return self.call("DELETE", "/meta-storage/records", query=kwargs)
 
-    def getGlobalRecord(self):
+    def getglobalrecord(self, globalId):
         """Get record with global identifier.
 
         ``GET /meta-storage/records/{globalId}``
@@ -547,11 +546,11 @@ class MetastorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Metastorage_getGlobalRecord_response.schema
+            .. literalinclude:: ../files/Metastorage_getglobalrecord_response.schema
         """
-        return self.call("GET", "/meta-storage/records/{globalId}")
+        return self.call("GET", f"/meta-storage/records/{globalId}")
 
-    def getClusters(self):
+    def getclusters(self):
         """Get clusters with matchkeyid. CQL query with matchValue, clusterId fields
 
         ``GET /meta-storage/clusters``
@@ -566,11 +565,11 @@ class MetastorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Metastorage_getClusters_response.schema
+            .. literalinclude:: ../files/Metastorage_getclusters_response.schema
         """
         return self.call("GET", "/meta-storage/clusters")
 
-    def getCluster(self):
+    def getcluster(self, clusterId):
         """Get cluster by identifier
 
         ``GET /meta-storage/clusters/{clusterId}``
@@ -585,11 +584,11 @@ class MetastorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Metastorage_getCluster_response.schema
+            .. literalinclude:: ../files/Metastorage_getcluster_response.schema
         """
-        return self.call("GET", "/meta-storage/clusters/{clusterId}")
+        return self.call("GET", f"/meta-storage/clusters/{clusterId}")
 
-    def oaiService(self):
+    def oaiservice(self):
         """OAI service
 
         ``GET /meta-storage/oai``
@@ -600,7 +599,7 @@ class MetastorageAdmin(FolioAdminApi):
         """
         return self.call("GET", "/meta-storage/oai")
 
-    def postOaiPmhClient(self, oai_pmh_client):
+    def postoaipmhclient(self, oai_pmh_client):
         """Create OAI PMH client job
 
         ``POST /meta-storage/pmh-clients``
@@ -617,12 +616,12 @@ class MetastorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Metastorage_postOaiPmhClient_request.schema
+            .. literalinclude:: ../files/Metastorage_postoaipmhclient_request.schema
         """
-        return self.call("POST", "/meta-storage/pmh-clients", oai_pmh_client)
+        return self.call("POST", f"/meta-storage/pmh-clients", oai_pmh_client)
 
 		
-    def getCollectionOaiPmhClient(self):
+    def getcollectionoaipmhclient(self):
         """Get all OAI PMH client jobs
 
         ``GET /meta-storage/pmh-clients``
@@ -636,11 +635,11 @@ class MetastorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Metastorage_getCollectionOaiPmhClient_response.schema
+            .. literalinclude:: ../files/Metastorage_getcollectionoaipmhclient_response.schema
         """
         return self.call("GET", "/meta-storage/pmh-clients")
 
-    def getOaiPmhClient(self):
+    def getoaipmhclient(self, id_):
         """Get OAI-PMH client
 
         ``GET /meta-storage/pmh-clients/{id}``
@@ -655,12 +654,12 @@ class MetastorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Metastorage_getOaiPmhClient_response.schema
+            .. literalinclude:: ../files/Metastorage_getoaipmhclient_response.schema
         """
-        return self.call("GET", "/meta-storage/pmh-clients/{id}")
+        return self.call("GET", f"/meta-storage/pmh-clients/{id_}")
 
 		
-    def putOaiPmhClient(self, oai_pmh_client):
+    def putoaipmhclient(self, oai_pmh_client, id_):
         """Update OAI-PMH client
 
         ``PUT /meta-storage/pmh-clients/{id}``
@@ -675,12 +674,12 @@ class MetastorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Metastorage_putOaiPmhClient_request.schema
+            .. literalinclude:: ../files/Metastorage_putoaipmhclient_request.schema
         """
-        return self.call("PUT", "/meta-storage/pmh-clients/{id}", oai_pmh_client)
+        return self.call("PUT", f"/meta-storage/pmh-clients/{id_}", oai_pmh_client)
 
 		
-    def deleteOaiPmhClient(self):
+    def deleteoaipmhclient(self, id_):
         """Delete OAI-PMH client
 
         ``DELETE /meta-storage/pmh-clients/{id}``
@@ -695,11 +694,11 @@ class MetastorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Metastorage_deleteOaiPmhClient_response.schema
+            .. literalinclude:: ../files/Metastorage_deleteoaipmhclient_response.schema
         """
-        return self.call("DELETE", "/meta-storage/pmh-clients/{id}")
+        return self.call("DELETE", f"/meta-storage/pmh-clients/{id_}")
 
-    def startOaiPmhClient(self):
+    def startoaipmhclient(self, id_):
         """Start OAI PMH client job
 
         ``POST /meta-storage/pmh-clients/{id}/start``
@@ -709,9 +708,9 @@ class MetastorageAdmin(FolioAdminApi):
             OkapiRequestNotFound: Not Found
             OkapiFatalError: Internal error
         """
-        return self.call("POST", "/meta-storage/pmh-clients/{id}/start")
+        return self.call("POST", f"/meta-storage/pmh-clients/{id_}/start")
 
-    def stopOaiPmhClient(self):
+    def stopoaipmhclient(self, id_):
         """Stop OAI PMH client job
 
         ``POST /meta-storage/pmh-clients/{id}/stop``
@@ -721,9 +720,9 @@ class MetastorageAdmin(FolioAdminApi):
             OkapiRequestNotFound: Not Found
             OkapiFatalError: Internal error
         """
-        return self.call("POST", "/meta-storage/pmh-clients/{id}/stop")
+        return self.call("POST", f"/meta-storage/pmh-clients/{id_}/stop")
 
-    def statusOaiPmhClient(self):
+    def statusoaipmhclient(self, id_):
         """Get OAI PMH client status
 
         ``GET /meta-storage/pmh-clients/{id}/status``
@@ -738,6 +737,6 @@ class MetastorageAdmin(FolioAdminApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Metastorage_statusOaiPmhClient_response.schema
+            .. literalinclude:: ../files/Metastorage_statusoaipmhclient_response.schema
         """
-        return self.call("GET", "/meta-storage/pmh-clients/{id}/status")
+        return self.call("GET", f"/meta-storage/pmh-clients/{id_}/status")

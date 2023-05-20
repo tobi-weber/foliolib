@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-04-16
+# Generated at 2023-05-20
 
 import logging
 
@@ -90,6 +90,11 @@ class SourceRecordStorageSourceRecords(FolioApi):
                     Example:
                     
                      - ['order,ASC']
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -269,6 +274,30 @@ class SourceRecordStorageBatch(FolioApi):
         """
         return self.call("PUT", "/source-storage/batch/parsed-records", data=parsedRecord)
 
+    def set_fetch(self, fetch: dict):
+        """Fetch exact fields of parsed records by external IDs.
+
+        ``POST /source-storage/batch/parsed-records/fetch``
+
+        Args:
+            fetch (dict): See Schema below
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/SourceRecordStorageBatch_set_fetch_request.schema
+            .. literalinclude:: ../files/SourceRecordStorageBatch_set_fetch_return.schema 
+        """
+        return self.call("POST", "/source-storage/batch/parsed-records/fetch", data=fetch)
+
 
 class SourceRecordStorageTestRecords(FolioApi):
     """Source Record Storage Test Record API
@@ -332,6 +361,11 @@ class SourceRecordStorageStream(FolioApi):
                     Example:
                     
                      - ['order,ASC']
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -424,6 +458,11 @@ class SourceRecordStorageStream(FolioApi):
                     Example:
                     
                      - ['order,ASC']
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -475,6 +514,11 @@ class SourceRecordStorageRecords(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -572,6 +616,7 @@ class SourceRecordStorageRecords(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
@@ -655,6 +700,11 @@ class SourceRecordStorageSnapshots(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -752,6 +802,7 @@ class SourceRecordStorageSnapshots(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
             OkapiFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 

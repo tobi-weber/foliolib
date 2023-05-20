@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-04-16
+# Generated at 2023-05-20
 
 import logging
 
@@ -705,6 +705,48 @@ class Groups(FolioApi):
             .. literalinclude:: ../files/Groups_modify_group_request.schema
         """
         return self.call("PUT", f"/groups/{groupId}", data=group)
+
+
+class UserTenants(FolioApi):
+    """mod-users User tenants API
+
+    Records that show the primary tenant for a user when doing single-sign-on
+    """
+
+    def get_userTenants(self, **kwargs):
+        """Return a list of user tenants
+
+        ``GET /user-tenants``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/UserTenants_get_userTenants_return.schema 
+        """
+        return self.call("GET", "/user-tenants", query=kwargs)
 
 
 class Patronpin(FolioApi):
