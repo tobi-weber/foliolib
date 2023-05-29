@@ -18,7 +18,7 @@ parameters necessary for foliolib.
 
 For a server configuration myFolio the configuration file
 **$HOME/.foliolib/myFolio/server.conf** is created and a folder
-for module specific configurations **$HOME/.foliolib/modules**.
+for module specific configurations **$HOME/.foliolib/myFolio/modules**.
 
 A server configuration can be created from the command line:
 

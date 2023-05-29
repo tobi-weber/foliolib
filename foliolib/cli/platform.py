@@ -16,8 +16,8 @@ def platform():
 
 @platform.command()
 @click.argument("tenantid")
-@click.option("-p", "--platform", default="R3-2022-GA",
-              help="Path to platform directory, tgz file, zip file or platform version")
+@click.option("-p", "--platform", default="R1-2023-GA",
+              help="Platform version (e.g. R1-2023 or path to platform directory or platform tgz file")
 @click.option("-n", "--node", default=get_node(),
               help="node id", show_default=True)
 @click.option("-a", "--deployAsync",  help="", is_flag=True)
@@ -35,6 +35,7 @@ def platform():
     "--simulate", is_flag=True, help="Simulate the installation")
 def install(**kwargs):
     """Install a folio platform.
+    This can be called multiple times, to setup different tenants.
 
     TENANTID\ttenant id.
     """
@@ -58,7 +59,7 @@ def install(**kwargs):
 
 @platform.command()
 @click.option("-t", "--tenant", default="ALL",
-              help="Tenant id to upgrade. Default all tenants will be upgraded")
+              help="Tenant id to upgrade. Default all tenants will be upgraded, except the supertenant")
 @click.option("-p", "--platform", required=True,
               help="Path to platform directory, tgz file, zip file or platform version")
 @click.option("-n", "--node", default=get_node(),
@@ -78,6 +79,8 @@ def install(**kwargs):
     "--simulate", is_flag=True, help="Simulate the installation")
 def upgrade(**kwargs):
     """Upgrade folio tenants.
+    It is recommended to unsecure okapi before upgrading.
+    It may be necessary to update okapi before.
     """
     _kwargs = {}
     if kwargs["ignoreerrors"]:

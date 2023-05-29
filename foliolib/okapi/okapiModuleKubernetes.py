@@ -29,13 +29,13 @@ class OkapiModuleKubernetes:
         self.healthCheck = True
         self.podAntiAffinity = True
         modcfg = Config().modulescfg(modId)
-        okapicfg = Config().servercfg()
-        self._namespace = okapicfg.get(
-            "Kubernetes", "namespace", fallback="default")
-        self.imagePullSecret = okapicfg.get(
+        servercfg = Config().servercfg()
+        self._namespace = servercfg.get(
+            "Kubernetes", "namespace", fallback="folio")
+        self.imagePullSecret = servercfg.get(
             "Kubernetes", "imagePullSecret", fallback=None)
 
-        self._replicas = okapicfg.getint("Kubernetes", "replicas", fallback=1)
+        self._replicas = servercfg.getint("Kubernetes", "replicas", fallback=1)
 
         if self._modId.startswith("mod-authtoken"):
             self._replicas = 1

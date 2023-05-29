@@ -284,6 +284,9 @@ class Config:
             self.__foliolibcfg["Cache"]["descriptors"] = os.path.join(self.get_confdir(),
                                                                       "cache",
                                                                       "descriptors")
+            self.__foliolibcfg["Cache"]["platforms"] = os.path.join(self.get_confdir(),
+                                                                    "cache",
+                                                                    "platforms")
             self.__foliolibcfg["GitHub"] = {}
             self.__foliolibcfg["GitHub"]["access-token"] = ""
             with open(fpath, "w") as f:

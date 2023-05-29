@@ -11,6 +11,7 @@ import tempfile
 import zipfile
 
 import requests
+from foliolib.config import Config
 from foliolib.exceptions import FoliolibError
 from foliolib.helper import split_modid
 from foliolib.helper.modules import (add_modules, deploy_modules,
@@ -38,19 +39,30 @@ def __process_platform(platform):
             print(z.filelist())
             return "ZIP"
     else:
-        url = f"https://api.github.com/repos/folio-org/platform-complete/tags"
-        response = requests.get(url)
-        tags = response.json()
-        tarball_url = None
-        for t in tags:
-            if t["name"] == platform.strip():
-                tarball_url = t["tarball_url"]
-        if tarball_url is None:
-            raise FoliolibError("Unknown platform %s" % platform)
-        response = requests.get(tarball_url)
-        fname = os.path.join(tmp, "folio-platform.tar.gz")
-        with open(fname, "bw") as f:
-            f.write(response.content)
+        cache_dir = os.path.join(Config().foliolibcfg()[
+                                 "Cache"]["platforms"])
+        if not os.path.exists(cache_dir):
+            os.mkdir(cache_dir)
+        fname = os.path.join(cache_dir, f"folio-platform-{platform}.tar.gz")
+        if not os.path.exists(fname):
+            print("Download folio platform %s" % platform)
+            url = f"https://api.github.com/repos/folio-org/platform-complete/tags"
+            response = requests.get(url)
+            tags = response.json()
+            tarball_url = None
+            for t in tags:
+                if t["name"] == platform.strip():
+                    tarball_url = t["tarball_url"]
+            if tarball_url is None:
+                print("Available folio platforms:")
+                names = [t["name"] for t in tags]
+                for name in sorted(names):
+                    print(name)
+                raise FoliolibError("Unknown platform %s" % platform)
+            response = requests.get(tarball_url)
+            with open(fname, "bw") as f:
+                f.write(response.content)
+
         with tarfile.open(fname, "r:gz") as f:
             f.extractall(tmp)
             return os.path.join(tmp,
@@ -118,8 +130,14 @@ def upgrade_platform(platform: str, node: str, tenantid: str,
         loadSample (bool, optional): load samples. Defaults to False.
     """
     def upgrade(tid):
+        okapi = OkapiClient()
+        for m in okapi_modules:
+            if m.get_id().startswith("mod-authtoken"):
+                print("Upgrade %s for tenant %s" % (m.get_id(), tid))
+                msg = okapi.upgrade_modules(tid, [m.get_id()], invoke=False)
+                print(json.dumps(msg, indent=2))
         print("Upgrade modules for tenant %s ..." % tid)
-        msg = OkapiClient().upgrade_modules(tid, **kwargs)
+        msg = okapi.upgrade_modules(tid, **kwargs)
         print(json.dumps(msg, indent=2))
     platform = __process_platform(platform)
 
@@ -140,6 +158,7 @@ def upgrade_platform(platform: str, node: str, tenantid: str,
                              if not mod_name == split_modid(m.get_id())[0]]
 
     add_modules(okapi_modules + stripes_modules)
+
     if deploy_async:
         deploy_modules_async(node, okapi_modules)
     else:
@@ -148,7 +167,8 @@ def upgrade_platform(platform: str, node: str, tenantid: str,
     if tenantid == "ALL":
         tenants = OkapiClient().get_tenants()
         for tenant in tenants:
-            upgrade(tenant["id"])
+            if not tenant["id"] == "supertenant":
+                upgrade(tenant["id"])
     else:
         upgrade(tenantid)
     clean_okapi()
