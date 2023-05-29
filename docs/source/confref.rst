@@ -112,7 +112,7 @@ foliolib.conf
     [Env]
 
 
-    # Section for Kubernetes configuration
+    # Section for Kubernetes configuration.
     [Kubernetes]
 
     # Kind of the deployment. Deployment or StatefulSet.
@@ -193,7 +193,6 @@ foliolib.conf
 
 
     # Section for defining a volume for the module.
-    # Default it is not defined.
     [Volume]
 
     # Mount path of the volume. Required if section Volume is defined.
@@ -202,25 +201,23 @@ foliolib.conf
     # Size of the volume. Required if section Volume is defined.
     size = 1Gi
 
-    # StorageClassName. Default it is not defined.
+    # StorageClassName.
     storageClassName = myStorageClass
 
 
     # Section to define the security context.
-    # Default it is not defined.
     [SecurityContext]
 
-    # UID as integer. Default it is not defined.
+    # UID as integer.
     runAsUser = 1000
 
-    # Boolean. Default it is not defined.
+    # Boolean.
     runAsNonRoot = True
 
-    # GID as integer. Default it is not defined.
+    # GID as integer.
     runAsGroup = 1000
 
-    # GID as integer. Default it is not defined.
+    # GID as integer.
     fsGroup = 1000
 
-    # Default it is not defined.
     fsGroupChangePolicy = Always
