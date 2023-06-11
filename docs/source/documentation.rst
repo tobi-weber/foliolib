@@ -16,9 +16,10 @@ For example, the configuration for a server named **myFolio** is given the path
 The configuration file **$HOME/.foliolib/foliolib.conf** contains general
 parameters necessary for foliolib.
 
-For a server configuration myFolio the configuration file
-**$HOME/.foliolib/myFolio/server.conf** is created and a folder
-for module specific configurations **$HOME/.foliolib/myFolio/modules**.
+For a server configuration **myFolio** the configuration file
+**$HOME/.foliolib/myFolio/server.conf** and a folder
+for module specific configurations **$HOME/.foliolib/myFolio/modules**
+are created .
 
 A server configuration can be created from the command line:
 
@@ -30,6 +31,58 @@ A server configuration can be created from the command line:
 
 The modules directory contains configuration files for specific modules.
 The name of the file is modulename.conf, e.g. mod-pubsub.conf.
+
+
+Python Folio API
+----------------
+
+The `Python Folio API <https://foliolib.readthedocs.io/en/latest/foliolib.folio.api.html>`_
+is generated from the RAML and OAS files from the Folio-Modules.
+
+To call a function of the foliolib API, a server config must be loaded:
+
+.. code-block:: python
+
+    from foliolib import server
+    server("SERVER_NAME")
+
+and a authentication must be performed on the tenant(s),
+which should be called:
+
+.. code-block:: python
+
+    from foliolib.folio.users import Users
+    Users("TENANT_ID").login("USER_ID","PASSWORD")
+
+Now Folio API functions can be called.
+For example a query for `instances <https://foliolib.readthedocs.io/en/latest/generated/foliolib.folio.api.inventory.Inventory.html#foliolib.folio.api.inventory.Inventory.get_instances>`_
+can be performed:
+
+.. code-block:: python
+
+    from foliolib.folio.api.inventory import Inventory
+    inventory = Inventory("TENANT_ID")
+    instances = inventory.get_instances(query="title==*")
+    print(instances)
+
+Here is an example to get all `deployed modules <https://foliolib.readthedocs.io/en/latest/generated/foliolib.okapi.okapiClient.OkapiClient.html#foliolib.okapi.okapiClient.OkapiClient.get_deployed_modules>`_.
+If Okapi is secured, an authentication on the Supertenant is needed:
+
+.. code-block:: python
+
+    from foliolib import server
+    from foliolib.folio.users import Users
+    from foliolib.okapi.okapiClient import OkapiClient
+
+    server("SERVER_NAME")
+
+    Users("supertenant").login("USER_ID","PASSWORD")
+
+    okapi = OkapiClient()
+    modules = okapi.get_deployed_modules()
+    print(modules)
+
+
 
 
 Folio Enviroment Variables
