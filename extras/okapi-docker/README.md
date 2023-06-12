@@ -128,9 +128,6 @@ metadata:
   labels:
     app: okapi
 spec:
-  type: LoadBalancer
-  externalIPs:
-    - 192.168.10.99
   ports:
     - name: "okapi"
       protocol: TCP
