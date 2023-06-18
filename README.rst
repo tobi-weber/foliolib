@@ -20,6 +20,11 @@ The API is generated from the RAML and OAS files from the Folio-Modules.
 
 Documentation can be found `here <https://foliolib.readthedocs.io/>`_.
 
+Python packages can be found `here <https://pypi.org/project/foliolib/>`_.
+
+Debian packages can be found `here <https://github.com/tobi-weber/foliolib/releases/latest/>`_.
+
+
 Features:
 
 - Python Folio API
