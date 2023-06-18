@@ -26,6 +26,9 @@ foliolib.conf
     # Directory where to cache module descriptors.
     descriptors = [Home Directory]/.foliolib/cache/descriptors
 
+    # Directory where to cache Folio platforms.
+    platforms = [Home Directory]/.foliolib/cache/platforms
+
 
 
 [Server Name]/server.conf
@@ -52,6 +55,16 @@ foliolib.conf
     # Wether foliolib handles global enviroment variables.
     # Default is True.
     foliolibenv = True
+
+
+    # Section for command line interface
+    [Cli]
+
+    # Loglevel: INFO, WARNING, ERROR, DEBUG. Dfault is INFO
+    loglevel = INFO
+
+    # Wether every command needs to be confirmed.
+    confirm = True
 
 
     # Section for configuration for Kubernetes.

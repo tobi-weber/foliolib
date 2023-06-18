@@ -250,16 +250,18 @@ class OkapiClient:
 
         return False
 
-    def get_deployed_module(self, modId, instanceId=None):
+    def get_deployed_module(self, modId: Union[str, okapiModule.OkapiModule], instanceId: str = None):
         """Get deployed module
 
         Args:
-            modId (str): Module id.
+            modId (Union[str, OkapiModule]): Module id or instance of OkapiModule.
             instanceId (str, optional): Instance id. Defaults to None.
 
         Returns:
             dict: Deployment descriptor
         """
+        if isinstance(modId, okapiModule.OkapiModule):
+            modId = modId.get_id()
         url = f"/_/discovery/modules/{modId}"
         if instanceId is not None:
             url += "/" + instanceId
@@ -273,16 +275,18 @@ class OkapiClient:
         """
         return self.request("GET", "/_/discovery/modules")
 
-    def deploy_module(self, modId: str, node: str):
+    def deploy_module(self, modId: Union[str, okapiModule.OkapiModule], node: str = None):
         """Deploy a module.
 
         Args:
-            modId (str): Module id
-            node (str):
+            modId (Union[str, OkapiModule]): Module id or instance of OkapiModule.
+            node (str): The node on which module should be deployed. Default first node from nodes list.
 
         Returns:
             dict: Deployment descriptor.
         """
+        if isinstance(modId, okapiModule.OkapiModule):
+            modId = modId.get_id()
         descriptor = self.get_module(modId)
         if "launchDescriptor" in descriptor:
             modules = self.get_deployed_modules()
@@ -292,16 +296,17 @@ class OkapiClient:
             if Config().is_kubernetes():
                 return KubeClient().deploy(modId)
             else:
+                node = node or get_node()
                 return self.request("POST", "/_/discovery/modules",
                                     {"srvcId": modId, "nodeId": node})
         else:
             log.error("%s has no launchDescriptor", modId)
 
-    def undeploy_module(self, modId: str, instanceId=None):
+    def undeploy_module(self, modId: Union[str, okapiModule.OkapiModule], instanceId=None):
         """Remove registration for a given instance.
 
         Args:
-            modId (str): Module id.
+            modId (Union[str, OkapiModule]): Module id or instance of OkapiModule.
             instanceId (str, optional): Instance id. Defaults to None.
         """
         if isinstance(modId, okapiModule.OkapiModule):
@@ -319,11 +324,11 @@ class OkapiClient:
         """
         return self.request("DELETE", "/_/discovery/modules")
 
-    def is_module_deployed(self, modId: str):
+    def is_module_deployed(self, modId: Union[str, okapiModule.OkapiModule]):
         """Is module deployed.
 
         Args:
-            modId (str): Module id.
+            modId (Union[str, OkapiModule]): Module id or instance of OkapiModule.
 
         Returns:
             bool: wether module is deployed.

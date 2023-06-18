@@ -58,7 +58,7 @@ def __check_okapi():
 
 
 def __confirmation():
-    if not Config().servercfg().getboolean("Cli", "confirm", fallback=False):
+    if not Config().servercfg().getboolean("Cli", "confirm", fallback=True):
         return True
     confirmFile = os.path.join(Config().get_confdir(), ".confirm")
     confirmServer = None
