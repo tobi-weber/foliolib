@@ -42,5 +42,5 @@ def uninstall_tenant(tenantid, **kwargs):
             else:
                 raise
 
-    print("Remove tenat %s." % tenantid)
+    print("Remove tenant %s." % tenantid)
     OkapiClient().remove_tenant(tenantid)

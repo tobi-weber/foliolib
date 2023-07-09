@@ -14,4 +14,6 @@ Modules
    foliolib.okapi.okapiClient
    foliolib.okapi.kubeClient
    foliolib.okapi.okapiModule
+   foliolib.okapi.okapiModuleKubernetes
    foliolib.okapi.exceptions
+   
