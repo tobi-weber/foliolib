@@ -1,0 +1,31 @@
+{
+    "type": "object",
+    "title": "Publication details response",
+    "properties": {
+        "id": {
+            "description": "id of publication record",
+            "$ref": "common.yaml#/uuid"
+        },
+        "status": {
+            "type": "string",
+            "$ref": "publication_schema.yaml#/PublicationStatus"
+        },
+        "dateTime": {
+            "description": "the date of publication was created",
+            "type": "string"
+        },
+        "request": {
+            "description": "tenant request payload",
+            "type": "string"
+        },
+        "errors": {
+            "description": "List of errors",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "$ref": "publication_schema.yaml#/PublicationStatusError"
+            }
+        }
+    },
+    "additionalProperties": false
+}

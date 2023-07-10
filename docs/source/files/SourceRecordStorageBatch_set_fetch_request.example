@@ -1,0 +1,19 @@
+{
+  "conditions": {
+    "ids": [
+      "417f3355-081c-4aae-9209-ccb305f25f7e"
+    ],
+    "idType": "AUTHORITY"
+  },
+  "data": [
+    {
+      "from": "001",
+      "to": "001"
+    },
+    {
+      "from": "500",
+      "to": "999"
+    }
+  ],
+  "recordType": "MARC_AUTHORITY"
+}

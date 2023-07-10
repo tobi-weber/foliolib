@@ -1,0 +1,9 @@
+{
+  "id": "75d5bbd9-8e66-48ba-acd5-1e47798e2b8b",
+  "migrations": [
+    "marcIndexersVersionMigration"
+  ],
+  "status": "COMPLETED",
+  "startedDate": "2023-06-12T10:03:53.369+00:00",
+  "completedDate": "2023-06-12T12:07:42.369+00:00"
+}

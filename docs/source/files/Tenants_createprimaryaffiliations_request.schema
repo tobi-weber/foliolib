@@ -1,0 +1,21 @@
+{
+    "description": "Primary affiliation DTO",
+    "type": "object",
+    "properties": {
+        "tenantId": {
+            "description": "Unique tenant id",
+            "type": "string"
+        },
+        "users": {
+            "description": "users",
+            "type": "array",
+            "items": {
+                "$ref": "primaryAffiliationBody.yaml#/SyncUser"
+            }
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "tenantId"
+    ]
+}

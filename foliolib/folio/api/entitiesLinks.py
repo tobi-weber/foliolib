@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-05-20
+# Generated at 2023-07-10
 
 import logging
 
@@ -108,6 +108,27 @@ class Entitieslinks(FolioApi):
             .. literalinclude:: ../files/Entitieslinks_getinstanceauthoritylinkingrulebyid_response.schema
         """
         return self.call("GET", f"/linking-rules/instance-authority/{ruleId}")
+
+    def suggestlinksformarcrecord(self, parsedRecordContentCollection):
+        """Retrieve links suggestions for marc records
+
+        ``POST /links-suggestions/marc``
+
+        Args:
+            parsedRecordContentCollection (dict): See Schema below.
+
+        Returns:
+            dict: See Schema below.
+
+        Raises:
+            OkapiRequestError: Validation errors.
+            OkapiFatalError: Internal server error.
+
+        Schema:
+
+            .. literalinclude:: ../files/Entitieslinks_suggestlinksformarcrecord_request.schema
+        """
+        return self.call("POST", f"/links-suggestions/marc", parsedRecordContentCollection)
 
     def getauthoritylinksstats(self, **kwargs):
         """Retrieve authority updates (related to links) statistics

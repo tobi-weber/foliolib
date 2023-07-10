@@ -15,6 +15,7 @@
         },
         "ids": {
           "type": "array",
+          "description": "List of external ids",
           "items": {
             "description": "External id",
             "type": "string"
@@ -27,7 +28,8 @@
       "type": "array",
       "items": {
         "type": "object",
-        "description": "Fields range to provide",
+        "javaType": "org.folio.rest.jaxrs.model.FieldRange",
+        "description": "Field range to provide",
         "additionalProperties": false,
         "properties": {
           "from": {
@@ -53,7 +55,6 @@
   },
   "required": [
     "conditions",
-    "recordType",
-    "data"
+    "recordType"
   ]
 }

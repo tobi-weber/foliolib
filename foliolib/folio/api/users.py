@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-05-20
+# Generated at 2023-07-10
 
 import logging
 
@@ -739,7 +739,6 @@ class UserTenants(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiRequestNotFound: Not Found
             OkapiFatalError: Server Error
 
         Schema:
@@ -747,6 +746,30 @@ class UserTenants(FolioApi):
             .. literalinclude:: ../files/UserTenants_get_userTenants_return.schema 
         """
         return self.call("GET", "/user-tenants", query=kwargs)
+
+    def set_userTenant(self, userTenant: dict):
+        """Create a user-tenant
+
+        ``POST /user-tenants``
+
+        Args:
+            userTenant (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Headers:
+            - **Location** - URI to the created userTenant item
+
+        Schema:
+
+            .. literalinclude:: ../files/UserTenants_set_userTenant_request.schema
+        """
+        return self.call("POST", "/user-tenants", data=userTenant)
 
 
 class Patronpin(FolioApi):

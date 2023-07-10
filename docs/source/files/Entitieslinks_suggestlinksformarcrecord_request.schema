@@ -1,0 +1,15 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "Collection of SRS records content",
+    "type": "object",
+    "properties": {
+        "records": {
+            "description": "List of records content",
+            "type": "array",
+            "items": {
+                "description": "Parsed record content, e.g. MARC record",
+                "$ref": "parsedRecordContent.json"
+            }
+        }
+    }
+}

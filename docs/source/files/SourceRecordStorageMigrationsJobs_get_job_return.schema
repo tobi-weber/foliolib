@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Asynchronous migration job",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "Unique identifier",
+      "$ref": "../../raml-util/schemas/uuid.schema"
+    },
+    "migrations": {
+      "description": "Names of the migration tasks",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "description": "Status of migration job execution",
+      "type": "string",
+      "enum": [
+        "IN_PROGRESS",
+        "COMPLETED",
+        "ERROR"
+      ]
+    },
+    "startedDate": {
+      "description": "Date and time when migration job has been started",
+      "type": "string",
+      "format": "date-time"
+    },
+    "completedDate": {
+      "description": "Date and time when migration job has been completed",
+      "type": "string",
+      "format": "date-time"
+    },
+    "errorMessage": {
+      "description": "Error message that describes error occurred during migration job execution",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "migrations",
+    "status"
+  ]
+}

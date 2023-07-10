@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-05-20
+# Generated at 2023-07-10
 
 import logging
 
@@ -147,3 +147,46 @@ class Harvester(FolioApi):
             .. literalinclude:: ../files/Harvester_get_jobs_return.schema 
         """
         return self.call("GET", "/erm-usage-harvester/jobs", query=kwargs)
+
+    def set_purgefinished(self, **kwargs):
+        """Purge finished harvesting jobs
+
+        ``POST /erm-usage-harvester/jobs/purgefinished``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            timestamp (long):  Only purge jobs having a timestamp less than or equal to this value
+                    
+                    Example:
+                    
+                     - 1641020400000
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+        """
+        return self.call("POST", "/erm-usage-harvester/jobs/purgefinished", query=kwargs)
+
+    def set_purgestale(self):
+        """Purge stale jobs
+
+        ``POST /erm-usage-harvester/jobs/purgestale``
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+        """
+        return self.call("POST", "/erm-usage-harvester/jobs/purgestale")
+
+    def set_cleanup(self):
+        """Perform cleanup tasks on harvesting jobs
+
+        ``POST /erm-usage-harvester/jobs/cleanup``
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+        """
+        return self.call("POST", "/erm-usage-harvester/jobs/cleanup")

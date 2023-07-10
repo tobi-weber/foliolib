@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-05-20
+# Generated at 2023-07-10
 
 import logging
 
@@ -82,6 +82,27 @@ class Recordseditor(FolioApi):
             .. literalinclude:: ../files/Recordseditor_getrecordcreationstatus_response.schema
         """
         return self.call("GET", "/records-editor/records/status", query=kwargs)
+
+    def suggestion(self, quickMarcView):
+        """
+
+        ``POST /records-editor/links/suggestion``
+
+        Args:
+            quickMarcView (dict): See Schema below.
+
+        Returns:
+            dict: See Schema below.
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Internal server error, e.g. due to misconfiguration
+
+        Schema:
+
+            .. literalinclude:: ../files/Recordseditor_suggestion_request.schema
+        """
+        return self.call("POST", f"/records-editor/links/suggestion", quickMarcView)
 
 
 

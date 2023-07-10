@@ -1,0 +1,15 @@
+{
+    "type": "object",
+    "title": "Publication response",
+    "properties": {
+        "id": {
+            "description": "id of publication record",
+            "$ref": "common.yaml#/uuid"
+        },
+        "status": {
+            "type": "string",
+            "$ref": "publication_schema.yaml#/PublicationStatus"
+        }
+    },
+    "additionalProperties": false
+}

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-05-20
+# Generated at 2023-07-10
 
 import logging
 
@@ -683,6 +683,54 @@ class SourceRecordStorageRecords(FolioApi):
             OkapiFatalError: Server Error
         """
         return self.call("PUT", f"/source-storage/records/{recordsId}/suppress-from-discovery", query=kwargs)
+
+
+class SourceRecordStorageMigrationsJobs(FolioApi):
+    """Source Record Storage Migration Jobs API
+
+    API for managing asynchronous migration jobs
+    """
+
+    def set_job(self, job: dict):
+        """Initiate a migration job
+
+        ``POST /source-storage/migrations/jobs``
+
+        Args:
+            job (dict): See Schema below
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/SourceRecordStorageMigrationsJobs_set_job_request.schema
+            .. literalinclude:: ../files/SourceRecordStorageMigrationsJobs_set_job_return.schema 
+        """
+        return self.call("POST", "/source-storage/migrations/jobs", data=job)
+
+    def get_job(self, jobsId: str):
+        """Get a migration job
+
+        ``GET /source-storage/migrations/jobs/{jobsId}``
+
+        Args:
+            jobsId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+
+        Schema:
+
+            .. literalinclude:: ../files/SourceRecordStorageMigrationsJobs_get_job_return.schema 
+        """
+        return self.call("GET", f"/source-storage/migrations/jobs/{jobsId}")
 
 
 class SourceRecordStorageSnapshots(FolioApi):

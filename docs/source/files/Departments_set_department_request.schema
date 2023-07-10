@@ -26,6 +26,10 @@
       "description": "Number of users that have this department",
       "readonly": true
     },
+    "source": {
+      "description": "Origin of the department record, i.e. 'System' or 'User'",
+      "type": "string"
+    },
     "metadata": {
       "description": "Metadata about creation and changes to department records",
       "$ref": "raml-util/schemas/metadata.schema",

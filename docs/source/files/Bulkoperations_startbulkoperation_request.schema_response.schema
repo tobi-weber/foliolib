@@ -132,6 +132,11 @@
         "errorMessage": {
             "description": "Error message",
             "type": "string"
+        },
+        "expired": {
+            "description": "Were logs expired",
+            "type": "boolean",
+            "default": false
         }
     },
     "additionalProperties": false,

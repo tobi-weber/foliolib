@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-05-20
+# Generated at 2023-07-10
 
 import logging
 
@@ -146,6 +146,34 @@ class AgeToLostBackgroundProcesses(FolioApi):
             OkapiFatalError: Server Error
         """
         return self.call("POST", "/circulation/scheduled-age-to-lost-fee-charging")
+
+
+class AddInfo(FolioApi):
+    """API for adding patron or staff info
+
+    **Add info API**
+    """
+
+    def set_addInfo(self, loansId: str, addInfo: dict):
+        """
+
+        ``POST /circulation/loans/{loansId}/add-info``
+
+        Args:
+            loansId (str)
+            addInfo (dict): See Schema below
+
+        Raises:
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiRequestNotFound: Not Found
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/AddInfo_set_addInfo_request.schema
+        """
+        return self.call("POST", f"/circulation/loans/{loansId}/add-info", data=addInfo)
 
 
 class DeclareItemLost(FolioApi):

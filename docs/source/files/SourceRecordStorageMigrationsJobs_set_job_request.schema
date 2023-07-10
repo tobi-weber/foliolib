@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Request to initialize asynchronous migration job",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "migrations": {
+      "description": "Names of the migration tasks",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "migrations"
+  ]
+}

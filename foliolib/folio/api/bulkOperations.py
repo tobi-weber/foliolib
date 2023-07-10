@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-05-20
+# Generated at 2023-07-10
 
 import logging
 
@@ -209,3 +209,13 @@ class Bulkoperations(FolioApi):
             .. literalinclude:: ../files/Bulkoperations_getbulkoperationbyid_response.schema
         """
         return self.call("GET", f"/bulk-operations/{operationId}")
+
+    def cleanuplogfiles(self):
+        """Removed all files older than 30 days
+
+        ``POST /bulk-operations/clean-up-log-files``
+
+        Raises:
+            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+        """
+        return self.call("POST", "/bulk-operations/clean-up-log-files")

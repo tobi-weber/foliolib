@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-05-20
+# Generated at 2023-07-10
 
 import logging
 
@@ -176,7 +176,7 @@ class Search(FolioApi):
     def browseinstancesbycallnumber(self, **kwargs):
         """Provides list of instances for browsing by call number
 
-        ``GET /search/browse/call-numbers/instances``
+        ``GET /browse/call-numbers/instances``
 
         Keyword Args:
             query (str): A CQL query string with search conditions.
@@ -197,12 +197,12 @@ class Search(FolioApi):
 
             .. literalinclude:: ../files/Search_browseinstancesbycallnumber_response.schema
         """
-        return self.call("GET", "/search/browse/call-numbers/instances", query=kwargs)
+        return self.call("GET", "/browse/call-numbers/instances", query=kwargs)
 
     def browseinstancesbysubject(self, **kwargs):
         """Provides list of instances for browsing by subject
 
-        ``GET /search/browse/subjects/instances``
+        ``GET /browse/subjects/instances``
 
         Keyword Args:
             query (str): A CQL query string with search conditions.
@@ -221,12 +221,12 @@ class Search(FolioApi):
 
             .. literalinclude:: ../files/Search_browseinstancesbysubject_response.schema
         """
-        return self.call("GET", "/search/browse/subjects/instances", query=kwargs)
+        return self.call("GET", "/browse/subjects/instances", query=kwargs)
 
     def browseinstancesbycontributor(self, **kwargs):
         """Provides list of instances for browsing by contributor
 
-        ``GET /search/browse/contributors/instances``
+        ``GET /browse/contributors/instances``
 
         Keyword Args:
             query (str): A CQL query string with search conditions.
@@ -245,12 +245,12 @@ class Search(FolioApi):
 
             .. literalinclude:: ../files/Search_browseinstancesbycontributor_response.schema
         """
-        return self.call("GET", "/search/browse/contributors/instances", query=kwargs)
+        return self.call("GET", "/browse/contributors/instances", query=kwargs)
 
     def browseauthorities(self, **kwargs):
         """Provides list of authorities by headingRef
 
-        ``GET /search/browse/authorities``
+        ``GET /browse/authorities``
 
         Keyword Args:
             query (str): A CQL query string with search conditions.
@@ -270,7 +270,7 @@ class Search(FolioApi):
 
             .. literalinclude:: ../files/Search_browseauthorities_response.schema
         """
-        return self.call("GET", "/search/browse/authorities", query=kwargs)
+        return self.call("GET", "/browse/authorities", query=kwargs)
 
     def createindices(self, createIndexRequest):
         """Creates indices for passed resource name and tenant id in request header.
@@ -314,6 +314,27 @@ class Search(FolioApi):
             .. literalinclude:: ../files/Search_updatemappings_request.schema_response.schema
         """
         return self.call("POST", f"/search/index/mappings", updateMappingsRequest)
+
+    def updateindexdynamicsettings(self, updateIndexDynamicSettingsRequest):
+        """Update Index Dynamic Settings data.
+
+        ``PUT /search/index/settings``
+
+        Args:
+            updateIndexDynamicSettingsRequest (dict): See Schema below.
+
+        Returns:
+            dict: See Schema below.
+
+        Raises:
+            OkapiFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
+
+        Schema:
+
+            .. literalinclude:: ../files/Search_updateindexdynamicsettings_request.schema
+            .. literalinclude:: ../files/Search_updateindexdynamicsettings_request.schema_response.schema
+        """
+        return self.call("PUT", f"/search/index/settings", updateIndexDynamicSettingsRequest)
 
     def reindexinventoryrecords(self, reindexRequest):
         """Initiates reindex for the inventory records

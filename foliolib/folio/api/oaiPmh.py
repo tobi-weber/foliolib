@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-05-20
+# Generated at 2023-07-10
 
 import logging
 
@@ -272,6 +272,25 @@ class FolioSetFilteringConditions(FolioApi):
             .. literalinclude:: ../files/FolioSetFilteringConditions_get_filteringConditions_return.schema 
         """
         return self.call("GET", "/oai-pmh/filtering-conditions")
+
+
+class CleanupErrorLogs(FolioApi):
+    """OAI-PMH Error Logs Cleaning API
+
+    provides endpoint for triggering clean up process of old error logs.
+    """
+
+    def set_cleanUpErrorLog(self):
+        """
+
+        ``POST /oai-pmh/clean-up-error-logs``
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+        """
+        return self.call("POST", "/oai-pmh/clean-up-error-logs")
 
 
 class FolioSet(FolioApi):
