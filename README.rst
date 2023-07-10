@@ -1,6 +1,7 @@
 ========
 FolioLib
 ========
+
 |PyPI| |Pythons| |ReadTheDocs|
 
 .. |PyPI| image:: https://img.shields.io/pypi/v/foliolib.svg
@@ -18,11 +19,11 @@ FolioLib
 FolioLib is an API-Client for `Folio <https://www.folio.org/>`_.
 The API is generated from the RAML and OAS files from the Folio-Modules.
 
-Documentation can be found `here <https://foliolib.readthedocs.io/>`_.
+Documentation can be found at `https://foliolib.readthedocs.io/ <https://foliolib.readthedocs.io/>`_.
 
-Python packages can be found `here <https://pypi.org/project/foliolib/>`_.
+Python packages can be found at `https://pypi.org/project/foliolib/ <https://pypi.org/project/foliolib/>`_.
 
-Debian packages can be found `here <https://github.com/tobi-weber/foliolib/releases/latest/>`_.
+Debian packages can be found at `https://github.com/tobi-weber/foliolib/releases/latest/ <https://github.com/tobi-weber/foliolib/releases/latest/>`_.
 
 
 Features:
