@@ -103,7 +103,7 @@ Otherwise global parameters will overwrite module specific parameters.
 Example for the **Env** section in the **server.conf** configuration file:
 
 
-.. code-block:: bash
+.. code-block:: cfg
 
     [Env]
     db_host = postgres
@@ -126,7 +126,7 @@ section in the configuration file **server.conf** of the specific server
 configuration directory:
 
 
-.. code-block::
+.. code-block:: cfg
 
     [Kubernetes]
     enabled = True
@@ -160,7 +160,7 @@ parameters.
 
 Example for the mod-search module **mod-search.conf**:
 
-.. code-block::
+.. code-block:: cfg
 
     [Env]
     ELASTICSEARCH_URL = http://elasticsearch:9200
@@ -176,7 +176,7 @@ Example for the **mod-erm-usage-harvester.conf** to enable Hazelcast
 for Kubernetes:
 
 
-.. code-block::
+.. code-block:: cfg
 
     [Kubernetes]
     hazelcast = True

@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2021 Tobias Weber <tobi-weber@gmx.de>
+# Copyright (C) 2023 Tobias Weber <tobi-weber@gmx.de>
 
 import logging
-import pprint
 
 from foliolib.config import Config
 from foliolib.folio.users import Users
@@ -28,12 +27,12 @@ def login_supertenant(username: str, password: str):
         log.error("Login failed")
 
 
-def secure_supertenant(username: str = "okapi_admin", password: str = "admin"):
+def secure_supertenant(username: str, password: str):
     """Secure supertenant.
 
     Args:
-        username (str, optional): username for supertenant. Defaults to "okapi_admin".
-        password (str, optional): password supertenant. Defaults to "admin".
+        username (str): username for supertenant.
+        password (str): password supertenant.
     """
     tenant = "supertenant"
     permissions = [

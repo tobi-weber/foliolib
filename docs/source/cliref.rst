@@ -155,11 +155,31 @@ CLI Reference
 
   - **login**
 
-      Login into a tenant.
+      Log in a tenant.
 
   - **superuser**
 
       Create superuser for a tenant.
+
+  - **inventory**
+
+      Commands related to inventory.
+
+      - **loadref**
+
+        Load referencedata from filesystem path.
+
+      - **dumpref**
+
+        Write referencedata to filesystem path.
+
+      - **reindex**
+
+        Create indicies if needed and reindex.
+
+      - **totals**
+
+        Show total records in inventory.
 
 - **server**
 

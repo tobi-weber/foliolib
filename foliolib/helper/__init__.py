@@ -8,6 +8,11 @@ from foliolib.config import Config
 
 
 def get_node():
+    """Get first okapi node.
+
+    Returns:
+        str: node id
+    """
     from foliolib.okapi.okapiClient import OkapiClient
     try:
         nodes = OkapiClient().get_nodes()
@@ -34,7 +39,15 @@ def get_node():
     return host
 
 
-def split_modid(modid):
+def split_modid(modid: str):
+    """Split Module id in name and version
+
+    Args:
+        modid (str): Module id
+
+    Returns:
+        tuple: Tuple with module name and id
+    """
     m = re.search(r"-\d+.\d+.\d+", modid)
     if m is not None:
         version = m.group(0)

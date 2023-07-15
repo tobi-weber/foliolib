@@ -2,6 +2,7 @@
 # Copyright (C) 2022 Tobias Weber <tobi-weber@gmx.de>
 
 import click
+from foliolib.cli.folio.inventory import inventory
 from foliolib.folio.users import Users
 from foliolib.helper.folio import create_superuser
 
@@ -19,7 +20,7 @@ def folio():
 @click.option("-u", "--user", default="folio_admin", help=" ", show_default=True)
 @click.option("-p", "--password", default="admin", help=" ", show_default=True)
 def login(**kwargs):
-    """Login into a tenant
+    """Log into a tenant
 
     TENANTID\tThe tenant id.
     """
@@ -44,3 +45,6 @@ def superuser(**kwargs):
                                                     kwargs["tenantid"]))
     create_superuser(kwargs["tenantid"],
                      kwargs["user"], kwargs["password"])
+
+
+folio.add_command(inventory)

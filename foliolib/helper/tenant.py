@@ -13,10 +13,19 @@ log = logging.getLogger("foliolib.helper.okapi")
 
 
 def uninstall_tenant(tenantid, **kwargs):
-    """Disable all modules of a tenant.
+    """Disable all modules of a tenant and remove tenant.
 
     Args:
         tenantid ([type]): tenant id.
+        **kwargs (properties): Keyword Arguments
+
+    Keyword Args:
+        invoke (boolean): default = true
+                    Whether to invoke for tenant init/permissions/purge
+        purge (boolean): default = false
+                    Disabled modules will also be purged.
+        simulate (boolean): default = false
+                    Whether the installation is simulated
     """
     okapi = OkapiClient()
 

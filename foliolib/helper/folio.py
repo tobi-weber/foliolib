@@ -15,17 +15,17 @@ from foliolib.okapi.okapiClient import OkapiClient
 log = logging.getLogger("foliolib.helper.okapi")
 
 
-def create_superuser(tenant: str, username: str = "admin",
-                     password: str = "folio"):
+def create_superuser(tenant: str, username: str,
+                     password: str):
     """Create a superuser for a tenant.
 
     Args:
         tenant (str): tenant id.
-        username (str, optional): username. Defaults to "admin".
-        password (str, optional): password. Defaults to "folio".
+        username (str, optional): username..
+        password (str, optional): password..
 
     Returns:
-        [type]: [description]
+        dict: User object
     """
     okapi = OkapiClient()
 

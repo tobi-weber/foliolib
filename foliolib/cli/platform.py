@@ -50,7 +50,7 @@ def install(**kwargs):
         _kwargs["npmSnapshot"] = False
     if kwargs["no_prerelease"]:
         _kwargs["preRelease"] = False
-    install_platform(kwargs["platform"], kwargs["node"], kwargs["tenantid"],
+    install_platform(kwargs["platform"], kwargs["tenantid"], kwargs["node"],
                      loadSample=kwargs["loadsample"],
                      loadReference=kwargs["loadreference"],
                      deploy_async=kwargs["deployasync"],
@@ -93,6 +93,6 @@ def upgrade(**kwargs):
         _kwargs["npmSnapshot"] = False
     if kwargs["no_prerelease"]:
         _kwargs["preRelease"] = False
-    upgrade_platform(kwargs["platform"], kwargs["node"], kwargs["tenant"],
+    upgrade_platform(kwargs["platform"], kwargs["tenant"], kwargs["node"],
                      deploy_async=kwargs["deployasync"],
                      exclude=kwargs["exclude"], **_kwargs)

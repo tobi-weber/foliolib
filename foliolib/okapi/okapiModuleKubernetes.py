@@ -3,6 +3,7 @@
 
 import logging
 import math
+from typing import Union
 
 from foliolib.config import Config
 from foliolib.helper import split_modid
@@ -14,11 +15,20 @@ log = logging.getLogger("foliolib.okapi.okapiModuleKuberenetes")
 
 
 class OkapiModuleKubernetes:
+    """Defines an okapi module for Kubernetes.
+    """
 
-    def __init__(self, modId):
-        module = OkapiModule(modId)
-        self._modId = modId
-        self._name, self._version = split_modid(modId)
+    def __init__(self, module: Union[dict, str]):
+        """
+        Args:
+            module (Union[dict, str]): Module id or instance of OkapiModule.
+        """
+        if isinstance(module, OkapiModule):
+            self._modId = module.get_id()
+        elif isinstance(module, str):
+            self._modId = module
+            module = OkapiModule(module)
+        self._name, self._version = split_modid(self._modId)
         self._docker_image = module.get_docker_image()
         docker_args = module.get_docker_args()
         self._kind = "Deployment"
@@ -28,7 +38,7 @@ class OkapiModuleKubernetes:
         self._env = module.get_env()
         self.healthCheck = True
         self.podAntiAffinity = True
-        modcfg = Config().modulescfg(modId)
+        modcfg = Config().modulescfg(self._modId)
         servercfg = Config().servercfg()
         self._namespace = servercfg.get(
             "Kubernetes", "namespace", fallback="folio")
@@ -59,12 +69,27 @@ class OkapiModuleKubernetes:
                     "Kubernetes", "imagePullSecret", fallback=self.imagePullSecret)
 
     def get_kind(self):
+        """Get resource kind.
+
+        Returns:
+            str: Deployment or StatefulSet
+        """
         return self._kind
 
     def get_rfc_name(self):
+        """Get module id as rfc name.
+
+        Returns:
+            str: rfc name.
+        """
         return self._modId.replace(".", "-")
 
     def get_service(self):
+        """Get Kubernetes service definition for the module.
+
+        Returns:
+            dict: Kubernetes service definition.
+        """
         service = {
             "apiVersion": "v1",
             "kind": "Service",
@@ -97,6 +122,11 @@ class OkapiModuleKubernetes:
         return service
 
     def get_deployment(self):
+        """Get Kubernetes deployment or statefulset definition for the module.
+
+        Returns:
+            dict: Kubernetes deployment or statefulset definition.
+        """
         deployment = {
             "apiVersion": "apps/v1",
             "kind": self._kind,
@@ -145,12 +175,12 @@ class OkapiModuleKubernetes:
 
         volume = self.volume()
         hazelcast = self.hazelcast()
-        securityContext = self.securityContext()
-        deployment["spec"]["template"]["spec"]["containers"][0]["resources"] = self.resources()
+        securityContext = self.__securityContext()
+        deployment["spec"]["template"]["spec"]["containers"][0]["resources"] = self.__resources()
         if self.healthCheck:
-            deployment["spec"]["template"]["spec"]["containers"][0]["startupProbe"] = self.startupProbe()
-            deployment["spec"]["template"]["spec"]["containers"][0]["livenessProbe"] = self.livenessProbe()
-            deployment["spec"]["template"]["spec"]["containers"][0]["readinessProbe"] = self.readinessProbe()
+            deployment["spec"]["template"]["spec"]["containers"][0]["startupProbe"] = self.__startupProbe()
+            deployment["spec"]["template"]["spec"]["containers"][0]["livenessProbe"] = self.__livenessProbe()
+            deployment["spec"]["template"]["spec"]["containers"][0]["readinessProbe"] = self.__readinessProbe()
         if volume or hazelcast:
             deployment["spec"]["template"]["spec"]["containers"][0]["volumeMounts"] = []
             deployment["spec"]["template"]["spec"]["volumes"] = []
@@ -206,14 +236,79 @@ class OkapiModuleKubernetes:
 
         return deployment
 
-    def _healthProbe(self):
+    def volume(self):
+        """Get Kubernetes PersistentVolumeClaim definition.
+
+        Returns:
+            dict: Kubernetes PersistentVolumeClaim definition.
+        """
+        conf = Config().modulescfg(self._modId)
+        name = f"{self._modId}-data"
+        name = "%s-data" % self._modId.replace(".", "-")
+        mountPath = None
+        size = None
+        volume = {}
+        if conf is not None:
+            if conf.has_section("Volume"):
+                mountPath = conf.get("Volume", "mountPath")
+                storageClassName = conf.get(
+                    "Volume", "storageClassName", fallback=None)
+                size = conf.get("Volume", "size")
+
+                volume["claim"] = {"name": name,
+                                   "persistentVolumeClaim": {"claimName": name}
+                                   }
+                volume["mount"] = {"mountPath": mountPath,
+                                   "name": name
+
+                                   }
+                volume["persistentVolumeClaim"] = {"apiVersion": "v1",
+                                                   "kind": "PersistentVolumeClaim",
+                                                   "metadata": {"name": name,
+                                                                "labels":  {"app": self._modId}},
+                                                   "spec": {"accessModes": ["ReadWriteOnce"],
+                                                            "resources": {"requests": {"storage": size}},
+                                                            }
+                                                   }
+                if storageClassName is not None:
+                    volume["persistentVolumeClaim"]["spec"]["storageClassName"] = storageClassName
+
+        return volume
+
+    def hazelcast(self):
+        """Get Kubernetes ConfigMap definition for Hazelcast.
+
+        Returns:
+            dict: Kubernetes ConfigMap definition for Hazelcast.
+        """
+        conf = Config().modulescfg(self._modId)
+        if conf is not None and conf.getboolean(
+                "Kubernetes", "hazelcast", fallback=False):
+            name = f"{self._modId}-hazelcast-xml"
+            return {
+                "name": name,
+                "data": {"hazelcast.xml": get_hazelcast_xml(self.get_rfc_name(), self._namespace)},
+                "mount": {"name": "hazelcast-xml",
+                          "mountPath": "/etc/hazelcast",
+                          "readOnly": True},
+                "volume": {"name": "hazelcast-xml",
+                           "configMap": {"name": name}},
+                "ports": [{"containerPort": 5701},
+                          {"containerPort": 5702},
+                          {"containerPort": 5703},
+                          {"containerPort": 5704},
+                          {"containerPort": 54327}]
+            }
+        return None
+
+    def __healthProbe(self):
         return {"httpGet": {"path": "admin/health",
                             "port": self._port,
                             "scheme": "HTTP"
                             }
                 }
 
-    def startupProbe(self):
+    def __startupProbe(self):
         conf = Config().modulescfg(self._modId)
         failureThreshold = 60
         periodSeconds = 10
@@ -222,13 +317,13 @@ class OkapiModuleKubernetes:
                 "StartupProbe", "failureThreshold", fallback=failureThreshold)
             periodSeconds = conf.get(
                 "StartupProbe", "periodSeconds", fallback=periodSeconds)
-        data = self._healthProbe()
+        data = self.__healthProbe()
         data["failureThreshold"] = failureThreshold
         data["periodSeconds"] = periodSeconds
 
         return data
 
-    def livenessProbe(self):
+    def __livenessProbe(self):
         conf = Config().modulescfg(self._modId)
         failureThreshold = 3
         initialDelaySeconds = 45
@@ -246,7 +341,7 @@ class OkapiModuleKubernetes:
                 "LivenessProbe", "successThreshold", fallback=successThreshold)
             timeoutSeconds = conf.get(
                 "LivenessProbe", "timeoutSeconds", fallback=timeoutSeconds)
-        data = self._healthProbe()
+        data = self.__healthProbe()
         data["failureThreshold"] = failureThreshold
         data["initialDelaySeconds"] = initialDelaySeconds
         data["periodSeconds"] = periodSeconds
@@ -255,7 +350,7 @@ class OkapiModuleKubernetes:
 
         return data
 
-    def readinessProbe(self):
+    def __readinessProbe(self):
         conf = Config().modulescfg(self._modId)
         failureThreshold = 3
         initialDelaySeconds = 45
@@ -273,7 +368,7 @@ class OkapiModuleKubernetes:
                 "ReadinessProbe", "successThreshold", fallback=successThreshold)
             timeoutSeconds = conf.get(
                 "ReadinessProbe", "timeoutSeconds", fallback=timeoutSeconds)
-        data = self._healthProbe()
+        data = self.__healthProbe()
         data["failureThreshold"] = failureThreshold
         data["initialDelaySeconds"] = initialDelaySeconds
         data["periodSeconds"] = periodSeconds
@@ -282,7 +377,7 @@ class OkapiModuleKubernetes:
 
         return data
 
-    def resources(self):
+    def __resources(self):
         conf = Config().modulescfg(self._modId)
         module = OkapiModule(self._modId)
         min_cpu = "10m"
@@ -330,62 +425,7 @@ class OkapiModuleKubernetes:
 
         return resources
 
-    def volume(self):
-        conf = Config().modulescfg(self._modId)
-        name = f"{self._modId}-data"
-        name = "%s-data" % self._modId.replace(".", "-")
-        mountPath = None
-        size = None
-        volume = {}
-        if conf is not None:
-            if conf.has_section("Volume"):
-                mountPath = conf.get("Volume", "mountPath")
-                storageClassName = conf.get(
-                    "Volume", "storageClassName", fallback=None)
-                size = conf.get("Volume", "size")
-
-                volume["claim"] = {"name": name,
-                                   "persistentVolumeClaim": {"claimName": name}
-                                   }
-                volume["mount"] = {"mountPath": mountPath,
-                                   "name": name
-
-                                   }
-                volume["persistentVolumeClaim"] = {"apiVersion": "v1",
-                                                   "kind": "PersistentVolumeClaim",
-                                                   "metadata": {"name": name,
-                                                                "labels":  {"app": self._modId}},
-                                                   "spec": {"accessModes": ["ReadWriteOnce"],
-                                                            "resources": {"requests": {"storage": size}},
-                                                            }
-                                                   }
-                if storageClassName is not None:
-                    volume["persistentVolumeClaim"]["spec"]["storageClassName"] = storageClassName
-
-        return volume
-
-    def hazelcast(self):
-        conf = Config().modulescfg(self._modId)
-        if conf is not None and conf.getboolean(
-                "Kubernetes", "hazelcast", fallback=False):
-            name = f"{self._modId}-hazelcast-xml"
-            return {
-                "name": name,
-                "data": {"hazelcast.xml": get_hazelcast_xml(self.get_rfc_name(), self._namespace)},
-                "mount": {"name": "hazelcast-xml",
-                          "mountPath": "/etc/hazelcast",
-                          "readOnly": True},
-                "volume": {"name": "hazelcast-xml",
-                           "configMap": {"name": name}},
-                "ports": [{"containerPort": 5701},
-                          {"containerPort": 5702},
-                          {"containerPort": 5703},
-                          {"containerPort": 5704},
-                          {"containerPort": 54327}]
-            }
-        return None
-
-    def securityContext(self):
+    def __securityContext(self):
         conf = Config().modulescfg(self._modId)
         sc = {}
         if conf is not None:

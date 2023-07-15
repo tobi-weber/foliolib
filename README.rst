@@ -65,7 +65,7 @@ Make a Folio-API request:
     >>>
     >>> server("myServer")
     >>>
-    >>> Users("TenantId").login("UserId","Password")
+    >>> Users("TenantId").login("UserId", "Password")
     >>> inventory = Inventory("TenantId")
     >>> instances = inventory.get_instances(query="title==*")
     >>> print(instances)

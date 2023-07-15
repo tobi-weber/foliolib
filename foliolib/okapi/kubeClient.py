@@ -392,6 +392,11 @@ class KubeClient:
 class KubeAdmin(KubeClient):
 
     def __init__(self, kube_config: str = None):
+        """Manage folio in kubernetes.
+
+        Args:
+            kube_config (str, optional): Path to kube config. Defaults to None.
+        """
         super().__init__(kube_config)
         self.__apps_v1 = client.AppsV1Api()
         self.__core_v1 = client.CoreV1Api()

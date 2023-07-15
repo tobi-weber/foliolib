@@ -33,6 +33,7 @@ def __process_platform(platform):
             return os.path.join(tmp,
                                 t.getmembers()[0].name)
     elif platform.endswith(".zip"):
+        raise NotImplemented("zip support is not implemented yet")
         print("platform is zipfile")
         with zipfile.ZipFile(platform, "r") as z:
             z.extractall(tmp)
@@ -69,17 +70,38 @@ def __process_platform(platform):
                                 f.getmembers()[0].name)
 
 
-def install_platform(platform: str, node: str, tenantid: str,
+def install_platform(platform: str, tenantid: str, node: str = None,
                      loadSample: bool = False, loadReference: bool = False,
                      deploy_async=False, **kwargs):
     """Install a folio platform.
 
     Args:
         platform(str): Path to the folder of the folio platform.
-        node (str): node id
         tenantid (str): tenant id
+        node (str): The node id on which module should be deployed. Default first node from nodes list.
         loadSample (bool, optional): load samples. Defaults to False.
         loadReference (bool, optional): load example reference data. Defaults to False.
+        deploy_async (bool, optional): Wether to deploy asynchronously. Defaults to False.
+        **kwargs (properties): Keyword Arguments
+
+    Keyword Args:
+        ignoreErrors (boolean): default = false
+                    Okapi 4.2.0 and later, it is possible to ignore errors during the install operation. This is done by supplying parameter ignoreErrors=true.
+                    In this case, Okapi will try to upgrade all modules in the modules list, regardless if one of them fails. However, for individual modules,
+                    if they fail, their upgrade will not be commited.
+                    This is an experimental parameter which was added to be able to inspect all problem(s) with module upgrade(s).
+        invoke (boolean): default = true
+                    Whether to invoke for tenant init/permissions/purge
+        npmSnapshot (boolean): default = true
+                    Whether to include NPM module snapshots (default:true).
+        preRelease (boolean): default = true
+                    Whether pre-releases should be considered for installation.
+        purge (boolean): default = false
+                    Disabled modules will also be purged.
+        reinstall: (boolean - default: false)
+                    Whether to install modules even if up-to-update.
+        simulate (boolean): default = false
+                    Whether the installation is simulated
     """
 
     def create_tenant():
@@ -109,25 +131,41 @@ def install_platform(platform: str, node: str, tenantid: str,
     add_modules(okapi_modules + stripes_modules)
     print("\nDeploy modules ...")
     if deploy_async:
-        deploy_modules_async(node, okapi_modules)
+        deploy_modules_async(okapi_modules, node)
     else:
-        deploy_modules(node, okapi_modules)
+        deploy_modules(okapi_modules, node)
     print("\nEnable modules for tenant %s ..." % tenantid)
     enable_modules(tenantid, okapi_modules + stripes_modules,
                    loadSample=loadSample, loadReference=loadReference,
                    **kwargs)
 
 
-def upgrade_platform(platform: str, node: str, tenantid: str,
+def upgrade_platform(platform: str, tenantid: str, node: str = None,
                      deploy_async: bool = False, exclude: list = None,
                      **kwargs):
     """Upgrade a folio platform.
 
     Args:
         platform (str): Path to the folder of the folio platform.
-        node (str): node id
         tenantid (str): tenant id
-        loadSample (bool, optional): load samples. Defaults to False.
+        node (str): The node id on which module should be deployed. Default first node from nodes list.
+        deploy_async (bool, optional): Wether to deploy asynchronously. Defaults to False.
+        **kwargs (properties): Keyword Arguments
+
+    Keyword Args:
+        ignoreErrors (boolean): default = false
+                    Okapi 4.2.0 and later, it is possible to ignore errors during the upgrade operation.
+                    This is done by supplying parameter ignoreErrors=true.
+                    In this case, Okapi will try to upgrade all modules in the modules list, regardless if one of them fails.
+                    However, for individual modules, if they fail, their upgrade will not be commited. This is an experimental
+                    parameter which was added to be able to inspect all problem(s) with module upgrade(s).
+        invoke (boolean): default = true
+                    Whether to invoke for tenant init/permissions/purge
+        preRelease (boolean): default = true
+                    Whether pre-releases should be considered for installation.
+        simulate (boolean): default = false
+                    Whether the upgrade is simulated
+        tenantParameters (string): Parameters for Tenant init
     """
     def upgrade(tid):
         okapi = OkapiClient()
@@ -160,9 +198,9 @@ def upgrade_platform(platform: str, node: str, tenantid: str,
     add_modules(okapi_modules + stripes_modules)
 
     if deploy_async:
-        deploy_modules_async(node, okapi_modules)
+        deploy_modules_async(okapi_modules, node)
     else:
-        deploy_modules(node, okapi_modules)
+        deploy_modules(okapi_modules, node)
 
     if tenantid == "ALL":
         tenants = OkapiClient().get_tenants()

@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2020 Tobias Weber <tobi-weber@gmx.de>
+# Copyright (C) 2023 Tobias Weber <tobi-weber@gmx.de>
 
 
 import configparser
 import logging
 import os
 import pathlib
+from typing import Any, Union
 
 from foliolib.exceptions import ServerConfigNotFound
 
@@ -41,7 +42,7 @@ class Config:
         """
         return self._server
 
-    def set_server(self, name):
+    def set_server(self, name: str):
         """Set current server name.
 
         Args:
@@ -234,7 +235,15 @@ class Config:
 
         return is_foliolib_env
 
-    def get_env(self, as_dict=False):
+    def get_env(self, as_dict: bool = False):
+        """get global enviroment variables.
+
+        Args:
+            as_dict (bool, optional): Defaults to False.
+
+        Returns:
+            Union[dict, list]: dict, if as_dict is True, else list with enviroments variables.
+        """
         if self.is_foliolib_env():
             if as_dict:
                 return {k: v for k, v in self.__servercfg["Env"].items()}
@@ -247,11 +256,22 @@ class Config:
             else:
                 return []
 
-    def set_env(self, key, value):
+    def set_env(self, key: str, value: Any):
+        """Set enviroment variable.
+
+        Args:
+            key (str): Name of the enviroment variable.
+            value (Any): Value of the enviroment variable.
+        """
         if self.is_foliolib_env():
             self.set_servercfg("Env", key, value)
 
-    def delete_env(self, key):
+    def delete_env(self, key: str):
+        """Delete enviroment variable.
+
+        Args:
+            key (str): Name of the enviroment variable.
+        """
         if self.is_foliolib_env():
             self.remove_servercfg("Env", key)
 
@@ -354,7 +374,7 @@ class Config:
 
 
 def server(name: str, logging_level: str = "INFO"):
-    """ Load server sonfig for given name.
+    """ Load server config for given name.
 
     Args:
         name (str): Name of the server config.
@@ -363,4 +383,4 @@ def server(name: str, logging_level: str = "INFO"):
     from foliolib import set_logging
     set_logging(level=logging_level)
     Config().set_server(name)
-    print("Server is %s" % name)
+    log.info("Server is %s" % name)

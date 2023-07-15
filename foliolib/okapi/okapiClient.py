@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2020 Tobias Weber <tobi-weber@gmx.de>
+# Copyright (C) 2023 Tobias Weber <tobi-weber@gmx.de>
 
 import json
 import logging
@@ -280,7 +280,7 @@ class OkapiClient:
 
         Args:
             modId (Union[str, OkapiModule]): Module id or instance of OkapiModule.
-            node (str): The node on which module should be deployed. Default first node from nodes list.
+            node (str): The node id on which module should be deployed. Default first node from nodes list.
 
         Returns:
             dict: Deployment descriptor.
@@ -558,10 +558,6 @@ class OkapiClient:
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
-            async (boolean): default = false
-                        Whether to uninstall in the background
-            deploy (boolean): default = false
-                        Whether to undeploy
             ignoreErrors (boolean): default = false
                         Okapi 4.2.0 and later, it is possible to ignore errors during the install operation. This is done by supplying parameter ignoreErrors=true.
                         In this case, Okapi will try to upgrade all modules in the modules list, regardless if one of them fails. However, for individual modules,
