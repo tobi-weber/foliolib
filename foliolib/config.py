@@ -307,8 +307,8 @@ class Config:
             self.__foliolibcfg["Cache"]["platforms"] = os.path.join(self.get_confdir(),
                                                                     "cache",
                                                                     "platforms")
-            self.__foliolibcfg["GitHub"] = {}
-            self.__foliolibcfg["GitHub"]["access-token"] = ""
+            # self.__foliolibcfg["GitHub"] = {}
+            # self.__foliolibcfg["GitHub"]["access-token"] = ""
             with open(fpath, "w") as f:
                 self.__foliolibcfg.write(f)
         else:
@@ -342,9 +342,9 @@ class Config:
             self.__servercfg["Env"] = {}
             self.__servercfg["Env"]["db_host"] = okapi_host
             self.__servercfg["Env"]["db_port"] = "default"
-            self.__servercfg["Env"]["db_username"] = "okapi"
-            self.__servercfg["Env"]["db_password"] = "okapi25"
-            self.__servercfg["Env"]["db_database"] = "okapi"
+            self.__servercfg["Env"]["db_username"] = "folio"
+            self.__servercfg["Env"]["db_password"] = "folio"
+            self.__servercfg["Env"]["db_database"] = "okapi_modules"
             self.__servercfg["Env"]["db_querytimeout"] = "120000"
             self.__servercfg["Env"]["db_charset"] = "UTF-8"
             self.__servercfg["Env"]["kafka_host"] = okapi_host
