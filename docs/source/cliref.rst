@@ -180,6 +180,46 @@ CLI Reference
       - **totals**
 
         Show total records in inventory.
+  
+  - **config**
+
+      Commands related to config.
+
+      - **lst**
+
+        List config entries.
+
+  - **email**
+
+      Commands related to email config.
+
+      - **get**
+
+        Get EMail config.
+
+      - **set**
+
+        Set EMail config.
+
+      - **delete**
+
+        Delete EMail config.
+
+  - **foliohost**
+
+      Commands related to email config.
+
+      - **get**
+
+        Get Folio UI application host.
+
+      - **set**
+
+        Set Folio UI application host.
+
+      - **delete**
+
+        Delete Folio UI application host.
 
 - **server**
 

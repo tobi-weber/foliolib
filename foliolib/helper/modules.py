@@ -24,9 +24,7 @@ def load_install_file(install_file: str):
     """
     log.debug("Load modules for %s", install_file)
     with open(install_file) as f:
-        modules = sort_modules_by_requirements(
-            [create_okapiModule(m["id"]) for m in json.load(f)]
-        )
+        modules = [create_okapiModule(m["id"]) for m in json.load(f)]
     return modules
 
 
@@ -36,7 +34,7 @@ def add_modules(modules: list):
     Args:
         modules (list): Instances of OkapiModule.
     """
-    for module in modules:
+    for module in sort_modules_by_requirements(modules):
         if OkapiClient().is_module_added(module):
             log.warning("%s is already added", module.get_id())
         else:
@@ -51,7 +49,7 @@ def deploy_modules(modules: list, node: str = None):
         modules (list): Instances of OkapiModule.
         node (str, optional): The node id on which module should be deployed. Default first node from nodes list.
     """
-    for module in modules:
+    for module in sort_modules_by_requirements(modules):
         if module.has_launchDescriptor():
             if OkapiClient().is_module_deployed(module.get_id()):
                 log.warning("%s is already deployed", module.get_id())
@@ -87,7 +85,7 @@ def deploy_modules_async(modules: list, node: str = None):
                 raise self.exc
     threads = []
 
-    for module in modules:
+    for module in sort_modules_by_requirements(modules):
         if module.has_launchDescriptor():
             if OkapiClient().is_module_deployed(module.get_id()):
                 log.warning("%s is already deployed", module.get_id())
@@ -127,7 +125,7 @@ def enable_modules(tenantid: str, modules: list, loadSample: bool = False, loadR
         simulate (boolean): default = false
                     Whether the installation is simulated
     """
-    for module in modules:
+    for module in sort_modules_by_requirements(modules):
         if isinstance(module, OkapiModule):
             module = module.get_id()
         if OkapiClient().is_module_enabled(module, tenantid):

@@ -335,13 +335,14 @@ class Config:
             self.__servercfg["Okapi"]["host"] = okapi_host
             self.__servercfg["Okapi"]["port"] = okapi_port
             self.__servercfg["Okapi"]["ssl"] = str(ssl)
+            self.__servercfg["Okapi"]["verify_ssl"] = str(True)
             self.__servercfg["Okapi"]["foliolibenv"] = str(True)
             self.__servercfg["Cli"] = {}
             self.__servercfg["Cli"]["confirm"] = str(True)
             self.__servercfg["Cli"]["loglevel"] = "INFO"
             self.__servercfg["Env"] = {}
             self.__servercfg["Env"]["db_host"] = okapi_host
-            self.__servercfg["Env"]["db_port"] = "default"
+            self.__servercfg["Env"]["db_port"] = "5432"
             self.__servercfg["Env"]["db_username"] = "folio"
             self.__servercfg["Env"]["db_password"] = "folio"
             self.__servercfg["Env"]["db_database"] = "okapi_modules"

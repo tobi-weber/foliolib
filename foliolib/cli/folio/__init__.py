@@ -2,6 +2,7 @@
 # Copyright (C) 2022 Tobias Weber <tobi-weber@gmx.de>
 
 import click
+from foliolib.cli.folio.config import config
 from foliolib.cli.folio.inventory import inventory
 from foliolib.folio.users import Users
 from foliolib.helper.folio import create_superuser
@@ -48,3 +49,4 @@ def superuser(**kwargs):
 
 
 folio.add_command(inventory)
+folio.add_command(config)

@@ -4,7 +4,6 @@
 import logging
 from collections import UserDict
 
-from foliolib import folio
 from foliolib.folio import FolioService
 from foliolib.folio.api.configuration import Config as ConfigApi
 
@@ -86,33 +85,38 @@ class Config(FolioService):
         else:
             self._config.delete_entry(entry["id"])
 
-    def set_email(self, smtp_host: str, smtp_port: str, email_from: str,
+    def delete_entries(self, module):
+        for entry in self.get_entries(module):
+            self.delete_entry(
+                entry["module"], entry["configName"], entry["code"])
+
+    def set_email(self, host: str, port: str, email_from: str,
                   username: str, password: str, ssl: bool = False,
-                  smtp_login_option: str = None, start_tls: str = None,
-                  trust_all: bool = None, auth_methods: str = None):
+                  loginoption: str = None, starttls: str = None,
+                  trustall: bool = False, authmethods: str = None):
         """Set email configuration for a tenant.
         AUTH_METHODS	authentication methods	'CRAM-MD5 LOGIN PLAIN'
 
         Args:
-            smtp_host (str): The host of the smtp server.
-            smtp_port (str): The port of the smtp server.
+            host (str): The host of the smtp server.
+            port (str): The port of the smtp server.
             email_from (str): The 'from' property of the email.
             username (str): The username for the login.
             password (str): The password for the login.
             ssl (bool, optional): sslOnConnect mode for the connection. Defaults to False.
-            smtp_login_option (str, optional): The login mode for the connection. Examples are DISABLED, OPTIONAL or REQUIRED Defaults to DISABLED.
-            start_tls (str, optional):TLS security mode for the connection. Examples are NONE, OPTIONAL or REQUIRED Defaults to NONE.
-            trust_all (bool, optional): trust all certificates on ssl connect.
-            auth_methods (str, optional): Authentication methods. Example is 'CRAM-MD5 LOGIN PLAIN'.
+            loginoption (str, optional): The login mode for the connection. Examples are DISABLED, OPTIONAL or REQUIRED Defaults to DISABLED.
+            starttls (str, optional):TLS security mode for the connection. Examples are NONE, OPTIONAL or REQUIRED Defaults to NONE.
+            trustall (bool, optional): trust all certificates on ssl connect.
+            authmethods (str, optional): Authentication methods. Example is 'CRAM-MD5 LOGIN PLAIN'.
         """
         self.set_entry(
             EMailEntry("EMAIL_SMTP_HOST",
                        "server smtp host",
-                       smtp_host))
+                       host))
         self.set_entry(
             EMailEntry("EMAIL_SMTP_PORT",
                        "server smtp port",
-                       smtp_port))
+                       port))
         self.set_entry(
             EMailEntry("EMAIL_FROM",
                        "smtp from",
@@ -130,29 +134,35 @@ class Config(FolioService):
             EMailEntry("EMAIL_SMTP_SSL",
                        "sslOnConnect for the connection",
                        ssl))
-        if smtp_login_option is not None:
+        if loginoption is not None:
             self.set_entry(
                 EMailEntry("EMAIL_SMTP_LOGIN_OPTION",
                            "login mode for the connection",
-                           smtp_login_option))
-        if start_tls is not None:
+                           loginoption))
+        if starttls is not None:
             self.set_entry(
                 EMailEntry("EMAIL_START_TLS_OPTIONS",
                            "TLS security for the connection",
-                           start_tls))
-        if trust_all is not None:
+                           starttls))
+        if trustall is not None:
             self.set_entry(
                 EMailEntry("EMAIL_TRUST_ALL",
                            "trust all certificates on ssl connect",
-                           trust_all))
-        if auth_methods is not None:
+                           trustall))
+        if authmethods is not None:
             self.set_entry(
                 EMailEntry("AUTH_METHODS",
                            "authentication method",
-                           auth_methods))
+                           authmethods))
+
+    def delete_email(self):
+        self.delete_entries("SMTP_SERVER")
 
     def get_folio_host(self):
         return self.get_entries("USERSBL")
 
     def set_folio_host(self, folio_host):
         self.set_entry(FolioHostEntry(folio_host))
+
+    def delete_folio_host(self):
+        self.delete_entries("USERSBL")

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2022 Tobias Weber <tobi-weber@gmx.de>
+# Copyright (C) 2023 Tobias Weber <tobi-weber@gmx.de>
 
 import click
 from foliolib.folio.api.inventoryStorage import (

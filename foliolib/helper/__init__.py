@@ -1,10 +1,36 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2021 Tobias Weber <tobi-weber@gmx.de>
+# Copyright (C) 2023 Tobias Weber <tobi-weber@gmx.de>
 
 import base64
 import re
+import uuid
 
 from foliolib.config import Config
+
+
+def create_uuid():
+    """Create uuid.
+
+    Returns:
+        str: uuid
+    """
+    return str(uuid.uuid4())
+
+
+def is_valid_uuid(value):
+    """Check if uuid is valid.
+
+    Args:
+        value (str): uuid
+
+    Returns:
+        bool: Wether uuid is valid.
+    """
+    try:
+        uuid.UUID(value)
+        return True
+    except ValueError:
+        return False
 
 
 def get_node():

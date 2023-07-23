@@ -3,7 +3,6 @@
 import logging
 import os
 import sys
-import uuid
 
 from .config import server
 
@@ -14,18 +13,6 @@ SRCPATH = os.path.dirname(MODPATH)
 log = logging.getLogger("foliolib")
 
 RAISE = False
-
-
-def create_uuid():
-    return str(uuid.uuid4())
-
-
-def is_valid_uuid(value):
-    try:
-        uuid.UUID(value)
-        return True
-    except ValueError:
-        return False
 
 
 def set_logging(level="INFO", traceback=True):

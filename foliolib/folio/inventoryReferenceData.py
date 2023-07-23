@@ -6,7 +6,6 @@ import logging
 import os
 
 import inflection
-from foliolib import is_valid_uuid
 from foliolib.apiBuilder.raml.helper import pluralize, singularize
 from foliolib.folio import FolioService
 from foliolib.folio.api.inventoryStorage import (AlternativeTitleType,
@@ -30,6 +29,7 @@ from foliolib.folio.api.inventoryStorage import (AlternativeTitleType,
                                                  NatureOfContentTerm,
                                                  ServicePoint, StatisticalCode,
                                                  StatisticalCodeType)
+from foliolib.helper import is_valid_uuid
 
 log = logging.getLogger("foliolib.folio.inventoryReferenceData")
 

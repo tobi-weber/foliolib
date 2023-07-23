@@ -48,6 +48,27 @@ class Users(FolioService):
             return headers["x-okapi-token"]
         return None
 
+    def set_password(self, username: str, password: str):
+        """Set a new password for given username.
+
+        Args:
+            username (str): Username
+            password (str): Password
+        Returns:
+            bool: Wether set password was successful
+        """
+        log.info("Set password for user %s", username)
+        userId = self.get_user(username)["id"]
+        try:
+            self._login.delete_credentials(userId=userId)
+            self._login.set_credential({"userId": userId,
+                                        "password": password
+                                        })
+            return True
+        except Exception as err:
+            log.error(err)
+            return False
+
     def get_users(self, query=None):
         """Get all users
 
@@ -73,7 +94,7 @@ class Users(FolioService):
             raise UserNotFound(f"User {username} not found.")
         return users["users"][0]
 
-    def create_user(self, username: str, password: str, permissions: list = None, **userdata):
+    def create_user(self, username: str, password: str, permissions: list = None, **kwargs):
         """Create a user
 
         Args:
@@ -92,7 +113,7 @@ class Users(FolioService):
             log.info("Create user %s", username)
             userData = {"username": username,
                         "active": True}
-            userData.update(userdata)
+            userData.update(kwargs)
             user = self._users.set_user(userData)
 
             log.info("Create login record.")
