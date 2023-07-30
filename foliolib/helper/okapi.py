@@ -55,7 +55,8 @@ def secure_supertenant(username: str, password: str):
 
     log.info("Create user record.")
     user = userServices.create_user(
-        username, password, permissions=permissions)
+        username, password, permissions=permissions,
+        userServicePoints=False)
 
     authtoken = [m["id"]
                  for m in o.get_modules() if split_modid(m["id"])[0] == "mod-authtoken"][0]

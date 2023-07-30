@@ -2,7 +2,9 @@
 # Copyright (C) 2023 Tobias Weber <tobi-weber@gmx.de>
 
 import base64
+import json
 import re
+import sys
 import uuid
 
 from foliolib.config import Config
@@ -90,3 +92,8 @@ def decode_base64(s):
 
 def encode_base64(s):
     return base64.b64encode(s.encode("utf-8"))
+
+
+def jprint(obj):
+    sys.stdout.write(json.dumps(
+        obj, indent=2, ensure_ascii=False)+"\n")

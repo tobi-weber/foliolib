@@ -148,6 +148,10 @@ CLI Reference
       It is recommended to unsecure Okapi before upgrading.
       It may be necessary to update Okapi before upgrading.
 
+      Example:
+      
+      foliolib platform upgrade --platform R1-2023-GA --deployAsync --installnew --uninstall mod-remote-storage --loadReference --unsecure
+
 
 - **folio**
 

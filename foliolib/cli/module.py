@@ -5,8 +5,8 @@ import json
 
 import click
 from foliolib.config import Config
-from foliolib.helper import get_node
-from foliolib.okapi.kubeClient import KubeClient
+from foliolib.helper import get_node, jprint
+from foliolib.okapi.kubeClient import KubeAdmin, KubeClient
 from foliolib.okapi.okapiClient import OkapiClient
 from foliolib.okapi.okapiModule import create_okapiModules
 from tabulate import tabulate
@@ -29,7 +29,7 @@ def lst(**kwargs):
     mods = OkapiClient().get_modules(**kwargs)
     if kwargs["full"]:
         for e in mods:
-            print(json.dumps(e, indent=2)+"\n")
+            jprint(e+"\n")
     else:
         headers = ["id", "name"]
         body = [[e["id"], e["name"]] for e in mods]
@@ -44,7 +44,7 @@ def get(**kwargs):
     MODULEID\tmodule id.
     """
     mod = OkapiClient().get_module(kwargs["moduleid"])
-    print(json.dumps(mod, indent=2))
+    jprint(mod)
 
 
 @module.command()
@@ -93,7 +93,7 @@ def deployed(**kwargs):
     if kwargs["verbose"]:
         for mod in mods:
             print()
-            print(json.dumps(mod, indent=2))
+            jprint(mod)
     else:
         okapi_mods = [m for m in mods if "descriptor" in m]
         kube_mods = [m for m in mods if m["instId"].startswith("kube_")]
@@ -158,3 +158,9 @@ if Config().is_kubernetes():
         for modId in modIds:
             print("Redeploy %s" % modId)
             KubeClient().patch(modId)
+
+    @module.command()
+    def restart(**kwargs):
+        """Restart all folio modules.
+        """
+        KubeAdmin().restart_folio()

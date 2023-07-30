@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2021 Tobias Weber <tobi-weber@gmx.de>
+# Copyright (C) 2023 Tobias Weber <tobi-weber@gmx.de>
 
-import logging
 import os
 import sys
 
 from foliolib import set_logging
-from foliolib.config import Config, ServerConfigNotFound
+from foliolib.config import Config
 from foliolib.okapi.exceptions import (OkapiFatalError, OkapiNotReachable,
                                        OkapiRequestForbidden,
                                        OkapiRequestNotFound,
@@ -107,15 +106,19 @@ def cli():
         if len(sys.argv) > 1 and sys.argv[1] == "server":
             __run_err_cli()
         check_okapi = __check_okapi()
-        print(
-            f"== Active server is {Config().get_server()} - {Config().get_url()}")
+        if len(sys.argv) == 1:
+            print(
+                f"\n== Active server is {Config().get_server()} - {Config().get_url()}\n")
+            if Config().is_kubernetes():
+                print("== Kubernetes is enabled.\n")
         if check_okapi == 1:
             if not __confirmation():
                 return
             __run_cli()
             return
         elif check_okapi == 2:
-            print("No valid supertenant authentication!\n")
+            if len(sys.argv) == 1:
+                print("== No valid supertenant authentication avialable!\n")
             __run_auth_cli()
             return
         elif check_okapi == 3:

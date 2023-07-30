@@ -75,3 +75,4 @@ Also foliolib provides a command line interface:
 .. code-block:: bash
 
     foliolib --help
+

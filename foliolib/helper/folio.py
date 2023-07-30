@@ -53,15 +53,7 @@ def create_superuser(tenant: str, username: str,
             username, password,
             permissions=["perms.all",
                          "users.all"],
-            personal={"lastName": "Superuser"})
-
-        log.info("Create service points for user record.")
-        servicepoints = userService.get_servicePoints()
-        servicepointsIds = [sp["id"] for sp in servicepoints["servicepoints"]]
-        if servicepointsIds:
-            log.debug(servicepoints)
-            userService.set_servicePoints(username, servicepointsIds,
-                                          servicepointsIds[0])
+            lastname="Superuser")
     except:
         log.error("Failed to create Superuser %s", username)
         log.info("Enable mod-authtoken.")
@@ -75,17 +67,8 @@ def create_superuser(tenant: str, username: str,
     userService.login(username, password)
 
     log.info("Generate list of permissions")
-    perms = Permissions(tenant).get_permissions(
-        query="cql.allRecords=1 not permissionName==okapi.* not permissionName==modperms.* not permissionName==SYS#*",
-        length="5000")
-    topLevelPermissions = []
-    for permission in perms["permissions"]:
-        mods_perms = 0
-        for s in permission["childOf"]:
-            if s.startswith("SYS#") or s.startswith("modperms"):
-                mods_perms += 1
-        if len(permission["childOf"]) == mods_perms:
-            topLevelPermissions.append(permission["permissionName"])
+    topLevelPermissions = [p["permissionName"]
+                           for p in userService.get_topLevelPermissions()]
 
     # topLevelPermissions.extend(
     #    ["codex.collection.get",

@@ -50,18 +50,18 @@ class KubeClient:
         module = OkapiModuleKubernetes(modId)
         name = module.get_rfc_name()
         service = module.get_service()
-        volume = module.volume()
-        hazelcast = module.hazelcast()
-        if volume:
-            persistentVolumeClaim = volume["persistentVolumeClaim"]
+        persistentVolumeClaim = module.get_persistentVolumeClaim()
+        if persistentVolumeClaim:
             log.debug("Create PersistentVolumeClaim:\n%s" %
                       json.dumps(persistentVolumeClaim, indent=2))
             self.create_persistenVolumeClaim(persistentVolumeClaim)
-        if hazelcast:
-            if self.is_configMap(hazelcast["name"]):
-                self.remove_configMap(hazelcast["name"])
+        if module.has_hazelcast():
+            hazelcast = module.get_hazelcast_configMap()
+            hazelcast_name = hazelcast["metadata"]["name"]
+            if self.is_configMap(hazelcast_name):
+                self.remove_configMap(hazelcast_name)
             self.create_configMap(
-                hazelcast["name"], hazelcast["data"])
+                hazelcast_name, hazelcast["data"])
         log.debug("Create Service:\n%s" % json.dumps(service, indent=2))
         if self.is_service(name):
             self.remove_service(name)
@@ -131,13 +131,14 @@ class KubeClient:
                 module.get_rfc_name())
         else:
             raise Exception("Unknown kind %s" % self._kind)
-        volume = module.volume()
-        hazelcast = module.hazelcast()
+        volume = module.get_persistentVolumeClaim()
         if volume:
             log.debug(self.remove_persistenVolumeClaim(
                 volume["claim"]["name"]))
-        if module.hazelcast():
-            self.remove_configMap(hazelcast["name"])
+        hazelcast = module.get_hazelcast_configMap()
+        if hazelcast:
+            hazelcast_name = hazelcast["metadata"]["name"]
+            self.remove_configMap(hazelcast_name)
 
     def get_env(self):
         """Get enviroment variables.

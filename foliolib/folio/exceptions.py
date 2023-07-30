@@ -16,6 +16,14 @@ class UserNotFound(FolioException):
     pass
 
 
+class GroupNotFound(FolioException):
+    pass
+
+
+class DepartmentNotFound(FolioException):
+    pass
+
+
 class PermissionUserNotFound(FolioException):
     pass
 

@@ -21,8 +21,8 @@ def platform():
 @click.option("-n", "--node", default=get_node(),
               help="node id", show_default=True)
 @click.option("-a", "--deployAsync",  help="", is_flag=True)
-@click.option("--loadSample",  help="", is_flag=True)
-@click.option("--loadReference",  help="", is_flag=True)
+@click.option("--loadSample",  help="Load samples.", is_flag=True)
+@click.option("--loadReference",  help="Load example reference data.", is_flag=True)
 @click.option(
     "--ignoreErrors", is_flag=True, help="Ignore errors during the install operation")
 @click.option(
@@ -64,9 +64,16 @@ def install(**kwargs):
               help="Path to platform directory, tgz file, zip file or platform version")
 @click.option("-n", "--node", default=get_node(),
               help="node id", show_default=True)
-@click.option("-a", "--deployAsync",  help="", is_flag=True)
-@click.option("-e", "--exclude",  help="Exclude module from upgrade, e.g. mod-authtoken",
+@click.option("-a", "--deployAsync",  help="Deploy async.", is_flag=True)
+@click.option("-U", "--unsecure",  help="Unsecure okapi before upgrade.", is_flag=True)
+@click.option("-i", "--installnew",  help="Wether to install new modules from the release",
+              is_flag=True)
+@click.option("-e", "--exclude",  help="Exclude module from upgrade, e.g. mod-remote-storage",
               multiple=True)
+@click.option("-u", "--uninstall",  help="Uninstall module before upgrade., e.g. mod-remote-storage",
+              multiple=True)
+@click.option("--loadSample",  help="Load samples for new installed modules", is_flag=True)
+@click.option("--loadReference",  help="Load example reference data for new installed modules", is_flag=True)
 @click.option(
     "--ignoreErrors", is_flag=True, help="Ignore errors during the install operation")
 @click.option(
@@ -77,10 +84,16 @@ def install(**kwargs):
     "--no-preRelease", is_flag=True, help="Pre-releases should be considered for installation")
 @click.option(
     "--simulate", is_flag=True, help="Simulate the installation")
+@click.option(
+    "--purge", is_flag=True, help="Disabled modules will also be purged.")
 def upgrade(**kwargs):
     """Upgrade folio tenants.
     It is recommended to unsecure okapi before upgrading.
-    It may be necessary to update okapi before.
+    It may be necessary to upgrade okapi before.
+
+    Example:
+
+    foliolib platform upgrade --platform R1-2023-GA --deployAsync --installnew --uninstall mod-remote-storage --loadReference --unsecure
     """
     _kwargs = {}
     if kwargs["ignoreerrors"]:
@@ -93,6 +106,13 @@ def upgrade(**kwargs):
         _kwargs["npmSnapshot"] = False
     if kwargs["no_prerelease"]:
         _kwargs["preRelease"] = False
+    if kwargs["purge"]:
+        _kwargs["purge"] = True
     upgrade_platform(kwargs["platform"], kwargs["tenant"], kwargs["node"],
                      deploy_async=kwargs["deployasync"],
-                     exclude=kwargs["exclude"], **_kwargs)
+                     unsecure_okapi=kwargs["unsecure"],
+                     install_new=kwargs["installnew"],
+                     loadSample=kwargs["loadsample"],
+                     loadReference=kwargs["loadreference"],
+                     exclude=kwargs["exclude"],
+                     uninstall=kwargs["uninstall"])

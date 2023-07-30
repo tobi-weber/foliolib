@@ -5,9 +5,8 @@ import click
 from foliolib.helper.okapi import login_supertenant
 
 from .folio import folio
+from .orderedGroup import OrderedGroup
 from .server import server
-
-from.orderedGroup import OrderedGroup
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
@@ -20,14 +19,12 @@ def main():
 
 @main.command()
 # @click.argument("user", required=True)
-@click.argument("user", default="okapi_admin")
-@click.argument("password", default="admin")
+@click.option("-u", "--user", required=True,
+              help="username for the supertenant")
+@click.option("-p", "--password", required=True,
+              help="password of the user for the supertenant")
 def loginOkapi(**kwargs):
     """Log into Supertenant with username and password.
-
-    USER\tUsername of supertenant. (default: okapi_admin)
-
-    PASSWORD\tPassword of supertenant user. (default: admin)
     """
     login_supertenant(kwargs["user"], kwargs["password"])
 

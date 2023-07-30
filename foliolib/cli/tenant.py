@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 # Copyright (C) 2021 Tobias Weber <tobi-weber@gmx.de>
 
-import json
-
 import click
+from foliolib.helper import jprint
 from foliolib.helper.tenant import uninstall_tenant
 from foliolib.okapi.okapiClient import OkapiClient
 from tabulate import tabulate
@@ -96,7 +95,7 @@ def modify(**kwargs):
 def enable(**kwargs):
     """Enable module(s) for a tenant.
 
-    TENANTID\tThe tenant id.
+    TENANTID\tThe tenant id. ('all' for all tenants.)
     MODULEID\tOne ore multiple module id(s).
     """
     _kwargs = {}
@@ -123,9 +122,9 @@ def enable(**kwargs):
                                            loadSample=kwargs["loadsample"],
                                            loadReference=kwargs["loadreference"],
                                            **_kwargs)
-        print(json.dumps(msg, indent=2))
+        jprint(msg)
 
-    if tenantid == "ALL":
+    if tenantid.upper() == "ALL":
         tenants = OkapiClient().get_tenants()
         for tenant in tenants:
             if tenant["id"] != "supertenant":
@@ -152,7 +151,7 @@ def enable(**kwargs):
 def disable(**kwargs):
     """Disable module(s) for a tenant.
 
-    TENANTID\tThe tenant id.
+    TENANTID\tThe tenant id. ('all' for all tenants.)
     """
     _kwargs = {}
     tenantid = kwargs["tenantid"]
@@ -175,13 +174,13 @@ def disable(**kwargs):
                 print("Disable module %s for tenant %s" %
                       (modid, tid))
                 msg = OkapiClient().disable_modules([modid], tid, **_kwargs)
-                print(json.dumps(msg, indent=2))
+                jprint(msg)
         except Exception as e:
             print(e)
             if not kwargs["ignoreerrors"]:
                 raise
 
-    if tenantid == "ALL":
+    if tenantid.upper() == "ALL":
         tenants = OkapiClient().get_tenants()
         for tenant in tenants:
             if tenant["id"] != "supertenant":
@@ -204,10 +203,12 @@ def disable(**kwargs):
               help="Pre-releases should be considered for installation")
 @click.option("--simulate", is_flag=True,
               help="Simulate the installation")
+@click.option(
+    "--purge", is_flag=True, help="Disabled modules will also be purged.")
 def upgrade(**kwargs):
     """Upgrade tenant.
 
-    TENANTID\tThe tenant id.
+    TENANTID\tThe tenant id. ('all' for all tenants.)
     """
     _kwargs = {}
     tenantid = kwargs["tenantid"]
@@ -223,18 +224,20 @@ def upgrade(**kwargs):
         _kwargs["npmSnapshot"] = False
     if kwargs["no_prerelease"]:
         _kwargs["preRelease"] = False
+    if kwargs["purge"]:
+        _kwargs["purge"] = True
 
     def do(tid):
         print("Upgrade tenant %s" % tid)
         try:
             msg = OkapiClient().upgrade_modules(tid, **_kwargs)
-            print(json.dumps(msg, indent=2))
+            jprint(msg)
         except Exception as e:
             print(e)
             if not kwargs["ignoreerrors"]:
                 raise
 
-    if tenantid == "ALL":
+    if tenantid.upper() == "ALL":
         tenants = OkapiClient().get_tenants()
         for tenant in tenants:
             if tenant["id"] != "supertenant":
@@ -258,11 +261,12 @@ def upgrade(**kwargs):
               help="Pre-releases should be considered for installation")
 @click.option("--simulate", is_flag=True,
               help="Simulate the installation")
+@click.option(
+    "--purge", is_flag=True, help="Disabled modules will also be purged.")
 def upgrademodule(**kwargs):
     """Upgrade tenant.
 
-    TENANTID\tThe tenant id.
-    MODULEID\tmodule id. Can be repeated.
+    TENANTID\tThe tenant id. ('all' for all tenants.)
     """
     _kwargs = {}
     tenantid = kwargs["tenantid"]
@@ -279,13 +283,15 @@ def upgrademodule(**kwargs):
     if kwargs["no_prerelease"]:
         _kwargs["preRelease"] = False
     modules = kwargs["module"]
+    if kwargs["purge"]:
+        _kwargs["purge"] = True
 
     def do(tid):
         print("Upgrade modules %s for tenant %s" % (str(modules), tid))
         msg = OkapiClient().upgrade_modules(tid, modules=modules, **_kwargs)
-        print(json.dumps(msg, indent=2))
+        jprint(msg)
 
-    if tenantid == "ALL":
+    if tenantid.upper() == "ALL":
         tenants = OkapiClient().get_tenants()
         for tenant in tenants:
             if tenant["id"] != "supertenant":

@@ -4,6 +4,7 @@
 import click
 from foliolib.cli.folio.config import config
 from foliolib.cli.folio.inventory import inventory
+from foliolib.cli.folio.user import user
 from foliolib.folio.users import Users
 from foliolib.helper.folio import create_superuser
 
@@ -50,3 +51,4 @@ def superuser(**kwargs):
 
 folio.add_command(inventory)
 folio.add_command(config)
+folio.add_command(user)

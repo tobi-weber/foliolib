@@ -103,7 +103,7 @@ def set(**kwargs):
     loginoption = kwargs["loginoption"]
     starttls = kwargs["starttls"]
     authmethods = kwargs["authmethods"]
-    print(f"\Set Email config for {tenant}")
+    print(f"\nSet Email config for {tenant}")
     if deprecated:
         Config(tenant).set_email(host, port, email_from,
                                  username, password,

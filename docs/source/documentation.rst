@@ -147,6 +147,15 @@ So that the deployment works, Okapi needs to be running with
 `Here <https://github.com/tobi-weber/foliolib/tree/master/extras/okapi-docker>`_
 is a Dockerfile to build an image of Okapi with Kubernetes integration.
 
+The Kubernetes definitions that foliolib generates can be viewed as follows:
+
+.. code-block:: python
+
+    from foliolib import server
+    from foliolib.okapi.okapiModuleKubernetes import get_yaml
+    server("SERVER_NAME")
+    print(get_yaml("mod-users-19.1.1"))
+
 
 Module Configuration
 --------------------
@@ -180,3 +189,15 @@ for Kubernetes:
 
     [Kubernetes]
     hazelcast = True
+
+
+Autocompletion for bash
+-----------------------
+
+To configure autocompletion for bash add the following line to
+the ~/.bashrc file:
+
+.. code-block:: bash
+
+    eval "$(_FOLIOLIB_COMPLETE=bash_source foliolib)" &> /dev/null
+

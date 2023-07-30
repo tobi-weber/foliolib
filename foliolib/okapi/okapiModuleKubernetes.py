@@ -3,6 +3,7 @@
 
 import logging
 import math
+from io import StringIO
 from typing import Union
 
 from foliolib.config import Config
@@ -75,6 +76,14 @@ class OkapiModuleKubernetes:
             str: Deployment or StatefulSet
         """
         return self._kind
+
+    def get_namespace(self):
+        """Get namespace of the module
+
+        Returns:
+            str: Namespace
+        """
+        return self._namespace
 
     def get_rfc_name(self):
         """Get module id as rfc name.
@@ -173,28 +182,35 @@ class OkapiModuleKubernetes:
             }
         }
 
-        volume = self.volume()
-        hazelcast = self.hazelcast()
         securityContext = self.__securityContext()
         deployment["spec"]["template"]["spec"]["containers"][0]["resources"] = self.__resources()
         if self.healthCheck:
             deployment["spec"]["template"]["spec"]["containers"][0]["startupProbe"] = self.__startupProbe()
             deployment["spec"]["template"]["spec"]["containers"][0]["livenessProbe"] = self.__livenessProbe()
             deployment["spec"]["template"]["spec"]["containers"][0]["readinessProbe"] = self.__readinessProbe()
-        if volume or hazelcast:
+        if self.has_volume() or self.has_hazelcast():
             deployment["spec"]["template"]["spec"]["containers"][0]["volumeMounts"] = []
             deployment["spec"]["template"]["spec"]["volumes"] = []
-        if volume:
+        if self.has_volume():
+            persistentVolumeClaim = self.get_persistentVolumeClaim()
             deployment["spec"]["template"]["spec"]["containers"][0]["volumeMounts"].append(
-                volume["mount"])
+                self.__volume_mount())
             deployment["spec"]["template"]["spec"]["volumes"].append(
-                volume["claim"])
-        if hazelcast:
+                self.__volume_claim())
+        if self.has_hazelcast():
+            hazelcast = self.get_hazelcast_configMap()
             deployment["spec"]["template"]["spec"]["containers"][0]["volumeMounts"].append(
-                hazelcast["mount"])
+                {"name": "hazelcast-xml",
+                 "mountPath": "/etc/hazelcast",
+                 "readOnly": True})
             deployment["spec"]["template"]["spec"]["volumes"].append(
-                hazelcast["volume"])
-            deployment["spec"]["template"]["spec"]["containers"][0]["ports"] = hazelcast["ports"]
+                {"name": "hazelcast-xml",
+                 "configMap": {"name": self.__hazelcast_configMap_name()}})
+            deployment["spec"]["template"]["spec"]["containers"][0]["ports"] = [{"containerPort": 5701},
+                                                                                {"containerPort": 5702},
+                                                                                {"containerPort": 5703},
+                                                                                {"containerPort": 5704},
+                                                                                {"containerPort": 54327}]
             env = deployment["spec"]["template"]["spec"]["containers"][0]["env"]
             for e in env:
                 if e["name"] == "JAVA_OPTIONS":
@@ -236,7 +252,7 @@ class OkapiModuleKubernetes:
 
         return deployment
 
-    def volume(self):
+    def get_persistentVolumeClaim(self):
         """Get Kubernetes PersistentVolumeClaim definition.
 
         Returns:
@@ -245,61 +261,68 @@ class OkapiModuleKubernetes:
         conf = Config().modulescfg(self._modId)
         name = f"{self._modId}-data"
         name = "%s-data" % self._modId.replace(".", "-")
-        mountPath = None
-        size = None
-        volume = {}
-        if conf is not None:
-            if conf.has_section("Volume"):
-                mountPath = conf.get("Volume", "mountPath")
-                storageClassName = conf.get(
-                    "Volume", "storageClassName", fallback=None)
-                size = conf.get("Volume", "size")
+        persistentVolumeClaim = None
+        if self.has_volume():
+            mountPath = conf.get("Volume", "mountPath")
+            storageClassName = conf.get(
+                "Volume", "storageClassName", fallback=None)
+            size = conf.get("Volume", "size")
+            persistentVolumeClaim = {"apiVersion": "v1",
+                                     "kind": "PersistentVolumeClaim",
+                                     "metadata": {"name": name,
+                                                  "labels":  {"app": self._modId}},
+                                     "spec": {"accessModes": ["ReadWriteOnce"],
+                                              "resources": {"requests": {"storage": size}},
+                                              }
+                                     }
+            if storageClassName is not None:
+                persistentVolumeClaim["spec"]["storageClassName"] = storageClassName
 
-                volume["claim"] = {"name": name,
-                                   "persistentVolumeClaim": {"claimName": name}
-                                   }
-                volume["mount"] = {"mountPath": mountPath,
-                                   "name": name
+        return persistentVolumeClaim
 
-                                   }
-                volume["persistentVolumeClaim"] = {"apiVersion": "v1",
-                                                   "kind": "PersistentVolumeClaim",
-                                                   "metadata": {"name": name,
-                                                                "labels":  {"app": self._modId}},
-                                                   "spec": {"accessModes": ["ReadWriteOnce"],
-                                                            "resources": {"requests": {"storage": size}},
-                                                            }
-                                                   }
-                if storageClassName is not None:
-                    volume["persistentVolumeClaim"]["spec"]["storageClassName"] = storageClassName
-
-        return volume
-
-    def hazelcast(self):
+    def get_hazelcast_configMap(self):
         """Get Kubernetes ConfigMap definition for Hazelcast.
 
         Returns:
             dict: Kubernetes ConfigMap definition for Hazelcast.
         """
+        if self.has_hazelcast():
+            return {
+                "apiVersion": "v1",
+                "kind": "ConfigMap",
+                "metadata": {"name": self.__hazelcast_configMap_name()},
+                "data": {"hazelcast.xml": get_hazelcast_xml(self.get_rfc_name(), self._namespace)},
+            }
+        return None
+
+    def has_volume(self):
+        """Wether module has a volume defined.
+
+        Returns:
+            bool: Wether module has a volume defined.
+        """
+        conf = Config().modulescfg(self._modId)
+        if conf is not None:
+            if conf.has_section("Volume"):
+                return True
+
+        return False
+
+    def has_hazelcast(self):
+        """Wether module has hazelcast enabled.
+
+        Returns:
+            bool: Wether module has hazelcast enabled.
+        """
         conf = Config().modulescfg(self._modId)
         if conf is not None and conf.getboolean(
                 "Kubernetes", "hazelcast", fallback=False):
-            name = f"{self._modId}-hazelcast-xml"
-            return {
-                "name": name,
-                "data": {"hazelcast.xml": get_hazelcast_xml(self.get_rfc_name(), self._namespace)},
-                "mount": {"name": "hazelcast-xml",
-                          "mountPath": "/etc/hazelcast",
-                          "readOnly": True},
-                "volume": {"name": "hazelcast-xml",
-                           "configMap": {"name": name}},
-                "ports": [{"containerPort": 5701},
-                          {"containerPort": 5702},
-                          {"containerPort": 5703},
-                          {"containerPort": 5704},
-                          {"containerPort": 54327}]
-            }
-        return None
+            return True
+
+        return False
+
+    def __hazelcast_configMap_name(self):
+        return f"{self._modId}-hazelcast-xml"
 
     def __healthProbe(self):
         return {"httpGet": {"path": "admin/health",
@@ -377,6 +400,26 @@ class OkapiModuleKubernetes:
 
         return data
 
+    def __volume_name(self):
+        name = f"{self._modId}-data"
+        name = "%s-data" % self._modId.replace(".", "-")
+
+        return name
+
+    def __volume_claim(self):
+        conf = Config().modulescfg(self._modId)
+        volume_claim = {"name": self.__volume_name(),
+                        "persistentVolumeClaim": {"claimName": self.__volume_name()}}
+
+        return volume_claim
+
+    def __volume_mount(self):
+        conf = Config().modulescfg(self._modId)
+        volume_mount = {"mountPath": conf.get("Volume", "mountPath"),
+                        "name": self.__volume_name()}
+
+        return volume_mount
+
     def __resources(self):
         conf = Config().modulescfg(self._modId)
         module = OkapiModule(self._modId)
@@ -453,3 +496,47 @@ class OkapiModuleKubernetes:
                     sc["fsGroupChangePolicy"] = fsGroupChangePolicy
 
         return sc
+
+
+def get_yaml(modId):
+    """Get complete kubernetes yaml for a folio module.
+
+
+    Example:
+
+    .. code-block:: python
+
+        >>> from foliolib import server
+        >>> from foliolib.okapi.okapiModuleKubernetes import get_yaml
+        >>> server(SERVER_NAME)
+        >>> print(get_yaml("mod-users-18.0.1"))
+
+    Args:
+        modId (str): Module id
+
+    Returns:
+        str: Kubernetes yaml
+    """
+    import yaml
+    m = OkapiModuleKubernetes(modId)
+    service = m.get_service()
+    deployment = m.get_deployment()
+    namespace = m.get_namespace()
+    persistentVolumeClaim = m.get_persistentVolumeClaim()
+    hazelcast_configMap = m.get_hazelcast_configMap()
+    with StringIO() as f:
+        if hazelcast_configMap:
+            hazelcast_configMap["metadata"]["namespace"] = namespace
+            yaml.dump(hazelcast_configMap, f)
+            f.write("\n\n---\n\n")
+        if persistentVolumeClaim:
+            persistentVolumeClaim["metadata"]["namespace"] = namespace
+            yaml.dump(persistentVolumeClaim, f)
+            f.write("\n\n---\n\n")
+        service["metadata"]["namespace"] = namespace
+        yaml.dump(service, f)
+        f.write("\n\n---\n\n")
+        deployment["metadata"]["namespace"] = namespace
+        yaml.dump(deployment, f)
+        f.seek(0)
+        return f.read()

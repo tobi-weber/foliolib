@@ -13,11 +13,11 @@ import zipfile
 import requests
 from foliolib.config import Config
 from foliolib.exceptions import FoliolibError
-from foliolib.helper import split_modid
+from foliolib.helper import jprint, split_modid
 from foliolib.helper.modules import (add_modules, deploy_modules,
                                      deploy_modules_async, enable_modules,
                                      load_install_file)
-from foliolib.helper.okapi import clean_okapi
+from foliolib.helper.okapi import clean_okapi, unsecure_supertenant
 from foliolib.okapi.okapiClient import OkapiClient
 
 log = logging.getLogger("foliolib.helper.platform")
@@ -141,42 +141,49 @@ def install_platform(platform: str, tenantid: str, node: str = None,
 
 
 def upgrade_platform(platform: str, tenantid: str, node: str = None,
-                     deploy_async: bool = False, exclude: list = None,
-                     **kwargs):
-    """Upgrade a folio platform.
+                     deploy_async: bool = False, unsecure_okapi=False,
+                     install_new=False, loadSample: bool = False,
+                     loadReference: bool = False, exclude: list = None,
+                     uninstall: list = False, **kwargs):
+    """Upgrade a folio tenants to a new platform.
+
+    It is recommended to unsecure okapi before upgrading.
+
+    It may be necessary to upgrade okapi before.
 
     Args:
         platform (str): Path to the folder of the folio platform.
-        tenantid (str): tenant id
+        tenantid (str): tenant id. ('all' for all tenants.)
         node (str): The node id on which module should be deployed. Default first node from nodes list.
         deploy_async (bool, optional): Wether to deploy asynchronously. Defaults to False.
+        unsecure_okapi (bool, optional): Wether to unsecure okapi before upgrade. Default to False.
+        install_new (bool, optional): Wether to install new modules from the release. Default to False.
+        loadSample (bool, optional): load samples for new installed modules. Defaults to False.
+        loadReference (bool, optional): load example reference data for new installed modules. Defaults to False.
+        exclude (list, optional): Exclude module from upgrade, e.g. mod-remote-storage.
+        uninstall (list, optional): List of module names, e.g. [mod-remote-storage]. Uninstall modules before upgrade. Default to None.
         **kwargs (properties): Keyword Arguments
 
     Keyword Args:
         ignoreErrors (boolean): default = false
-                    Okapi 4.2.0 and later, it is possible to ignore errors during the upgrade operation.
-                    This is done by supplying parameter ignoreErrors=true.
-                    In this case, Okapi will try to upgrade all modules in the modules list, regardless if one of them fails.
-                    However, for individual modules, if they fail, their upgrade will not be commited. This is an experimental
-                    parameter which was added to be able to inspect all problem(s) with module upgrade(s).
+                    Okapi 4.2.0 and later, it is possible to ignore errors during the install operation. This is done by supplying parameter ignoreErrors=true.
+                    In this case, Okapi will try to upgrade all modules in the modules list, regardless if one of them fails. However, for individual modules,
+                    if they fail, their upgrade will not be commited.
+                    This is an experimental parameter which was added to be able to inspect all problem(s) with module upgrade(s).
         invoke (boolean): default = true
                     Whether to invoke for tenant init/permissions/purge
+        npmSnapshot (boolean): default = true
+                    Whether to include NPM module snapshots (default:true).
         preRelease (boolean): default = true
                     Whether pre-releases should be considered for installation.
+        purge (boolean): default = false
+                    Disabled modules will also be purged.
+        reinstall: (boolean - default: false)
+                    Whether to install modules even if up-to-update.
         simulate (boolean): default = false
-                    Whether the upgrade is simulated
-        tenantParameters (string): Parameters for Tenant init
+                    Whether the installation is simulated
     """
-    def upgrade(tid):
-        okapi = OkapiClient()
-        for m in okapi_modules:
-            if m.get_id().startswith("mod-authtoken"):
-                print("Upgrade %s for tenant %s" % (m.get_id(), tid))
-                msg = okapi.upgrade_modules(tid, [m.get_id()], invoke=False)
-                print(json.dumps(msg, indent=2))
-        print("Upgrade modules for tenant %s ..." % tid)
-        msg = okapi.upgrade_modules(tid, **kwargs)
-        print(json.dumps(msg, indent=2))
+    okapi = OkapiClient()
     platform = __process_platform(platform)
 
     okapi_install = os.path.join(platform, "okapi-install.json")
@@ -190,10 +197,52 @@ def upgrade_platform(platform: str, tenantid: str, node: str = None,
 
     if exclude is not None:
         for mod_name in exclude:
-            stripes_modules = [m for m in stripes_modules
-                               if not mod_name == split_modid(m.get_id())[0]]
-            okapi_modules = [m for m in okapi_modules
-                             if not mod_name == split_modid(m.get_id())[0]]
+            if not uninstall:
+                stripes_modules = [m for m in stripes_modules
+                                   if not mod_name == split_modid(m.get_id())[0]]
+                okapi_modules = [m for m in okapi_modules
+                                 if not mod_name == split_modid(m.get_id())[0]]
+
+    def upgrade(tid):
+        for m in okapi_modules:
+            if m.get_id().startswith("mod-authtoken"):
+                print("Upgrade %s for tenant %s" % (m.get_id(), tid))
+                msg = okapi.upgrade_modules(
+                    tid, [m.get_id()], invoke=False, **kwargs)
+                jprint(msg)
+
+        print("Upgrade modules for tenant %s ..." % tid)
+        msg = okapi.upgrade_modules(tid, **kwargs)
+        jprint(msg)
+
+    def install_modules(tid):
+        for m in okapi_modules+stripes_modules:
+            if not okapi.is_module_enabled(m.get_id(), tid):
+                print("Enable module %s" % m.get_id())
+                okapi.enable_module(
+                    tid, m.get_id(), loadSample=loadSample,
+                    loadReference=loadReference, **kwargs)
+
+    def uninstall_modules(tid):
+        modules = okapi.get_tenant_modules(tid)
+        for mod_name in uninstall:
+            for m in modules:
+                if split_modid(m["id"])[0] == mod_name:
+                    print("Uninstall module %s in tenant %s" % (m["id"], tid))
+                    okapi.disable_module(m["id"], tid, **kwargs)
+
+    if unsecure_okapi:
+        unsecure_supertenant()
+
+    if uninstall is not None:
+        if tenantid.upper() == "ALL":
+            tenants = okapi.get_tenants()
+            for tenant in tenants:
+                if not tenant["id"] == "supertenant":
+                    uninstall_modules(tenant["id"])
+        else:
+            uninstall_modules(tenantid)
+        clean_okapi()
 
     add_modules(okapi_modules + stripes_modules)
 
@@ -202,11 +251,15 @@ def upgrade_platform(platform: str, tenantid: str, node: str = None,
     else:
         deploy_modules(okapi_modules, node)
 
-    if tenantid == "ALL":
-        tenants = OkapiClient().get_tenants()
+    if tenantid.upper() == "ALL":
+        tenants = okapi.get_tenants()
         for tenant in tenants:
             if not tenant["id"] == "supertenant":
                 upgrade(tenant["id"])
+                if install_new:
+                    install_modules(tenant["id"])
     else:
         upgrade(tenantid)
+        if install_new:
+            install_modules(tenantid)
     clean_okapi()

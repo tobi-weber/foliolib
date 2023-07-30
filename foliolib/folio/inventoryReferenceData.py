@@ -497,7 +497,7 @@ class InventoryReferenceData(FolioService):
                 fpath = os.path.join(fullpath, fname)
                 with open(fpath, "w", encoding="utf-8") as f:
                     print("Write %s" % fpath)
-                    json.dump(d, f, indent=2)
+                    json.dump(d, f, indent=2, ensure_ascii=False)
 
     def __delete_reference_data(self, klass, name_or_id, baseMethodName=None):
         api = klass(self._tenant)

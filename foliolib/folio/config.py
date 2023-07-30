@@ -54,7 +54,7 @@ class Config(FolioService):
 
     def get_entries(self, module=None):
         if module is None:
-            return self._config.get_entries()["configs"]
+            return self._config.get_entries(limit=10000)["configs"]
         else:
             return self._config.get_entries(query=f"module={module}")["configs"]
 
