@@ -1,0 +1,34 @@
+{
+    "description": "Print entry",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "Identifier",
+            "type": "string",
+            "format": "uuid"
+        },
+        "created": {
+            "type": "string",
+            "description": "Creation date time"
+        },
+        "type": {
+            "type": "string",
+            "description": "Print entry type"
+        },
+        "sortingField": {
+            "type": "string",
+            "description": "Print entry sorting field"
+        },
+        "content": {
+            "type": "string",
+            "description": "Print entry content"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "id",
+        "created",
+        "type",
+        "content"
+    ]
+}

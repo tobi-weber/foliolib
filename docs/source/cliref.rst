@@ -103,6 +103,10 @@ CLI Reference
   - **modify**
 
       Modify tenant.
+      
+  - **superuser**
+
+      Create superuser for a tenant.
 
   - **enable**
 
@@ -160,10 +164,6 @@ CLI Reference
   - **login**
 
       Log in a tenant.
-
-  - **superuser**
-
-      Create superuser for a tenant.
 
   - **inventory**
 

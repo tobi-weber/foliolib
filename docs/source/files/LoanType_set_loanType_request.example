@@ -3,6 +3,6 @@
   "value": {
     "id": "2b94c631-fca9-4892-a730-03ee529ffe27",
     "name": "Can circulate",
-    "source": "System"
+    "source": "local"
   }
 }

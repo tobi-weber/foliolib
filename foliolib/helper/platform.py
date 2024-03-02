@@ -144,7 +144,7 @@ def upgrade_platform(platform: str, tenantid: str, node: str = None,
                      deploy_async: bool = False, unsecure_okapi=False,
                      install_new=False, loadSample: bool = False,
                      loadReference: bool = False, exclude: list = None,
-                     uninstall: list = False, **kwargs):
+                     uninstall: list = False, preupgrade:list = None, **kwargs):
     """Upgrade a folio tenants to a new platform.
 
     It is recommended to unsecure okapi before upgrading.
@@ -162,6 +162,7 @@ def upgrade_platform(platform: str, tenantid: str, node: str = None,
         loadReference (bool, optional): load example reference data for new installed modules. Defaults to False.
         exclude (list, optional): Exclude module from upgrade, e.g. mod-remote-storage.
         uninstall (list, optional): List of module names, e.g. [mod-remote-storage]. Uninstall modules before upgrade. Default to None.
+        preupgrade (list, optional): List of module names, e.g. [mod-users]. Upgrade module before other modules upgraded. Default to None.
         **kwargs (properties): Keyword Arguments
 
     Keyword Args:
@@ -205,11 +206,20 @@ def upgrade_platform(platform: str, tenantid: str, node: str = None,
 
     def upgrade(tid):
         for m in okapi_modules:
-            if m.get_id().startswith("mod-authtoken"):
-                print("Upgrade %s for tenant %s" % (m.get_id(), tid))
-                msg = okapi.upgrade_modules(
-                    tid, [m.get_id()], invoke=False, **kwargs)
-                jprint(msg)
+            if split_modid(m.get_id())[0] == "mod-authtoken":
+                if not okapi.is_module_enabled(m.get_id(), tid):
+                    print("Upgrade %s for tenant %s" % (m.get_id(), tid))
+                    msg = okapi.upgrade_modules(
+                        tid, [m.get_id()], invoke=False, **kwargs)
+                    jprint(msg)
+
+        for m in okapi_modules:
+            for modulename in preupgrade:
+                if split_modid(m.get_id())[0] == modulename:
+                    print("Upgrade %s for tenant %s" % (m.get_id(), tid))
+                    msg = okapi.upgrade_modules(
+                        tid, [m.get_id()], **kwargs)
+                    jprint(msg)
 
         print("Upgrade modules for tenant %s ..." % tid)
         msg = okapi.upgrade_modules(tid, **kwargs)
@@ -228,13 +238,13 @@ def upgrade_platform(platform: str, tenantid: str, node: str = None,
         for mod_name in uninstall:
             for m in modules:
                 if split_modid(m["id"])[0] == mod_name:
-                    print("Uninstall module %s in tenant %s" % (m["id"], tid))
+                    print("Uninstall module %s for tenant %s" % (m["id"], tid))
                     okapi.disable_module(m["id"], tid, **kwargs)
 
     if unsecure_okapi:
         unsecure_supertenant()
 
-    if uninstall is not None:
+    if uninstall:
         if tenantid.upper() == "ALL":
             tenants = okapi.get_tenants()
             for tenant in tenants:
@@ -244,7 +254,7 @@ def upgrade_platform(platform: str, tenantid: str, node: str = None,
             uninstall_modules(tenantid)
         clean_okapi()
 
-    add_modules(okapi_modules + stripes_modules)
+    add_modules(okapi_modules + stripes_modules, resolve_incompatible=True)
 
     if deploy_async:
         deploy_modules_async(okapi_modules, node)

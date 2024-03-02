@@ -36,7 +36,9 @@ class BaseOAS:
         if self._parent.get_schema_dir():
             fpath = os.path.join(
                 self._parent.get_schema_dir(), fpath)
-        log.info("Load file %s", fpath)
+        log.info("Load file %s -- %s", fpath, os.path.curdir)
+        if not os.path.exists(fpath):
+            fpath = fpath.replace("../", "")
         key = None
         if "#/" in fpath:
             p = fpath.split("#/")

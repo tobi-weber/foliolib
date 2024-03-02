@@ -42,6 +42,9 @@
         "1895e539-8dac-441e-b1f5-aab62b3fde60",
         "47f504bd-0c1b-498e-a2ae-e2f0a0cea273"
       ],
+      "customFields": {
+        "membership": "opt_0"
+      },
       "metadata": {
         "createdDate": "2018-07-19T00:00:00.000+0000",
         "createdByUserId": "28d1057c-d137-11e8-a8d5-f2801f1b9fd1"

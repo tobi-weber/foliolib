@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -27,7 +27,7 @@ class Tenant(FolioApi):
             OkapiRequestError: Bad request
             OkapiRequestPayloadToLarge: Payload Too large
             OkapiRequestUnprocessableEntity: Validation errors
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -49,7 +49,7 @@ class Tenant(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: job id not found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -66,6 +66,6 @@ class Tenant(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: job id not found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
         """
         return self.call("DELETE", f"/_/tenant/{id_}")

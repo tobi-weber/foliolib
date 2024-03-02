@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -54,7 +54,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -73,7 +73,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -105,7 +105,7 @@ class Courses(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -124,7 +124,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/coursereserves/courselistings/{listing_id}")
 
@@ -140,7 +140,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -190,7 +190,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -210,7 +210,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -246,7 +246,7 @@ class Courses(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -266,7 +266,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/coursereserves/courselistings/{listing_id}/instructors/{instructor_id}")
 
@@ -283,7 +283,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -332,7 +332,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -351,7 +351,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -383,7 +383,7 @@ class Courses(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -402,7 +402,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/coursereserves/roles/{role_id}")
 
@@ -418,7 +418,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -467,7 +467,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -486,7 +486,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -518,7 +518,7 @@ class Courses(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -537,7 +537,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/coursereserves/terms/{term_id}")
 
@@ -553,7 +553,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -602,7 +602,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -621,7 +621,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -653,7 +653,7 @@ class Courses(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -672,7 +672,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/coursereserves/coursetypes/{type_id}")
 
@@ -688,7 +688,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -737,7 +737,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -756,7 +756,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -788,7 +788,7 @@ class Courses(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -807,7 +807,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/coursereserves/departments/{department_id}")
 
@@ -823,7 +823,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -872,7 +872,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -891,7 +891,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -923,7 +923,7 @@ class Courses(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -942,7 +942,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/coursereserves/processingstatuses/{status_id}")
 
@@ -958,7 +958,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -1007,7 +1007,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1026,7 +1026,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -1058,7 +1058,7 @@ class Courses(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1077,7 +1077,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/coursereserves/copyrightstatuses/{status_id}")
 
@@ -1093,7 +1093,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -1143,7 +1143,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1191,7 +1191,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1211,7 +1211,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -1234,7 +1234,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -1277,7 +1277,7 @@ class Courses(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1298,7 +1298,7 @@ class Courses(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1318,7 +1318,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/coursereserves/courselistings/{listing_id}/courses/{course_id}")
 
@@ -1333,7 +1333,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/coursereserves/courses/{course_id}")
 
@@ -1350,7 +1350,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -1371,7 +1371,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -1421,7 +1421,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1469,7 +1469,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1489,7 +1489,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -1512,7 +1512,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -1555,7 +1555,7 @@ class Courses(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1576,7 +1576,7 @@ class Courses(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1596,7 +1596,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/coursereserves/courselistings/{listing_id}/reserves/{reserve_id}")
 
@@ -1611,7 +1611,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/coursereserves/reserves/{reserve_id}")
 
@@ -1628,7 +1628,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -1649,7 +1649,7 @@ class Courses(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:

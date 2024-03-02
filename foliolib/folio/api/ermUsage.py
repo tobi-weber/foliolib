@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -21,7 +21,7 @@ class Files(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         import os
         headers = {}
@@ -44,7 +44,7 @@ class Files(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("GET", f"/erm-usage/files/{filesId}")
 
@@ -58,7 +58,7 @@ class Files(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/erm-usage/files/{filesId}")
 
@@ -112,7 +112,7 @@ class Customreports(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -131,7 +131,7 @@ class Customreports(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -156,7 +156,7 @@ class Customreports(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -175,7 +175,7 @@ class Customreports(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/custom-reports/{customReportsId}")
 
@@ -191,7 +191,7 @@ class Customreports(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -249,7 +249,7 @@ class Counterreports(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -268,7 +268,7 @@ class Counterreports(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -293,7 +293,7 @@ class Counterreports(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -312,7 +312,7 @@ class Counterreports(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/counter-reports/{counterReportsId}")
 
@@ -328,7 +328,7 @@ class Counterreports(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -346,7 +346,7 @@ class Counterreports(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("GET", f"/counter-reports/{counterReportsId}/download")
 
@@ -363,7 +363,7 @@ class Counterreports(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -385,7 +385,7 @@ class Counterreports(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("GET", f"/counter-reports/export/{exportId}", query=kwargs)
 
@@ -407,7 +407,7 @@ class Counterreports(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("GET", f"/counter-reports/export/provider/{providerId}/report/{name}/version/{aversion}/from/{begin}/to/{end}", query=kwargs)
 
@@ -427,7 +427,7 @@ class Counterreports(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -445,7 +445,7 @@ class Counterreports(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -462,7 +462,7 @@ class Counterreports(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -480,7 +480,7 @@ class Counterreports(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -538,7 +538,7 @@ class Usagedataproviders(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -557,7 +557,7 @@ class Usagedataproviders(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -582,7 +582,7 @@ class Usagedataproviders(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -601,7 +601,7 @@ class Usagedataproviders(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/usage-data-providers/{usageDataProvidersId}")
 
@@ -617,7 +617,7 @@ class Usagedataproviders(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -675,7 +675,7 @@ class Aggregatorsettings(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -694,7 +694,7 @@ class Aggregatorsettings(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -719,7 +719,7 @@ class Aggregatorsettings(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -738,7 +738,7 @@ class Aggregatorsettings(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/aggregator-settings/{aggregatorSettingsId}")
 
@@ -754,7 +754,7 @@ class Aggregatorsettings(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -776,6 +776,6 @@ class Aggregatorsettings(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("GET", f"/aggregator-settings/{aggregatorSettingsId}/exportcredentials", query=kwargs)

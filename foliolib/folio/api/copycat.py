@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -27,7 +27,7 @@ class Copycat(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -48,7 +48,7 @@ class Copycat(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Headers:
             - **Location** - URI of profile
@@ -103,7 +103,7 @@ class Copycat(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -125,7 +125,7 @@ class Copycat(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -145,7 +145,7 @@ class Copycat(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -164,6 +164,6 @@ class Copycat(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/copycat/profiles/{profilesId}")

@@ -53,19 +53,19 @@ Define a config for your Folio server:
 
 .. code-block:: bash
 
-    foliolib server create myServer -H okapi.server.url -p 9130
+    foliolib server create myServer --host okapi.server.url --port 9130 --admin
 
 Make a Folio-API request:
 
 .. code-block:: python
 
     >>> from foliolib import server
-    >>> from foliolib.folio.users import Users
+    >>> from foliolib.folio.usersImpl import UsersImpl
     >>> from foliolib.folio.api.inventory import Inventory
     >>>
     >>> server("myServer")
     >>>
-    >>> Users("TenantId").login("UserId", "Password")
+    >>> UsersImpl("TenantId").login("UserId", "Password")
     >>> inventory = Inventory("TenantId")
     >>> instances = inventory.get_instances(query="title==*")
     >>> print(instances)

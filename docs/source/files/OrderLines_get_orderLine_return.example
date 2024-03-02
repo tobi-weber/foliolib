@@ -22,6 +22,8 @@
       "grace": 30
     }
   ],
+  "claimingActive": false,
+  "claimingInterval": 0,
   "collection": false,
   "contributors": [
     {
@@ -56,6 +58,10 @@
     "subscriptionTo": "2020-10-09T00:00:00.000Z"
   },
   "donor": "ABCDEFGHIJKLM",
+  "donorOrganizationIds": [
+    "d926d900-e27d-46d6-bba8-31e9d5c2cf44",
+    "077274ad-6b4f-4c28-9779-6d381e7a1ca1"
+  ],
   "eresource": {
     "activated": false,
     "activationDue": 10,
@@ -157,6 +163,9 @@
       }
     ],
     "vendorAccount": "8910-10"
+  },
+  "customFields": {
+    "externalOrderNumber": "ML58723"
   },
   "metadata": {
     "createdDate": "2018-07-19T00:00:00.000+0000",

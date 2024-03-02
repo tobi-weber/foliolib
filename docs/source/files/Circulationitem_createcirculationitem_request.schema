@@ -1,0 +1,42 @@
+{
+    "type": "object",
+    "description": "CirculationItem",
+    "properties": {
+        "id": {
+            "type": "string",
+            "format": "uuid"
+        },
+        "holdingsRecordId": {
+            "type": "string",
+            "format": "uuid"
+        },
+        "status": {
+            "$ref": "itemStatus.yaml#/ItemStatus"
+        },
+        "dcbItem": {
+            "type": "boolean"
+        },
+        "materialTypeId": {
+            "type": "string"
+        },
+        "permanentLoanTypeId": {
+            "type": "string"
+        },
+        "instanceTitle": {
+            "type": "string"
+        },
+        "barcode": {
+            "type": "string"
+        },
+        "pickupLocation": {
+            "type": "string"
+        },
+        "effectiveLocationId": {
+            "type": "string"
+        },
+        "lendingLibraryCode": {
+            "type": "string"
+        }
+    },
+    "additionalProperties": false
+}

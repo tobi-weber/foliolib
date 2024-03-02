@@ -1,0 +1,15 @@
+{
+    "description": "Mail message response",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "Identifier",
+            "type": "string",
+            "format": "uuid"
+        }
+    },
+    "additionalProperties": true,
+    "required": [
+        "id"
+    ]
+}

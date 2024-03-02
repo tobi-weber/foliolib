@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -29,7 +29,7 @@ class RtacBatch(FolioApi):
             OkapiRequestError: Bad Request
             OkapiRequestForbidden: Forbidden
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -60,7 +60,7 @@ class Rtac(FolioApi):
         Raises:
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestError: Bad Request
             OkapiRequestForbidden: Forbidden
 

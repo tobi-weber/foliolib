@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "The result from an LDP template query",
+  "type": "object",
+  "properties": {
+    "records": {
+      "type": "array",
+      "description": "The returned rows",
+      "items": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": true
+      }
+    },
+    "totalRecords": {
+      "type": "integer",
+      "description": "The number of rows returned"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "records",
+    "totalRecords"
+  ]
+}

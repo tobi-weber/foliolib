@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -27,7 +27,7 @@ class Settings(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -49,7 +49,7 @@ class Settings(FolioApi):
             OkapiRequestError: Bad request
             OkapiRequestForbidden: Forbidden
             OkapiRequestPayloadToLarge: Payload Too Large
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -70,7 +70,7 @@ class Settings(FolioApi):
             OkapiRequestError: Bad request
             OkapiRequestForbidden: Forbidden
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -93,7 +93,7 @@ class Settings(FolioApi):
             OkapiRequestForbidden: Forbidden
             OkapiRequestNotFound: Not Found
             OkapiRequestPayloadToLarge: Payload Too Large
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -111,7 +111,7 @@ class Settings(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
         """
         return self.call("DELETE", f"/settings/entries/{id_}")
 
@@ -130,7 +130,7 @@ class Settings(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestForbidden: Forbidden
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 

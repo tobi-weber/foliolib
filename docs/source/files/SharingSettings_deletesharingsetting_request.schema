@@ -1,0 +1,24 @@
+{
+    "description": "A JSON schema for the Sharing settings object",
+    "type": "object",
+    "properties": {
+        "settingId": {
+            "description": "id of sharing setting record",
+            "type": "string",
+            "format": "uuid"
+        },
+        "url": {
+            "description": "URL for publishing requests for consortia tenants",
+            "type": "string"
+        },
+        "payload": {
+            "description": "Http request body",
+            "type": "object"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "settingId",
+        "url"
+    ]
+}

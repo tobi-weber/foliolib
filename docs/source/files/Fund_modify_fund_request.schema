@@ -67,6 +67,27 @@
         "$ref": "../../common/schemas/uuid.json"
       }
     },
+    "donorOrganizationIds": {
+      "description": "donor organization ids associated with this fund",
+      "type": "array",
+      "items": {
+        "description": "UUID of an donor organization record",
+        "$ref": "../../common/schemas/uuid.json"
+      }
+    },
+    "restrictByLocations": {
+      "description": "restrict usage of this fund by locations",
+      "type": "boolean",
+      "default": false
+    },
+    "locationIds": {
+      "description": "location ids associated with this fund",
+      "type": "array",
+      "items": {
+        "description": "UUID of an location record",
+        "$ref": "../../common/schemas/uuid.json"
+      }
+    },
     "tags": {
       "type": "object",
       "description": "arbitrary tags associated with this fund",

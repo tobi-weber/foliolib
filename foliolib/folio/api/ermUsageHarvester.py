@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -56,7 +56,7 @@ class Harvester(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("GET", "/erm-usage-harvester/start")
 
@@ -70,7 +70,7 @@ class Harvester(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("GET", f"/erm-usage-harvester/start/{startId}")
 
@@ -87,7 +87,7 @@ class Harvester(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("GET", "/erm-usage-harvester/impl", query=kwargs)
 
@@ -140,7 +140,7 @@ class Harvester(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -165,7 +165,7 @@ class Harvester(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("POST", "/erm-usage-harvester/jobs/purgefinished", query=kwargs)
 
@@ -176,7 +176,7 @@ class Harvester(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("POST", "/erm-usage-harvester/jobs/purgestale")
 
@@ -187,6 +187,6 @@ class Harvester(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("POST", "/erm-usage-harvester/jobs/cleanup")

@@ -1,0 +1,17 @@
+{
+    "description": "A JSON schema for the publication result collection",
+    "type": "object",
+    "properties": {
+        "publicationResults": {
+            "type": "array",
+            "description": "The list of publication results",
+            "items": {
+                "type": "object",
+                "$ref": "publication_schema.yaml#/PublicationResult"
+            }
+        },
+        "totalRecords": {
+            "type": "integer"
+        }
+    }
+}

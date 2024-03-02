@@ -20,6 +20,15 @@
         "1895e539-8dac-441e-b1f5-aab62b3fde60",
         "47f504bd-0c1b-498e-a2ae-e2f0a0cea273"
       ],
+      "donorOrganizationIds": [
+        "d926d900-e27d-46d6-bba8-31e9d5c2cf44",
+        "077274ad-6b4f-4c28-9779-6d381e7a1ca1"
+      ],
+      "restrictByLocations": true,
+      "locationIds": [
+        "eb2d063a-5b4c-4cab-8db1-5fc5c5941df6",
+        "fcd64ce1-6995-48f0-840e-89ffa2288371"
+      ],
       "tags": {
         "tagList": [
           "tag"

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -59,7 +59,7 @@ class LedgerRolloverProgress(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -78,7 +78,7 @@ class LedgerRolloverProgress(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Headers:
             - **Location** - URI to the created ledgerRolloversProgress item
@@ -103,7 +103,7 @@ class LedgerRolloverProgress(FolioApi):
         Raises:
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -158,7 +158,7 @@ class FinanceFundCodesExpenseClasses(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -219,7 +219,7 @@ class ExpenseClasses(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -238,7 +238,7 @@ class ExpenseClasses(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -263,7 +263,7 @@ class ExpenseClasses(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -282,7 +282,7 @@ class ExpenseClasses(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/finance/expense-classes/{expenseClassesId}")
 
@@ -299,7 +299,7 @@ class ExpenseClasses(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -360,7 +360,7 @@ class FiscalYears(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -379,7 +379,7 @@ class FiscalYears(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -404,7 +404,7 @@ class FiscalYears(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -423,7 +423,7 @@ class FiscalYears(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/finance/fiscal-years/{fiscalYearsId}")
 
@@ -440,7 +440,7 @@ class FiscalYears(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -453,11 +453,12 @@ class FiscalYears(FolioApi):
 class ReleaseEncumbrance(FolioApi):
     """Release encumbrance API
 
-    This documents the API calls that release any remaining money encumbered back to the budget's available pool
+    This documents the API calls that release any remaining money encumbered back to the budget's available pool.
+		It should only be used by the UI, and only to release a single encumbrance - <tt>batch-all-or-nothing</tt> should be used otherwise.
     """
 
     def set_releaseEncumbrance(self, releaseEncumbranceId: str):
-        """Release encumbrance
+        """Release encumbrance (use only in UI for a single encumbrance - use <tt>batch-all-or-nothing</tt> otherwise)
 
         ``POST /finance/release-encumbrance/{releaseEncumbranceId}``
 
@@ -467,51 +468,10 @@ class ReleaseEncumbrance(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
         """
         return self.call("POST", f"/finance/release-encumbrance/{releaseEncumbranceId}")
-
-
-class ExchangeRate(FolioApi):
-    """Exchange rate API
-
-    This documents the API calls that can be made to get exchange rates
-    """
-
-    def get_exchangeRates(self, **kwargs):
-        """Get exchange rate
-
-        ``GET /finance/exchange-rate``
-
-        Args:
-            **kwargs (properties): Keyword Arguments
-
-        Keyword Args:
-            from (currency_code):  From currency code
-                    
-                    Example:
-                    
-                     - USD
-            to (currency_code):  To currency code
-                    
-                    Example:
-                    
-                     - EUR
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/ExchangeRate_get_exchangeRates_return.schema 
-        """
-        return self.call("GET", "/finance/exchange-rate", query=kwargs)
 
 
 class LedgerRolloverErrors(FolioApi):
@@ -565,7 +525,7 @@ class LedgerRolloverErrors(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestError: Bad Request
 
         Schema:
@@ -585,7 +545,7 @@ class LedgerRolloverErrors(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Headers:
             - **Location** - URI to the created ledgerRolloversError item
@@ -607,10 +567,95 @@ class LedgerRolloverErrors(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
         """
         return self.call("DELETE", f"/finance/ledger-rollovers-errors/{ledgerRolloversErrorsId}")
+
+
+class Exchange(FolioApi):
+    """Exchange API
+
+    This documents the API calls that can be made to get exchange operations
+    """
+
+    def get_calculateExchanges(self, **kwargs):
+        """Get exchange calculation
+
+        ``GET /finance/calculate-exchange``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            from (currency_code):  Source currency code
+                    
+                    Example:
+                    
+                     - USD
+            to (currency_code):  Target currency code
+                    
+                    Example:
+                    
+                     - EUR
+            amount (amount):  The amount of money to calculate exchange
+                    
+                    Example:
+                    
+                     - 100.0
+            rate (amount):  The User defined exchange rate
+                    
+                    Example:
+                    
+                     - 1.08
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestNotFound: Not Found
+            OkapiRequestFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Exchange_get_calculateExchanges_return.schema 
+        """
+        return self.call("GET", "/finance/calculate-exchange", query=kwargs)
+
+    def get_exchangeRates(self, **kwargs):
+        """Get exchange rate
+
+        ``GET /finance/exchange-rate``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            from (currency_code):  From currency code
+                    
+                    Example:
+                    
+                     - USD
+            to (currency_code):  To currency code
+                    
+                    Example:
+                    
+                     - EUR
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestNotFound: Not Found
+            OkapiRequestFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Exchange_get_exchangeRates_return.schema 
+        """
+        return self.call("GET", "/finance/exchange-rate", query=kwargs)
 
 
 class GroupFundFiscalYear(FolioApi):
@@ -664,7 +709,7 @@ class GroupFundFiscalYear(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -683,7 +728,7 @@ class GroupFundFiscalYear(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -706,7 +751,7 @@ class GroupFundFiscalYear(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
         """
         return self.call("DELETE", f"/finance/group-fund-fiscal-years/{groupFundFiscalYearsId}")
@@ -763,7 +808,7 @@ class Groups(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -782,7 +827,7 @@ class Groups(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -807,7 +852,7 @@ class Groups(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -826,7 +871,7 @@ class Groups(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/finance/groups/{groupsId}")
 
@@ -843,7 +888,7 @@ class Groups(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -867,7 +912,7 @@ class Groups(FolioApi):
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -927,7 +972,7 @@ class Ledgers(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -946,7 +991,7 @@ class Ledgers(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -971,7 +1016,7 @@ class Ledgers(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -990,7 +1035,7 @@ class Ledgers(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/finance/ledgers/{ledgersId}")
 
@@ -1007,7 +1052,7 @@ class Ledgers(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -1030,7 +1075,7 @@ class Ledgers(FolioApi):
         Raises:
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1091,7 +1136,7 @@ class LedgerRolloverLogs(FolioApi):
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1113,7 +1158,7 @@ class LedgerRolloverLogs(FolioApi):
         Raises:
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1173,7 +1218,7 @@ class FundTypes(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1192,7 +1237,7 @@ class FundTypes(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -1217,7 +1262,7 @@ class FundTypes(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1236,7 +1281,7 @@ class FundTypes(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/finance/fund-types/{fundTypesId}")
 
@@ -1253,7 +1298,7 @@ class FundTypes(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -1314,7 +1359,7 @@ class LedgerRollover(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1333,7 +1378,7 @@ class LedgerRollover(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Headers:
             - **Location** - URI to the created ledgerRollover item
@@ -1358,7 +1403,7 @@ class LedgerRollover(FolioApi):
         Raises:
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1374,7 +1419,7 @@ class Transaction(FolioApi):
     """
 
     def set_allocation(self, allocation: dict):
-        """Create an allocation by transaction
+        """Create an allocation by transaction; DEPRECATED - use <tt>batch-all-or-nothing</tt> instead
 
         ``POST /finance/allocations``
 
@@ -1386,7 +1431,7 @@ class Transaction(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1395,7 +1440,7 @@ class Transaction(FolioApi):
         return self.call("POST", "/finance/allocations", data=allocation)
 
     def set_transfer(self, transfer: dict):
-        """Create a transfer by transaction
+        """Create a transfer by transaction; DEPRECATED - use <tt>batch-all-or-nothing</tt> instead
 
         ``POST /finance/transfers``
 
@@ -1407,7 +1452,7 @@ class Transaction(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1428,7 +1473,7 @@ class Transaction(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1437,7 +1482,7 @@ class Transaction(FolioApi):
         return self.call("POST", "/finance/encumbrances", data=encumbrance)
 
     def modify_encumbrance(self, encumbrancesId: str, encumbrance: dict):
-        """Update a Transaction instance
+        """Update a Transaction instance; DEPRECATED - use <tt>batch-all-or-nothing</tt> instead
 
         ``PUT /finance/encumbrances/{encumbrancesId}``
 
@@ -1452,7 +1497,7 @@ class Transaction(FolioApi):
         return self.call("PUT", f"/finance/encumbrances/{encumbrancesId}", data=encumbrance)
 
     def delete_encumbrance(self, encumbrancesId: str):
-        """Delete an encumbrance with given transactionId
+        """Delete an encumbrance with given transactionId; DEPRECATED - use <tt>batch-all-or-nothing</tt> instead
 
         ``DELETE /finance/encumbrances/{encumbrancesId}``
 
@@ -1465,7 +1510,7 @@ class Transaction(FolioApi):
         return self.call("DELETE", f"/finance/encumbrances/{encumbrancesId}")
 
     def set_payment(self, payment: dict):
-        """Create a payment by transaction
+        """Create a payment by transaction; DEPRECATED - use <tt>batch-all-or-nothing</tt> instead
 
         ``POST /finance/payments``
 
@@ -1477,7 +1522,7 @@ class Transaction(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1486,7 +1531,8 @@ class Transaction(FolioApi):
         return self.call("POST", "/finance/payments", data=payment)
 
     def modify_payment(self, paymentsId: str, payment: dict):
-        """Update a payment transaction (only allowed to set invoiceCancelled to true)
+        """Update a payment transaction (only allowed to set invoiceCancelled to true);
+        DEPRECATED - use <tt>batch-all-or-nothing</tt> instead
 
         ``PUT /finance/payments/{paymentsId}``
 
@@ -1497,7 +1543,7 @@ class Transaction(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1506,7 +1552,7 @@ class Transaction(FolioApi):
         return self.call("PUT", f"/finance/payments/{paymentsId}", data=payment)
 
     def set_pendingPayment(self, pendingPayment: dict):
-        """Create a pending payment by transaction
+        """Create a pending payment by transaction; DEPRECATED - use <tt>batch-all-or-nothing</tt> instead
 
         ``POST /finance/pending-payments``
 
@@ -1518,7 +1564,7 @@ class Transaction(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1527,7 +1573,7 @@ class Transaction(FolioApi):
         return self.call("POST", "/finance/pending-payments", data=pendingPayment)
 
     def modify_pendingPayment(self, pendingPaymentsId: str, pendingPayment: dict):
-        """Update a pending payment by transaction
+        """Update a pending payment by transaction; DEPRECATED - use <tt>batch-all-or-nothing</tt> instead
 
         ``PUT /finance/pending-payments/{pendingPaymentsId}``
 
@@ -1538,7 +1584,7 @@ class Transaction(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1547,7 +1593,7 @@ class Transaction(FolioApi):
         return self.call("PUT", f"/finance/pending-payments/{pendingPaymentsId}", data=pendingPayment)
 
     def set_credit(self, credit: dict):
-        """Create a credit by transaction
+        """Create a credit by transaction; DEPRECATED - use <tt>batch-all-or-nothing</tt> instead
 
         ``POST /finance/credits``
 
@@ -1559,7 +1605,7 @@ class Transaction(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1568,7 +1614,8 @@ class Transaction(FolioApi):
         return self.call("POST", "/finance/credits", data=credit)
 
     def modify_credit(self, creditsId: str, credit: dict):
-        """Update a credit transaction (only allowed to set invoiceCancelled to true)
+        """Update a credit transaction (only allowed to set invoiceCancelled to true);
+        DEPRECATED - use <tt>batch-all-or-nothing</tt> instead
 
         ``PUT /finance/credits/{creditsId}``
 
@@ -1579,7 +1626,7 @@ class Transaction(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1631,7 +1678,7 @@ class Transaction(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnauthorized: Authentication is required
 
         Schema:
@@ -1654,13 +1701,32 @@ class Transaction(FolioApi):
         Raises:
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
             .. literalinclude:: ../files/Transaction_get_transaction_return.schema 
         """
         return self.call("GET", f"/finance/transactions/{transactionsId}")
+
+    def set_batchAllOrNothing(self, batchAllOrNothing: dict):
+        """Process actions on transactions in a single all-or-nothing operation
+
+        ``POST /finance/transactions/batch-all-or-nothing``
+
+        Args:
+            batchAllOrNothing (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/Transaction_set_batchAllOrNothing_request.schema
+        """
+        return self.call("POST", "/finance/transactions/batch-all-or-nothing", data=batchAllOrNothing)
 
 
 class TransactionSummary(FolioApi):
@@ -1682,7 +1748,7 @@ class TransactionSummary(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1702,7 +1768,7 @@ class TransactionSummary(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1723,7 +1789,7 @@ class TransactionSummary(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1743,13 +1809,37 @@ class TransactionSummary(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
             .. literalinclude:: ../files/TransactionSummary_modify_invoiceTransactionSummary_request.schema
         """
         return self.call("PUT", f"/finance/invoice-transaction-summaries/{invoiceTransactionSummariesId}", data=invoiceTransactionSummary)
+
+
+class UnreleaseEncumbrance(FolioApi):
+    """Unrelease encumbrance API
+
+    This documents the API calls that unrelease any remaining money encumbered back to the budget's available pool.
+		It should only be used by the UI, and only to unrelease a single encumbrance - <tt>batch-all-or-nothing</tt> should be used otherwise
+    """
+
+    def set_unreleaseEncumbrance(self, unreleaseEncumbranceId: str):
+        """Unrelease encumbrance (use only in UI for a single encumbrance - use <tt>batch-all-or-nothing</tt> otherwise)
+
+        ``POST /finance/unrelease-encumbrance/{unreleaseEncumbranceId}``
+
+        Args:
+            unreleaseEncumbranceId (str)
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestNotFound: Not Found
+            OkapiRequestFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+        """
+        return self.call("POST", f"/finance/unrelease-encumbrance/{unreleaseEncumbranceId}")
 
 
 class LedgerRolloverBudgets(FolioApi):
@@ -1804,7 +1894,7 @@ class LedgerRolloverBudgets(FolioApi):
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1826,7 +1916,7 @@ class LedgerRolloverBudgets(FolioApi):
         Raises:
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1872,7 +1962,7 @@ class GroupFiscalYearSummaries(FolioApi):
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1932,7 +2022,7 @@ class Budgets(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1951,7 +2041,7 @@ class Budgets(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -1976,7 +2066,7 @@ class Budgets(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1995,7 +2085,7 @@ class Budgets(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/finance/budgets/{budgetsId}")
 
@@ -2012,7 +2102,7 @@ class Budgets(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -2036,13 +2126,28 @@ class Budgets(FolioApi):
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
             .. literalinclude:: ../files/Budgets_get_expenseClassesTotals_return.schema 
         """
         return self.call("GET", f"/finance/budgets/{budgetsId}/expense-classes-totals")
+
+    def set_recalculate(self, budgetsId: str):
+        """Recalculate the budget
+
+        ``POST /finance/budgets/{budgetsId}/recalculate``
+
+        Args:
+            budgetsId (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+        """
+        return self.call("POST", f"/finance/budgets/{budgetsId}/recalculate")
 
 
 class Funds(FolioApi):
@@ -2096,7 +2201,7 @@ class Funds(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -2115,7 +2220,7 @@ class Funds(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -2140,7 +2245,7 @@ class Funds(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -2159,7 +2264,7 @@ class Funds(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/finance/funds/{fundsId}")
 
@@ -2176,7 +2281,7 @@ class Funds(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -2200,7 +2305,7 @@ class Funds(FolioApi):
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -2222,7 +2327,7 @@ class Funds(FolioApi):
         Raises:
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 

@@ -1,0 +1,20 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "loginResponse.json",
+    "title": "Login Response Schema",
+    "description": "Successful login response ",
+    "type": "object",
+    "properties": {
+        "okapiToken": {
+            "description": "session token (X-Okapi-Token format)",
+            "type": "string"
+        },
+        "refreshToken": {
+            "description": "refresh token",
+            "type": "string"
+        }
+    },
+    "required": [
+        "okapiToken"
+    ]
+}

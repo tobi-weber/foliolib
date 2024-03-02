@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Request to assemble parts of a file into the result",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "tags": {
+      "description": "Identifier for all files taken from response to individual uploads.  Determines what files will be assembled",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "key": {
+      "description": "Storage key for the object",
+      "type": "string"
+    },
+    "uploadId": {
+      "description": "ID of the upload taken from /data-import/uploadUrl",
+      "type": "string"
+    }
+  },
+  "required": [
+    "tags",
+    "key",
+    "uploadId"
+  ]
+}

@@ -3,9 +3,6 @@
   "description": "purchase order",
   "type": "object",
   "javaName": "PurchaseOrder",
-  "extends": {
-    "$ref": "../../common/schemas/entity.json"
-  },
   "properties": {
     "id": {
       "description": "UUID of this purchase order",
@@ -125,6 +122,11 @@
       "type": "object",
       "description": "arbitrary tags associated with this purchase order",
       "$ref": "../../../raml-util/schemas/tags.schema"
+    },
+    "customFields": {
+      "description": "Object that contains custom field",
+      "type": "object",
+      "additionalProperties": true
     },
     "metadata": {
       "type": "object",

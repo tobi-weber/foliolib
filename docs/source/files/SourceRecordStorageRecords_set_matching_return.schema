@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of pairs of MARC record id and external entity id",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "identifiers": {
+      "description": "List of pairs of records identifiers",
+      "type": "array",
+      "items": {
+        "additionalProperties": false,
+        "type": "object",
+        "javaType": "org.folio.rest.jaxrs.model.RecordIdentifiersDto",
+        "properties": {
+          "recordId": {
+            "description": "MARC record UUID",
+            "$ref": "../../raml-util/schemas/uuid.schema"
+          },
+          "externalId": {
+            "description": "UUID of external entity (instance, holdings, authority)",
+            "$ref": "../../raml-util/schemas/uuid.schema"
+          }
+        }
+      }
+    },
+    "totalRecords": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "identifiersPairs",
+    "totalRecords"
+  ]
+}

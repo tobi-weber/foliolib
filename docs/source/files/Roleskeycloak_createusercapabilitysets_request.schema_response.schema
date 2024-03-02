@@ -1,0 +1,21 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "User Capability Set Schema",
+    "description": "User capability set collection",
+    "type": "object",
+    "properties": {
+        "totalRecords": {
+            "readOnly": true,
+            "description": "The total number of records matching the provided criteria",
+            "type": "integer",
+            "format": "int64"
+        },
+        "userCapabilitySets": {
+            "description": "List with found/created user-capabilitySet relations",
+            "type": "array",
+            "items": {
+                "$ref": "userCapabilitySet.json"
+            }
+        }
+    }
+}

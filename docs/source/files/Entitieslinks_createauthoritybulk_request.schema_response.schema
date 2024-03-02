@@ -1,0 +1,18 @@
+{
+    "description": "Bulk authorities create response",
+    "type": "object",
+    "properties": {
+        "errorRecordsFileName": {
+            "description": "File name of error authorities",
+            "type": "string"
+        },
+        "errorsFileName": {
+            "description": "File name of error details",
+            "type": "string"
+        },
+        "errorsNumber": {
+            "description": "Total number of errors",
+            "type": "integer"
+        }
+    }
+}

@@ -13,6 +13,10 @@
       "description": "Profile unique identifier",
       "$ref": "../../raml-util/schemas/uuid.schema"
     },
+    "profileWrapperId": {
+      "description": "Profile wrapper unique identifier",
+      "$ref": "../../raml-util/schemas/uuid.schema"
+    },
     "contentType": {
       "description": "Type of the content",
       "type": "string",

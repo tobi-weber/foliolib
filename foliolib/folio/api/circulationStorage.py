@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -23,7 +23,7 @@ class RequestStorageBatch(FolioApi):
             request (dict): See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -79,7 +79,7 @@ class TlrFeatureToggleJob(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -98,7 +98,7 @@ class TlrFeatureToggleJob(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -123,7 +123,7 @@ class TlrFeatureToggleJob(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -147,7 +147,7 @@ class TlrFeatureToggleJob(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/tlr-feature-toggle-job-storage/tlr-feature-toggle-jobs/{tlrFeatureToggleJobsId}", query=kwargs)
 
@@ -164,7 +164,7 @@ class TlrFeatureToggleJob(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -227,7 +227,7 @@ class RequestPolicyStorage(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -249,7 +249,8 @@ class RequestPolicyStorage(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
             - **Location** - URI to the created requestPolicy item
@@ -280,8 +281,8 @@ class RequestPolicyStorage(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -300,7 +301,7 @@ class RequestPolicyStorage(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/request-policy-storage/request-policies/{requestPolicyId}")
 
@@ -317,8 +318,9 @@ class RequestPolicyStorage(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -373,7 +375,7 @@ class PatronActionSession(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -392,7 +394,7 @@ class PatronActionSession(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -417,7 +419,7 @@ class PatronActionSession(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -436,7 +438,7 @@ class PatronActionSession(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/patron-action-session-storage/patron-action-sessions/{patronSessionId}")
 
@@ -453,7 +455,7 @@ class PatronActionSession(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -487,7 +489,7 @@ class PatronActionSession(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -543,8 +545,8 @@ class StaffSlips(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -563,8 +565,8 @@ class StaffSlips(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Headers:
             - **Location** - URI to the created staffSlip item
@@ -595,8 +597,8 @@ class StaffSlips(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -615,8 +617,8 @@ class StaffSlips(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/staff-slips-storage/staff-slips/{staffSlipId}")
 
@@ -633,8 +635,8 @@ class StaffSlips(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -689,7 +691,7 @@ class ScheduledNoticeStorage(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -708,7 +710,7 @@ class ScheduledNoticeStorage(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -740,7 +742,7 @@ class ScheduledNoticeStorage(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -759,7 +761,7 @@ class ScheduledNoticeStorage(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/scheduled-notice-storage/scheduled-notices/{scheduledNoticeId}")
 
@@ -776,7 +778,7 @@ class ScheduledNoticeStorage(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -832,7 +834,7 @@ class RequestPreferenceStorage(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -851,7 +853,7 @@ class RequestPreferenceStorage(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -876,7 +878,7 @@ class RequestPreferenceStorage(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -895,7 +897,7 @@ class RequestPreferenceStorage(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/request-preference-storage/request-preference/{requestPreferenceId}")
 
@@ -912,7 +914,7 @@ class RequestPreferenceStorage(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -968,8 +970,8 @@ class CancellationReason(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -989,8 +991,8 @@ class CancellationReason(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -1022,8 +1024,8 @@ class CancellationReason(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1042,8 +1044,8 @@ class CancellationReason(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/cancellation-reason-storage/cancellation-reasons/{cancellationReasonId}")
 
@@ -1060,8 +1062,8 @@ class CancellationReason(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1116,8 +1118,8 @@ class FixedDueDateSchedule(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -1137,8 +1139,8 @@ class FixedDueDateSchedule(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -1170,8 +1172,8 @@ class FixedDueDateSchedule(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1190,8 +1192,8 @@ class FixedDueDateSchedule(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/fixed-due-date-schedule-storage/fixed-due-date-schedules/{fixedDueDateScheduleId}")
 
@@ -1208,8 +1210,8 @@ class FixedDueDateSchedule(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1264,7 +1266,7 @@ class ActualCostRecordStorage(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1283,7 +1285,7 @@ class ActualCostRecordStorage(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -1308,7 +1310,7 @@ class ActualCostRecordStorage(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1332,7 +1334,7 @@ class ActualCostRecordStorage(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/actual-cost-record-storage/actual-cost-records/{actualCostRecordsId}", query=kwargs)
 
@@ -1349,7 +1351,7 @@ class ActualCostRecordStorage(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -1374,7 +1376,7 @@ class CirculationRulesStorage(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1391,7 +1393,7 @@ class CirculationRulesStorage(FolioApi):
             circulationRulesStorage (dict): See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1446,7 +1448,7 @@ class CheckInStorage(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1465,7 +1467,7 @@ class CheckInStorage(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
@@ -1492,7 +1494,7 @@ class CheckInStorage(FolioApi):
         Raises:
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1547,8 +1549,8 @@ class LoanStorage(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1567,7 +1569,7 @@ class LoanStorage(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -1595,7 +1597,7 @@ class LoanStorage(FolioApi):
             userId (str)
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestError: Bad Request
             OkapiRequestUnprocessableEntity: Unprocessable Entity
         """
@@ -1614,8 +1616,8 @@ class LoanStorage(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1634,8 +1636,8 @@ class LoanStorage(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/loan-storage/loans/{loanId}")
 
@@ -1652,8 +1654,8 @@ class LoanStorage(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -1701,7 +1703,7 @@ class LoanStorage(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1756,8 +1758,8 @@ class LoanPolicyStorage(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1776,8 +1778,8 @@ class LoanPolicyStorage(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -1809,8 +1811,8 @@ class LoanPolicyStorage(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1829,8 +1831,8 @@ class LoanPolicyStorage(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/loan-policy-storage/loan-policies/{loanPolicyId}")
 
@@ -1847,8 +1849,8 @@ class LoanPolicyStorage(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1875,7 +1877,7 @@ class AnonymizeStorageLoans(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -1884,6 +1886,96 @@ class AnonymizeStorageLoans(FolioApi):
             .. literalinclude:: ../files/AnonymizeStorageLoans_set_anonymizeStorageLoan_return.schema 
         """
         return self.call("POST", "/anonymize-storage-loans", data=anonymizeStorageLoan)
+
+
+class CheckoutLockStorage(FolioApi):
+    """Checkout Lock API
+
+    **Storage for checkout lock**
+    """
+
+    def get_checkOutLockStorages(self, **kwargs):
+        """Retrieve a list of checkout lock items
+
+        ``GET /check-out-lock-storage``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            userId (str):  Filter locks by user ID.
+            offset (int):  The number of items to skip in the result set.
+            limit (int):  The maximum number of locks to return.
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/CheckoutLockStorage_get_checkOutLockStorages_return.schema 
+        """
+        return self.call("GET", "/check-out-lock-storage", query=kwargs)
+
+    def set_checkOutLockStorage(self, checkOutLockStorage: dict):
+        """Create a lock for the given userid
+
+        ``POST /check-out-lock-storage``
+
+        Args:
+            checkOutLockStorage (dict): See Schema below
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/CheckoutLockStorage_set_checkOutLockStorage_request.schema
+            .. literalinclude:: ../files/CheckoutLockStorage_set_checkOutLockStorage_return.schema 
+        """
+        return self.call("POST", "/check-out-lock-storage", data=checkOutLockStorage)
+
+    def get_checkOutLockStorage(self, lockId: str):
+        """Get checkout lock
+
+        ``GET /check-out-lock-storage/{lockId}``
+
+        Args:
+            lockId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestNotFound: Not Found
+
+        Schema:
+
+            .. literalinclude:: ../files/CheckoutLockStorage_get_checkOutLockStorage_return.schema 
+        """
+        return self.call("GET", f"/check-out-lock-storage/{lockId}")
+
+    def delete_checkOutLockStorage(self, lockId: str):
+        """Delete checkout lock
+
+        ``DELETE /check-out-lock-storage/{lockId}``
+
+        Args:
+            lockId (str)
+
+        Raises:
+            OkapiRequestFatalError: Server Error
+        """
+        return self.call("DELETE", f"/check-out-lock-storage/{lockId}")
 
 
 class PatronNoticePolicy(FolioApi):
@@ -1930,7 +2022,7 @@ class PatronNoticePolicy(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1951,7 +2043,7 @@ class PatronNoticePolicy(FolioApi):
 
         Raises:
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1972,7 +2064,7 @@ class PatronNoticePolicy(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1991,7 +2083,7 @@ class PatronNoticePolicy(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/patron-notice-policy-storage/patron-notice-policies/{patronNoticePolicyId}")
 
@@ -2007,7 +2099,7 @@ class PatronNoticePolicy(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -2062,8 +2154,8 @@ class RequestStorage(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -2082,8 +2174,8 @@ class RequestStorage(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -2115,8 +2207,8 @@ class RequestStorage(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -2135,8 +2227,8 @@ class RequestStorage(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/request-storage/requests/{requestId}")
 
@@ -2153,8 +2245,8 @@ class RequestStorage(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -28,7 +28,7 @@ class Sharedindex(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -52,7 +52,7 @@ class Sharedindex(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -71,7 +71,7 @@ class Sharedindex(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -91,7 +91,7 @@ class Sharedindex(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -108,7 +108,7 @@ class Sharedindex(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
         """
         return self.call("DELETE", f"/shared-index/config/matchkeys/{id_}")
 
@@ -123,7 +123,7 @@ class Sharedindex(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -144,7 +144,7 @@ class Sharedindex(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -168,7 +168,7 @@ class Sharedindex(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -187,7 +187,7 @@ class Sharedindex(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -204,7 +204,7 @@ class Sharedindex(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
         """
         return self.call("DELETE", f"/shared-index/config/sources/{id_}")
 
@@ -221,7 +221,7 @@ class Sharedindex(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -243,7 +243,7 @@ class Sharedindex(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -264,7 +264,7 @@ class Sharedindex(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -284,7 +284,7 @@ class Sharedindex(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
         """
         return self.call("DELETE", f"/shared-index/shared-index/ingest-jobs/{id_}", query=kwargs)
 
@@ -298,7 +298,7 @@ class Sharedindex(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -320,7 +320,7 @@ class Sharedindex(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -337,7 +337,7 @@ class Sharedindex(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
         """
         return self.call("DELETE", "/shared-index/records")
 
@@ -352,7 +352,7 @@ class Sharedindex(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -371,7 +371,7 @@ class Sharedindex(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -390,7 +390,7 @@ class Sharedindex(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -405,6 +405,6 @@ class Sharedindex(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
         """
         return self.call("GET", "/shared-index/oai")

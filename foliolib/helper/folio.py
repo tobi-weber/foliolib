@@ -7,9 +7,9 @@ import time
 from distutils.version import StrictVersion
 
 from foliolib.config import Config
-from foliolib.folio.api.permissions import Permissions
 from foliolib.folio.exceptions import UserNotFound
-from foliolib.folio.users import Users
+from foliolib.folio.permissionsImpl import PermissionsImpl
+from foliolib.folio.usersImpl import UsersImpl
 from foliolib.okapi.okapiClient import OkapiClient
 
 log = logging.getLogger("foliolib.helper.okapi")
@@ -37,23 +37,23 @@ def create_superuser(tenant: str, username: str,
         disabled_mods = None
 
     log.debug("Disabled Mods: \n%s", json.dumps(disabled_mods, indent=2))
-    userService = Users(tenant)
+    users = UsersImpl(tenant)
 
     try:
         Config().del_token(tenant)
         log.info("Create user record.")
         try:
-            userService.get_user(username)
+            users.get_user(username)
             log.info("User %s exist.", username)
             okapi.enable_modules(tenant, [m["id"] for m in disabled_mods])
             return
         except UserNotFound:
             pass
-        user = userService.create_user(
+        user = users.add_user(
             username, password,
             permissions=["perms.all",
                          "users.all"],
-            lastname="Superuser")
+            lastName="Superuser")
     except:
         log.error("Failed to create Superuser %s", username)
         log.info("Enable mod-authtoken.")
@@ -64,11 +64,11 @@ def create_superuser(tenant: str, username: str,
     okapi.enable_modules(tenant, [m["id"] for m in disabled_mods])
 
     log.info("Login as superuser")
-    userService.login(username, password)
+    users.login(username, password)
 
     log.info("Generate list of permissions")
     topLevelPermissions = [p["permissionName"]
-                           for p in userService.get_topLevelPermissions()]
+                           for p in PermissionsImpl(tenant).get_topLevelPermissions()]
 
     # topLevelPermissions.extend(
     #    ["codex.collection.get",
@@ -78,7 +78,7 @@ def create_superuser(tenant: str, username: str,
 
     for perm in topLevelPermissions:
         try:
-            userService.set_permission(username, perm)
+            users.set_permission(username, perm)
             log.info("%s assigned" % perm)
         except:
             log.error("Cannot assign %s" % perm)

@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "collection of contact records",
+  "type": "object",
+  "properties": {
+    "contacts": {
+      "description": "The list of contacts in this collection",
+      "type": "array",
+      "id": "contacts",
+      "items": {
+        "type": "object",
+        "$ref": "contact.json"
+      }
+    },
+    "totalRecords": {
+      "description": "The number of contact person records returned in this collection",
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "contacts",
+    "totalRecords"
+  ]
+}

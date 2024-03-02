@@ -1,0 +1,49 @@
+{
+    "description": "An Authority source file",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "Unique ID of the Authority source file; a UUID",
+            "type": "string",
+            "format": "uuid"
+        },
+        "name": {
+            "type": "string",
+            "description": "Authority source file name"
+        },
+        "code": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 25,
+            "description": "Label identifying prefix, i.e. 'n', 'D', 'fst'"
+        },
+        "type": {
+            "type": "string",
+            "description": "Type of authority records stored in source file"
+        },
+        "baseUrl": {
+            "type": "string",
+            "format": "url",
+            "description": "Base URL of the source file origin"
+        },
+        "selectable": {
+            "type": "boolean",
+            "default": true
+        },
+        "hridManagement": {
+            "description": "Identifies HRID management properties",
+            "type": "object",
+            "properties": {
+                "startNumber": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "default": 1
+                }
+            }
+        }
+    },
+    "required": [
+        "name",
+        "code"
+    ]
+}

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -59,7 +59,7 @@ class Alert(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -78,7 +78,7 @@ class Alert(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Headers:
             - **Location** - URI to the created alert item
@@ -102,7 +102,7 @@ class Alert(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -121,7 +121,7 @@ class Alert(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/orders-storage/alerts/{alertsId}")
 
@@ -138,7 +138,7 @@ class Alert(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -198,7 +198,7 @@ class PoLine(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -217,7 +217,7 @@ class PoLine(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Headers:
             - **Location** - URI to the created poLine item
@@ -241,7 +241,7 @@ class PoLine(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -260,7 +260,7 @@ class PoLine(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/orders-storage/po-lines/{poLinesId}")
 
@@ -277,7 +277,7 @@ class PoLine(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -337,7 +337,7 @@ class Configuration(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -356,7 +356,7 @@ class Configuration(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -381,7 +381,7 @@ class Configuration(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -400,7 +400,7 @@ class Configuration(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/orders-storage/configuration/reasons-for-closure/{reasonsForClosureId}")
 
@@ -417,7 +417,7 @@ class Configuration(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -471,7 +471,7 @@ class Configuration(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -490,7 +490,7 @@ class Configuration(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -515,7 +515,7 @@ class Configuration(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -534,7 +534,7 @@ class Configuration(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/orders-storage/configuration/prefixes/{prefixesId}")
 
@@ -551,7 +551,7 @@ class Configuration(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -605,7 +605,7 @@ class Configuration(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -624,7 +624,7 @@ class Configuration(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -649,7 +649,7 @@ class Configuration(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -668,7 +668,7 @@ class Configuration(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/orders-storage/configuration/suffixes/{suffixesId}")
 
@@ -685,7 +685,7 @@ class Configuration(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -746,7 +746,7 @@ class Pieces(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -765,7 +765,7 @@ class Pieces(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Headers:
             - **Location** - URI to the created piece item
@@ -789,7 +789,7 @@ class Pieces(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -808,7 +808,7 @@ class Pieces(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/orders-storage/pieces/{piecesId}")
 
@@ -825,7 +825,7 @@ class Pieces(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -885,7 +885,7 @@ class PurchaseOrder(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -904,7 +904,7 @@ class PurchaseOrder(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Headers:
             - **Location** - URI to the created purchaseOrder item
@@ -928,7 +928,7 @@ class PurchaseOrder(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -947,7 +947,7 @@ class PurchaseOrder(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/orders-storage/purchase-orders/{purchaseOrdersId}")
 
@@ -964,7 +964,7 @@ class PurchaseOrder(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1025,13 +1025,52 @@ class ReceivingHistory(FolioApi):
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
             .. literalinclude:: ../files/ReceivingHistory_get_receivingHistories_return.schema 
         """
         return self.call("GET", "/orders-storage/receiving-history", query=kwargs)
+
+
+class PoLineBatch(FolioApi):
+    """PO Line batch
+
+    **This module implements the PO lines batch processing interface.  This API is intended for internal use only.
+    """
+
+    def modify_poLinesBatch(self, poLinesBatch: dict):
+        """Update the list of PO lines in a batch
+
+        ``PUT /orders-storage/po-lines-batch``
+
+        Args:
+            poLinesBatch (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/PoLineBatch_modify_poLinesBatch_request.schema
+        """
+        return self.call("PUT", "/orders-storage/po-lines-batch", data=poLinesBatch)
+
+
+class Claiming(FolioApi):
+    """Pieces claiming batch job API
+
+    **Pieces claiming batch job API. This API is intended for internal use only by the Timer interface.**
+    """
+
+    def set_process(self):
+        """Traverse the list of claimed pieces and modify their status information as needed
+
+        ``POST /orders-storage/claiming/process``
+        """
+        return self.call("POST", "/orders-storage/claiming/process")
 
 
 class ExportHistory(FolioApi):
@@ -1085,7 +1124,7 @@ class ExportHistory(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1104,7 +1143,7 @@ class ExportHistory(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Headers:
             - **Location** - URI to the created exportHistory item
@@ -1128,7 +1167,7 @@ class ExportHistory(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1147,7 +1186,7 @@ class ExportHistory(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/orders-storage/export-history/{exportHistoryId}")
 
@@ -1164,7 +1203,7 @@ class ExportHistory(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1224,7 +1263,7 @@ class OrderTemplates(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1243,7 +1282,7 @@ class OrderTemplates(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -1268,7 +1307,7 @@ class OrderTemplates(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1287,7 +1326,7 @@ class OrderTemplates(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/orders-storage/order-templates/{orderTemplatesId}")
 
@@ -1304,7 +1343,7 @@ class OrderTemplates(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -1345,7 +1384,7 @@ class PoLineNumber(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1405,7 +1444,7 @@ class AcquisitionsUnit(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1424,7 +1463,7 @@ class AcquisitionsUnit(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -1449,7 +1488,7 @@ class AcquisitionsUnit(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1468,7 +1507,7 @@ class AcquisitionsUnit(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/acquisitions-units-storage/units/{unitsId}")
 
@@ -1485,7 +1524,7 @@ class AcquisitionsUnit(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -1539,7 +1578,7 @@ class AcquisitionsUnit(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1558,7 +1597,7 @@ class AcquisitionsUnit(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -1583,7 +1622,7 @@ class AcquisitionsUnit(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1602,7 +1641,7 @@ class AcquisitionsUnit(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/acquisitions-units-storage/memberships/{membershipsId}")
 
@@ -1619,7 +1658,7 @@ class AcquisitionsUnit(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -1680,7 +1719,7 @@ class OrderInvoiceRelns(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1699,7 +1738,7 @@ class OrderInvoiceRelns(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Headers:
             - **Location** - URI to the created orderInvoiceReln item
@@ -1723,7 +1762,7 @@ class OrderInvoiceRelns(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1742,7 +1781,7 @@ class OrderInvoiceRelns(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/orders-storage/order-invoice-relns/{orderInvoiceRelnsId}")
 
@@ -1759,7 +1798,7 @@ class OrderInvoiceRelns(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1833,7 +1872,7 @@ class AcquisitionMethod(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1852,7 +1891,7 @@ class AcquisitionMethod(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Headers:
             - **Location** - URI to the created acquisitionMethod item
@@ -1876,7 +1915,7 @@ class AcquisitionMethod(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1895,7 +1934,7 @@ class AcquisitionMethod(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/orders-storage/acquisition-methods/{acquisitionMethodsId}")
 
@@ -1912,7 +1951,7 @@ class AcquisitionMethod(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1937,7 +1976,7 @@ class PoNumber(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1997,7 +2036,7 @@ class ReportingCode(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -2016,7 +2055,7 @@ class ReportingCode(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Headers:
             - **Location** - URI to the created reportingCode item
@@ -2040,7 +2079,7 @@ class ReportingCode(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -2059,7 +2098,7 @@ class ReportingCode(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/orders-storage/reporting-codes/{reportingCodesId}")
 
@@ -2076,7 +2115,7 @@ class ReportingCode(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -2136,7 +2175,7 @@ class Titles(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -2155,7 +2194,7 @@ class Titles(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Headers:
             - **Location** - URI to the created title item
@@ -2179,7 +2218,7 @@ class Titles(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -2198,7 +2237,7 @@ class Titles(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/orders-storage/titles/{titlesId}")
 
@@ -2215,7 +2254,7 @@ class Titles(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 

@@ -1,0 +1,18 @@
+{
+    "type": "object",
+    "description": "A list of policies with additional meta information.",
+    "properties": {
+        "policies": {
+            "description": "A list of policies.",
+            "type": "array",
+            "items": {
+                "$ref": "policy.json"
+            },
+            "minItems": 1,
+            "maxItems": 255
+        }
+    },
+    "required": [
+        "policies"
+    ]
+}

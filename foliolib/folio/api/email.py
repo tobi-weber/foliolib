@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -35,7 +35,7 @@ class DelayedTasks(FolioApi):
                      - DELIVERED
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", "/delayedTask/expiredMessages", query=kwargs)
 
@@ -93,7 +93,7 @@ class Email(FolioApi):
         Raises:
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -155,7 +155,7 @@ class SmtpConfiguration(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -174,7 +174,7 @@ class SmtpConfiguration(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -199,7 +199,7 @@ class SmtpConfiguration(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -223,7 +223,7 @@ class SmtpConfiguration(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/smtp-configuration/{smtpConfigurationId}", query=kwargs)
 
@@ -240,7 +240,7 @@ class SmtpConfiguration(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:

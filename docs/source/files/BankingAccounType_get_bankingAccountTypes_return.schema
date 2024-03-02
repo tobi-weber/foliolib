@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of banking account type records",
+  "type": "object",
+  "properties": {
+    "bankingAccountTypes": {
+      "description": "The list of banking account types in this collection",
+      "type": "array",
+      "id": "bankingAccountTypes",
+      "items": {
+        "type": "object",
+        "$ref": "banking_account_type.json"
+      }
+    },
+    "totalRecords": {
+      "description": "The number of banking account type records returned in this collection",
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "bankingAccountTypes",
+    "totalRecords"
+  ]
+}

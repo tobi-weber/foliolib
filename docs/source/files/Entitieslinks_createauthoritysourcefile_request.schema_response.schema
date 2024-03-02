@@ -1,0 +1,64 @@
+{
+    "description": "An Authority source file",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "Unique ID of the Authority source file; a UUID",
+            "type": "string",
+            "format": "uuid"
+        },
+        "name": {
+            "type": "string",
+            "description": "Authority source file name"
+        },
+        "codes": {
+            "type": "array",
+            "description": "List of identifying prefix",
+            "items": {
+                "type": "string",
+                "description": "identifying prefix, i.e. 'n', 'D', 'fst'"
+            }
+        },
+        "type": {
+            "type": "string",
+            "description": "Type of authority records stored in source file"
+        },
+        "baseUrl": {
+            "type": "string",
+            "format": "url",
+            "description": "Base URL of the source file origin"
+        },
+        "source": {
+            "type": "string",
+            "description": "label indicating where the authority source file entry originates from, i.e. 'folio' or 'local'",
+            "enum": [
+                "folio",
+                "local"
+            ]
+        },
+        "selectable": {
+            "type": "boolean"
+        },
+        "hridManagement": {
+            "description": "Identifies HRID management properties",
+            "type": "object",
+            "properties": {
+                "startNumber": {
+                    "type": "integer"
+                }
+            }
+        },
+        "_version": {
+            "type": "integer",
+            "description": "Record version for optimistic locking"
+        },
+        "metadata": {
+            "$ref": "../common/metadata.yaml"
+        }
+    },
+    "required": [
+        "name",
+        "codes",
+        "source"
+    ]
+}

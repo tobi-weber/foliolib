@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -30,7 +30,7 @@ class Jobs(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request, e.g. malformed request body or query parameter. Details of the errors (e.g. name of the parameter or line/character number with malformed data) provided in the response.
-            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
 
         Schema:
 
@@ -52,7 +52,7 @@ class Jobs(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
 
         Schema:
 
@@ -71,7 +71,7 @@ class Jobs(FolioApi):
         Raises:
             OkapiRequestError: Bad request, e.g. malformed request body or query parameter. Details of the errors (e.g. name of the parameter or line/character number with malformed data) provided in the response.
             OkapiRequestNotFound: Job with a given ID not found
-            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
 
         Schema:
 
@@ -87,7 +87,7 @@ class Jobs(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: ExportFile with a given Job ID not found
-            OkapiFatalError: Internal server errors
+            OkapiRequestFatalError: Internal server errors
         """
         return self.call("POST", f"/data-export-spring/jobs/{id_}/resend")
 
@@ -97,6 +97,24 @@ class Jobs(FolioApi):
         ``GET /data-export-spring/jobs/{id}/download``
         """
         return self.call("GET", f"/data-export-spring/jobs/{id_}/download")
+
+    def sendjob(self, job):
+        """Send job via Kafka
+
+        ``POST /data-export-spring/jobs/send``
+
+        Args:
+            job (dict): See Schema below.
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
+
+        Schema:
+
+            .. literalinclude:: ../files/Jobs_sendjob_request.schema
+        """
+        return self.call("POST", f"/data-export-spring/jobs/send", job)
 
 
 
@@ -119,7 +137,7 @@ class Exportconfigs(FolioApi):
             dict: See Schema below.
 
         Raises:
-            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
 
         Schema:
 
@@ -138,7 +156,7 @@ class Exportconfigs(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
 
         Schema:
 
@@ -157,7 +175,7 @@ class Exportconfigs(FolioApi):
         Raises:
             OkapiRequestError: Bad request, e.g. malformed request body or query parameter. Details of the errors (e.g. name of the parameter or line/character number with malformed data) provided in the response.
             OkapiRequestNotFound: Export configuration with a given ID not found
-            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
 
         Schema:
 
@@ -177,7 +195,7 @@ class Exportconfigs(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Export config not found
-            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
 
         Schema:
 
@@ -194,6 +212,6 @@ class Exportconfigs(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Export config not found
-            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
         """
         return self.call("DELETE", f"/data-export-spring/configs/{id_}")

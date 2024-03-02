@@ -26,7 +26,7 @@ A server configuration can be created from the command line:
 
 .. code-block:: bash
 
-    foliolib server create myFolio -H okapi.server.url
+    foliolib server create myFolio --host okapi.server.url --admin
 
 
 The modules directory contains configuration files for specific modules.
@@ -46,12 +46,11 @@ To call a function of the foliolib API, a server config must be loaded:
     from foliolib import server
     server("SERVER_NAME")
 
-and a authentication must be performed on the tenant(s),
-which should be called:
+and a authentication must be performed on the tenant(s):
 
 .. code-block:: python
 
-    from foliolib.folio.users import Users
+    from foliolib.folio.usersImpl import UsersImpl
     Users("TENANT_ID").login("USER_ID","PASSWORD")
 
 Now Folio API functions can be called.
@@ -71,12 +70,12 @@ If Okapi is secured, an authentication on the Supertenant is needed:
 .. code-block:: python
 
     from foliolib import server
-    from foliolib.folio.users import Users
+    from foliolib.folio.usersImpl import UsersImpl
     from foliolib.okapi.okapiClient import OkapiClient
 
     server("SERVER_NAME")
 
-    Users("supertenant").login("USER_ID","PASSWORD")
+    UsersImpl("supertenant").login("USER_ID","PASSWORD")
 
     okapi = OkapiClient()
     modules = okapi.get_deployed_modules()
@@ -131,7 +130,7 @@ configuration directory:
     [Kubernetes]
     enabled = True
 
-In order to connect to Kubernetes, a Kubernetes config file its needed.
+In order to connect to Kubernetes, a Kubernetes config file is needed.
 This can be a file **kube_config** inside the server config path
 ($HOME/.foliolib/[Server Name]/kube_config) or the path can be set in the
 section **Kubernetes** with the key **kube_config** in the **server.conf**

@@ -7,8 +7,8 @@ import logging
 import time
 
 from foliolib.config import Config
-from foliolib.okapi.exceptions import (KubeDeployError, OkapiFatalError,
-                                       OkapiRequestError)
+from foliolib.okapi.exceptions import (KubeDeployError, OkapiRequestError,
+                                       OkapiRequestFatalError)
 from foliolib.okapi.okapiModuleKubernetes import OkapiModuleKubernetes
 from kubernetes import client, config
 from kubernetes.client.exceptions import ApiException
@@ -87,7 +87,7 @@ class KubeClient:
             log.debug("Wait for %s is deployed" % modId)
             try:
                 isDeployed = OkapiClient().is_module_deployed(modId)
-            except OkapiFatalError:
+            except OkapiRequestFatalError:
                 pass
             except OkapiRequestError:
                 pass

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -30,7 +30,7 @@ class Passwordvalidator(FolioApi):
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not found error
             OkapiRequestUnprocessableEntity: Validation errors
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -62,7 +62,7 @@ class Validatorregistry(FolioApi):
 
         Raises:
             OkapiRequestUnprocessableEntity: Validation errors
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -85,7 +85,7 @@ class Validatorregistry(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestUnprocessableEntity: Validation errors
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -108,7 +108,7 @@ class Validatorregistry(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Rule not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -126,7 +126,7 @@ class Validatorregistry(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Rule not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 

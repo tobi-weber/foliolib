@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -60,7 +60,7 @@ class Bulkedit(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not found
-            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
 
         Schema:
 
@@ -87,7 +87,7 @@ class Bulkedit(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not found
-            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
 
         Schema:
 
@@ -114,7 +114,7 @@ class Bulkedit(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not found
-            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
 
         Schema:
 
@@ -134,7 +134,7 @@ class Bulkedit(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not found
-            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
         """
         return self.call("GET", f"/bulk-edit/{jobId}/preview/updated-items/download")
 
@@ -149,7 +149,7 @@ class Bulkedit(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not found
-            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
         """
         return self.call("GET", f"/bulk-edit/{jobId}/preview/updated-users/download")
 
@@ -164,7 +164,7 @@ class Bulkedit(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not found
-            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
         """
         return self.call("GET", f"/bulk-edit/{jobId}/preview/updated-holdings/download")
 
@@ -185,7 +185,7 @@ class Bulkedit(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: Bad Request
-            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
 
         Schema:
 
@@ -210,7 +210,7 @@ class Bulkedit(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: Not found
-            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
 
         Schema:
 
@@ -235,7 +235,7 @@ class Bulkedit(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: Not found
-            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
 
         Schema:
 
@@ -259,7 +259,7 @@ class Bulkedit(FolioApi):
 
         Raises:
             OkapiRequestNotFound: No found
-            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
 
         Schema:
 
@@ -278,7 +278,7 @@ class Bulkedit(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
         """
         import os
         headers = {}
@@ -302,7 +302,7 @@ class Bulkedit(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: Bad Request
-            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
         """
         return self.call("POST", f"/bulk-edit/{jobId}/start")
 
@@ -315,7 +315,7 @@ class Bulkedit(FolioApi):
             jobId (str): UUID of the JobCommand (format: uuid)
 
         Raises:
-            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
         """
         return self.call("POST", f"/bulk-edit/{jobId}/roll-back")
 

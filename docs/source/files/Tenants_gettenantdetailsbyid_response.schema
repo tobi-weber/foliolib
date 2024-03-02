@@ -1,0 +1,21 @@
+{
+    "allOf": [
+        {
+            "$ref": "tenant.yaml#/Tenant"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "setupStatus": {
+                    "type": "string",
+                    "enum": [
+                        "IN_PROGRESS",
+                        "COMPLETED",
+                        "COMPLETED_WITH_ERRORS",
+                        "FAILED"
+                    ]
+                }
+            }
+        }
+    ]
+}

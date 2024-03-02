@@ -1,0 +1,20 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "User Capabilities Schema",
+    "description": "User capabilities collection",
+    "type": "object",
+    "properties": {
+        "totalRecords": {
+            "description": "The total number of records matching the provided criteria",
+            "type": "integer",
+            "format": "int64"
+        },
+        "userCapabilities": {
+            "description": "List with found/created user-capability relations",
+            "type": "array",
+            "items": {
+                "$ref": "userCapability.json"
+            }
+        }
+    }
+}

@@ -2,10 +2,13 @@
 # Copyright (C) 2023 Tobias Weber <tobi-weber@gmx.de>
 
 import logging
+import re
 
 from foliolib.config import Config
-from foliolib.folio.users import Users
+from foliolib.folio.usersImpl import UsersImpl
 from foliolib.helper import split_modid
+from foliolib.helper.modules import remove_module
+from foliolib.okapi.exceptions import OkapiRequestError
 from foliolib.okapi.okapiClient import OkapiClient
 from foliolib.okapi.okapiModule import (create_okapiModules,
                                         sort_modules_by_requirements)
@@ -21,7 +24,7 @@ def login_supertenant(username: str, password: str):
         password (str): password supertenant.
     """
     log.info("Logging in supertenant")
-    userService = Users("supertenant")
+    userService = UsersImpl("supertenant")
     token = userService.login(username, password)
     if token is None:
         log.error("Login failed")
@@ -51,10 +54,10 @@ def secure_supertenant(username: str, password: str):
     res = o.enable_modules(tenant, modules)
     # print(res)
 
-    userServices = Users(tenant)
+    userServices = UsersImpl(tenant)
 
     log.info("Create user record.")
-    user = userServices.create_user(
+    user = userServices.add_user(
         username, password, permissions=permissions,
         userServicePoints=False)
 
@@ -118,10 +121,8 @@ def clean_okapi():
         if modId in deployedModules:
             log.info("Undeploy %s", modId)
             okapi.undeploy_module(modId)
-    for mod in modsToRemove:
-        modId = mod.get_id()
-        log.info("Remove %s", modId)
-        okapi.remove_module(modId)
+    remove_module(modsToRemove, resolve_incompatible=True)
+
 
     if okapiModule is not None:
         log.info("Remove %s", okapiModule)

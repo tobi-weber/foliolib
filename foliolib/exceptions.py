@@ -10,6 +10,10 @@ class ConfigError(FoliolibError):
     pass
 
 
+class InvalidUUID(FoliolibError):
+    pass
+
+
 class ServerConfigNotFound(ConfigError):
 
     def __init__(self, name=None, servers=None):

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -27,7 +27,7 @@ class InventoryBatch(FolioApi):
 
         Raises:
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -52,7 +52,7 @@ class InventoryConfig(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -69,7 +69,7 @@ class InventoryConfig(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -97,7 +97,7 @@ class InventoryMove(FolioApi):
 
         Raises:
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -120,7 +120,7 @@ class InventoryMove(FolioApi):
 
         Raises:
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -229,7 +229,7 @@ class InventoryEventHandlers(FolioApi):
         ``POST /inventory/handlers/instances``
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("POST", "/inventory/handlers/instances")
 
@@ -280,7 +280,7 @@ class Inventory(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -299,7 +299,7 @@ class Inventory(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Headers:
             - **Location** - URI to the created item item
@@ -330,7 +330,7 @@ class Inventory(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -349,7 +349,7 @@ class Inventory(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/inventory/items/{itemId}")
 
@@ -365,7 +365,7 @@ class Inventory(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -387,7 +387,7 @@ class Inventory(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -409,7 +409,7 @@ class Inventory(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -431,7 +431,7 @@ class Inventory(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -453,7 +453,7 @@ class Inventory(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -475,7 +475,7 @@ class Inventory(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -497,7 +497,7 @@ class Inventory(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -519,7 +519,7 @@ class Inventory(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -541,7 +541,7 @@ class Inventory(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -563,7 +563,7 @@ class Inventory(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -580,6 +580,16 @@ class Inventory(FolioApi):
             **kwargs (properties): Keyword Arguments
 
         Keyword Args:
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
             query (str):  A query expressed as a CQL string
                     (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
                     using valid searchable fields.
@@ -601,7 +611,7 @@ class Inventory(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -620,7 +630,7 @@ class Inventory(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Headers:
             - **Location** - URI to the created itemsByHoldingsId item
@@ -651,7 +661,7 @@ class Inventory(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -700,7 +710,7 @@ class Inventory(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -719,7 +729,7 @@ class Inventory(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -751,7 +761,7 @@ class Inventory(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -770,7 +780,7 @@ class Inventory(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/inventory/instances/{instanceId}")
 
@@ -786,7 +796,7 @@ class Inventory(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -794,3 +804,18 @@ class Inventory(FolioApi):
             .. literalinclude:: ../files/Inventory_modify_instance_request.schema
         """
         return self.call("PUT", f"/inventory/instances/{instanceId}", data=instance)
+
+    def delete_markDeleted(self, instanceId: str):
+        """Toggle the suppression state of an instance record, affecting either instance and associated MARC record if present.
+
+        ``DELETE /inventory/instances/{instanceId}/mark-deleted``
+
+        Args:
+            instanceId (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiRequestFatalError: Server Error
+        """
+        return self.call("DELETE", f"/inventory/instances/{instanceId}/mark-deleted")

@@ -1,0 +1,52 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "List Request DTO",
+    "type": "object",
+    "properties": {
+        "name": {
+            "description": "List name",
+            "type": "string",
+            "minLength": 1
+        },
+        "description": {
+            "description": "List description",
+            "type": "string"
+        },
+        "entityTypeId": {
+            "description": "ID of the entity Type",
+            "type": "string",
+            "format": "UUID"
+        },
+        "fqlQuery": {
+            "description": "FQL Query",
+            "type": "string"
+        },
+        "fields": {
+            "description": "Fields to be included in list contents",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "isActive": {
+            "description": "Indicates a List is Active or not",
+            "type": "boolean"
+        },
+        "isPrivate": {
+            "description": "Indicates a List is Private or not",
+            "type": "boolean"
+        },
+        "queryId": {
+            "description": "Optional id of query to create list from",
+            "type": "string",
+            "format": "uuid"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "name",
+        "entityTypeId",
+        "isActive",
+        "isPrivate"
+    ]
+}

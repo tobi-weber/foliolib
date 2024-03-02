@@ -31,6 +31,10 @@
       "type": "boolean",
       "description": "Records the fact that the record should not be displayed in a discovery system"
     },
+    "displaySummary": {
+      "description": "Display summary about the item",
+      "type": "string"
+    },
     "accessionNumber": {
       "type": "string",
       "description": "Also called inventar number"
@@ -157,6 +161,8 @@
       "description": "Notes about action, copy, binding etc.",
       "items": {
         "type": "object",
+        "additionalProperties": false,
+        "javaType": "org.folio.rest.jaxrs.model.ItemNote",
         "properties": {
           "itemNoteTypeId": {
             "type": "string",
@@ -319,7 +325,13 @@
     "permanentLocation": {
       "description": "The permanent shelving location in which an item resides",
       "type": "object",
-      "readonly": true
+      "folio:$ref": "location.json",
+      "readonly": true,
+      "folio:isVirtual": true,
+      "folio:linkBase": "locations",
+      "folio:linkFromField": "permanentLocationId",
+      "folio:linkToField": "id",
+      "folio:includedElement": "locations.0"
     },
     "temporaryLocationId": {
       "type": "string",
@@ -406,7 +418,7 @@
     },
     "holdingsRecord2": {
       "type": "object",
-      "description": "Item associated holdings record object.",
+      "description": "Fake property for mod-graphql to determine record relationships.",
       "folio:$ref": "holdingsrecord.json",
       "readonly": true,
       "folio:isVirtual": true,

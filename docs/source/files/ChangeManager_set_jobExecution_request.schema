@@ -25,6 +25,20 @@
     "userId": {
       "description": "ID of the user initializing JobExecutions",
       "$ref": "../../raml-util/schemas/uuid.schema"
+    },
+    "jobPartNumber": {
+      "description": "The order number of the chunk job for COMPOSITE jobs",
+      "type": "integer",
+      "default": 1
+    },
+    "totalJobParts": {
+      "description": "The total number of chunk jobs for COMPOSITE jobs",
+      "type": "integer",
+      "default": 1
+    },
+    "parentJobId": {
+      "description": "Id of the parent JobExecution entity",
+      "$ref": "../../raml-util/schemas/uuid.schema"
     }
   },
   "required": [

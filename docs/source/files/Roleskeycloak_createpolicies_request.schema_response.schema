@@ -1,0 +1,17 @@
+{
+    "type": "object",
+    "description": "A list of policies with additional meta information.",
+    "properties": {
+        "policies": {
+            "description": "A list of policies.",
+            "type": "array",
+            "items": {
+                "$ref": "policy.json"
+            }
+        },
+        "totalRecords": {
+            "description": "The total number of roles matching the provided criteria",
+            "type": "integer"
+        }
+    }
+}

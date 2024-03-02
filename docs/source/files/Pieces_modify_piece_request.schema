@@ -2,13 +2,14 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "Piece details",
   "type": "object",
+  "javaName": "Piece",
   "properties": {
     "id": {
       "description": "UUID of this piece record",
       "$ref": "../../common/schemas/uuid.json"
     },
-    "caption": {
-      "description": "Volume/enumeration information",
+    "displaySummary": {
+      "description": "Display summary information",
       "type": "string"
     },
     "comment": {
@@ -53,6 +54,18 @@
       "type": "string",
       "description": "Chronology is the descriptive information for the dating scheme of a serial. Synchronized with inventory item."
     },
+    "barcode": {
+      "type": "string",
+      "description": "Barcode is the descriptive information for the barcode of a serial. Synchronized with inventory item."
+    },
+    "accessionNumber": {
+      "type": "string",
+      "description": "AccessionNumber is the descriptive information for the accession number of a serial. Synchronized with inventory item."
+    },
+    "callNumber": {
+      "type": "string",
+      "description": "CallNumber is the descriptive information for the call number of a serial. Synchronized with inventory item."
+    },
     "discoverySuppress": {
       "type": "boolean",
       "description": "Records the fact that the record should not be displayed in a discovery system"
@@ -66,7 +79,11 @@
       "type": "string",
       "enum": [
         "Received",
-        "Expected"
+        "Expected",
+        "Late",
+        "Claim delayed",
+        "Claim sent",
+        "Unreceivable"
       ],
       "default": "Expected"
     },
@@ -83,6 +100,28 @@
       "description": "The date associated item is actually received",
       "type": "string",
       "format": "date-time"
+    },
+    "statusUpdatedDate": {
+      "description": "Date when the status of this piece was last updated",
+      "type": "string",
+      "format": "date-time"
+    },
+    "claimingInterval": {
+      "description": "Time interval (in days) for processing claims related to this piece",
+      "type": "integer"
+    },
+    "internalNote": {
+      "description": "Internal note for Send Claim action",
+      "type": "string"
+    },
+    "externalNote": {
+      "description": "External note for Send Claim action to share with Vendor",
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object",
+      "$ref": "../../../raml-util/schemas/metadata.schema",
+      "readonly": true
     }
   },
   "additionalProperties": false,

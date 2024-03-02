@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -31,7 +31,7 @@ class Tags(FolioApi):
         Raises:
             OkapiRequestUnauthorized: Not authorized to perform requested action
             OkapiRequestUnprocessableEntity: Validation errors
-            OkapiFatalError: Unexpected error
+            OkapiRequestFatalError: Unexpected error
 
         Schema:
 
@@ -54,7 +54,7 @@ class Tags(FolioApi):
         Raises:
             OkapiRequestUnauthorized: Not authorized to perform requested action
             OkapiRequestUnprocessableEntity: Validation errors
-            OkapiFatalError: Unexpected error
+            OkapiRequestFatalError: Unexpected error
 
         Schema:
 
@@ -74,7 +74,7 @@ class Tags(FolioApi):
             OkapiRequestUnauthorized: Not authorized to perform requested action
             OkapiRequestNotFound: Item with a given ID not found
             OkapiRequestUnprocessableEntity: Validation errors
-            OkapiFatalError: Unexpected error
+            OkapiRequestFatalError: Unexpected error
 
         Schema:
 
@@ -84,7 +84,7 @@ class Tags(FolioApi):
 
 		
     def puttagbyid(self, tagDto, id_):
-        """Update tag with given ID
+        """Update tag with given ID. When renaming the tag label mod-tags doesn't update it in other modules, the client must ensure this.
 
         ``PUT /tags/{id}``
 
@@ -94,7 +94,7 @@ class Tags(FolioApi):
         Raises:
             OkapiRequestUnauthorized: Not authorized to perform requested action
             OkapiRequestNotFound: Item with a given ID not found
-            OkapiFatalError: Unexpected error
+            OkapiRequestFatalError: Unexpected error
 
         Schema:
 
@@ -104,13 +104,13 @@ class Tags(FolioApi):
 
 		
     def deletetagbyid(self, id_):
-        """Delete tag with given ID
+        """Delete tag with given ID. This neither checks whether other modules still use the tag label nor does it delete the tag from other modules. The client must ensure this.
 
         ``DELETE /tags/{id}``
 
         Raises:
             OkapiRequestUnauthorized: Not authorized to perform requested action
             OkapiRequestNotFound: Item with a given ID not found
-            OkapiFatalError: Unexpected error
+            OkapiRequestFatalError: Unexpected error
         """
         return self.call("DELETE", f"/tags/{id_}")

@@ -3,10 +3,11 @@
 
 
 import click
-from foliolib.folio.api.email import Email, SmtpConfiguration
-from foliolib.folio.config import Config
+from foliolib.folio.api.email import SmtpConfiguration
+from foliolib.folio.configImpl import ConfigImpl
 from tabulate import tabulate
 
+from ..confirm import confirm
 from ..orderedGroup import OrderedGroup
 
 
@@ -22,7 +23,7 @@ def config():
 def lst(**kwargs):
     """List config entries.
     """
-    entries = Config(kwargs["tenant"]).get_entries()
+    entries = ConfigImpl(kwargs["tenant"]).get_entries()
     for entry in entries:
         body = [[k, v]
                 for k, v in entry.items() if not k == "metadata"]
@@ -50,7 +51,7 @@ def get(**kwargs):
     deprecated = kwargs["deprecated"]
     print(f"\nEmail config for {tenant}:")
     if deprecated:
-        entries = Config(tenant).get_entries("SMTP_SERVER")
+        entries = ConfigImpl(tenant).get_entries("SMTP_SERVER")
         for entry in entries:
             print("\t%s: %s" % (entry["description"], entry["value"]))
     else:
@@ -88,6 +89,7 @@ def get(**kwargs):
               help="Start TLS options. Values are DISABLED, OPTIONAL or REQUIRED")
 @click.option("-a", "--authmethods",
               help="Authentication methods")
+@confirm
 def set(**kwargs):
     """Set EMail config.
     """
@@ -105,11 +107,11 @@ def set(**kwargs):
     authmethods = kwargs["authmethods"]
     print(f"\nSet Email config for {tenant}")
     if deprecated:
-        Config(tenant).set_email(host, port, email_from,
-                                 username, password,
-                                 ssl=ssl, loginoption=loginoption,
-                                 starttls=starttls, trustall=trustall,
-                                 authmethods=authmethods)
+        ConfigImpl(tenant).set_email(host, port, email_from,
+                                     username, password,
+                                     ssl=ssl, loginoption=loginoption,
+                                     starttls=starttls, trustall=trustall,
+                                     authmethods=authmethods)
     else:
         smtpConfig = {"host": host,
                       "port": port,
@@ -136,6 +138,7 @@ def set(**kwargs):
               help="Tenant id")
 @click.option("-d", "--deprecated", is_flag=True,
               help="For older Folio versions, the config module is used.")
+@confirm
 def delete(**kwargs):
     """Delete EMail config.
     """
@@ -143,7 +146,7 @@ def delete(**kwargs):
     deprecated = kwargs["deprecated"]
     print(f"\nDelete Email config for {tenant}")
     if deprecated:
-        Config(tenant).delete_email()
+        ConfigImpl(tenant).delete_email()
     else:
         smtpConfigs = SmtpConfiguration(tenant).get_smtpConfigurations()[
             "smtpConfigurations"]
@@ -168,7 +171,7 @@ def get(**kwargs):
     """Get Folio UI application host.
     """
     tenant = kwargs["tenant"]
-    entries = Config(tenant).get_entries("USERSBL")
+    entries = ConfigImpl(tenant).get_entries("USERSBL")
     for entry in entries:
         print("\n%s: %s" % (entry["description"], entry["value"]))
 
@@ -178,6 +181,7 @@ def get(**kwargs):
               help="Tenant id")
 @click.option("-f", "--foliohost", required=True,
               help="Folio UI application host")
+@confirm
 def set(**kwargs):
     """Set Folio UI application host.
     """
@@ -186,15 +190,16 @@ def set(**kwargs):
     print(f"Set Folio UI application host: {foliohost}")
     # if not foliohost.startswith("http"):
     #     foliohost = "https://%s" % foliohost
-    Config(tenant).set_folio_host(foliohost)
+    ConfigImpl(tenant).set_folio_host(foliohost)
 
 
 @foliohost.command()
 @click.option("-t", "--tenant", required=True,
               help="Tenant id")
+@confirm
 def delete(**kwargs):
     """Delete Folio UI application host.
     """
     tenant = kwargs["tenant"]
     print("Delete Folio UI application host")
-    Config(tenant).delete_folio_host()
+    ConfigImpl(tenant).delete_folio_host()

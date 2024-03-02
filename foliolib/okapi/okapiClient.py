@@ -12,16 +12,19 @@ import urllib3
 from foliolib.config import Config
 from foliolib.helper import get_node
 from foliolib.okapi import misc, okapiModule
-from foliolib.okapi.exceptions import (OkapiException, OkapiFatalError,
-                                       OkapiMoved, OkapiNotReachable,
-                                       OkapiRequestConflict, OkapiRequestError,
+from foliolib.okapi.exceptions import (OkapiException, OkapiMoved,
+                                       OkapiNotReachable, OkapiRequestConflict,
+                                       OkapiRequestError,
+                                       OkapiRequestFatalError,
                                        OkapiRequestForbidden,
                                        OkapiRequestNotAcceptable,
                                        OkapiRequestNotFound,
+                                       OkapiRequestNotImplemented,
                                        OkapiRequestPayloadToLarge,
                                        OkapiRequestTimeout,
                                        OkapiRequestUnauthorized,
-                                       OkapiRequestUnprocessableEntity)
+                                       OkapiRequestUnprocessableEntity,
+                                       OkapiRequestUnsupportedMediaType)
 from foliolib.okapi.kubeClient import KubeClient
 
 urllib3.disable_warnings()
@@ -915,10 +918,14 @@ class OkapiClient:
             raise OkapiRequestConflict(response)
         elif response.status_code == 413:
             raise OkapiRequestPayloadToLarge(response)
+        elif response.status_code == 415:
+            raise OkapiRequestUnsupportedMediaType(response)
         elif response.status_code == 422:
             raise OkapiRequestUnprocessableEntity(response)
-        elif response.status_code >= 500:
-            raise OkapiFatalError(response)
+        elif response.status_code == 500:
+            raise OkapiRequestFatalError(response)
+        elif response.status_code == 501:
+            raise OkapiRequestNotImplemented(response)
         else:
             print(response.text)
             raise OkapiException(

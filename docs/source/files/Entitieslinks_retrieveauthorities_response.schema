@@ -1,0 +1,21 @@
+{
+    "description": "A collection of authority records",
+    "type": "object",
+    "properties": {
+        "authorities": {
+            "description": "List of authority records",
+            "type": "array",
+            "items": {
+                "$ref": "./authorityDto.yaml"
+            }
+        },
+        "totalRecords": {
+            "description": "Total amount of records",
+            "type": "integer"
+        }
+    },
+    "required": [
+        "authorities",
+        "totalRecords"
+    ]
+}

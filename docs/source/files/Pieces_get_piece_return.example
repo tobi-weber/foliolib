@@ -1,6 +1,6 @@
 {
   "id": "5e317dc2-deeb-4429-b2a1-91e5cd0fd5f7",
-  "caption": "Tutorial Volume 5",
+  "displaySummary": "Tutorial Volume 5",
   "comment": "Special Edition",
   "format": "Electronic",
   "itemId": "522a501a-56b5-48d9-b28a-3a8f02482d97",
@@ -10,9 +10,20 @@
   "displayOnHolding": false,
   "enumeration": "Volume 1",
   "chronology": "2021",
+  "barcode": "0987654111",
+  "accessionNumber": "2015.1",
+  "callNumber": "BF2050 .M335 1999",
   "discoverySuppress": false,
   "copyNumber": "94753",
   "receivingStatus": "Expected",
   "supplement": true,
-  "receiptDate": "2018-10-11T00:00:00.000Z"
+  "receiptDate": "2018-10-11T00:00:00.000Z",
+  "claimingInterval": 0,
+  "internalNote": "Internal note for Send Claim action",
+  "externalNote": "External note for Send Claim action to share with Vendor",
+  "statusUpdatedDate": "2018-10-11T00:00:00.000Z",
+  "metadata": {
+    "createdDate": "2018-08-19T00:00:00.000+0000",
+    "createdByUserId": "28d1057c-d137-11e8-a8d5-f2801f1b9fd1"
+  }
 }

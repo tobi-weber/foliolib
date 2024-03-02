@@ -1,0 +1,27 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Role-CapabilitySet Request Schema",
+    "description": "Request body to assign existing capability sets to a role",
+    "type": "object",
+    "properties": {
+        "roleId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID of the role"
+        },
+        "capabilitySetIds": {
+            "description": "List of capability set identifiers",
+            "type": "array",
+            "items": {
+                "type": "string",
+                "description": "Capability set identifier",
+                "format": "uuid"
+            },
+            "minItems": 1
+        }
+    },
+    "required": [
+        "roleId",
+        "capabilitySetIds"
+    ]
+}

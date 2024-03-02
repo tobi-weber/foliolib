@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of pieceLineAuditEvents",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "pieceAuditEvents": {
+      "description": "List of pieceAuditEvents",
+      "type": "array",
+      "id": "pieceAuditEventsList",
+      "items": {
+        "type": "object",
+        "$ref": "piece_audit_event.json"
+      }
+    },
+    "totalItems": {
+      "description": "total records",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "pieceAuditEvents",
+    "totalItems"
+  ]
+}

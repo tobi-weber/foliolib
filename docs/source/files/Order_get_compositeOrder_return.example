@@ -36,6 +36,9 @@
   "vendor": "168f8a86-d26c-406e-813f-c7527f241ac3",
   "workflowStatus": "Open",
   "nextPolNumber": 4,
+  "customFields": {
+    "membership": "opt_0"
+  },
   "metadata": {
     "createdDate": "2018-07-19T00:00:00.000+0000",
     "createdByUserId": "28d1057c-d137-11e8-a8d5-f2801f1b9fd1"
@@ -64,6 +67,8 @@
           "grace": 30
         }
       ],
+      "claimingActive": false,
+      "claimingInterval": 0,
       "collection": false,
       "contributors": [
         {
@@ -190,6 +195,9 @@
         "tagList": [
           "important"
         ]
+      },
+      "customFields": {
+        "externalOrderNumber": "ML58723"
       },
       "metadata": {
         "createdDate": "2018-07-19T00:00:00.000+0000",

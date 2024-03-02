@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -28,7 +28,7 @@ class InventoryUpdate(FolioApi):
         Raises:
             OkapiRequestUnprocessableEntity: Unprocessable Entity
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -52,7 +52,7 @@ class InventoryUpdate(FolioApi):
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: Not Found
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -75,7 +75,7 @@ class InventoryUpdate(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -98,7 +98,7 @@ class InventoryUpdate(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -122,7 +122,7 @@ class InventoryUpdate(FolioApi):
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: Not Found
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -179,7 +179,7 @@ class InventoryUpdate(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 

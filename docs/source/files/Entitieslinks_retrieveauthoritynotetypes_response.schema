@@ -1,0 +1,21 @@
+{
+    "description": "A collection of authority note types",
+    "type": "object",
+    "properties": {
+        "authorityNoteTypes": {
+            "description": "List of authority note types",
+            "type": "array",
+            "items": {
+                "$ref": "./authorityNoteTypeDto.yaml"
+            }
+        },
+        "totalRecords": {
+            "description": "Total amount of records",
+            "type": "integer"
+        }
+    },
+    "required": [
+        "authorityNoteTypes",
+        "totalRecords"
+    ]
+}

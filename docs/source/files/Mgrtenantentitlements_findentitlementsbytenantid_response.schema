@@ -1,0 +1,19 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "installations.json",
+    "title": "Tenant Entitlements Schema",
+    "description": "List of tenant entitlements (installations)",
+    "type": "object",
+    "properties": {
+        "totalRecords": {
+            "type": "integer",
+            "description": "A total number of records"
+        },
+        "entitlements": {
+            "type": "array",
+            "items": {
+                "$ref": "entitlement.json"
+            }
+        }
+    }
+}

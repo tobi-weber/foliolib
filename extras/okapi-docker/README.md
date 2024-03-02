@@ -5,7 +5,7 @@
 To build the okapi docker image run:
 
 ``` bash
-./build_okapi_image.sh [VERSION]
+docker build -t okapi:5.3.0 --build-arg version=5.3.0 .
 ```
 
 ## Enviroment Variables

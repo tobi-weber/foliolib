@@ -1,0 +1,8 @@
+{
+  "url": "https://github.com/folio-org/folio-analytics/blob/count_loans_and_renewals_ldp/reports/count_loans_and_renewals/count_loans_and_renewals.sql",
+  "params": {
+    "start_date": "2023-08-18T00:00:00.000Z",
+    "items_permanent_location_filter": "H",
+    "limit": "20"
+  }
+}

@@ -151,6 +151,11 @@
       "description": "arbitrary tags associated with this purchase order",
       "$ref": "../../../raml-util/schemas/tags.schema"
     },
+    "customFields": {
+      "description": "Object that contains custom field",
+      "type": "object",
+      "additionalProperties": true
+    },
     "metadata": {
       "type": "object",
       "$ref": "../../../raml-util/schemas/metadata.schema",

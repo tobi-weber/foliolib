@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -31,7 +31,7 @@ class Search(FolioApi):
 
         Raises:
             OkapiRequestError: Validation errors
-            OkapiFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
+            OkapiRequestFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
 
         Schema:
 
@@ -49,7 +49,7 @@ class Search(FolioApi):
 
         Raises:
             OkapiRequestError: Validation errors
-            OkapiFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
+            OkapiRequestFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
         """
         return self.call("GET", "/search/instances/ids", query=kwargs)
 
@@ -63,7 +63,7 @@ class Search(FolioApi):
 
         Raises:
             OkapiRequestError: Validation errors
-            OkapiFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
+            OkapiRequestFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
         """
         return self.call("GET", "/search/holdings/ids", query=kwargs)
 
@@ -73,7 +73,7 @@ class Search(FolioApi):
         ``GET /search/{recordType}/facets``
 
         Args:
-            recordType (str):  (enum: ['instances', 'authorities', 'contributors'])
+            recordType (str):  (enum: ['instances', 'authorities', 'contributors', 'subjects'])
 
         Keyword Args:
             query (str): A CQL query string with search conditions.
@@ -84,7 +84,7 @@ class Search(FolioApi):
 
         Raises:
             OkapiRequestError: Validation errors
-            OkapiFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
+            OkapiRequestFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
 
         Schema:
 
@@ -109,7 +109,7 @@ class Search(FolioApi):
 
         Raises:
             OkapiRequestError: Validation errors
-            OkapiFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
+            OkapiRequestFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
 
         Schema:
 
@@ -130,7 +130,7 @@ class Search(FolioApi):
 
         Raises:
             OkapiRequestError: Validation errors
-            OkapiFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
+            OkapiRequestFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
 
         Schema:
 
@@ -151,7 +151,7 @@ class Search(FolioApi):
 
         Raises:
             OkapiRequestError: Validation errors
-            OkapiFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
+            OkapiRequestFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
 
         Schema:
 
@@ -169,7 +169,7 @@ class Search(FolioApi):
 
         Raises:
             OkapiRequestError: Validation errors
-            OkapiFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
+            OkapiRequestFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
         """
         return self.call("GET", f"/search/resources/jobs/{jobId}/ids")
 
@@ -191,13 +191,41 @@ class Search(FolioApi):
 
         Raises:
             OkapiRequestError: Validation errors
-            OkapiFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
+            OkapiRequestFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
 
         Schema:
 
             .. literalinclude:: ../files/Search_browseinstancesbycallnumber_response.schema
         """
         return self.call("GET", "/browse/call-numbers/instances", query=kwargs)
+
+    def browseinstancesbyclassificationnumber(self, browseOptionId, **kwargs):
+        """Provides list of instances for browsing by classification number
+
+        ``GET /browse/classification-numbers/{browseOptionId}/instances``
+
+        Args:
+            browseOptionId (str): Browse option type (enum: ['all', 'lc', 'dewey'])
+
+        Keyword Args:
+            query (str): A CQL query string with search conditions.
+            limit (int): Limit the number of elements returned in the browse response. (minimum: 0, maximum: 100, default: 100)
+            expandAll (bool): Whether to return only basic properties or entire instance. (default: False)
+            highlightMatch (bool): Whether to highlight matched resource by query input or not. (default: True)
+            precedingRecordsCount (int): Number of preceding records for browsing around and around-including options (minimum: 1, maximum: 100)
+
+        Returns:
+            dict: See Schema below.
+
+        Raises:
+            OkapiRequestError: Validation errors
+            OkapiRequestFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
+
+        Schema:
+
+            .. literalinclude:: ../files/Search_browseinstancesbyclassificationnumber_response.schema
+        """
+        return self.call("GET", f"/browse/classification-numbers/{browseOptionId}/instances", query=kwargs)
 
     def browseinstancesbysubject(self, **kwargs):
         """Provides list of instances for browsing by subject
@@ -215,7 +243,7 @@ class Search(FolioApi):
 
         Raises:
             OkapiRequestError: Validation errors
-            OkapiFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
+            OkapiRequestFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
 
         Schema:
 
@@ -239,7 +267,7 @@ class Search(FolioApi):
 
         Raises:
             OkapiRequestError: Validation errors
-            OkapiFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
+            OkapiRequestFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
 
         Schema:
 
@@ -264,7 +292,7 @@ class Search(FolioApi):
 
         Raises:
             OkapiRequestError: Validation errors
-            OkapiFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
+            OkapiRequestFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
 
         Schema:
 
@@ -285,7 +313,7 @@ class Search(FolioApi):
 
         Raises:
             OkapiRequestError: Validation errors
-            OkapiFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
+            OkapiRequestFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
 
         Schema:
 
@@ -306,7 +334,7 @@ class Search(FolioApi):
             dict: See Schema below.
 
         Raises:
-            OkapiFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
+            OkapiRequestFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
 
         Schema:
 
@@ -327,7 +355,7 @@ class Search(FolioApi):
             dict: See Schema below.
 
         Raises:
-            OkapiFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
+            OkapiRequestFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
 
         Schema:
 
@@ -348,7 +376,7 @@ class Search(FolioApi):
             dict: See Schema below.
 
         Raises:
-            OkapiFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
+            OkapiRequestFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
 
         Schema:
 
@@ -377,7 +405,7 @@ class SearchAdmin(FolioAdminApi):
             dict: See Schema below.
 
         Raises:
-            OkapiFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
+            OkapiRequestFatalError: When unhandled exception occurred during code execution, e.g. NullPointerException
 
         Schema:
 
@@ -498,7 +526,7 @@ class SearchAdmin(FolioAdminApi):
         ``PUT /search/config/features/{featureId}``
 
         Args:
-            featureId (str): Feature id (name) (enum: ['search.all.fields', 'browse.cn.intermediate.values', 'browse.cn.intermediate.remove.duplicates'])
+            featureId (str): Feature id (name) (enum: ['search.all.fields', 'browse.cn.intermediate.values', 'browse.cn.intermediate.remove.duplicates', 'browse.classifications'])
             featureConfig (dict): See Schema below.
 
         Returns:
@@ -521,9 +549,46 @@ class SearchAdmin(FolioAdminApi):
         ``DELETE /search/config/features/{featureId}``
 
         Args:
-            featureId (str): Feature id (name) (enum: ['search.all.fields', 'browse.cn.intermediate.values', 'browse.cn.intermediate.remove.duplicates'])
+            featureId (str): Feature id (name) (enum: ['search.all.fields', 'browse.cn.intermediate.values', 'browse.cn.intermediate.remove.duplicates', 'browse.classifications'])
 
         Raises:
             OkapiRequestNotFound: No feature configuration is found by id
         """
         return self.call("DELETE", f"/search/config/features/{featureId}")
+
+    def getbrowseconfigs(self, browseType):
+        """Get all configurations for browse type
+
+        ``GET /browse/config/{browseType}``
+
+        Args:
+            browseType (str): Browse feature type (enum: ['instance-classification'])
+
+        Returns:
+            dict: See Schema below.
+
+        Schema:
+
+            .. literalinclude:: ../files/Search_getbrowseconfigs_response.schema
+        """
+        return self.call("GET", f"/browse/config/{browseType}")
+
+    def putbrowseconfig(self, browseType, browseOptionId, browseConfig):
+        """Update configuration for browse type
+
+        ``PUT /browse/config/{browseType}/{browseOptionId}``
+
+        Args:
+            browseType (str): Browse feature type (enum: ['instance-classification'])
+            browseOptionId (str): Browse option type (enum: ['all', 'lc', 'dewey'])
+            browseConfig (dict): See Schema below.
+
+        Raises:
+            OkapiRequestError: Validation errors
+            OkapiRequestUnprocessableEntity: Validation error for the request.
+
+        Schema:
+
+            .. literalinclude:: ../files/Search_putbrowseconfig_request.schema
+        """
+        return self.call("PUT", f"/browse/config/{browseType}/{browseOptionId}", browseConfig)

@@ -1,0 +1,120 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "List summary results DTO",
+    "type": "object",
+    "properties": {
+        "content": {
+            "description": "array of content",
+            "type": "array",
+            "items": {
+                "$ref": "#/ListSummaryDTO"
+            }
+        },
+        "totalRecords": {
+            "description": "Total number of records",
+            "type": "integer",
+            "format": "int64"
+        },
+        "totalPages": {
+            "description": "Total number of pages",
+            "type": "integer"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "content",
+        "totalRecords",
+        "totalPages"
+    ],
+    "ListSummaryDTO": {
+        "description": "List Summary DTO",
+        "type": "object",
+        "properties": {
+            "id": {
+                "description": "List id",
+                "type": "string",
+                "format": "UUID"
+            },
+            "name": {
+                "description": "List name",
+                "type": "string"
+            },
+            "entityTypeId": {
+                "description": "ID of the entity Type",
+                "type": "string",
+                "format": "UUID"
+            },
+            "entityTypeName": {
+                "description": "Name of the entity Type",
+                "type": "string"
+            },
+            "createdByUsername": {
+                "description": "Created By Username",
+                "type": "string"
+            },
+            "createdDate": {
+                "description": "Date and time when the record was created",
+                "type": "string",
+                "format": "date-time"
+            },
+            "isActive": {
+                "description": "Indicates if a List is Active or not",
+                "type": "boolean"
+            },
+            "isPrivate": {
+                "description": "Indicate if a List is Private or not",
+                "type": "boolean"
+            },
+            "isCanned": {
+                "description": "Indicates if a List is canned or not",
+                "type": "boolean"
+            },
+            "isDeleted": {
+                "description": "Indicates if a List has been deleted",
+                "type": "boolean"
+            },
+            "updatedBy": {
+                "description": "ID of the user who last updated the record (when available)",
+                "type": "string",
+                "format": "UUID"
+            },
+            "updatedByUsername": {
+                "description": "Username of the user who last updated the record (when available)",
+                "type": "string"
+            },
+            "updatedDate": {
+                "description": "Date and time when the record was last updated",
+                "type": "string",
+                "format": "date-time"
+            },
+            "recordsCount": {
+                "description": "record count for refresh",
+                "type": "number"
+            },
+            "refreshedDate": {
+                "description": "End date for successful refresh",
+                "type": "string",
+                "format": "date-time"
+            },
+            "refreshedByUsername": {
+                "description": "Username who did the refresh",
+                "type": "string"
+            },
+            "isRefreshing": {
+                "description": "Indicates if list refresh is in progress",
+                "type": "boolean"
+            },
+            "latestRefreshFailed": {
+                "description": "Indicates if the most recent list refresh failed",
+                "type": "boolean"
+            }
+        },
+        "additionalProperties": false,
+        "required": [
+            "id",
+            "name",
+            "entityTypeId",
+            "entityTypeName"
+        ]
+    }
+}

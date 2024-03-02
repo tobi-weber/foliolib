@@ -315,14 +315,15 @@ class Config:
             log.debug("%s already exists.", fpath)
 
     def create_server_conf(self, name: str, okapi_host: str = "localhost",
-                           okapi_port: str = "9130", ssl=False):
+                           okapi_port: str = "9130", ssl: bool = False, isAdmin: bool = False):
         """Create server.conf for given server config name.
 
         Args:
             name (str): Server name.
             okapi_host (str, optional): Okapi host. Defaults to "localhost".
             okapi_port (str, optional): Okapi port. Defaults to "9130".
-            ssl (bool, optional): SSL. Defaults to False.
+            ssl (bool, optional): Wether okapi server is ssl. Defaults to False.
+            isAdmin (bool, optional): Whether cli should provide management for okapi. Defaults to False.
         """
         self.__servercfg = configparser.ConfigParser()
         sdir = os.path.join(self.get_confdir(), name)
@@ -340,6 +341,7 @@ class Config:
             self.__servercfg["Cli"] = {}
             self.__servercfg["Cli"]["confirm"] = str(True)
             self.__servercfg["Cli"]["loglevel"] = "INFO"
+            self.__servercfg["Cli"]["isAdmin"] = str(isAdmin)
             self.__servercfg["Env"] = {}
             self.__servercfg["Env"]["db_host"] = okapi_host
             self.__servercfg["Env"]["db_port"] = "5432"

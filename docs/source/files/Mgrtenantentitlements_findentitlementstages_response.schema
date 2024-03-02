@@ -1,0 +1,19 @@
+{
+    "schema": "http://json-schema.org/draft-04/schema#",
+    "id": "entitlementStage.json",
+    "title": "Tenant Entitlement Stage Schema",
+    "description": "Tenant entitlement stage descriptor",
+    "type": "object",
+    "properties": {
+        "totalRecords": {
+            "type": "integer",
+            "description": "A total number of records"
+        },
+        "entitlementStages": {
+            "type": "array",
+            "items": {
+                "$ref": "entitlementStage.json"
+            }
+        }
+    }
+}

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -24,7 +24,7 @@ class KbCredentials(FolioApi):
 
         Raises:
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -47,7 +47,7 @@ class KbCredentials(FolioApi):
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -71,7 +71,7 @@ class KbCredentials(FolioApi):
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -93,7 +93,7 @@ class KbCredentials(FolioApi):
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestNotFound: Not Found
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -112,7 +112,7 @@ class KbCredentials(FolioApi):
         Raises:
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/eholdings/kb-credentials/{kbCredentialsId}")
 
@@ -201,7 +201,7 @@ class Export(FolioApi):
             fiscalYear (str):  Fiscal year of cost-per-use data
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("GET", f"/eholdings/packages/{packageId}/resources/costperuse/export", query=kwargs)
 
@@ -438,7 +438,7 @@ class AccessTypes(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1158,7 +1158,7 @@ class CustomLabels(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1690,7 +1690,7 @@ class Eholdings(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1712,7 +1712,7 @@ class Eholdings(FolioApi):
 
         Raises:
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("POST", "/eholdings/loading/kb-credentials")
 
@@ -1727,7 +1727,7 @@ class Eholdings(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("POST", f"/eholdings/loading/kb-credentials/{kbCredentialsId}")
 
@@ -1744,7 +1744,7 @@ class Eholdings(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 

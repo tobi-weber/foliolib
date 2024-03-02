@@ -9,7 +9,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "$ref": "holdingstype.json"
+        "$ref": "holdingsType.json"
       }
     },
     "totalRecords": {

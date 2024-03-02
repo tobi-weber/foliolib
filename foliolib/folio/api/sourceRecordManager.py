@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -27,7 +27,7 @@ class MappingMetadataProvider(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -48,7 +48,7 @@ class MappingMetadataProvider(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -93,7 +93,7 @@ class ChangeManager(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -115,7 +115,7 @@ class ChangeManager(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -134,7 +134,7 @@ class ChangeManager(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/change-manager/jobExecutions/{jobExecutionsId}")
 
@@ -151,7 +151,7 @@ class ChangeManager(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -191,7 +191,7 @@ class ChangeManager(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -215,7 +215,7 @@ class ChangeManager(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -240,7 +240,7 @@ class ChangeManager(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -250,26 +250,30 @@ class ChangeManager(FolioApi):
         """
         return self.call("PUT", f"/change-manager/jobExecutions/{jobExecutionsId}/jobProfile", data=jobProfile)
 
-    def set_record(self, jobExecutionsId: str, record: dict):
+    def set_record(self, jobExecutionsId: str, record: dict, **kwargs):
         """Receive chunk of raw records
 
         ``POST /change-manager/jobExecutions/{jobExecutionsId}/records``
 
         Args:
             jobExecutionsId (str)
-            record (dict): See Schema below
+            record (dict)
+            **kwargs (properties): Keyword Arguments: See Schema below
+
+        Keyword Args:
+            acceptInstanceId (bool): (default=False) 
 
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
 
             .. literalinclude:: ../files/ChangeManager_set_record_request.schema
         """
-        return self.call("POST", f"/change-manager/jobExecutions/{jobExecutionsId}/records", data=record)
+        return self.call("POST", f"/change-manager/jobExecutions/{jobExecutionsId}/records", data=record, query=kwargs)
 
     def delete_record(self, jobExecutionsId: str):
         """Delete JobExecution and associated records in SRS
@@ -282,7 +286,7 @@ class ChangeManager(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/change-manager/jobExecutions/{jobExecutionsId}/records")
 
@@ -302,7 +306,7 @@ class ChangeManager(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -321,7 +325,7 @@ class ChangeManager(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -386,6 +390,11 @@ class MetadataProvider(FolioApi):
                     Example:
                     
                      - ['d0ebb7b0-2f0f-11eb-adc1-0242ac120002', '91f9b8d6-d80e-4727-9783-73fb53e3c786']
+            subordinationTypeNotAny (list):  Filter by specified SubordinationTypes
+                    
+                    Example:
+                    
+                     - ['COMPOSITE_CHILD']
             userId (str):  Filter by user id
                     
                     Example:
@@ -418,7 +427,7 @@ class MetadataProvider(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -589,7 +598,7 @@ class MetadataProvider(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -626,13 +635,33 @@ class MetadataProvider(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
             .. literalinclude:: ../files/MetadataProvider_get_users_return.schema 
         """
         return self.call("GET", "/metadata-provider/jobExecutions/users", query=kwargs)
+
+    def get_incomingRecord(self, recordId: str):
+        """get incoming record by id
+
+        ``GET /metadata-provider/incomingRecords/{recordId}``
+
+        Args:
+            recordId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+
+        Schema:
+
+            .. literalinclude:: ../files/MetadataProvider_get_incomingRecord_return.schema 
+        """
+        return self.call("GET", f"/metadata-provider/incomingRecords/{recordId}")
 
 
 class MappingRulesProvider(FolioApi):
@@ -654,7 +683,7 @@ class MappingRulesProvider(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -677,7 +706,7 @@ class MappingRulesProvider(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -699,7 +728,7 @@ class MappingRulesProvider(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -37,6 +37,11 @@ class DataImport(FolioApi):
                      - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
                     
                      - id=67dfac11-1caf-4470-9ad1-d533f6360bdd
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -54,7 +59,7 @@ class DataImport(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -74,7 +79,7 @@ class DataImport(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -99,7 +104,7 @@ class DataImport(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -118,7 +123,7 @@ class DataImport(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/data-import/uploadDefinitions/{uploadDefinitionId}")
 
@@ -134,7 +139,8 @@ class DataImport(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestConflict: Conflict
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -158,7 +164,7 @@ class DataImport(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -179,7 +185,7 @@ class DataImport(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/data-import/uploadDefinitions/{uploadDefinitionId}/files/{fileId}")
 
@@ -198,7 +204,7 @@ class DataImport(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -215,6 +221,27 @@ class DataImport(FolioApi):
         
         return self.call("POST", f"/data-import/uploadDefinitions/{uploadDefinitionId}/files/{fileId}", headers=headers, data=data)
 
+    def set_assembleStorageFile(self, uploadDefinitionId: str, fileId: str, assembleStorageFile: dict):
+        """Assemble the large file uploaded to storage by the UI
+
+        ``POST /data-import/uploadDefinitions/{uploadDefinitionId}/files/{fileId}/assembleStorageFile``
+
+        Args:
+            uploadDefinitionId (str)
+            fileId (str)
+            assembleStorageFile (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/DataImport_set_assembleStorageFile_request.schema
+        """
+        return self.call("POST", f"/data-import/uploadDefinitions/{uploadDefinitionId}/files/{fileId}/assembleStorageFile", data=assembleStorageFile)
+
     def set_processFile(self, uploadDefinitionId: str, processFile: dict):
         """Starts the file processing
 
@@ -227,7 +254,7 @@ class DataImport(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -235,6 +262,46 @@ class DataImport(FolioApi):
             .. literalinclude:: ../files/DataImport_set_processFile_request.schema
         """
         return self.call("POST", f"/data-import/uploadDefinitions/{uploadDefinitionId}/processFiles", data=processFile)
+
+    def delete_cancel(self, jobExecutionId: str):
+        """
+
+        ``DELETE /data-import/jobExecutions/{jobExecutionId}/cancel``
+
+        Args:
+            jobExecutionId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/DataImport_delete_cancel_return.schema 
+        """
+        return self.call("DELETE", f"/data-import/jobExecutions/{jobExecutionId}/cancel")
+
+    def get_downloadUrl_by_jobExecution(self, jobExecutionId: str):
+        """
+
+        ``GET /data-import/jobExecutions/{jobExecutionId}/downloadUrl``
+
+        Args:
+            jobExecutionId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+
+        Schema:
+
+            .. literalinclude:: ../files/DataImport_get_downloadUrl_by_jobExecution_return.schema 
+        """
+        return self.call("GET", f"/data-import/jobExecutions/{jobExecutionId}/downloadUrl")
 
     def get_fileExtensions(self, **kwargs):
         """Get a list of definitions
@@ -259,6 +326,11 @@ class DataImport(FolioApi):
                      - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
                     
                      - importBlocked=true
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
             offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
                     
                     Example:
@@ -276,7 +348,7 @@ class DataImport(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -296,7 +368,7 @@ class DataImport(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -321,7 +393,7 @@ class DataImport(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -340,7 +412,7 @@ class DataImport(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/data-import/fileExtensions/{fileExtensionsId}")
 
@@ -356,7 +428,8 @@ class DataImport(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestConflict: Conflict
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -376,7 +449,7 @@ class DataImport(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -394,10 +467,78 @@ class DataImport(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
             .. literalinclude:: ../files/DataImport_get_dataTypes_return.schema 
         """
         return self.call("GET", "/data-import/dataTypes")
+
+    def get_splitStatuses(self):
+        """Get the server configuration of file splitting
+
+        ``GET /data-import/splitStatus``
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/DataImport_get_splitStatuses_return.schema 
+        """
+        return self.call("GET", "/data-import/splitStatus")
+
+    def get_uploadUrls(self, **kwargs):
+        """Get a presigned upload url for the first part of a file
+
+        ``GET /data-import/uploadUrl``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            fileName ():  The name of the file that will be uploaded
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/DataImport_get_uploadUrls_return.schema 
+        """
+        return self.call("GET", "/data-import/uploadUrl", query=kwargs)
+
+    def get_subsequents(self, **kwargs):
+        """Get a presigned upload url for later parts of a file
+
+        ``GET /data-import/uploadUrl/subsequent``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            key ():  The key that will be uploaded to on S3
+            uploadId ():  The upload ID
+            partNumber (int):  The part number, postitive integers beginning at two (part 1 is uploaded with /uploadUrl)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/DataImport_get_subsequents_return.schema 
+        """
+        return self.call("GET", "/data-import/uploadUrl/subsequent", query=kwargs)

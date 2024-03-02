@@ -35,6 +35,11 @@
                   "description": "The barcode assigned to the piece",
                   "type": "string"
                 },
+                "receiptDate": {
+                  "description": "The date when associated piece is expected to arrive",
+                  "type": "string",
+                  "format": "date-time"
+                },
                 "callNumber": {
                   "description": "The call number assigned to the piece",
                   "type": "string"
@@ -43,8 +48,8 @@
                   "description": "The free form notes pertaining to the piece",
                   "type": "string"
                 },
-                "caption": {
-                  "description": "The enumeration caption of the piece",
+                "displaySummary": {
+                  "description": "Display summary of the piece",
                   "type": "string"
                 },
                 "createItem": {

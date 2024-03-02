@@ -1,41 +1,11 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
 from foliolib.folio import FolioApi, FolioAdminApi
 
 log = logging.getLogger("oliolib.folio.api.circulation")
-
-
-class PickSlips(FolioApi):
-    """API for fetching current pick slips
-
-    **API for pick slips generation**
-    """
-
-    def get_pickSlips(self, servicePointId: str):
-        """Retrieve pickSlip item with given {pickSlipId}
-
-        ``GET /circulation/pick-slips/{servicePointId}``
-
-        Args:
-            servicePointId (str)
-
-        Returns:
-            dict: See Schema below
-
-        Raises:
-            OkapiRequestError: Bad Request
-            OkapiRequestUnauthorized: Authentication is required
-            OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-
-        Schema:
-
-            .. literalinclude:: ../files/PickSlips_get_pickSlips_return.schema 
-        """
-        return self.call("GET", f"/circulation/pick-slips/{servicePointId}")
 
 
 class RequestsReports(FolioApi):
@@ -59,7 +29,7 @@ class RequestsReports(FolioApi):
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -83,7 +53,7 @@ class EndPatronActionSession(FolioApi):
             endPatronActionSession (dict): See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -111,7 +81,7 @@ class LoanAnonymization(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -133,7 +103,7 @@ class AgeToLostBackgroundProcesses(FolioApi):
         ``POST /circulation/scheduled-age-to-lost``
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("POST", "/circulation/scheduled-age-to-lost")
 
@@ -143,7 +113,7 @@ class AgeToLostBackgroundProcesses(FolioApi):
         ``POST /circulation/scheduled-age-to-lost-fee-charging``
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("POST", "/circulation/scheduled-age-to-lost-fee-charging")
 
@@ -166,7 +136,7 @@ class AddInfo(FolioApi):
         Raises:
             OkapiRequestUnprocessableEntity: Unprocessable Entity
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -194,7 +164,7 @@ class DeclareItemLost(FolioApi):
         Raises:
             OkapiRequestUnprocessableEntity: Unprocessable Entity
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -222,7 +192,7 @@ class ChangeDueDate(FolioApi):
         Raises:
             OkapiRequestUnprocessableEntity: Unprocessable Entity
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -230,6 +200,59 @@ class ChangeDueDate(FolioApi):
             .. literalinclude:: ../files/ChangeDueDate_set_changeDueDate_request.schema
         """
         return self.call("POST", f"/circulation/loans/{loansId}/change-due-date", data=changeDueDate)
+
+
+class StaffSlips(FolioApi):
+    """API for fetching current staff slips
+
+    **API for staff slips generation**
+    """
+
+    def get_pickSlips(self, servicePointId: str):
+        """Retrieve pickSlip item with given {pickSlipId}
+
+        ``GET /circulation/pick-slips/{servicePointId}``
+
+        Args:
+            servicePointId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiRequestNotFound: Not Found
+            OkapiRequestFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/StaffSlips_get_pickSlips_return.schema 
+        """
+        return self.call("GET", f"/circulation/pick-slips/{servicePointId}")
+
+    def get_searchSlips(self, servicePointId: str):
+        """Retrieve searchSlip item with given {searchSlipId}
+
+        ``GET /circulation/search-slips/{servicePointId}``
+
+        Args:
+            servicePointId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiRequestNotFound: Not Found
+            OkapiRequestFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/StaffSlips_get_searchSlips_return.schema 
+        """
+        return self.call("GET", f"/circulation/search-slips/{servicePointId}")
 
 
 class Circulation(FolioApi):
@@ -255,7 +278,7 @@ class Circulation(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -282,7 +305,7 @@ class Circulation(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -309,7 +332,7 @@ class Circulation(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -336,7 +359,7 @@ class Circulation(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -386,8 +409,8 @@ class Circulation(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -406,7 +429,7 @@ class Circulation(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Headers:
             - **Location** - URI to the created loan item
@@ -437,8 +460,8 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -457,8 +480,8 @@ class Circulation(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/circulation/loans/{loanId}")
 
@@ -474,8 +497,8 @@ class Circulation(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -523,8 +546,8 @@ class Circulation(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -543,8 +566,8 @@ class Circulation(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Headers:
             - **Location** - URI to the created request item
@@ -575,8 +598,8 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -595,8 +618,8 @@ class Circulation(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/circulation/requests/{requestId}")
 
@@ -612,8 +635,8 @@ class Circulation(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -636,7 +659,7 @@ class Circulation(FolioApi):
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -659,7 +682,7 @@ class Circulation(FolioApi):
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -682,7 +705,7 @@ class Circulation(FolioApi):
         Raises:
             OkapiRequestUnprocessableEntity: Unprocessable Entity
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -706,7 +729,7 @@ class Circulation(FolioApi):
         Raises:
             OkapiRequestUnprocessableEntity: Unprocessable Entity
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -732,7 +755,7 @@ class Circulation(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -741,6 +764,25 @@ class Circulation(FolioApi):
             .. literalinclude:: ../files/Circulation_set_instance_return.schema 
         """
         return self.call("POST", "/circulation/requests/instances", data=instance, query=kwargs)
+
+    def get_allowedServicePoints(self):
+        """Get allowed pickup service points grouped by request type
+
+        ``GET /circulation/requests/allowed-service-points``
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiRequestFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Circulation_get_allowedServicePoints_return.schema 
+        """
+        return self.call("GET", "/circulation/requests/allowed-service-points")
 
 
 class InventoryReports(FolioApi):
@@ -761,7 +803,7 @@ class InventoryReports(FolioApi):
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -785,7 +827,7 @@ class CirculationRules(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -803,7 +845,7 @@ class CirculationRules(FolioApi):
 
         Raises:
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -831,7 +873,7 @@ class CirculationRules(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -859,7 +901,7 @@ class CirculationRules(FolioApi):
 
         Raises:
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -887,7 +929,7 @@ class CirculationRules(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -915,7 +957,7 @@ class CirculationRules(FolioApi):
 
         Raises:
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -943,7 +985,7 @@ class CirculationRules(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -971,7 +1013,7 @@ class CirculationRules(FolioApi):
 
         Raises:
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -999,7 +1041,7 @@ class CirculationRules(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1027,7 +1069,7 @@ class CirculationRules(FolioApi):
 
         Raises:
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1055,7 +1097,7 @@ class CirculationRules(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1083,7 +1125,7 @@ class CirculationRules(FolioApi):
 
         Raises:
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1113,7 +1155,7 @@ class RequestMove(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1141,7 +1183,7 @@ class ClaimItemReturned(FolioApi):
         Raises:
             OkapiRequestUnprocessableEntity: Unprocessable Entity
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -1162,7 +1204,7 @@ class ClaimItemReturned(FolioApi):
         Raises:
             OkapiRequestUnprocessableEntity: Unprocessable Entity
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:

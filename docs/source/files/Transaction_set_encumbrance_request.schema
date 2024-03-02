@@ -2,9 +2,7 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "A financial transaction",
   "type": "object",
-  "extends": {
-    "$ref": "../../common/schemas/entity.json"
-  },
+  "javaName": "transaction",
   "properties": {
     "id": {
       "$ref": "../../common/schemas/uuid.json",

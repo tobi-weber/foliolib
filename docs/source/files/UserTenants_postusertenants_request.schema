@@ -21,6 +21,22 @@
         },
         "isPrimary": {
             "type": "boolean"
+        },
+        "centralTenantId": {
+            "type": "string"
+        },
+        "consortiumId": {
+            "type": "string",
+            "format": "uuid"
+        },
+        "email": {
+            "type": "string"
+        },
+        "mobilePhoneNumber": {
+            "type": "string"
+        },
+        "phoneNumber": {
+            "type": "string"
         }
     },
     "additionalProperties": false,

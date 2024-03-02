@@ -1,0 +1,23 @@
+{
+  "title": "Login Credentials Schema",
+  "type": "object",
+  "description": "An entity that describes the basic credentials for a user to log on to the system",
+  "properties": {
+    "username": {
+      "description": "Username in the system, case insensitive",
+      "type": "string"
+    },
+    "userId": {
+      "description": "Unique user id",
+      "type": "string"
+    },
+    "password": {
+      "description": "User password",
+      "type": "string"
+    },
+    "tenant": {
+      "description": "Tenant; parameter for resolving duplicated usernames across tenants.",
+      "type": "string"
+    }
+  }
+}

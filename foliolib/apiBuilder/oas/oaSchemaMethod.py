@@ -10,11 +10,13 @@ from types import MethodType
 import inflection
 from foliolib.apiBuilder.oas.baseoas import BaseOAS
 from foliolib.apiBuilder.oas.operationIds import operationIds
-from foliolib.okapi.exceptions import (OkapiFatalError, OkapiMoved,
-                                       OkapiRequestConflict, OkapiRequestError,
+from foliolib.okapi.exceptions import (OkapiMoved, OkapiRequestConflict,
+                                       OkapiRequestError,
+                                       OkapiRequestFatalError,
                                        OkapiRequestForbidden,
                                        OkapiRequestNotAcceptable,
                                        OkapiRequestNotFound,
+                                       OkapiRequestNotImplemented,
                                        OkapiRequestPayloadToLarge,
                                        OkapiRequestTimeout,
                                        OkapiRequestUnauthorized,
@@ -35,9 +37,10 @@ RESPONSES = {202: Success,
              408: OkapiRequestTimeout,
              409: OkapiRequestConflict,
              413: OkapiRequestPayloadToLarge,
-             415: OkapiRequestError,  # TODO:
+             415: OkapiRequestPayloadToLarge,
              422: OkapiRequestUnprocessableEntity,
-             500: OkapiFatalError,
+             500: OkapiRequestFatalError,
+             501: OkapiRequestNotImplemented,
              }
 
 TYPES = {"string": "str",
@@ -147,8 +150,14 @@ class OASchemaMethod(BaseOAS):
 
     def get_oaResponses(self):
         if "responses" in self._data:
-            responses = [OAResponse(k, v, self._oaSchema, self)
-                         for k, v in self._data["responses"].items()]
+            responses = []
+            for k, v in self._data["responses"].items():
+                try:
+                    oaResponse = OAResponse(k, v, self._oaSchema, self)
+                    responses.append(oaResponse)
+                except ValueError as e:
+                    log.error("Invalid Response Code: %s" % str(k))
+                    log.error(e)
 
             return responses
 

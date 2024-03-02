@@ -17,3 +17,4 @@ Modules
    foliolib.helper.okapi
    foliolib.helper.platform
    foliolib.helper.tenant
+   foliolib.helper.database

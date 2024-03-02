@@ -1,0 +1,51 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "List Update Request DTO",
+    "type": "object",
+    "properties": {
+        "name": {
+            "description": "List name",
+            "type": "string",
+            "minLength": 1
+        },
+        "description": {
+            "description": "List description",
+            "type": "string"
+        },
+        "fqlQuery": {
+            "description": "FQL Query",
+            "type": "string"
+        },
+        "fields": {
+            "description": "Fields to be included in list contents",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "isActive": {
+            "description": "Indicates a List is Active or not",
+            "type": "boolean"
+        },
+        "isPrivate": {
+            "description": "Indicates a List is Private or not",
+            "type": "boolean"
+        },
+        "version": {
+            "description": "Number of version",
+            "type": "integer"
+        },
+        "queryId": {
+            "description": "Query ID",
+            "type": "string",
+            "format": "UUID"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "name",
+        "isActive",
+        "isPrivate",
+        "version"
+    ]
+}

@@ -1,0 +1,61 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "Circulation Item",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "item id",
+            "$ref": "uuid.json"
+        },
+        "holdingsRecordId": {
+            "description": "holding record id",
+            "$ref": "uuid.json"
+        },
+        "status": {
+            "description": "status",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "Enum name of status",
+                    "type": "string"
+                },
+                "date": {
+                    "description": "Date status",
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "materialTypeId": {
+            "description": "material type id",
+            "type": "string"
+        },
+        "permanentLoanTypeId": {
+            "description": "permanent loan type id",
+            "type": "string"
+        },
+        "instanceTitle": {
+            "description": "instance title",
+            "type": "string"
+        },
+        "barcode": {
+            "description": "item barcode",
+            "type": "string"
+        },
+        "pickupLocation": {
+            "description": "pickup location",
+            "type": "string"
+        },
+        "lendingLibraryCode": {
+            "description": "5 digit agency code which identifies the lending library",
+            "type": "string"
+        },
+        "metadata": {
+            "description": "Entity metadata",
+            "type": "object",
+            "$ref": "metadata.json"
+        }
+    },
+    "additionalProperties": false,
+    "required": []
+}

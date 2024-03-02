@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -26,7 +26,7 @@ class Metastorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -46,7 +46,7 @@ class Metastorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -62,7 +62,7 @@ class Metastorage(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
         """
         return self.call("DELETE", "/meta-storage/config/oai")
 
@@ -79,7 +79,7 @@ class Metastorage(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -104,7 +104,7 @@ class Metastorage(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -123,7 +123,7 @@ class Metastorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -140,7 +140,7 @@ class Metastorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
         """
         return self.call("DELETE", f"/meta-storage/config/matchkeys/{id_}")
 
@@ -156,7 +156,7 @@ class Metastorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -175,7 +175,7 @@ class Metastorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -194,7 +194,7 @@ class Metastorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -215,7 +215,7 @@ class Metastorage(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -240,7 +240,7 @@ class Metastorage(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -259,7 +259,7 @@ class Metastorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -279,7 +279,7 @@ class Metastorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -296,7 +296,7 @@ class Metastorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
         """
         return self.call("DELETE", f"/meta-storage/config/modules/{id_}")
 
@@ -308,7 +308,7 @@ class Metastorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
         """
         return self.call("PUT", f"/meta-storage/config/modules/{id_}/reload")
 
@@ -325,7 +325,7 @@ class Metastorage(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -349,7 +349,7 @@ class Metastorage(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -368,7 +368,7 @@ class Metastorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -385,7 +385,7 @@ class Metastorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
         """
         return self.call("DELETE", f"/meta-storage/config/sources/{id_}")
 
@@ -402,7 +402,7 @@ class Metastorage(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -424,7 +424,7 @@ class Metastorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -445,7 +445,7 @@ class Metastorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -465,7 +465,7 @@ class Metastorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
         """
         return self.call("DELETE", f"/meta-storage/ingest-jobs/{id_}", query=kwargs)
 
@@ -485,7 +485,7 @@ class Metastorage(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -507,7 +507,7 @@ class Metastorage(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -527,7 +527,7 @@ class Metastorage(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
         """
         return self.call("DELETE", "/meta-storage/records", query=kwargs)
 
@@ -542,7 +542,7 @@ class Metastorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -561,7 +561,7 @@ class Metastorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -580,7 +580,7 @@ class Metastorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -595,7 +595,7 @@ class Metastorage(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
         """
         return self.call("GET", "/meta-storage/oai")
 
@@ -612,7 +612,7 @@ class Metastorage(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -631,7 +631,7 @@ class Metastorage(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -650,7 +650,7 @@ class Metastorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -670,7 +670,7 @@ class Metastorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -690,7 +690,7 @@ class Metastorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -706,7 +706,7 @@ class Metastorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
         """
         return self.call("POST", f"/meta-storage/pmh-clients/{id_}/start")
 
@@ -718,7 +718,7 @@ class Metastorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
         """
         return self.call("POST", f"/meta-storage/pmh-clients/{id_}/stop")
 
@@ -733,7 +733,7 @@ class Metastorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 

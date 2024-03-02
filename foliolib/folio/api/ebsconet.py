@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -43,7 +43,7 @@ class Ebsconet(FolioApi):
         Raises:
             OkapiRequestError: Bad request, e.g. malformed request body or query parameter. Details of the error (e.g. name of the parameter or line/character number with malformed data) provided in the response.
             OkapiRequestNotFound: Purchase order line with a given number not found
-            OkapiFatalError: Internal server error, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server error, e.g. due to misconfiguration
 
         Schema:
 
@@ -63,7 +63,7 @@ class Ebsconet(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request, e.g. malformed request body or query parameter. Details of the error (e.g. name of the parameter or line/character number with malformed data) provided in the response.
-            OkapiFatalError: Internal server error, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server error, e.g. due to misconfiguration
 
         Schema:
 

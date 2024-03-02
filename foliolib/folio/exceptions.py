@@ -12,6 +12,10 @@ class FolioTenantMissing(FolioException):
     pass
 
 
+class LoginFailed(FolioException):
+    pass
+
+
 class UserNotFound(FolioException):
     pass
 
@@ -24,11 +28,23 @@ class DepartmentNotFound(FolioException):
     pass
 
 
+class AddressTypeNotFound(FolioException):
+    pass
+
+
 class PermissionUserNotFound(FolioException):
     pass
 
 
 class ServicePointsUserNotFound(FolioException):
+    pass
+
+
+class PermissionNotFound(FolioException):
+    pass
+
+
+class PermissionUserNotFound(FolioException):
     pass
 
 

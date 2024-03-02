@@ -1,0 +1,20 @@
+{
+    "description": "Query request body",
+    "type": "object",
+    "properties": {
+        "fqlQuery": {
+            "description": "FQL string",
+            "type": "string"
+        },
+        "entityTypeId": {
+            "description": "Entity type identifier",
+            "type": "string",
+            "format": "uuid"
+        }
+    },
+    "required": [
+        "fqlQuery",
+        "entityTypeId"
+    ],
+    "additionalProperties": false
+}

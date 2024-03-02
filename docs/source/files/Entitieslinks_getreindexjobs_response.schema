@@ -1,0 +1,22 @@
+{
+    "description": "A collection of reindex jobs",
+    "type": "object",
+    "properties": {
+        "reindexJobs": {
+            "description": "List of reindex jobs",
+            "id": "reindexJob",
+            "type": "array",
+            "items": {
+                "$ref": "./reindexJobDto.yaml"
+            }
+        },
+        "totalRecords": {
+            "description": "Estimated or exact total number of records",
+            "type": "integer"
+        }
+    },
+    "required": [
+        "reindexJobs",
+        "totalRecords"
+    ]
+}

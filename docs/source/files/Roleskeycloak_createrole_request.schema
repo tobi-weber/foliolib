@@ -1,0 +1,29 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "role.json",
+    "title": "Role schema",
+    "description": "Role",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "Role identifier",
+            "type": "string",
+            "format": "uuid"
+        },
+        "name": {
+            "description": "A human-readable name/label for this role",
+            "type": "string"
+        },
+        "description": {
+            "description": "Free form description of the role",
+            "type": "string"
+        },
+        "metadata": {
+            "readOnly": true,
+            "$ref": "../common/metadata.json"
+        }
+    },
+    "required": [
+        "name"
+    ]
+}

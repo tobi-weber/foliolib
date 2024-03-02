@@ -1,0 +1,15 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "List Configuration Data",
+    "type": "object",
+    "properties": {
+        "maxListSize": {
+            "description": "Maximum allowable size of a list",
+            "type": "integer"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "maxListSize"
+    ]
+}

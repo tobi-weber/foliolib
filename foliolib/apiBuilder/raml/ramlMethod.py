@@ -10,8 +10,9 @@ from foliolib.apiBuilder.raml.exceptions import (RamlTraitDataError,
                                                  RamlTraitNotFound,
                                                  RamlUnknownDataType,
                                                  RamlUnknownStatusCode)
-from foliolib.okapi.exceptions import (OkapiFatalError, OkapiMoved,
-                                       OkapiRequestConflict, OkapiRequestError,
+from foliolib.okapi.exceptions import (OkapiMoved, OkapiRequestConflict,
+                                       OkapiRequestError,
+                                       OkapiRequestFatalError,
                                        OkapiRequestForbidden,
                                        OkapiRequestNotAcceptable,
                                        OkapiRequestNotFound,
@@ -149,8 +150,9 @@ class RamlMethod:
             log.error("No method data?")
 
     def _set_queryParameters(self, queryParameters):
-        log.debug("QueryParameters found")
-        self._data["queryParameters"].update(queryParameters)
+        if queryParameters is not None:
+            log.debug("QueryParameters found")
+            self._data["queryParameters"].update(queryParameters)
 
     def _set_responses(self, responses):
         for k, v in responses.items():
@@ -176,7 +178,7 @@ class RamlMethod:
             elif 400 <= k < 500:
                 self._data["errors"].append(RESPONSES[k])
             elif k >= 500:
-                self._data["errors"].append(OkapiFatalError)
+                self._data["errors"].append(OkapiRequestFatalError)
             else:
                 raise RamlUnknownStatusCode(str(k))
 

@@ -1,0 +1,31 @@
+{
+    "description": "The mail message that can be sent via mail",
+    "title": "Mail Entity Schema",
+    "type": "object",
+    "properties": {
+        "notificationId": {
+            "description": "notification ID",
+            "type": "string"
+        },
+        "from": {
+            "description": "sender's address",
+            "type": "string"
+        },
+        "to": {
+            "description": "receiver's address",
+            "type": "string"
+        },
+        "outputFormat": {
+            "description": "format type: `text/html` or `text/plain`",
+            "type": "string"
+        },
+        "body": {
+            "description": "text of email",
+            "type": "string"
+        }
+    },
+    "additionalProperties": true,
+    "required": [
+        "body"
+    ]
+}

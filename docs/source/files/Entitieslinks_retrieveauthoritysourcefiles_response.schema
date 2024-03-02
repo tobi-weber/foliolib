@@ -1,0 +1,21 @@
+{
+    "description": "A collection of authority source files",
+    "type": "object",
+    "properties": {
+        "authoritySourceFiles": {
+            "description": "List of authority source files",
+            "type": "array",
+            "items": {
+                "$ref": "./authoritySourceFileDto.yaml"
+            }
+        },
+        "totalRecords": {
+            "description": "Total amount of records",
+            "type": "integer"
+        }
+    },
+    "required": [
+        "authorityNoteTypes",
+        "totalRecords"
+    ]
+}

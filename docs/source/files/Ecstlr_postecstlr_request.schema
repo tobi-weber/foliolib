@@ -1,0 +1,81 @@
+{
+    "description": "ECS TLR - title level requests in a multi-tenant environment with \u0421onsortia support enabled",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "ID of the ECS TLR",
+            "$ref": "uuid.yaml"
+        },
+        "instanceId": {
+            "description": "ID of the instance being requested",
+            "$ref": "uuid.yaml"
+        },
+        "requesterId": {
+            "description": "ID of the requesting patron (user)",
+            "$ref": "uuid.yaml"
+        },
+        "requestType": {
+            "description": "Whether the item should be held upon return, recalled or paged for",
+            "type": "string",
+            "enum": [
+                "Hold",
+                "Recall",
+                "Page"
+            ]
+        },
+        "requestLevel": {
+            "description": "Level of the request - Item or Title",
+            "type": "string",
+            "enum": [
+                "Item",
+                "Title"
+            ]
+        },
+        "requestExpirationDate": {
+            "description": "Date when the request expires",
+            "type": "string",
+            "format": "date-time"
+        },
+        "requestDate": {
+            "description": "Date when the request was placed",
+            "type": "string",
+            "format": "date-time"
+        },
+        "patronComments": {
+            "description": "Comments made by the patron",
+            "type": "string"
+        },
+        "fulfillmentPreference": {
+            "description": "How should the request be fulfilled (whether the item should be kept on the hold shelf for collection or delivered to the requester)",
+            "type": "string",
+            "enum": [
+                "Hold Shelf",
+                "Delivery"
+            ]
+        },
+        "pickupServicePointId": {
+            "description": "The ID of the Service Point where this request can be picked up",
+            "$ref": "uuid.yaml"
+        },
+        "itemId": {
+            "description": "ID of the item being requested",
+            "$ref": "uuid.yaml"
+        },
+        "secondaryRequestId": {
+            "description": "Secondary request ID",
+            "$ref": "uuid.yaml"
+        },
+        "secondaryRequestTenantId": {
+            "description": "ID of the tenant secondary request was created in",
+            "type": "string"
+        }
+    },
+    "required": [
+        "instanceId",
+        "requesterId",
+        "requestType",
+        "requestLevel",
+        "fulfillmentPreference",
+        "requestDate"
+    ]
+}

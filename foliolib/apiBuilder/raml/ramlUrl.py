@@ -54,8 +54,8 @@ class RamlUrl:
             if resourceType in self._ramlGlobals["resourceTypes"]:
 
                 globalMethods = self._ramlGlobals["resourceTypes"][resourceType]
-                # print(self._data)
-                # print(globalMethods)
+                #print(json.dumps(globalMethods, indent=2))
+                #print(json.dumps(self._data, indent=2))
                 globalMethods = merge_dict(globalMethods,
                                            self._data)
                 methods = [k for k in globalMethods if k in [

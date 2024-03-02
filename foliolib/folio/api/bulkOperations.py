@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -34,7 +34,7 @@ class Bulkoperations(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
 
         Schema:
 
@@ -51,6 +51,29 @@ class Bulkoperations(FolioApi):
         
         return self.call("POST", f"/bulk-operations/upload", data=data, query=kwargs)
 
+    def triggerbulkeditbyquery(self, queryRequest):
+        """Trigger bulk edit by query
+
+        ``POST /bulk-operations/query``
+
+        Args:
+            queryRequest (dict): See Schema below.
+
+        Returns:
+            dict: See Schema below.
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnprocessableEntity: Unprocessable entity
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
+
+        Schema:
+
+            .. literalinclude:: ../files/Bulkoperations_triggerbulkeditbyquery_request.schema
+            .. literalinclude:: ../files/Bulkoperations_triggerbulkeditbyquery_request.schema_response.schema
+        """
+        return self.call("POST", f"/bulk-operations/query", queryRequest)
+
     def postcontentupdates(self, operationId, bulkOperationRuleCollection):
         """Upload content updates
 
@@ -66,7 +89,7 @@ class Bulkoperations(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not found
-            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
 
         Schema:
 
@@ -93,7 +116,7 @@ class Bulkoperations(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: Not found
-            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
 
         Schema:
 
@@ -116,7 +139,7 @@ class Bulkoperations(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: Bad Request
-            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
 
         Schema:
 
@@ -141,7 +164,7 @@ class Bulkoperations(FolioApi):
 
         Raises:
             OkapiRequestNotFound: No found
-            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
 
         Schema:
 
@@ -163,7 +186,7 @@ class Bulkoperations(FolioApi):
             dict: See Schema below.
 
         Raises:
-            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
 
         Schema:
 
@@ -185,7 +208,7 @@ class Bulkoperations(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not found
-            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
         """
         return self.call("GET", f"/bulk-operations/{operationId}/download", query=kwargs)
 
@@ -202,7 +225,7 @@ class Bulkoperations(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not found
-            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
 
         Schema:
 
@@ -216,6 +239,57 @@ class Bulkoperations(FolioApi):
         ``POST /bulk-operations/clean-up-log-files``
 
         Raises:
-            OkapiFatalError: Internal server errors, e.g. due to misconfiguration
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
         """
         return self.call("POST", "/bulk-operations/clean-up-log-files")
+
+    def getlistusers(self, **kwargs):
+        """Get a list of users
+
+        ``GET /bulk-operations/list-users``
+
+        Keyword Args:
+            query (str): Request query
+            offset (int): Query offset
+            limit (int): Query limit
+
+        Returns:
+            dict: See Schema below.
+
+        Raises:
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
+
+        Schema:
+
+            .. literalinclude:: ../files/Bulkoperations_getlistusers_response.schema
+        """
+        return self.call("GET", "/bulk-operations/list-users", query=kwargs)
+
+    def deletefilebynameandoperationid(self, operationId, fileName):
+        """Delete file by name and bulk operation id
+
+        ``DELETE /bulk-operations/{operationId}/files/{fileName}``
+
+        Args:
+            operationId (str): UUID of the Bulk Operation (format: uuid)
+            fileName (str): File name
+
+        Raises:
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
+        """
+        return self.call("DELETE", f"/bulk-operations/{operationId}/files/{fileName}")
+
+    def canceloperationbyid(self, operationId):
+        """Cancel bulk operation by id
+
+        ``POST /bulk-operations/{operationId}/cancel``
+
+        Args:
+            operationId (str): UUID of the Bulk Operation (format: uuid)
+
+        Raises:
+            OkapiRequestNotFound: Not found
+            OkapiRequestError: Bad request
+            OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
+        """
+        return self.call("POST", f"/bulk-operations/{operationId}/cancel")

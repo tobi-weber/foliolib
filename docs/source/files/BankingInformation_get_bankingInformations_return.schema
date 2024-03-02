@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Collection of banking information records",
+  "type": "object",
+  "properties": {
+    "bankingInformation": {
+      "description": "The list of banking information in this collection",
+      "type": "array",
+      "id": "bankingInformation",
+      "items": {
+        "type": "object",
+        "$ref": "banking_information.json"
+      }
+    },
+    "totalRecords": {
+      "description": "The number of banking information records returned in this collection",
+      "type": "integer"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "bankingInformation",
+    "totalRecords"
+  ]
+}

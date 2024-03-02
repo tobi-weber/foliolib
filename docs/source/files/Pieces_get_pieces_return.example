@@ -3,7 +3,7 @@
     [
      {
         "id": "5e317dc2-deeb-4429-b2a1-91e5cd0fd5f7",
-        "caption": "Tutorial Volume 1",
+        "displaySummary": "Tutorial Volume 1",
         "comment": "Special Edition",
         "format": "Electronic",
         "itemId": "522a501a-56b5-48d9-b28a-3a8f02482d97",
@@ -13,15 +13,22 @@
         "displayOnHolding": false,
         "enumeration": "Volume 1",
         "chronology": "2021",
+        "barcode": "0987654111",
+        "accessionNumber": "2015.1",
+        "callNumber": "BF2050 .M335 2000",
         "discoverySuppress": false,
         "copyNumber": "175143",
         "receiptDate": "2020-01-10T00:00:00.000Z",
-        "receivingStatus": "Expected",
+        "receivingStatus": "Unreceivable",
+        "claimingInterval": 0,
+        "internalNote": "Internal note for Send Claim action",
+        "externalNote": "External note for Send Claim action to share with Vendor",
+        "statusUpdatedDate": "2020-01-10T00:00:00.000Z",
         "supplement": true
      },
      {
         "id": "9ff85e44-a7e2-44b8-86e4-1ab8e9862f22",
-        "caption": "Tutorial Volume 2",
+        "displaySummary": "Tutorial Volume 2",
         "comment": "Limited edition",
         "format": "Physical",
         "itemId": "fefa55b1-a4b3-4f2f-b7a0-39efd7cab54c",
@@ -31,16 +38,21 @@
         "displayOnHolding": false,
         "enumeration": "Volume 2",
         "chronology": "2021",
+        "barcode": "0987654222",
+        "accessionNumber": "2015.2",
+        "callNumber": "BF2050 .M335 2001",
         "discoverySuppress": false,
         "copyNumber": "186323",
         "receiptDate": "2018-10-11T00:00:00.000Z",
         "receivingStatus": "Received",
         "supplement": true,
-        "receivedDate": "2018-10-10T00:00:00.000Z"
+        "receivedDate": "2018-10-10T00:00:00.000Z",
+        "claimingInterval": 0,
+        "statusUpdatedDate": "2018-10-10T00:00:00.000Z"
       },
       {
         "id": "fabc8ce7-e168-43e6-a079-b214231b8001",
-        "caption": "Tutorial Volume 3",
+        "displaySummary": "Tutorial Volume 3",
         "comment": "Deluxe Edition",
         "format": "Other",
         "poLineId": "d471d766-8dbb-4609-999a-02681dea6c22",
@@ -49,12 +61,17 @@
         "displayOnHolding": true,
         "enumeration": "Volume 3",
         "chronology": "2022",
+        "barcode": "0987654333",
+        "accessionNumber": "2015.3",
+        "callNumber": "BF2050 .M335 2002",
         "discoverySuppress": true,
         "copyNumber": "108572",
-        "receivingStatus": "Received",
+        "receivingStatus": "Late",
         "supplement": true,
         "receiptDate": "2018-10-11T00:00:00.000Z",
-        "receivedDate": "2018-10-10T00:00:00.000Z"
+        "receivedDate": "2018-10-10T00:00:00.000Z",
+        "claimingInterval": 0,
+        "statusUpdatedDate": "2018-10-11T00:00:00.000Z"
       }
     ],
   "totalRecords": 3

@@ -1,5 +1,6 @@
 {
   "name": "main",
+  "description": "main desc",
   "isDeleted": false,
   "protectCreate": true,
   "protectRead": false,

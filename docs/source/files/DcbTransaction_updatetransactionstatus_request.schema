@@ -1,0 +1,21 @@
+{
+    "type": "object",
+    "properties": {
+        "status": {
+            "type": "string",
+            "enum": [
+                "CREATED",
+                "OPEN",
+                "AWAITING_PICKUP",
+                "ITEM_CHECKED_OUT",
+                "ITEM_CHECKED_IN",
+                "CLOSED",
+                "CANCELLED",
+                "ERROR"
+            ]
+        },
+        "message": {
+            "type": "string"
+        }
+    }
+}

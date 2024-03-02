@@ -3,9 +3,10 @@
 
 import json
 import logging
-import os
+import re
 from threading import Thread
 
+from foliolib.okapi.exceptions import OkapiRequestError
 from foliolib.okapi.okapiClient import OkapiClient
 from foliolib.okapi.okapiModule import (OkapiModule, create_okapiModule,
                                         sort_modules_by_requirements)
@@ -28,19 +29,83 @@ def load_install_file(install_file: str):
     return modules
 
 
-def add_modules(modules: list):
-    """Add module to okapi.
+def add_modules(modules: list, resolve_incompatible=False):
+    """Add modules to okapi.
 
     Args:
         modules (list): Instances of OkapiModule.
     """
+    def resolve_incompatible(err):
+        log.debug("Resolve incompatible interface error: \n%s" % str(err))
+        _modules = []
+        for l in str(err).split("\n"):
+            p = re.compile("Incompatible version for module (.*) interface (.*). Need (.*)")
+            r =p.search(l)
+            interface = r.group(2)
+            for module in modules:
+                if interface in module.get_provides():
+                    _modules.append(module)
+        return _modules
+
+    def add_module(module):
+        log.info("Add %s", module.get_id())
+        try:
+            OkapiClient().add_module(module)
+        except OkapiRequestError as err:
+            if resolve_incompatible and "Incompatible version" in str(err):
+                #add_module(resolve_incompatible(module, err))
+                for _module in resolve_incompatible(err):
+                    log.info("Add module %s failed with incompatible version error. Try to resolve ..." % module.get_id())
+                    add_module(_module)
+                add_module(module)
+            else:
+                raise
+
     for module in sort_modules_by_requirements(modules):
         if OkapiClient().is_module_added(module):
-            log.warning("%s is already added", module.get_id())
+            log.debug("%s is already added", module.get_id())
         else:
-            log.info("Add %s", module.get_id())
-            OkapiClient().add_module(module)
+            add_module(module)
 
+def remove_module(modules: list, resolve_incompatible = False):
+    """Remove modules to okapi.
+
+    Args:
+        modules (list): Instances of OkapiModule.
+    """
+    def resolve_incompatible(err):
+        log.debug("Resolve incompatible version error: \n%s" % str(err))
+        modIds = []
+        err = str(err)
+        for l in err.split("\n"):
+            if l.startswith("delete: module"):
+                if "Missing dependency" in l:
+                    p = re.compile("delete: module (.*): Missing dependency: (.*) requires (.*)")
+                else:
+                    p = re.compile("delete: module (.*): Incompatible version for module (.*) interface (.*)")
+                r = p.search(l)
+            modId = r.group(2)
+            modIds.append(modId)
+        return modIds
+    
+    def remove(modId):
+        try:
+            log.info("Remove %s", modId)
+            OkapiClient().remove_module(modId)
+        except OkapiRequestError as err:
+            if resolve_incompatible and "Incompatible version" in str(err):
+                log.info("Remove for %s failed with incompatible version. Try to resolve ..." % modId)
+                for _modId in resolve_incompatible(err):
+                    remove(_modId)
+                remove(modId)#
+        except:
+            raise
+
+
+    modules = sort_modules_by_requirements(modules)
+    modules.reverse()
+    for module in modules:
+        remove( module.get_id())
 
 def deploy_modules(modules: list, node: str = None):
     """Deploy modules.
@@ -52,7 +117,7 @@ def deploy_modules(modules: list, node: str = None):
     for module in sort_modules_by_requirements(modules):
         if module.has_launchDescriptor():
             if OkapiClient().is_module_deployed(module.get_id()):
-                log.warning("%s is already deployed", module.get_id())
+                log.debug("%s is already deployed", module.get_id())
             else:
                 log.info("Deploy %s", module.get_id())
                 OkapiClient().deploy_module(module.get_id(), node)
@@ -88,7 +153,7 @@ def deploy_modules_async(modules: list, node: str = None):
     for module in sort_modules_by_requirements(modules):
         if module.has_launchDescriptor():
             if OkapiClient().is_module_deployed(module.get_id()):
-                log.warning("%s is already deployed", module.get_id())
+                log.debug("%s is already deployed", module.get_id())
             else:
                 log.info("Deploy %s", module.get_id())
                 t = Deploy(module, node)
@@ -98,6 +163,20 @@ def deploy_modules_async(modules: list, node: str = None):
     for t in threads:
         t.join()
     log.info("Deploy done.")
+
+
+def undeploy_modules(modules: list):
+    """Undeploy modules.
+
+    Args:
+        modules (list): Instances of OkapiModule.
+        node (str, optional): The node id on which module should be deployed. Default first node from nodes list.
+    """
+
+    for mod in sort_modules_by_requirements(modules):
+        modId = mod.get_id()
+        log.info("Undeploy %s", modId)
+        OkapiClient().undeploy_module(modId)
 
 
 def enable_modules(tenantid: str, modules: list, loadSample: bool = False, loadReference: bool = False, **kwargs):
@@ -129,7 +208,7 @@ def enable_modules(tenantid: str, modules: list, loadSample: bool = False, loadR
         if isinstance(module, OkapiModule):
             module = module.get_id()
         if OkapiClient().is_module_enabled(module, tenantid):
-            log.warning(
+            log.debug(
                 "Module %s is already enabled for tenant %s", module, tenantid)
         else:
             log.info("Enable %s", module)

@@ -1,0 +1,92 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Record DTO Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "UUID",
+      "$ref": "../../raml-util/schemas/uuid.schema"
+    },
+    "snapshotId": {
+      "description": "Corresponding snapshot id, which is the same as jobExecutionId",
+      "$ref": "../../raml-util/schemas/uuid.schema"
+    },
+    "matchedId": {
+      "description": "Represents relations with another matched records, necessary for saving the history of applying changes for inventory/holding/etc records",
+      "$ref": "../../raml-util/schemas/uuid.schema"
+    },
+    "generation": {
+      "description": "Generation from the last record with the same matchedId incremented by 1. Starts from 0.",
+      "type": "integer"
+    },
+    "recordType": {
+      "description": "Type of record, e.g. MARC",
+      "type": "string",
+      "$ref": "../mod-source-record-storage/recordType.json"
+    },
+    "rawRecord": {
+      "description": "Raw record",
+      "type": "object",
+      "$ref": "../mod-source-record-storage/rawRecord.json"
+    },
+    "parsedRecord": {
+      "description": "Parsed record",
+      "type": "object",
+      "$ref": "../mod-source-record-storage/parsedRecord.json"
+    },
+    "errorRecord": {
+      "description": "Error record",
+      "type": "object",
+      "$ref": "../mod-source-record-storage/errorRecord.json"
+    },
+    "deleted": {
+      "description": "Flag indicates that the record marked as deleted",
+      "type": "boolean",
+      "default": false
+    },
+    "order": {
+      "description": "Order of the record in imported file",
+      "type": "integer",
+      "minimum": 0
+    },
+    "externalIdsHolder": {
+      "description": "Container for identifiers of external entities",
+      "type": "object",
+      "$ref": "../common/externalIdsHolder.json"
+    },
+    "additionalInfo": {
+      "description": "Auxiliary data which is not related to MARC type record",
+      "type": "object",
+      "$ref": "../mod-source-record-storage/additionalInfo.json"
+    },
+    "state": {
+      "description": "This field represents the actual state of a particular SRS record. Can be: ACTUAL, OLD, DRAFT, DELETED. ",
+      "type": "string",
+      "enum": [
+        "ACTUAL",
+        "OLD",
+        "DRAFT",
+        "DELETED"
+      ],
+      "default": "ACTUAL"
+    },
+    "leaderRecordStatus": {
+      "description": "Single character representing MARC leader 05",
+      "type": "string",
+      "pattern": "^[a|c|d|n|p|o|s|x]{1}$"
+    },
+    "metadata": {
+      "description": "Metadata provided by the server",
+      "type": "object",
+      "$ref": "../../raml-util/schemas/metadata.schema",
+      "readonly": true
+    }
+  },
+  "required": [
+    "snapshotId",
+    "matchedId",
+    "recordType",
+    "rawRecord"
+  ]
+}

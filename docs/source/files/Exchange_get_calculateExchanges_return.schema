@@ -1,0 +1,5 @@
+{
+  "type": "number",
+  "description": "Exchange calculation expressed as a total calculation of exchange",
+  "example": 99.95
+}

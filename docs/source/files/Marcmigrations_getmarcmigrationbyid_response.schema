@@ -1,0 +1,52 @@
+{
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "ID of migration operation",
+            "type": "string",
+            "format": "uuid"
+        },
+        "userId": {
+            "description": "ID of user that created the migration operation",
+            "type": "string",
+            "format": "uuid"
+        },
+        "entityType": {
+            "$ref": "#/components/schemas/EntityType"
+        },
+        "operationType": {
+            "$ref": "#/components/schemas/OperationType"
+        },
+        "status": {
+            "$ref": "#/components/schemas/MigrationOperationStatus"
+        },
+        "totalNumOfRecords": {
+            "description": "Total number of records that will be migrated",
+            "type": "integer"
+        },
+        "processedNumOfRecords": {
+            "description": "Total number of migrated records",
+            "type": "integer"
+        },
+        "startTimeMapping": {
+            "description": "Start time of mapping step of migration",
+            "type": "string",
+            "format": "date-time"
+        },
+        "endTimeMapping": {
+            "description": "End time of mapping step of migration",
+            "type": "string",
+            "format": "date-time"
+        },
+        "startTimeSaving": {
+            "description": "Start time of saving step of migration",
+            "type": "string",
+            "format": "date-time"
+        },
+        "endTimeSaving": {
+            "description": "End time of saving step of migration",
+            "type": "string",
+            "format": "date-time"
+        }
+    }
+}

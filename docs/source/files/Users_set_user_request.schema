@@ -26,7 +26,7 @@
       "type": "boolean"
     },
     "type": {
-      "description": "The class of user like staff or patron; this is different from patronGroup",
+      "description": "The class of user like staff or patron; this is different from patronGroup; it can store shadow, system user and dcb types also",
       "type": "string"
     },
     "patronGroup": {
@@ -145,6 +145,11 @@
         "preferredContactTypeId": {
           "description": "Id of user's preferred contact type like Email, Mail or Text Message, see /addresstypes API",
           "type": "string"
+        },
+        "profilePictureLink": {
+          "description": "Link to the profile picture",
+          "type": "string",
+          "format": "uri"
         }
       },
       "additionalProperties": false,

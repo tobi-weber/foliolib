@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -28,7 +28,7 @@ class Contribution(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request, e.g. malformed query parameter.
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -47,7 +47,7 @@ class Contribution(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request, e.g. malformed query parameter.
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
         """
         return self.call("DELETE", f"/inn-reach/central-servers/{centralServerId}/contributions/current")
 
@@ -68,7 +68,7 @@ class Contribution(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request, e.g. malformed query parameter.
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -86,7 +86,7 @@ class Contribution(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
         """
         return self.call("POST", f"/inn-reach/central-servers/{centralServerId}/contributions")
 
@@ -112,7 +112,7 @@ class Settings(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestConflict: Item state conflict
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -134,7 +134,7 @@ class Settings(FolioApi):
             dict: See Schema below.
 
         Raises:
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -152,7 +152,7 @@ class Settings(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -172,7 +172,7 @@ class Settings(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -188,7 +188,7 @@ class Settings(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
         """
         return self.call("DELETE", f"/inn-reach/central-servers/{centralServerId}")
 
@@ -209,7 +209,7 @@ class Settings(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request, e.g. malformed query parameter.
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -233,7 +233,7 @@ class Settings(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestConflict: Item state conflict
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -254,7 +254,7 @@ class Settings(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestConflict: Item state conflict
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -275,7 +275,7 @@ class Settings(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -296,7 +296,7 @@ class Settings(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -315,7 +315,7 @@ class Settings(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
         """
         return self.call("DELETE", f"/inn-reach/central-servers/{centralServerId}/material-type-mappings/{id_}")
 
@@ -332,7 +332,7 @@ class Settings(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -354,7 +354,7 @@ class Settings(FolioApi):
             dict: See Schema below.
 
         Raises:
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -372,7 +372,7 @@ class Settings(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -392,7 +392,7 @@ class Settings(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -408,7 +408,7 @@ class Settings(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
         """
         return self.call("DELETE", f"/inn-reach/locations/{locationId}")
 
@@ -429,7 +429,7 @@ class Settings(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request, e.g. malformed query parameter.
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -450,7 +450,7 @@ class Settings(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestConflict: Item state conflict
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -476,7 +476,7 @@ class Settings(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request, e.g. malformed query parameter.
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -498,7 +498,7 @@ class Settings(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestConflict: Item state conflict
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -516,7 +516,7 @@ class Settings(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request, e.g. malformed query parameter.
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
         """
         return self.call("GET", f"/inn-reach/central-servers/{centralServerId}/libraries/locations/location-mappings")
 
@@ -533,7 +533,7 @@ class Settings(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -557,7 +557,7 @@ class Settings(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestConflict: Item state conflict
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -576,7 +576,7 @@ class Settings(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
         """
         return self.call("DELETE", f"/inn-reach/central-servers/{centralServerId}/contribution-criteria")
 
@@ -594,7 +594,7 @@ class Settings(FolioApi):
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Item not found
             OkapiRequestConflict: Item state conflict
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -613,7 +613,7 @@ class Settings(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestUnauthorized: Unauthorized
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -634,7 +634,7 @@ class Settings(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -655,7 +655,7 @@ class Settings(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -678,7 +678,7 @@ class Settings(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -699,7 +699,7 @@ class Settings(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request, e.g. malformed query parameter.
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -720,7 +720,7 @@ class Settings(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestConflict: Item state conflict
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -741,7 +741,7 @@ class Settings(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -762,7 +762,7 @@ class Settings(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -785,7 +785,7 @@ class Settings(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -804,7 +804,7 @@ class Settings(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
         """
         return self.call("DELETE", f"/inn-reach/central-servers/{centralServerId}/marc-transformation-options")
 
@@ -821,7 +821,7 @@ class Settings(FolioApi):
             dict: See Schema below.
 
         Raises:
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -845,7 +845,7 @@ class Settings(FolioApi):
             dict: See Schema below.
 
         Raises:
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -866,7 +866,7 @@ class Settings(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -888,7 +888,7 @@ class Settings(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -912,7 +912,7 @@ class Settings(FolioApi):
             dict: See Schema below.
 
         Raises:
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -933,7 +933,7 @@ class Settings(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -953,7 +953,7 @@ class Settings(FolioApi):
             dict: See Schema below.
 
         Raises:
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -974,7 +974,7 @@ class Settings(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -997,7 +997,7 @@ class Settings(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1021,7 +1021,7 @@ class Settings(FolioApi):
             dict: See Schema below.
 
         Raises:
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1042,7 +1042,7 @@ class Settings(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1064,7 +1064,7 @@ class Settings(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1085,7 +1085,7 @@ class Settings(FolioApi):
             dict: See Schema below.
 
         Raises:
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1106,7 +1106,7 @@ class Settings(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1127,7 +1127,7 @@ class Settings(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1148,7 +1148,7 @@ class Settings(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1171,7 +1171,7 @@ class Settings(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1192,7 +1192,7 @@ class Settings(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1213,7 +1213,7 @@ class Settings(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1231,7 +1231,7 @@ class Settings(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1257,7 +1257,7 @@ class Circulation(FolioApi):
             dict: See Schema below.
 
         Raises:
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1274,7 +1274,7 @@ class Circulation(FolioApi):
             dict: See Schema below.
 
         Raises:
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1291,7 +1291,7 @@ class Circulation(FolioApi):
             dict: See Schema below.
 
         Raises:
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1312,7 +1312,7 @@ class Circulation(FolioApi):
             dict: See Schema below.
 
         Raises:
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1335,7 +1335,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestError: An error occurred during creation of transaction record
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1359,7 +1359,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request, e.g. malformed query parameter.
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1377,7 +1377,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1396,7 +1396,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1417,7 +1417,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1439,7 +1439,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1457,7 +1457,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
         """
         return self.call("POST", f"/inn-reach/transactions/{id_}/itemhold/finalcheckin/{servicePointId}")
 
@@ -1471,7 +1471,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
         """
         return self.call("POST", f"/inn-reach/transactions/{id_}/itemhold/transfer-item/{itemId}")
 
@@ -1488,7 +1488,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1509,7 +1509,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1531,7 +1531,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1552,7 +1552,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1568,7 +1568,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
         """
         return self.call("POST", f"/inn-reach/transactions/{id_}/itemhold/recall")
 
@@ -1582,7 +1582,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
         """
         return self.call("POST", f"/inn-reach/transactions/{id_}/patronhold/return-item/{servicePointId}")
 
@@ -1596,7 +1596,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1617,7 +1617,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1638,7 +1638,7 @@ class Circulation(FolioApi):
             dict: See Schema below.
 
         Raises:
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1662,7 +1662,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestError: An error occurred during processing the request
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1686,7 +1686,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestError: An error occurred during processing the request
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1710,7 +1710,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestError: An error occurred during processing the request
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1734,7 +1734,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestError: An error occurred during processing the request
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1758,7 +1758,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestError: An error occurred during processing the request
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1805,7 +1805,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestError: An error occurred during processing the request
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1829,7 +1829,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestError: An error occurred during processing the request
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1853,7 +1853,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestError: An error occurred during processing the request
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1877,7 +1877,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestError: An error occurred during processing the request
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1901,7 +1901,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestError: An error occurred during processing the request
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1925,7 +1925,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestError: An error occurred during processing the request
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1949,7 +1949,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestError: An error occurred during processing the request
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1973,7 +1973,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestError: An error occurred during processing the request
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -1997,7 +1997,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestError: An error occurred during processing the request
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -2019,7 +2019,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -2040,7 +2040,7 @@ class Circulation(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Item not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 

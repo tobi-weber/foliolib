@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2023 Tobias Weber <tobi-weber@gmx.de>
+# Copyright (C) 2024 Tobias Weber <tobi-weber@gmx.de>
 
 import os
 import sys
 
 from foliolib import set_logging
 from foliolib.config import Config
-from foliolib.okapi.exceptions import (OkapiFatalError, OkapiNotReachable,
+from foliolib.okapi.exceptions import (OkapiNotReachable,
+                                       OkapiRequestFatalError,
                                        OkapiRequestForbidden,
                                        OkapiRequestNotFound,
                                        OkapiRequestUnauthorized)
@@ -51,79 +52,60 @@ def __check_okapi():
         return 3
     except OkapiNotReachable:
         return 11
-    except OkapiFatalError as e:
+    except OkapiRequestFatalError as e:
         print(e)
         return 12
 
 
-def __confirmation():
-    if not Config().servercfg().getboolean("Cli", "confirm", fallback=True):
-        return True
-    confirmFile = os.path.join(Config().get_confdir(), ".confirm")
-    confirmServer = None
-    if os.path.exists(confirmFile):
-        with open(confirmFile, encoding="utf8") as f:
-            confirmServer = f.read()
-    if len(sys.argv) > 2:
-        if confirmServer is not None:
-            if Config().get_server() == confirmServer:
-                return True
-            else:
-                os.remove(confirmFile)
-        confirm = input(
-            "== Do you want to continue [%s]? [y/n/a] " % (" ".join(sys.argv[1:])))
-        if confirm == "y":
-            return True
-        elif confirm == "n":
-            return False
-        elif confirm == "a":
-            with open(confirmFile, "w", encoding="utf8") as f:
-                confirmServer = f.write(Config().get_server())
-            return True
-        else:
-            return False
-    else:
-        return True
+def __admin_cli():
+    from foliolib.cli.admin import admin
+    admin()
 
 
-def __run_cli():
-    from foliolib.cli.main import main
-    main()
+def __folio_cli():
+    from foliolib.cli.folio import folio
+    folio()
 
 
-def __run_auth_cli():
-    from foliolib.cli.main_noauth import main
-    main()
+def __noauth_cli():
+    from foliolib.cli.admin import noauth
+    noauth()
 
 
-def __run_err_cli():
-    from foliolib.cli.main_err import main
-    main()
+def __err_cli():
+    from foliolib.cli.err_cli import err
+    err()
 
 
 def cli():
     if __load_config():
         if len(sys.argv) > 1 and sys.argv[1] == "server":
-            __run_err_cli()
+            __err_cli()
         check_okapi = __check_okapi()
         if len(sys.argv) == 1:
             print(
                 f"\n== Active server is {Config().get_server()} - {Config().get_url()}\n")
             if Config().is_kubernetes():
                 print("== Kubernetes is enabled.\n")
-        if check_okapi == 1:
-            if not __confirmation():
+        if Config().servercfg().getboolean("Cli", "isAdmin", fallback=False):
+            if check_okapi == 1:
+                __admin_cli()
                 return
-            __run_cli()
-            return
-        elif check_okapi == 2:
-            if len(sys.argv) == 1:
-                print("== No valid supertenant authentication avialable!\n")
-            __run_auth_cli()
-            return
-        elif check_okapi == 3:
-            print("Okapi is not ready ...\n")
-            return
-        elif check_okapi > 10:
-            print("Okapi/Server not running?\n")
-    __run_err_cli()
+            elif check_okapi == 2:
+                if len(sys.argv) == 1:
+                    print("== No valid supertenant authentication avialable!\n")
+                __noauth_cli()
+                return
+            elif check_okapi == 3:
+                print("Okapi is not ready ...\n")
+            elif check_okapi > 10:
+                print("Okapi/Server not running?\n")
+        else:
+            if check_okapi in [1, 2]:
+                __folio_cli()
+                return
+            elif check_okapi == 3:
+                print("Okapi is not ready ...\n")
+            elif check_okapi > 10:
+                print("Okapi/Server not running?\n")
+    __err_cli()

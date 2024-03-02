@@ -101,6 +101,14 @@
         "$ref": "../../common/schemas/uuid.json"
       }
     },
+    "privilegedContacts": {
+      "description": "An array of privileged contact record IDs",
+      "type": "array",
+      "items": {
+        "description": "UUID of a privileged contact record",
+        "$ref": "../../common/schemas/uuid.json"
+      }
+    },
     "agreements": {
       "id": "agreement",
       "description": "The the list of agreements for this organization",
@@ -401,6 +409,12 @@
     "isVendor": {
       "id": "isVendor",
       "description": "Used to indicate that this organization is also a vendor",
+      "type": "boolean",
+      "default": false
+    },
+    "isDonor": {
+      "id": "isDonor",
+      "description": "Used to designate whether this organization is a donor",
       "type": "boolean",
       "default": false
     },

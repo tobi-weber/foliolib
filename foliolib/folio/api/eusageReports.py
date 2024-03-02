@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -25,7 +25,7 @@ class Eusagereports(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -44,7 +44,7 @@ class Eusagereports(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -62,7 +62,7 @@ class Eusagereports(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -84,7 +84,7 @@ class Eusagereports(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -103,7 +103,7 @@ class Eusagereports(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -121,7 +121,7 @@ class Eusagereports(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -143,7 +143,7 @@ class Eusagereports(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -163,7 +163,7 @@ class Eusagereports(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -182,7 +182,7 @@ class Eusagereports(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -201,7 +201,7 @@ class Eusagereports(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -220,7 +220,7 @@ class Eusagereports(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -239,7 +239,7 @@ class Eusagereports(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 

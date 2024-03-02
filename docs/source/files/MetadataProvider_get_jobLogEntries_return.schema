@@ -1,15 +1,15 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "description": "Collection of job summary log entries",
+  "description": "Collection of record processing logs",
   "type": "object",
   "additionalProperties": false,
   "properties": {
     "entries": {
-      "description": "List of jobExecution summary log entries",
+      "description": "List of of record processing logs",
       "type": "array",
       "id": "entries",
       "items": {
-        "$ref": "jobLogEntryDto.json"
+        "$ref": "recordProcessingLogDto.json"
       }
     },
     "totalRecords": {

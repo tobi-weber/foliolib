@@ -93,6 +93,11 @@ class OkapiRequestPayloadToLarge(OkapiRequestError):
     Status code = 413
     """
 
+class OkapiRequestUnsupportedMediaType(OkapiRequestError):
+    description = "Unsupported Media Type"
+    """
+    Status code = 415
+    """
 
 class OkapiRequestUnprocessableEntity(OkapiRequestError):
     description = "Unprocessable Entity"
@@ -101,8 +106,13 @@ class OkapiRequestUnprocessableEntity(OkapiRequestError):
     """
 
 
-class OkapiFatalError(OkapiRequestError):
+class OkapiRequestFatalError(OkapiRequestError):
     description = "Server Error"
+
+
+class OkapiRequestNotImplemented(OkapiRequestError):
+    description = "Server Error: Not implemented"
+
 
 
 class TenantNotFound(OkapiException):

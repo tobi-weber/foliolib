@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -59,7 +59,7 @@ class Patron(FolioApi):
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestNotFound: Not Found
             OkapiRequestForbidden: Forbidden
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -85,7 +85,7 @@ class Patron(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestForbidden: Forbidden
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -113,7 +113,7 @@ class Patron(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestForbidden: Forbidden
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -141,7 +141,7 @@ class Patron(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestForbidden: Forbidden
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -149,6 +149,29 @@ class Patron(FolioApi):
             .. literalinclude:: ../files/Patron_set_hold_request.schema
         """
         return self.call("POST", f"/patron/account/{accountId}/instance/{instanceId}/hold", data=hold)
+
+    def get_allowedServicePoints_by_account(self, accountId: str, instanceId: str):
+        """Returns a list of pickup service points allowed for a particular patron and instance
+
+        ``GET /patron/account/{accountId}/instance/{instanceId}/allowed-service-points``
+
+        Args:
+            accountId (str)
+            instanceId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiRequestFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/Patron_get_allowedServicePoints_by_account_return.schema 
+        """
+        return self.call("GET", f"/patron/account/{accountId}/instance/{instanceId}/allowed-service-points")
 
     def set_cancel(self, accountId: str, holdId: str, cancel: dict):
         """cancels the request
@@ -170,7 +193,7 @@ class Patron(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestConflict: Conflict
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 

@@ -137,6 +137,15 @@
             "description": "Were logs expired",
             "type": "boolean",
             "default": false
+        },
+        "fqlQueryId": {
+            "description": "FQL query identifier",
+            "type": "string",
+            "format": "uuid"
+        },
+        "fqlQuery": {
+            "description": "FQL query string",
+            "type": "string"
         }
     },
     "additionalProperties": false,

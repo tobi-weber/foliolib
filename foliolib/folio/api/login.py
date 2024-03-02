@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -27,7 +27,7 @@ class Login(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -36,7 +36,7 @@ class Login(FolioApi):
         return self.call("GET", f"/authn/loginAttempts/{loginAttemptsId}")
 
     def set_login(self, login: dict):
-        """Get a new login token
+        """Deprecated. Please use login-with-expiry instead. Will be removed in a future release. Get a new login token without an expiration (legacy endpoint)
 
         ``POST /authn/login``
 
@@ -48,11 +48,12 @@ class Login(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
+            OkapiRequestNotFound: Not Found
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Headers:
-            - **x-okapi-token**             - **refreshtoken** 
+            - **x-okapi-token** 
 
         Schema:
 
@@ -60,6 +61,79 @@ class Login(FolioApi):
             .. literalinclude:: ../files/Login_set_login_return.schema 
         """
         return self.call("POST", "/authn/login", data=login)
+
+    def set_loginWithExpiry(self, loginWithExpiry: dict):
+        """Get an expiring refresh and access token
+
+        ``POST /authn/login-with-expiry``
+
+        Args:
+            loginWithExpiry (dict): See Schema below
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestNotFound: Not Found
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiRequestFatalError: Server Error
+
+        Headers:
+            - **Set-Cookie** - access token cookie and refresh token cookie
+
+        Schema:
+
+            .. literalinclude:: ../files/Login_set_loginWithExpiry_request.schema
+            .. literalinclude:: ../files/Login_set_loginWithExpiry_return.schema 
+        """
+        return self.call("POST", "/authn/login-with-expiry", data=loginWithExpiry)
+
+    def set_refresh(self):
+        """Get a new refresh and access token
+
+        ``POST /authn/refresh``
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiRequestFatalError: Server Error
+
+        Headers:
+            - **Set-Cookie** - access token cookie and refresh token cookie
+
+        Schema:
+
+            .. literalinclude:: ../files/Login_set_refresh_return.schema 
+        """
+        return self.call("POST", "/authn/refresh")
+
+    def set_logout(self):
+        """Logs the user out on their current device
+
+        ``POST /authn/logout``
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiRequestFatalError: Server Error
+        """
+        return self.call("POST", "/authn/logout")
+
+    def set_logoutAll(self):
+        """Logs the user out on all of their devices
+
+        ``POST /authn/logout-all``
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiRequestFatalError: Server Error
+        """
+        return self.call("POST", "/authn/logout-all")
 
     def set_update(self, update: dict):
         """Self-update existing credentials.  N.B. A non-empty password must be provided.
@@ -73,7 +147,7 @@ class Login(FolioApi):
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -91,7 +165,7 @@ class Login(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -113,7 +187,7 @@ class Login(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
         """
         return self.call("DELETE", "/authn/credentials", query=kwargs)
@@ -130,7 +204,7 @@ class Login(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -152,7 +226,7 @@ class Login(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -174,7 +248,7 @@ class Login(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -197,7 +271,7 @@ class Login(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -227,7 +301,7 @@ class Login(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -247,7 +321,7 @@ class Login(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -269,7 +343,7 @@ class Login(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -292,7 +366,7 @@ class Login(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 

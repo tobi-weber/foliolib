@@ -18,7 +18,7 @@ is a Dockerfile to build an image of Okapi with Kubernetes integration.
 
   .. code-block:: bash
 
-      foliolib server create myFolio --host <fqdn okapi> --port 9130 [--ssl]
+      foliolib server create myFolio --host <fqdn okapi> --port 9130 --admin [--ssl]
 
 2. Copy the kube config file to $HOME/.foliolib/myFolio/kube_config
 
@@ -50,7 +50,9 @@ is a Dockerfile to build an image of Okapi with Kubernetes integration.
     # replication_factor = 3
 
 
-4. Create the file $HOME/.foliolib/myFolio/modules/mod-erm-usage-harvester.conf
+4. Create module config files:
+   
+  Create the file $HOME/.foliolib/myFolio/modules/mod-erm-usage-harvester.conf
 
   .. code-block:: cfg
 
@@ -58,7 +60,8 @@ is a Dockerfile to build an image of Okapi with Kubernetes integration.
     hazelcast = True
 
 
-5. Create the file $HOME/.foliolib/myFolio/modules/mod-agreements.conf
+
+  Create the file $HOME/.foliolib/myFolio/modules/mod-agreements.conf
 
   .. code-block:: cfg
 
@@ -72,9 +75,10 @@ is a Dockerfile to build an image of Okapi with Kubernetes integration.
     [Kubernetes]
     hazelcast = True
 
+   
 
-6. Create the file $HOME/.foliolib/myFolio/modules/mod-search.conf and
-   replace the ELASTIC_PASSWORD and MODSEARCH_PASSOWRD with your own value:
+  Create the file $HOME/.foliolib/myFolio/modules/mod-search.conf and
+  replace the ELASTIC_PASSWORD, MOD_SEARCH_USER and MODSEARCH_PASSOWRD with your own value:
 
   .. code-block:: cfg
 
@@ -85,41 +89,106 @@ is a Dockerfile to build an image of Okapi with Kubernetes integration.
     ELASTICSEARCH_USERNAME = elastic
     ELASTICSEARCH_PASSWORD = ELASTIC_PASSWORD
     INITIAL_LANGUAGES = eng,ger
+    SYSTEM_USER_NAME = MOD_SEARCH_USER
     SYSTEM_USER_PASSWORD = MODSEARCH_PASSOWRD
 
 
-7. Create the file $HOME/.foliolib/myFolio/modules/mod-remote-storage.conf
 
-  .. code-block:: cfg
-
-    [Kubernetes]
-    hazelcast = True
-
-
-8. Create the file $HOME/.foliolib/myFolio/modules/mod-pubsub.conf and
-   replace MOD_PUBSUB_PASSWORD with your own value:
+  Create the file HOME/.foliolib/myFolio/modules/mod-consortia.conf
+  and replace MOD_CONSORTIA_USER and MOD_CONSORTIA_PASSWORD with your own value:
 
   .. code-block:: cfg
 
       [Env]
+      SYSTEM_USER_NAME = MOD_CONSORTIA_USER
+      SYSTEM_USER_PASSWORD = MOD_CONSORTIA_PASSWORD
+
+
+
+  Create the file HOME/.foliolib/myFolio/modules/mod-data-export-spring.conf
+  and replace MOD_DATA_EXPORT_SPRING_USER and MOD_DATA_EXPORT_SPRING_PASSWORD with your own value:
+
+  .. code-block:: cfg
+
+      [Env]
+      SYSTEM_USER_NAME = MOD_DATA_EXPORT_SPRING_USER
+      SYSTEM_USER_PASSWORD = MOD_DATA_EXPORT_SPRING_PASSWORD
+
+
+
+  Create the file HOME/.foliolib/myFolio/modules/mod-dcb.conf
+  and replace MOD_DCB_USER_USER and MOD_DCB_PASSWORD with your own value:
+
+  .. code-block:: cfg
+
+      [Env]
+      SYSTEM_USER_NAME = MOD_DCB_USER_USER
+      SYSTEM_USER_PASSWORD = MOD_DCB_PASSWORD
+
+
+
+  Create the file HOME/.foliolib/myFolio/modules/mod-entities-links.conf
+  and replace MOD_ENTITIES_LINKS_USER and MOD_ENTITIES_LINKS_PASSWORD with your own value:
+
+  .. code-block:: cfg
+
+      [Env]
+      SYSTEM_USER_NAME = MOD_ENTITIES_LINKS_USER
+      SYSTEM_USER_PASSWORD = MOD_ENTITIES_LINKS_PASSWORD
+      DB_CONNECTION_TIMEOUT = 30000
+
+
+
+  Create the file HOME/.foliolib/myFolio/modules/mod-inn-reach.conf
+  and replace MOD_INN_REACH_USER and MOD_INN_REACH_PASSWORD with your own value:
+
+  .. code-block:: cfg
+
+      [Env]
+      SYSTEM_USER_NAME = MOD_INN_REACH_USER
+      SYSTEM_USER_PASSWORD = MOD_INN_REACH_PASSWORD
+   
+
+
+  Create the file HOME/.foliolib/myFolio/modules/mod-pubsub.conf and
+  replace MOD_PUBSUB_USER and MOD_PUBSUB_PASSWORD with your own value:
+
+  .. code-block:: cfg
+
+      [Env]
+      SYSTEM_USER_NAME = MOD_PUBSUB_USER
       SYSTEM_USER_PASSWORD = MOD_PUBSUB_PASSWORD
 
 
 
-9. Install a folio tenant named **test**:
+  Create the file HOME/.foliolib/myFolio/modules/mod-remote-storage.conf and
+  replace MOD_REMOTE_STORAGE_USER and MOD_REMOTE_STORAGE_PASSWORD with your own value:
+
+  .. code-block:: cfg
+
+      [Env]
+      SYSTEM_USER_NAME = MOD_REMOTE_STORAGE_USER
+      SYSTEM_USER_PASSWORD = MOD_REMOTE_STORAGE_PASSWORD
+
+      [Kubernetes]
+      hazelcast = True
+
+
+5.  Install a folio tenant named **test**:
 
   .. code-block:: bash
 
-    foliolib platform install test --loadReference --loadSample -a -p R1-2023-GA
+    foliolib platform install -t test --loadReference --loadSample -a -p R2-2023-csp-1
 
 
-10. Create a superuser for the tenant **test** with username **test**
+6. Create a superuser for the tenant **test** with username **test**
     and password **test**:
 
   .. code-block:: bash
 
-    foliolib folio superuser test -u test -p test
+    foliolib tenant superuser -t test -u test -p test
 
 
-11. Install the Frontend for the folio platform R1-2023-GA for the tenant test.
+7. Install the Frontend for the folio platform R2-2023-csp-1
+    for the tenant test.
 

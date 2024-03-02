@@ -1,0 +1,121 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Schema for records matching request",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "logicalOperator": {
+      "description": "Logical operator that will be used to combine defined filters",
+      "type": "string",
+      "enum": [
+        "AND",
+        "OR"
+      ],
+      "default": "AND"
+    },
+    "filters": {
+      "description": "Collection of conditions for records matching",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "values": {
+            "description": "Collection of values to match for equality",
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "field": {
+            "description": "MARC field tag to match",
+            "type": "string",
+            "pattern": "^[0-9]{3}$"
+          },
+          "indicator1": {
+            "description": "MARC field indicator1 to match. Value can be a lowercase alphabetic, numeric, blank, or * meaning a wildcard",
+            "type": "string",
+            "pattern": "^[a-z0-9\\s*]?$"
+          },
+          "indicator2": {
+            "description": "MARC field indicator2 to match. Value can be a lowercase alphabetic, numeric, blank, or * meaning a wildcard",
+            "type": "string",
+            "pattern": "^[a-z0-9\\s*]?$"
+          },
+          "subfield": {
+            "description": "MARC subfield to match, allowed value can be ASCII lowercase alphabetic or numeric character",
+            "type": "string",
+            "pattern": "^[a-z0-9]?$"
+          },
+          "matchType": {
+            "description": "Match type to consider for the query",
+            "type": "string",
+            "enum": [
+              "EXACTLY_MATCHES",
+              "EXISTING_VALUE_CONTAINS_INCOMING_VALUE",
+              "INCOMING_VALUE_CONTAINS_EXISTING_VALUE",
+              "EXISTING_VALUE_BEGINS_WITH_INCOMING_VALUE",
+              "INCOMING_VALUE_BEGINS_WITH_EXISTING_VALUE",
+              "EXISTING_VALUE_ENDS_WITH_INCOMING_VALUE",
+              "INCOMING_VALUE_ENDS_WITH_EXISTING_VALUE"
+            ],
+            "default": "EXACTLY_MATCHES"
+          },
+          "qualifier": {
+            "description": "Qualifier for match criteria",
+            "type": "string",
+            "enum": [
+              "BEGINS_WITH",
+              "ENDS_WITH",
+              "CONTAINS"
+            ]
+          },
+          "comparisonPartType": {
+            "description": "Part of a value to compare",
+            "type": "string",
+            "enum": [
+              "NUMERICS_ONLY",
+              "ALPHANUMERICS_ONLY"
+            ]
+          }
+        },
+        "required": [
+          "field",
+          "values"
+        ]
+      }
+    },
+    "recordType": {
+      "description": "Type of MARC record",
+      "type": "string",
+      "enum": [
+        "MARC_BIB",
+        "MARC_AUTHORITY",
+        "MARC_HOLDING"
+      ]
+    },
+    "limit": {
+      "description": "Limitation of the number of elements returned in the response",
+      "type": "integer",
+      "minimum": 1,
+      "default": 1000
+    },
+    "offset": {
+      "description": "Offset to skip over a number of elements",
+      "type": "integer",
+      "minimum": 0,
+      "default": 0
+    },
+    "returnTotalRecordsCount": {
+      "description": "Indicates whether it is needed to return total count of records matching the specified filters",
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "filters",
+    "recordType"
+  ]
+}

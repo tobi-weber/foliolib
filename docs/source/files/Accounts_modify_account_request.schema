@@ -201,6 +201,7 @@
   "required": [
     "amount",
     "remaining",
+    "status",
     "paymentStatus",
     "userId",
     "feeFineId",

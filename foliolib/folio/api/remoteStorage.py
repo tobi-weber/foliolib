@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -29,7 +29,7 @@ class Remotestorage(FolioApi):
             dict: See Schema below.
 
         Raises:
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -52,7 +52,7 @@ class Remotestorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestUnprocessableEntity: Validation errors
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -70,7 +70,7 @@ class Remotestorage(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Configuration not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -90,7 +90,7 @@ class Remotestorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Configuration not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -106,7 +106,7 @@ class Remotestorage(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Configuration not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
         """
         return self.call("DELETE", f"/remote-storage/configurations/{configId}")
 
@@ -124,7 +124,7 @@ class Remotestorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestUnprocessableEntity: Validation errors
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -148,7 +148,7 @@ class Remotestorage(FolioApi):
             dict: See Schema below.
 
         Raises:
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -166,7 +166,7 @@ class Remotestorage(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Mapping not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -182,7 +182,7 @@ class Remotestorage(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Mapping not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
         """
         return self.call("DELETE", f"/remote-storage/mappings/{folioLocationId}")
 
@@ -200,7 +200,7 @@ class Remotestorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestUnprocessableEntity: Validation errors
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -225,7 +225,7 @@ class Remotestorage(FolioApi):
             dict: See Schema below.
 
         Raises:
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -243,7 +243,7 @@ class Remotestorage(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Mapping not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -262,7 +262,7 @@ class Remotestorage(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Mapping not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
         """
         return self.call("DELETE", f"/remote-storage/extended-mappings/{remoteStorageConfigurationId}/{originalLocationId}")
 
@@ -280,7 +280,7 @@ class Remotestorage(FolioApi):
             dict: See Schema below.
 
         Raises:
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -297,7 +297,7 @@ class Remotestorage(FolioApi):
             dict: See Schema below.
 
         Raises:
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -319,7 +319,7 @@ class Remotestorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestUnprocessableEntity: Validation errors
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -345,7 +345,7 @@ class Remotestorage(FolioApi):
             dict: See Schema below.
 
         Raises:
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -403,7 +403,7 @@ class Remotestorage(FolioApi):
             dict: See Schema below.
 
         Raises:
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -443,7 +443,7 @@ class Remotestorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestUnprocessableEntity: Validation errors
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -463,7 +463,7 @@ class Remotestorage(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestUnprocessableEntity: Validation errors
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -484,7 +484,7 @@ class Remotestorage(FolioApi):
             dict: See Schema below.
 
         Raises:
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -503,6 +503,6 @@ class Remotestorage(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
         """
         return self.call("POST", f"/remote-storage/items/barcode/{barcode}/markAsMissing")

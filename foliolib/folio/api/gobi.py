@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -114,7 +114,7 @@ class GobiCustomMappings(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -133,7 +133,7 @@ class GobiCustomMappings(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Headers:
             - **Location** - URI to the created customMapping item
@@ -157,7 +157,7 @@ class GobiCustomMappings(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -176,7 +176,7 @@ class GobiCustomMappings(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/gobi/orders/custom-mappings/{orderType}")
 
@@ -193,7 +193,7 @@ class GobiCustomMappings(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -219,7 +219,7 @@ class Gobi(FolioApi):
         Raises:
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestForbidden: Forbidden
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("GET", "/gobi/validate")
 
@@ -231,7 +231,7 @@ class Gobi(FolioApi):
         Raises:
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestForbidden: Forbidden
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("POST", "/gobi/validate")
 
@@ -247,7 +247,7 @@ class Gobi(FolioApi):
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestForbidden: Forbidden
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 

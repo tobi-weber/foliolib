@@ -1,11 +1,153 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
 from foliolib.folio import FolioApi, FolioAdminApi
 
 log = logging.getLogger("oliolib.folio.api.organizationsStorage")
+
+
+class BankingAccounType(FolioApi):
+    """Banking account types
+
+    **CRUD APIs used to manage banking account types.**
+    """
+
+    def get_bankingAccountTypes(self, **kwargs):
+        """Get a list of banking account types
+
+        ``GET /organizations-storage/banking-account-types``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            query (str):  A query expressed as a CQL string
+                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
+                    using valid searchable fields.
+                    The first example below shows the general form of a full CQL query,
+                    but those fields might not be relevant in this context.
+                    
+                    CQL query
+                    
+                    
+                    Example:
+                    
+                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
+                    
+                     - name=Personal
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiRequestFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/BankingAccounType_get_bankingAccountTypes_return.schema 
+        """
+        return self.call("GET", "/organizations-storage/banking-account-types", query=kwargs)
+
+    def set_bankingAccountType(self, bankingAccountType: dict):
+        """Create a banking account type
+
+        ``POST /organizations-storage/banking-account-types``
+
+        Args:
+            bankingAccountType (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiRequestFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Headers:
+            - **Location** - URI to the created bankingAccountType item
+
+        Schema:
+
+            .. literalinclude:: ../files/BankingAccounType_set_bankingAccountType_request.schema
+        """
+        return self.call("POST", "/organizations-storage/banking-account-types", data=bankingAccountType)
+
+    def get_bankingAccountType(self, bankingAccountTypesId: str):
+        """Retrieve bankingAccountType item with given {bankingAccountTypeId}
+
+        ``GET /organizations-storage/banking-account-types/{bankingAccountTypesId}``
+
+        Args:
+            bankingAccountTypesId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/BankingAccounType_get_bankingAccountType_return.schema 
+        """
+        return self.call("GET", f"/organizations-storage/banking-account-types/{bankingAccountTypesId}")
+
+    def delete_bankingAccountType(self, bankingAccountTypesId: str):
+        """Delete a banking account type by id
+
+        ``DELETE /organizations-storage/banking-account-types/{bankingAccountTypesId}``
+
+        Args:
+            bankingAccountTypesId (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiRequestFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+        """
+        return self.call("DELETE", f"/organizations-storage/banking-account-types/{bankingAccountTypesId}")
+
+    def modify_bankingAccountType(self, bankingAccountTypesId: str, bankingAccountType: dict):
+        """Update a banking account type by id
+
+        ``PUT /organizations-storage/banking-account-types/{bankingAccountTypesId}``
+
+        Args:
+            bankingAccountTypesId (str)
+            bankingAccountType (dict): See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
+            OkapiRequestFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/BankingAccounType_modify_bankingAccountType_request.schema
+        """
+        return self.call("PUT", f"/organizations-storage/banking-account-types/{bankingAccountTypesId}", data=bankingAccountType)
 
 
 class Organization(FolioApi):
@@ -59,7 +201,7 @@ class Organization(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -78,7 +220,7 @@ class Organization(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Headers:
             - **Location** - URI to the created organization item
@@ -102,7 +244,7 @@ class Organization(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -121,7 +263,7 @@ class Organization(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/organizations-storage/organizations/{organizationsId}")
 
@@ -138,7 +280,7 @@ class Organization(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -198,7 +340,7 @@ class Category(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -217,7 +359,7 @@ class Category(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Headers:
             - **Location** - URI to the created category item
@@ -241,7 +383,7 @@ class Category(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -260,7 +402,7 @@ class Category(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/organizations-storage/categories/{categoriesId}")
 
@@ -277,7 +419,7 @@ class Category(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -337,7 +479,7 @@ class Interface(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -356,7 +498,7 @@ class Interface(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Headers:
             - **Location** - URI to the created interface item
@@ -380,7 +522,7 @@ class Interface(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -399,7 +541,7 @@ class Interface(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/organizations-storage/interfaces/{interfacesId}")
 
@@ -416,7 +558,7 @@ class Interface(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -447,7 +589,7 @@ class Interface(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -466,7 +608,7 @@ class Interface(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/organizations-storage/interfaces/{interfacesId}/credentials")
 
@@ -483,7 +625,7 @@ class Interface(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -553,7 +695,7 @@ class Contact(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -572,7 +714,7 @@ class Contact(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Headers:
             - **Location** - URI to the created contact item
@@ -596,7 +738,7 @@ class Contact(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -615,7 +757,7 @@ class Contact(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/organizations-storage/contacts/{contactsId}")
 
@@ -632,13 +774,155 @@ class Contact(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
             .. literalinclude:: ../files/Contact_modify_contact_request.schema
         """
         return self.call("PUT", f"/organizations-storage/contacts/{contactsId}", data=contact)
+
+
+class BankingInformation(FolioApi):
+    """Banking information
+
+    **CRUD APIs used to manage banking information.**
+    """
+
+    def get_bankingInformations(self, **kwargs):
+        """Get a list of banking information
+
+        ``GET /organizations-storage/banking-information``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            query (str):  A query expressed as a CQL string
+                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
+                    using valid searchable fields.
+                    The first example below shows the general form of a full CQL query,
+                    but those fields might not be relevant in this context.
+                    
+                    CQL query
+                    
+                    
+                    Example:
+                    
+                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
+                    
+                     - bankName=TRC
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiRequestFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/BankingInformation_get_bankingInformations_return.schema 
+        """
+        return self.call("GET", "/organizations-storage/banking-information", query=kwargs)
+
+    def set_bankingInformation(self, bankingInformation: dict):
+        """Create a banking information
+
+        ``POST /organizations-storage/banking-information``
+
+        Args:
+            bankingInformation (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiRequestFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Headers:
+            - **Location** - URI to the created bankingInformation item
+
+        Schema:
+
+            .. literalinclude:: ../files/BankingInformation_set_bankingInformation_request.schema
+        """
+        return self.call("POST", "/organizations-storage/banking-information", data=bankingInformation)
+
+    def get_bankingInformation(self, bankingInformationId: str):
+        """Retrieve bankingInformation item with given {bankingInformationId}
+
+        ``GET /organizations-storage/banking-information/{bankingInformationId}``
+
+        Args:
+            bankingInformationId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/BankingInformation_get_bankingInformation_return.schema 
+        """
+        return self.call("GET", f"/organizations-storage/banking-information/{bankingInformationId}")
+
+    def delete_bankingInformation(self, bankingInformationId: str):
+        """Delete a banking information by id
+
+        ``DELETE /organizations-storage/banking-information/{bankingInformationId}``
+
+        Args:
+            bankingInformationId (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiRequestFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+        """
+        return self.call("DELETE", f"/organizations-storage/banking-information/{bankingInformationId}")
+
+    def modify_bankingInformation(self, bankingInformationId: str, bankingInformation: dict):
+        """Update a banking information by id
+
+        ``PUT /organizations-storage/banking-information/{bankingInformationId}``
+
+        Args:
+            bankingInformationId (str)
+            bankingInformation (dict): See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
+            OkapiRequestFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/BankingInformation_modify_bankingInformation_request.schema
+        """
+        return self.call("PUT", f"/organizations-storage/banking-information/{bankingInformationId}", data=bankingInformation)
 
 
 class Email(FolioApi):
@@ -693,7 +977,7 @@ class Email(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -712,7 +996,7 @@ class Email(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Headers:
             - **Location** - URI to the created email item
@@ -736,7 +1020,7 @@ class Email(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -755,7 +1039,7 @@ class Email(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/organizations-storage/emails/{emailsId}")
 
@@ -772,13 +1056,106 @@ class Email(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
             .. literalinclude:: ../files/Email_modify_email_request.schema
         """
         return self.call("PUT", f"/organizations-storage/emails/{emailsId}", data=email)
+
+
+class Setting(FolioApi):
+    """Settings
+
+    **CRUD APIs used to manage settings.**
+    """
+
+    def get_settings(self, **kwargs):
+        """Get a list of settings
+
+        ``GET /organizations-storage/settings``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            query (str):  A query expressed as a CQL string
+                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
+                    using valid searchable fields.
+                    The first example below shows the general form of a full CQL query,
+                    but those fields might not be relevant in this context.
+                    
+                    CQL query
+                    
+                    
+                    Example:
+                    
+                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
+                    
+                     - key=BANKING_INFORMATION_ENABLED
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiRequestNotFound: Not Found
+            OkapiRequestFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Setting_get_settings_return.schema 
+        """
+        return self.call("GET", "/organizations-storage/settings", query=kwargs)
+
+    def get_setting(self, settingsId: str):
+        """Retrieve setting item with given {settingId}
+
+        ``GET /organizations-storage/settings/{settingsId}``
+
+        Args:
+            settingsId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiRequestNotFound: Not Found
+            OkapiRequestFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Setting_get_setting_return.schema 
+        """
+        return self.call("GET", f"/organizations-storage/settings/{settingsId}")
+
+    def modify_setting(self, settingsId: str):
+        """
+
+        ``PUT /organizations-storage/settings/{settingsId}``
+
+        Args:
+            settingsId (str)
+        """
+        return self.call("PUT", f"/organizations-storage/settings/{settingsId}")
 
 
 class Url(FolioApi):
@@ -833,7 +1210,7 @@ class Url(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -852,7 +1229,7 @@ class Url(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Headers:
             - **Location** - URI to the created url item
@@ -876,7 +1253,7 @@ class Url(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -895,7 +1272,7 @@ class Url(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/organizations-storage/urls/{urlsId}")
 
@@ -912,7 +1289,7 @@ class Url(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -973,7 +1350,7 @@ class Address(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -992,7 +1369,7 @@ class Address(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Headers:
             - **Location** - URI to the created address item
@@ -1016,7 +1393,7 @@ class Address(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1035,7 +1412,7 @@ class Address(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/organizations-storage/addresses/{addressesId}")
 
@@ -1052,7 +1429,7 @@ class Address(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1112,7 +1489,7 @@ class OrganizationType(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1131,7 +1508,7 @@ class OrganizationType(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -1156,7 +1533,7 @@ class OrganizationType(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1175,7 +1552,7 @@ class OrganizationType(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
         """
         return self.call("DELETE", f"/organizations-storage/organization-types/{organizationTypesId}")
@@ -1193,7 +1570,7 @@ class OrganizationType(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -1255,7 +1632,7 @@ class PhoneNumber(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1274,7 +1651,7 @@ class PhoneNumber(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Headers:
             - **Location** - URI to the created phoneNumber item
@@ -1298,7 +1675,7 @@ class PhoneNumber(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -1317,7 +1694,7 @@ class PhoneNumber(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/organizations-storage/phone-numbers/{phoneNumbersId}")
 
@@ -1334,10 +1711,149 @@ class PhoneNumber(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
             .. literalinclude:: ../files/PhoneNumber_modify_phoneNumber_request.schema
         """
         return self.call("PUT", f"/organizations-storage/phone-numbers/{phoneNumbersId}", data=phoneNumber)
+
+
+class PrivilegedContact(FolioApi):
+    """Privileged Contacts
+
+    **CRUD APIs used to manage privileged contacts.**
+    """
+
+    def get_privilegedContacts(self, **kwargs):
+        """Get list of privileged contact persons
+
+        ``GET /organizations-storage/privileged-contacts``
+
+        Args:
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            query (str):  A query expressed as a CQL string
+                    (see [dev.folio.org/reference/glossary#cql](https://dev.folio.org/reference/glossary#cql))
+                    using valid searchable fields.
+                    The first example below shows the general form of a full CQL query,
+                    but those fields might not be relevant in this context.
+                    
+                    with valid searchable fields: for example code
+                    
+                    
+                    Example:
+                    
+                     - (username=="ab*" or personal.firstName=="ab*" or personal.lastName=="ab*") and active=="true" sortby personal.lastName personal.firstName barcode
+                    
+                     - ["code", "MEDGRANT", "="]
+            totalRecords (str): (default=auto) How to calculate the totalRecords property. "exact" for the correct number, "estimated" for an estimation, "auto" to automatically select "exact" or "estimated", "none" for suppressing the totalRecords property. For details see https://github.com/folio-org/raml-module-builder#estimated-totalrecords
+                    
+                    Example:
+                    
+                     - none
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiRequestFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/PrivilegedContact_get_privilegedContacts_return.schema 
+        """
+        return self.call("GET", "/organizations-storage/privileged-contacts", query=kwargs)
+
+    def set_privilegedContact(self, privilegedContact: dict):
+        """Create a new privilegedContact item.
+
+        ``POST /organizations-storage/privileged-contacts``
+
+        Args:
+            privilegedContact (dict): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiRequestFatalError: Server Error
+
+        Headers:
+            - **Location** - URI to the created privilegedContact item
+
+        Schema:
+
+            .. literalinclude:: ../files/PrivilegedContact_set_privilegedContact_request.schema
+        """
+        return self.call("POST", "/organizations-storage/privileged-contacts", data=privilegedContact)
+
+    def get_privilegedContact(self, privilegedContactsId: str):
+        """Retrieve privilegedContact item with given {privilegedContactId}
+
+        ``GET /organizations-storage/privileged-contacts/{privilegedContactsId}``
+
+        Args:
+            privilegedContactsId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/PrivilegedContact_get_privilegedContact_return.schema 
+        """
+        return self.call("GET", f"/organizations-storage/privileged-contacts/{privilegedContactsId}")
+
+    def delete_privilegedContact(self, privilegedContactsId: str):
+        """Delete privilegedContact item with given {privilegedContactId}
+
+        ``DELETE /organizations-storage/privileged-contacts/{privilegedContactsId}``
+
+        Args:
+            privilegedContactsId (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiRequestFatalError: Server Error
+        """
+        return self.call("DELETE", f"/organizations-storage/privileged-contacts/{privilegedContactsId}")
+
+    def modify_privilegedContact(self, privilegedContactsId: str, privilegedContact: dict):
+        """Update privilegedContact item with given {privilegedContactId}
+
+        ``PUT /organizations-storage/privileged-contacts/{privilegedContactsId}``
+
+        Args:
+            privilegedContactsId (str)
+            privilegedContact (dict): See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiRequestConflict: Conflict
+            OkapiRequestFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/PrivilegedContact_modify_privilegedContact_request.schema
+        """
+        return self.call("PUT", f"/organizations-storage/privileged-contacts/{privilegedContactsId}", data=privilegedContact)

@@ -58,6 +58,15 @@
         "$ref": "claim.json"
       }
     },
+    "claimingActive": {
+      "description": "Indicates if there is an active claim or dispute",
+      "type": "boolean",
+      "default": false
+    },
+    "claimingInterval": {
+      "description": "Specifies the time interval, in days, within which claims or disputes must be initiated",
+      "type": "integer"
+    },
     "collection": {
       "description": "whether or not this purchase order line is for a collection",
       "type": "boolean",
@@ -89,6 +98,14 @@
     "donor": {
       "description": "the donor contributing to this purchase order line",
       "type": "string"
+    },
+    "donorOrganizationIds": {
+      "description": "donor organization ids associated with this fund",
+      "type": "array",
+      "items": {
+        "description": "UUID of an donor organization record",
+        "$ref": "../../common/schemas/uuid.json"
+      }
     },
     "eresource": {
       "description": "eresource record",
@@ -227,6 +244,11 @@
       "description": "Vendor detail record",
       "type": "object",
       "$ref": "vendor_detail.json"
+    },
+    "customFields": {
+      "description": "Object that contains custom field",
+      "type": "object",
+      "additionalProperties": true
     },
     "metadata": {
       "type": "object",

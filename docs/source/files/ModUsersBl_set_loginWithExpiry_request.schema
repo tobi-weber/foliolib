@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Login Credentials Schema",
+  "description": "Login Credentials Schema",
+  "type": "object",
+  "properties": {
+    "username": {
+      "type": "string",
+      "description": "Username"
+    },
+    "userId": {
+      "type": "string",
+      "description": "User Id"
+    },
+    "password": {
+      "type": "string",
+      "description": "Password"
+    },
+    "tenant": {
+      "description": "Parameter for resolving duplicated usernames across tenants.",
+      "type": "string"
+    }
+  }
+}

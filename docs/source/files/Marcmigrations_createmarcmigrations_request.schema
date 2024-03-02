@@ -1,0 +1,15 @@
+{
+    "type": "object",
+    "required": [
+        "entityType",
+        "operationType"
+    ],
+    "properties": {
+        "entityType": {
+            "$ref": "#/components/schemas/EntityType"
+        },
+        "operationType": {
+            "$ref": "#/components/schemas/OperationType"
+        }
+    }
+}

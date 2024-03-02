@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2020 Tobias Weber <tobi-weber@gmx.de>
+# Copyright (C) 2023 Tobias Weber <tobi-weber@gmx.de>
 
 import uuid
 
@@ -8,14 +8,14 @@ from foliolib.okapi.okapiClient import OkapiClient
 
 class FolioApi:
 
-    def __init__(self, tenant: str, okapi: OkapiClient = None):
-        """
+    def __init__(self, tenant: str):
+        """Base class of the Folio API
+
         Args:
             tenant (str): Tenant id
-            okapi (OkapiClient, optional): Instance of OkapiClient. Defaults to None.
         """
         self._tenant = tenant
-        self._okapi = okapi or OkapiClient()
+        self._okapi = OkapiClient()
 
     def get_tenant(self):
         return self._tenant
@@ -34,12 +34,10 @@ class FolioApi:
 
 class FolioAdminApi:
 
-    def __init__(self, okapi: OkapiClient = None):
+    def __init__(self):
+        """Base class of not tenant related Folio API.
         """
-        Args:
-            okapi (OkapiClient, optional): Instance of OkapiClient. Defaults to None.
-        """
-        self._okapi = okapi or OkapiClient()
+        self._okapi = OkapiClient()
 
     def get_okapiClient(self):
         return self._okapi
@@ -53,7 +51,9 @@ class FolioAdminApi:
                                      query=query, headers=headers, files=files)
 
 
-class FolioService:
+class FolioAPIImpl:
+    """Base class for concrete implementations of the Folio API.
+    """
 
     def __init__(self, tenant: str):
         """
@@ -61,9 +61,6 @@ class FolioService:
             tenant (str): Tenant id
         """
         self._tenant = tenant
-
-    def make_uuid(self):
-        return str(uuid.uuid4())
 
     def get_tenant(self):
         return self._tenant

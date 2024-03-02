@@ -1,0 +1,19 @@
+{
+    "description": "A JSON schema for the Sharing settings object response for post request",
+    "type": "object",
+    "properties": {
+        "createSettingsPCId": {
+            "type": "string",
+            "format": "uuid"
+        },
+        "updateSettingsPCId": {
+            "type": "string",
+            "format": "uuid"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "createSettingsPCId",
+        "updateSettingsPCId"
+    ]
+}

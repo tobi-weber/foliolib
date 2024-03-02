@@ -1,0 +1,4 @@
+{
+  "strict": false,
+  "value": "{\n  \"organizationId\": \"fde0af0b-9735-45c9-b9cb-3f3ee989bba9\",\n  \"categoryId\": \"3501d066-76b1-4260-9db3-44699d40a18e\",\n  \"accountTypeId\": \"6a901d4c-4bea-47a4-8020-fac364a6c41a\",\n  \"bankName\": \"TRC\",\n  \"bankAccountNumber\": \"123456\",\n  \"transitNumber\": \"654321\",\n  \"notes\": \"Best one\"\n}\n"
+}

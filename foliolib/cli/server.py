@@ -6,7 +6,6 @@ import shutil
 
 import click
 from foliolib.config import Config
-from foliolib.helper import database
 
 from .orderedGroup import OrderedGroup
 
@@ -61,10 +60,10 @@ def enable(**kwargs):
 
 @server.command()
 @click.argument("name")
-@click.option("-H", "--host", default="localhost", help="okapi host", show_default=True)
-@click.option("-p", "--port", default="9130", help="", show_default=True)
-@click.option("-s", "--ssl", is_flag=True,
-              help="")
+@click.option("-H", "--host", default="localhost", help="Okapi fqdn or IP", show_default=True)
+@click.option("-p", "--port", default="9130", help="Okapi port", show_default=True)
+@click.option("-s", "--ssl", is_flag=True, help="Wether okapi server is ssl")
+@click.option("-a", "--admin", is_flag=True, help="Whether cli should provide management for okapi")
 def create(**kwargs):
     """Create new server config
 
@@ -76,7 +75,7 @@ def create(**kwargs):
         Config().create_foliolib_conf()
         Config().create_server_conf(name, okapi_host=kwargs["host"],
                                     okapi_port=kwargs["port"],
-                                    ssl=kwargs["ssl"])
+                                    ssl=kwargs["ssl"], isAdmin=kwargs["admin"])
         Config().set_server(name)
         __save_current_server(name)
     else:

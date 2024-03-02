@@ -1,0 +1,14 @@
+{
+    "type": "object",
+    "properties": {
+        "configs": {
+            "type": "array",
+            "items": {
+                "$ref": "#/components/schemas/browseConfig"
+            }
+        },
+        "totalRecords": {
+            "type": "integer"
+        }
+    }
+}

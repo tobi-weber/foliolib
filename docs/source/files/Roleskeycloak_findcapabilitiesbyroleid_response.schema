@@ -1,0 +1,25 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Capabilities Object Schema",
+    "description": "Response body containing capability records",
+    "type": "object",
+    "properties": {
+        "capabilities": {
+            "description": "A collection of capability sets",
+            "type": "array",
+            "items": {
+                "$ref": "capability.json"
+            },
+            "minItems": 1
+        },
+        "totalRecords": {
+            "readOnly": true,
+            "description": "The total number of records matching the provided criteria",
+            "type": "integer",
+            "format": "int64"
+        }
+    },
+    "required": [
+        "capabilities"
+    ]
+}

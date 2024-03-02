@@ -1,0 +1,110 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "List Entity DTO",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "List id",
+            "type": "string",
+            "format": "UUID"
+        },
+        "name": {
+            "description": "List name",
+            "type": "string"
+        },
+        "description": {
+            "description": "List description",
+            "type": "string"
+        },
+        "entityTypeId": {
+            "description": "ID of the entity Type",
+            "type": "string",
+            "format": "UUID"
+        },
+        "entityTypeName": {
+            "description": "Name of the entity Type",
+            "type": "string"
+        },
+        "userFriendlyQuery": {
+            "description": "User Friendly Query",
+            "type": "string"
+        },
+        "fqlQuery": {
+            "description": "FQL Query",
+            "type": "string"
+        },
+        "fields": {
+            "description": "Fields to be included in list contents",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "createdBy": {
+            "description": "ID of the user who created the record (when available)",
+            "type": "string",
+            "format": "UUID"
+        },
+        "createdByUsername": {
+            "description": "Created By Username",
+            "type": "string"
+        },
+        "createdDate": {
+            "description": "Date and time when the record was created",
+            "type": "string",
+            "format": "date-time"
+        },
+        "isActive": {
+            "description": "Indicates a List is Active or not",
+            "type": "boolean"
+        },
+        "isPrivate": {
+            "description": "Indicates a List is Private or not",
+            "type": "boolean"
+        },
+        "isCanned": {
+            "description": "Indicates if a List is canned or not",
+            "type": "boolean"
+        },
+        "isDeleted": {
+            "description": "Indicates if a List has been deleted",
+            "type": "boolean"
+        },
+        "updatedBy": {
+            "description": "ID of the user who last updated the record (when available)",
+            "type": "string",
+            "format": "UUID"
+        },
+        "updatedByUsername": {
+            "description": "Username of the user who last updated the record (when available)",
+            "type": "string"
+        },
+        "updatedDate": {
+            "description": "Date and time when the record was last updated",
+            "type": "string",
+            "format": "date-time"
+        },
+        "successRefresh": {
+            "description": "List Refresh Information",
+            "$ref": "ListRefreshDTO.json"
+        },
+        "inProgressRefresh": {
+            "description": "List In-Progress Refresh Information",
+            "$ref": "ListRefreshDTO.json"
+        },
+        "failedRefresh": {
+            "description": "List Failed Refresh Information",
+            "$ref": "ListRefreshDTO.json"
+        },
+        "version": {
+            "description": "Number of version",
+            "type": "integer"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "id",
+        "name",
+        "version"
+    ]
+}

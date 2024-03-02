@@ -80,10 +80,26 @@
       "description": "The subscription interval in days",
       "type": "integer"
     },
+    "claimingActive": {
+      "description": "Indicates if there is an active claim or dispute",
+      "type": "boolean",
+      "default": false
+    },
+    "claimingInterval": {
+      "description": "Specifies the time interval, in days, within which claims or disputes must be initiated",
+      "type": "integer"
+    },
     "isAcknowledged": {
       "description": "Flag for acknowledge receiving note",
       "type": "boolean",
       "default": false
+    },
+    "acqUnitIds": {
+      "description": "acquisition unit ids associated with this title",
+      "type": "array",
+      "items": {
+        "$ref": "../../common/schemas/uuid.json"
+      }
     },
     "metadata": {
       "type": "object",

@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A configuration type",
+  "title": "Configuration Type Schema",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "UUID of configuration",
+      "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+    },
+    "configName": {
+      "description": "Name of configuration",
+      "type": "string"
+    },
+    "enabled": {
+      "description": "Status of configuration",
+      "type": "boolean",
+      "default": false
+    },
+    "enabledObjectStorage": {
+      "description": "Status of object storage configuration",
+      "type": "boolean",
+      "default": false
+    },
+    "encryptionKey": {
+      "description": "Encryption key for encoding/decoding profile picture",
+      "type": "string"
+    },
+    "maxFileSize": {
+      "description": "Size of profile picture in MB",
+      "type": "number"
+    },
+    "metadata": {
+      "$ref": "raml-util/schemas/metadata.schema",
+      "readonly": true
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "configName"
+  ]
+}

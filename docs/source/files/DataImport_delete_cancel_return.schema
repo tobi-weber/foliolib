@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "cancel job execution response schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "ok": {
+      "description": "If the request was successful; this will always be true as failures will cause a non-2xx response",
+      "type": "boolean",
+      "const": true
+    }
+  },
+  "required": [
+    "ok"
+  ]
+}

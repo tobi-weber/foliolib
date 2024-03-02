@@ -1,19 +1,18 @@
 # -*- coding: utf-8 -*-
-# Copyright (C) 2023 Tobias Weber <tobi-weber@gmx.de>
+# Copyright (C) 2024 Tobias Weber <tobi-weber@gmx.de>
 
-import json
-import os
+import textwrap
 
 import click
+from foliolib.config import Config
 from foliolib.folio.api.inventoryStorage import (
-    AuthoritiesReindex, BoundWithPart, HoldingsStorage,
-    InstancePrecedingSucceedingTitles, InstanceReindex, InstanceStorage,
-    ItemStorage)
-from foliolib.folio.api.search import Search
-from foliolib.folio.inventoryReferenceData import InventoryReferenceData
+    BoundWithPart, HoldingsStorage, InstancePrecedingSucceedingTitles,
+    InstanceStorage, ItemStorage)
+from foliolib.folio.inventoryImpl import InventoryImpl, InventoryReferenceData
 from foliolib.helper import jprint
-from foliolib.okapi.exceptions import OkapiRequestError
+from tabulate import tabulate
 
+from ..confirm import confirm
 from ..orderedGroup import OrderedGroup
 
 
@@ -30,6 +29,7 @@ def inventory():
               help="Filesystem path")
 @click.option("-r", "--replace", is_flag=True,
               default=False, help="Replace, if name exists with different id")
+@confirm
 def loadref(**kwargs):
     """Load referencedata from filesystem path.
     """
@@ -44,6 +44,7 @@ def loadref(**kwargs):
               help="Tenant id")
 @click.option("-p", "--path", required=True,
               help="Filesystem path")
+@confirm
 def dumpref(**kwargs):
     """Write referencedata to filesystem path.
     """
@@ -55,36 +56,12 @@ def dumpref(**kwargs):
 @inventory.command()
 @click.option("-t", "--tenant", required=True,
               help="Tenant id")
+@confirm
 def reindex(**kwargs):
     """Create indicies if needed and reindex.
     """
     tenant = kwargs["tenant"]
-    print("\n## Reindex")
-    search = Search(tenant)
-    try:
-        res = search.createindices({"resourceName": "instance"})
-        print("Instance index created.")
-    except OkapiRequestError as e:
-        pass
-    try:
-        res = search.createindices({"resourceName": "instance_subject"})
-        print("Instance subject index created.")
-    except OkapiRequestError as e:
-        pass
-    try:
-        res = search.createindices({"resourceName": "authority"})
-        print("Authority index created.")
-    except OkapiRequestError as e:
-        pass
-    print("Reindex Inventory")
-    res = search.reindexinventoryrecords({"recreateIndex": True})
-    print(res)
-    print("Reindex Instance")
-    res = InstanceReindex(tenant).set_reindex()
-    print(res)
-    print("Reindex Authorities")
-    res = AuthoritiesReindex(tenant).set_reindex()
-    print(res)
+    InventoryImpl(tenant).reindex()
 
 
 @inventory.command()
@@ -147,3 +124,245 @@ def barcode(**kwargs):
         jprint(instance)
     except IndexError:
         print("Title for barcode %s not found" % barcode)
+
+
+@inventory.command()
+@click.option("-t", "--tenant", required=True,
+              help="Tenant id")
+@click.option("-q", "--query",
+              help="Query string")
+@click.option("-i", "--id", help="Get instance by id")
+@click.option("-f", "--full", is_flag=True, help="Wether output complete record.")
+def instances(**kwargs):
+    """List Instances by query.
+    """
+    tenant = kwargs["tenant"]
+    query = kwargs["query"] or "id=* sortby title"
+    full = kwargs["full"]
+    uuid = kwargs["id"]
+    if uuid is not None:
+        full = True
+        query = "id=%s" % uuid
+
+    count = InstanceStorage(tenant).get_instances(
+        query=query)["totalRecords"]
+    instances = []
+    for i in range(0, count, 1000):
+        instances += InstanceStorage(tenant).get_instances(query=query,
+                                                           offset=i,
+                                                           limit=1000)["instances"]
+        
+    if full:
+        for instance in instances:
+            jprint(instance)
+            print("\n---\n")
+    else:
+        headers = ["id", "hrid", "title"]
+        body = [[i["id"], i["hrid"], "\n".join(textwrap.wrap(i["title"], width=70))]
+                for i in instances]
+        print(tabulate(body, headers, tablefmt="grid"))
+
+
+@inventory.command()
+@click.option("-t", "--tenant", required=True,
+              help="Tenant id")
+@click.option("-q", "--query",
+              help="Query string")
+@click.option("-i", "--id", help="Get holding by id")
+@click.option("-f", "--full", is_flag=True, help="Wether output complete record.")
+def holdings(**kwargs):
+    """List Holdings by query.
+    """
+    tenant = kwargs["tenant"]
+    query = kwargs["query"] or "id=* sortby id"
+    full = kwargs["full"]
+    uuid = kwargs["id"]
+    if uuid is not None:
+        full = True
+        query = "id=%s" % uuid
+
+    count = HoldingsStorage(tenant).get_holdings(
+        query=query)["totalRecords"]
+    holdings = []
+    for i in range(0, count, 1000):
+        holdings += HoldingsStorage(tenant).get_holdings(query=query,
+                                                           offset=i,
+                                                           limit=1000)["holdingsRecords"]
+        
+    if full:
+        for holding in holdings:
+            jprint(holding)
+            print("\n---\n")
+    else:
+        headers = ["id", "hrid", "instanceId"]
+        body = [[h["id"], h["hrid"], h["instanceId"]]
+                for h in holdings]
+        print(tabulate(body, headers, tablefmt="grid"))
+
+
+@inventory.command()
+@click.option("-t", "--tenant", required=True,
+              help="Tenant id")
+@click.option("-q", "--query",
+              help="Query string")
+@click.option("-i", "--id", help="Get item by id")
+@click.option("-f", "--full", is_flag=True, help="Wether output complete record.")
+def items(**kwargs):
+    """List Items by query.
+    """
+    tenant = kwargs["tenant"]
+    query = kwargs["query"] or "id=* sortby id"
+    full = kwargs["full"]
+    uuid = kwargs["id"]
+    if uuid is not None:
+        full = True
+        query = "id=%s" % uuid
+
+    count = ItemStorage(tenant).get_items(
+        query=query)["totalRecords"]
+    items = []
+    for i in range(0, count, 1000):
+        items += ItemStorage(tenant).get_items(query=query,
+                                                           offset=i,
+                                                           limit=1000)["items"]
+        
+    if full:
+        for item in items:
+            jprint(item)
+            print("\n---\n")
+    else:
+        headers = ["id", "hrid", "holdingsRecordId"]
+        body = [[i["id"], i["hrid"], i["holdingsRecordId"]]
+                for i in items]
+        print(tabulate(body, headers, tablefmt="grid"))
+
+
+@inventory.command()
+@click.option("-t", "--tenant", required=True,
+              help="Tenant id")
+@click.option("-q", "--query",
+              help="Query string")
+@click.option("-i", "--id", help="Get servicepoint by id")
+@click.option("-f", "--full", is_flag=True, help="Wether output complete record.")
+def servicepoints(**kwargs):
+    """List Servicepoints by query.
+    """
+    tenant = kwargs["tenant"]
+    query = kwargs["query"] or "id=* sortby id"
+    full = kwargs["full"]
+    uuid = kwargs["id"]
+    if uuid is not None:
+        full = True
+        query = "id=%s" % uuid
+
+    refData = InventoryReferenceData(tenant)
+    sps = refData.get_servicePoints(query=query)
+
+    if full:
+        for sp in sps:
+            jprint(sp)
+            print("\n---\n")
+    else:
+        headers = ["id", "name", "code", "description"]
+        body = [[s["id"], s["name"], s["code"],
+                 "\n".join(textwrap.wrap(s["discoveryDisplayName"], width=40))]
+                for s in sps]
+        print(tabulate(body, headers, tablefmt="grid"))
+
+
+if Config().servercfg().getboolean("Cli", "dev", fallback=False):
+    @inventory.command()
+    @click.option("-t", "--tenant", required=True,
+                help="Tenant id")
+    @click.option("-q", "--query",
+                help="Query string")
+    @click.option("-i", "--id", help="Get library by id")
+    @click.option("-f", "--full", is_flag=True, help="Wether output complete record.")
+    def libraries(**kwargs):
+        """List Libraries by query.
+        """
+        tenant = kwargs["tenant"]
+        query = kwargs["query"] or "id=* sortby id"
+        full = kwargs["full"]
+        uuid = kwargs["id"]
+        if uuid is not None:
+            full = True
+            query = "id=%s" % uuid
+
+        refData = InventoryReferenceData(tenant)
+        libraries = refData.get_libraries(query=query)
+
+        if full:
+            for l in libraries:
+                jprint(l)
+                print("\n---\n")
+        else:
+            headers = ["id", "name", "code", "campusId"]
+            body = [[l["id"], l["name"], l["code"], l["campusId"]]
+                    for l in libraries]
+            print(tabulate(body, headers, tablefmt="grid"))
+
+
+    @inventory.command()
+    @click.option("-t", "--tenant", required=True,
+                help="Tenant id")
+    @click.option("-q", "--query",
+                help="Query string")
+    @click.option("-i", "--id", help="Get campus by id")
+    @click.option("-f", "--full", is_flag=True, help="Wether output complete record.")
+    def campuses(**kwargs):
+        """List Campuses by query.
+        """
+        tenant = kwargs["tenant"]
+        query = kwargs["query"] or "id=* sortby id"
+        full = kwargs["full"]
+        uuid = kwargs["id"]
+        if uuid is not None:
+            full = True
+            query = "id=%s" % uuid
+
+        refData = InventoryReferenceData(tenant)
+        campuses = refData.get_campuses(query=query)
+
+        if full:
+            for c in campuses:
+                jprint(c)
+                print("\n---\n")
+        else:
+            headers = ["id", "name", "code", "institutionId"]
+            body = [[c["id"], c["name"], c["code"], c["institutionId"]]
+                    for c in campuses]
+            print(tabulate(body, headers, tablefmt="grid"))
+
+
+    @inventory.command()
+    @click.option("-t", "--tenant", required=True,
+                help="Tenant id")
+    @click.option("-q", "--query",
+                help="Query string")
+    @click.option("-i", "--id", help="Get campus by id")
+    @click.option("-f", "--full", is_flag=True, help="Wether output complete record.")
+    def institutions(**kwargs):
+        """List Institutions by query.
+        """
+        tenant = kwargs["tenant"]
+        query = kwargs["query"] or "id=* sortby id"
+        full = kwargs["full"]
+        uuid = kwargs["id"]
+        if uuid is not None:
+            full = True
+            query = "id=%s" % uuid
+
+        refData = InventoryReferenceData(tenant)
+        institutions = refData.get_institutions(query=query)
+
+        if full:
+            for i in institutions:
+                jprint(i)
+                print("\n---\n")
+        else:
+            headers = ["id", "name", "code"]
+            body = [[i["id"], i["name"], i["code"]]
+                    for i in institutions]
+            print(tabulate(body, headers, tablefmt="grid"))
+

@@ -1,0 +1,44 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "tenant.json",
+    "title": "Tenant Schema",
+    "description": "Tenant information",
+    "type": "object",
+    "x-implements": [
+        "org.folio.tm.domain.entity.base.Identifiable"
+    ],
+    "properties": {
+        "id": {
+            "description": "A UUID identifying this attribute",
+            "type": "string",
+            "format": "uuid"
+        },
+        "name": {
+            "description": "Tenant name",
+            "type": "string",
+            "pattern": "[a-z][a-z0-9_]{0,29}[a-z0-9]"
+        },
+        "description": {
+            "description": "Tenant description",
+            "type": "string"
+        },
+        "type": {
+            "description": "Tenant type",
+            "$ref": "tenantType.json"
+        },
+        "attributes": {
+            "description": "List of tenant attributes",
+            "type": "array",
+            "items": {
+                "$ref": "tenantAttribute.json"
+            }
+        },
+        "metadata": {
+            "$ref": "common/metadata.json"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "name"
+    ]
+}

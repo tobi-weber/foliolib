@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -111,7 +111,7 @@ class SourceRecordStorageSourceRecords(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -151,7 +151,7 @@ class SourceRecordStorageSourceRecords(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -188,7 +188,7 @@ class SourceRecordStorageSourceRecords(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -216,7 +216,7 @@ class SourceRecordStorageBatch(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -240,7 +240,7 @@ class SourceRecordStorageBatch(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -264,7 +264,7 @@ class SourceRecordStorageBatch(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -288,7 +288,7 @@ class SourceRecordStorageBatch(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -316,7 +316,7 @@ class SourceRecordStorageTestRecords(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -489,7 +489,7 @@ class SourceRecordStorageStream(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -536,7 +536,7 @@ class SourceRecordStorageRecords(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -556,7 +556,7 @@ class SourceRecordStorageRecords(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -567,6 +567,28 @@ class SourceRecordStorageRecords(FolioApi):
             .. literalinclude:: ../files/SourceRecordStorageRecords_set_record_request.schema
         """
         return self.call("POST", "/source-storage/records", data=record)
+
+    def set_matching(self, matching: dict):
+        """Collection of pairs of marc record ID to external entity ID (instance, holdings, authority)
+
+        ``POST /source-storage/records/matching``
+
+        Args:
+            matching (dict): See Schema below
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/SourceRecordStorageRecords_set_matching_request.schema
+            .. literalinclude:: ../files/SourceRecordStorageRecords_set_matching_return.schema 
+        """
+        return self.call("POST", "/source-storage/records/matching", data=matching)
 
     def get_record(self, recordsId: str):
         """Retrieve record item with given {recordId}
@@ -581,7 +603,7 @@ class SourceRecordStorageRecords(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -600,7 +622,7 @@ class SourceRecordStorageRecords(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/source-storage/records/{recordsId}")
 
@@ -617,7 +639,7 @@ class SourceRecordStorageRecords(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -648,7 +670,7 @@ class SourceRecordStorageRecords(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -680,9 +702,27 @@ class SourceRecordStorageRecords(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("PUT", f"/source-storage/records/{recordsId}/suppress-from-discovery", query=kwargs)
+
+    def modify_generation(self, recordsId: str, generation: dict):
+        """Updates a specific Record with incremented generation and state ACTUAL by matched id
+
+        ``PUT /source-storage/records/{recordsId}/generation``
+
+        Args:
+            recordsId (str)
+            generation (dict): See Schema below
+
+        Returns:
+            dict: See Schema below
+
+        Schema:
+
+            .. literalinclude:: ../files/SourceRecordStorageRecords_modify_generation_request.schema
+        """
+        return self.call("PUT", f"/source-storage/records/{recordsId}/generation", data=generation)
 
 
 class SourceRecordStorageMigrationsJobs(FolioApi):
@@ -703,7 +743,7 @@ class SourceRecordStorageMigrationsJobs(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -770,7 +810,7 @@ class SourceRecordStorageSnapshots(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -790,7 +830,7 @@ class SourceRecordStorageSnapshots(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -815,7 +855,7 @@ class SourceRecordStorageSnapshots(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -834,7 +874,7 @@ class SourceRecordStorageSnapshots(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/source-storage/snapshots/{jobExecutionId}")
 
@@ -851,7 +891,7 @@ class SourceRecordStorageSnapshots(FolioApi):
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
             OkapiRequestConflict: Conflict
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:

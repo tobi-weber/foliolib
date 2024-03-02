@@ -1,0 +1,24 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "roles.json",
+    "title": "Roles schema",
+    "description": "Roles",
+    "type": "object",
+    "properties": {
+        "roles": {
+            "description": "Role identifier",
+            "type": "array",
+            "items": {
+                "$ref": "role.json"
+            },
+            "nullable": false
+        },
+        "totalRecords": {
+            "description": "The total number of roles matching the provided criteria",
+            "type": "integer"
+        }
+    },
+    "required": [
+        "roles"
+    ]
+}

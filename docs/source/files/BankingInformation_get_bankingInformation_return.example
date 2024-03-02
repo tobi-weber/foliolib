@@ -1,0 +1,15 @@
+{
+  "id": "c59680de-3e0e-46d6-a0a1-62528e8e92ae",
+  "organizationId": "fde0af0b-9735-45c9-b9cb-3f3ee989bba9",
+  "categoryId": "3501d066-76b1-4260-9db3-44699d40a18e",
+  "accountTypeId": "6a901d4c-4bea-47a4-8020-fac364a6c41a",
+  "bankName": "TRC",
+  "bankAccountNumber": "123456",
+  "transitNumber": "654321",
+  "notes": "Best one",
+  "isPrimary": false,
+  "metadata": {
+    "createdDate": "2023-10-11T00:00:00.000+0000",
+    "createdByUserId": "28d1057c-d137-11e8-a8d5-f2801f1b9fd1"
+  }
+}

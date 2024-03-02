@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -54,7 +54,7 @@ class Departments(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -73,7 +73,7 @@ class Departments(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -98,7 +98,7 @@ class Departments(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -117,7 +117,7 @@ class Departments(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/departments/{departmentId}")
 
@@ -133,7 +133,7 @@ class Departments(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -189,7 +189,7 @@ class ProxiesFor(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -208,7 +208,7 @@ class ProxiesFor(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -233,7 +233,7 @@ class ProxiesFor(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -252,7 +252,7 @@ class ProxiesFor(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/proxiesfor/{proxiesforId}")
 
@@ -268,7 +268,7 @@ class ProxiesFor(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -323,7 +323,7 @@ class AddressTypes(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -342,7 +342,7 @@ class AddressTypes(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -367,7 +367,7 @@ class AddressTypes(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -386,7 +386,7 @@ class AddressTypes(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/addresstypes/{addresstypeId}")
 
@@ -402,7 +402,7 @@ class AddressTypes(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -460,7 +460,7 @@ class Users(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -479,7 +479,7 @@ class Users(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -511,7 +511,7 @@ class Users(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -530,7 +530,7 @@ class Users(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/users/{userId}")
 
@@ -546,7 +546,7 @@ class Users(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -561,7 +561,7 @@ class Users(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("POST", "/users/expire/timer")
 
@@ -571,6 +571,145 @@ class Users(FolioApi):
         ``POST /users/outbox/process``
         """
         return self.call("POST", "/users/outbox/process")
+
+    def upload_profilePicture(self, filePath: str):
+        """Upload user profile picture
+
+        ``POST /users/profile-picture``
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Users_upload_profilePicture_return.schema 
+        """
+        import os
+        headers = {}
+        headers["Content-Type"] = "application/octet-stream"
+        headers["Content-length"] = str(os.path.getsize(filePath))
+        headers["Content-Disposition"] = "attachment; filename=%s" % os.path.basename(
+            filePath)
+        with open(filePath, 'rb') as f:
+            data = f.read()
+        
+        return self.call("POST", "/users/profile-picture", headers=headers, data=data)
+
+    def get_profilePicture(self, profileId: str):
+        """
+
+        ``GET /users/profile-picture/{profileId}``
+
+        Args:
+            profileId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+
+        Schema:
+
+            .. literalinclude:: ../files/Users_get_profilePicture_return.schema 
+        """
+        return self.call("GET", f"/users/profile-picture/{profileId}")
+
+    def modify_profilePicture(self, profileId: str, filePath: str):
+        """update user profile picture
+
+        ``PUT /users/profile-picture/{profileId}``
+
+        Args:
+            profileId (str)
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiRequestFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Users_modify_profilePicture_return.schema 
+        """
+        import os
+        headers = {}
+        headers["Content-Type"] = "application/octet-stream"
+        headers["Content-length"] = str(os.path.getsize(filePath))
+        headers["Content-Disposition"] = "attachment; filename=%s" % os.path.basename(
+            filePath)
+        with open(filePath, 'rb') as f:
+            data = f.read()
+        
+        return self.call("PUT", f"/users/profile-picture/{profileId}", headers=headers, data=data)
+
+    def delete_profilePicture(self, profileId: str):
+        """delete user profile picture
+
+        ``DELETE /users/profile-picture/{profileId}``
+
+        Args:
+            profileId (str)
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestFatalError: Server Error
+        """
+        return self.call("DELETE", f"/users/profile-picture/{profileId}")
+
+    def set_cleanup(self):
+        """Remove unused profile picture from object and db storage
+
+        ``POST /users/profile-picture/cleanup``
+        """
+        return self.call("POST", "/users/profile-picture/cleanup")
+
+    def get_entries(self):
+        """
+
+        ``GET /users/configurations/entry``
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiRequestFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Users_get_entries_return.schema 
+        """
+        return self.call("GET", "/users/configurations/entry")
+
+    def modify_entry(self, configId: str, entry: dict):
+        """
+
+        ``PUT /users/configurations/entry/{configId}``
+
+        Args:
+            configId (str)
+            entry (dict): See Schema below
+
+        Raises:
+            OkapiRequestNotFound: Not Found
+            OkapiRequestError: Bad Request
+            OkapiRequestFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/Users_modify_entry_request.schema
+        """
+        return self.call("PUT", f"/users/configurations/entry/{configId}", data=entry)
 
 
 class Groups(FolioApi):
@@ -619,7 +758,7 @@ class Groups(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -638,7 +777,7 @@ class Groups(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -663,7 +802,7 @@ class Groups(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -682,7 +821,7 @@ class Groups(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/groups/{groupId}")
 
@@ -698,7 +837,7 @@ class Groups(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -739,7 +878,7 @@ class UserTenants(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -758,7 +897,7 @@ class UserTenants(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
@@ -770,6 +909,13 @@ class UserTenants(FolioApi):
             .. literalinclude:: ../files/UserTenants_set_userTenant_request.schema
         """
         return self.call("POST", "/user-tenants", data=userTenant)
+
+    def delete_userTenants(self):
+        """
+
+        ``DELETE /user-tenants``
+        """
+        return self.call("DELETE", "/user-tenants")
 
 
 class Patronpin(FolioApi):
@@ -787,7 +933,7 @@ class Patronpin(FolioApi):
             patronPin (dict): See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -805,7 +951,7 @@ class Patronpin(FolioApi):
 
         Raises:
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -823,7 +969,7 @@ class Patronpin(FolioApi):
 
         Raises:
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 

@@ -1,0 +1,36 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "entitlementFlow.json",
+    "title": "Tenant Entitlement Flow Schema",
+    "description": "A tenant entitlement flow result, may contain multiple tenant application entitlements",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "An entitlement flow identifier",
+            "type": "string",
+            "format": "uuid"
+        },
+        "status": {
+            "$ref": "types/executionStatus.json"
+        },
+        "entitlementType": {
+            "$ref": "types/entitlementType.json"
+        },
+        "startedAt": {
+            "description": "A tenant entitlement flow start timestamp",
+            "type": "string",
+            "format": "date-time"
+        },
+        "finishedAt": {
+            "description": "A tenant entitlement flow end timestamp",
+            "type": "string",
+            "format": "date-time"
+        },
+        "applicationFlows": {
+            "type": "array",
+            "items": {
+                "$ref": "applicationFlow.json"
+            }
+        }
+    }
+}

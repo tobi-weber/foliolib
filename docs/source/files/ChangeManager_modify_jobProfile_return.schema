@@ -21,7 +21,9 @@
       "enum": [
         "CHILD",
         "PARENT_SINGLE",
-        "PARENT_MULTIPLE"
+        "PARENT_MULTIPLE",
+        "COMPOSITE_PARENT",
+        "COMPOSITE_CHILD"
       ]
     },
     "jobProfileInfo": {
@@ -88,6 +90,21 @@
     "userId": {
       "description": "ID of the user who created the JobExecution",
       "$ref": "../../raml-util/schemas/uuid.schema"
+    },
+    "jobPartNumber": {
+      "description": "The order number of the chunk job for COMPOSITE jobs",
+      "type": "integer",
+      "default": 1
+    },
+    "totalJobParts": {
+      "description": "The total number of chunk jobs for COMPOSITE jobs",
+      "type": "integer",
+      "default": 1
+    },
+    "totalRecordsInFile": {
+      "description": "The total number of records in the source file for COMPOSITE_PARENT jobs",
+      "type": "integer",
+      "default": 0
     }
   },
   "required": [

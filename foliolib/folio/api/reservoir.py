@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -26,7 +26,7 @@ class Reservoir(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -46,7 +46,7 @@ class Reservoir(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -62,7 +62,7 @@ class Reservoir(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
         """
         return self.call("DELETE", "/reservoir/config/oai")
 
@@ -79,7 +79,7 @@ class Reservoir(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -104,7 +104,7 @@ class Reservoir(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -123,7 +123,7 @@ class Reservoir(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -140,7 +140,7 @@ class Reservoir(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
         """
         return self.call("DELETE", f"/reservoir/config/matchkeys/{id_}")
 
@@ -156,7 +156,7 @@ class Reservoir(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -175,7 +175,7 @@ class Reservoir(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -194,7 +194,7 @@ class Reservoir(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -215,7 +215,7 @@ class Reservoir(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -240,7 +240,7 @@ class Reservoir(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -259,7 +259,7 @@ class Reservoir(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -279,7 +279,7 @@ class Reservoir(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -296,7 +296,7 @@ class Reservoir(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
         """
         return self.call("DELETE", f"/reservoir/config/modules/{id_}")
 
@@ -308,7 +308,7 @@ class Reservoir(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
         """
         return self.call("PUT", f"/reservoir/config/modules/{id_}/reload")
 
@@ -325,7 +325,7 @@ class Reservoir(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -349,7 +349,7 @@ class Reservoir(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -368,7 +368,7 @@ class Reservoir(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -385,7 +385,7 @@ class Reservoir(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
         """
         return self.call("DELETE", f"/reservoir/config/sources/{id_}")
 
@@ -402,7 +402,7 @@ class Reservoir(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -424,7 +424,7 @@ class Reservoir(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -445,7 +445,7 @@ class Reservoir(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -465,7 +465,7 @@ class Reservoir(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
         """
         return self.call("DELETE", f"/reservoir/ingest-jobs/{id_}", query=kwargs)
 
@@ -483,7 +483,7 @@ class Reservoir(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestForbidden: Forbidden
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -516,7 +516,7 @@ class Reservoir(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -538,7 +538,7 @@ class Reservoir(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -558,7 +558,7 @@ class Reservoir(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
         """
         return self.call("DELETE", "/reservoir/records", query=kwargs)
 
@@ -573,7 +573,7 @@ class Reservoir(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -593,7 +593,7 @@ class Reservoir(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -615,7 +615,7 @@ class Reservoir(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -634,7 +634,7 @@ class Reservoir(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -649,7 +649,7 @@ class Reservoir(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
         """
         return self.call("GET", "/reservoir/oai")
 
@@ -666,7 +666,7 @@ class Reservoir(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -685,7 +685,7 @@ class Reservoir(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -704,7 +704,7 @@ class Reservoir(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -724,7 +724,7 @@ class Reservoir(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 
@@ -741,7 +741,7 @@ class Reservoir(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
         """
         return self.call("DELETE", f"/reservoir/pmh-clients/{id_}")
 
@@ -753,7 +753,7 @@ class Reservoir(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
         """
         return self.call("POST", f"/reservoir/pmh-clients/{id_}/start")
 
@@ -765,7 +765,7 @@ class Reservoir(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
         """
         return self.call("POST", f"/reservoir/pmh-clients/{id_}/stop")
 
@@ -780,7 +780,7 @@ class Reservoir(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Internal error
+            OkapiRequestFatalError: Internal error
 
         Schema:
 

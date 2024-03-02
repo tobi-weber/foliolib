@@ -1,11 +1,98 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
 from foliolib.folio import FolioApi, FolioAdminApi
 
 log = logging.getLogger("foliolib.folio.api.consortia")
+
+
+
+class SharingInstances(FolioApi):
+    """Sharing instance and setting integration API
+
+    Sharing instance and setting integration API
+    """
+
+    def getsharinginstances(self, consortiumId, **kwargs):
+        """Sharing instances
+
+        ``GET /consortia/{consortiumId}/sharing/instances``
+
+        Args:
+            consortiumId (str):
+
+        Keyword Args:
+            instanceIdentifier (str):
+            sourceTenantId (str): The ID of the source tenant
+            targetTenantId (str): The ID of the target tenant
+            status (str):
+            offset (int): Skip over a number of elements by specifying an offset value for the query (default: 0, minimum: 0, maximum: 2147483647)
+            limit (int): Limit the number of elements returned in the response (default: 10, minimum: 0, maximum: 2147483647)
+
+        Returns:
+            dict: See Schema below.
+
+        Raises:
+            OkapiRequestError: Bad request
+            OkapiRequestNotFound: Resource not found
+            OkapiRequestFatalError: Internal server error
+
+        Schema:
+
+            .. literalinclude:: ../files/SharingInstances_getsharinginstances_response.schema
+        """
+        return self.call("GET", f"/consortia/{consortiumId}/sharing/instances", query=kwargs)
+
+		
+    def startsharinginstance(self, consortiumId, sharingInstance):
+        """
+
+        ``POST /consortia/{consortiumId}/sharing/instances``
+
+        Args:
+            consortiumId (str):
+            sharingInstance (dict): See Schema below.
+
+        Returns:
+            dict: See Schema below.
+
+        Raises:
+            OkapiRequestError: Bad request
+            OkapiRequestNotFound: Resource not found
+            OkapiRequestConflict: Validation errors
+            OkapiRequestUnprocessableEntity: Validation errors
+            OkapiRequestFatalError: Internal server error
+
+        Schema:
+
+            .. literalinclude:: ../files/SharingInstances_startsharinginstance_request.schema
+        """
+        return self.call("POST", f"/consortia/{consortiumId}/sharing/instances", sharingInstance)
+
+    def getsharinginstancebyid(self, consortiumId, actionId):
+        """
+
+        ``GET /consortia/{consortiumId}/sharing/instances/{actionId}``
+
+        Args:
+            consortiumId (str):
+            actionId (str):
+
+        Returns:
+            dict: See Schema below.
+
+        Raises:
+            OkapiRequestError: Bad request
+            OkapiRequestNotFound: Resource not found
+            OkapiRequestFatalError: Internal server error
+
+        Schema:
+
+            .. literalinclude:: ../files/SharingInstances_getsharinginstancebyid_response.schema
+        """
+        return self.call("GET", f"/consortia/{consortiumId}/sharing/instances/{actionId}")
 
 
 
@@ -36,7 +123,7 @@ class UserTenants(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Resource not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -60,7 +147,7 @@ class UserTenants(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Resource not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -84,7 +171,7 @@ class UserTenants(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Resource not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
         """
         return self.call("DELETE", f"/consortia/{consortiumId}/user-tenants", query=kwargs)
 
@@ -103,100 +190,13 @@ class UserTenants(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Resource not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
             .. literalinclude:: ../files/UserTenants_getusertenantbyassociationid_response.schema
         """
         return self.call("GET", f"/consortia/{consortiumId}/user-tenants/{associationId}")
-
-
-
-class SharingInstance(FolioApi):
-    """Sharing instance integration API
-
-    Sharing instance integration API
-    """
-
-    def getsharinginstances(self, consortiumId, **kwargs):
-        """Sharing instances
-
-        ``GET /consortia/{consortiumId}/sharing/instances``
-
-        Args:
-            consortiumId (str):
-
-        Keyword Args:
-            instanceIdentifier (str):
-            sourceTenantId (str): The ID of the source tenant
-            targetTenantId (str): The ID of the target tenant
-            status (str):
-            offset (int): Skip over a number of elements by specifying an offset value for the query (default: 0, minimum: 0, maximum: 2147483647)
-            limit (int): Limit the number of elements returned in the response (default: 10, minimum: 0, maximum: 2147483647)
-
-        Returns:
-            dict: See Schema below.
-
-        Raises:
-            OkapiRequestError: Bad request
-            OkapiRequestNotFound: Resource not found
-            OkapiFatalError: Internal server error
-
-        Schema:
-
-            .. literalinclude:: ../files/SharingInstance_getsharinginstances_response.schema
-        """
-        return self.call("GET", f"/consortia/{consortiumId}/sharing/instances", query=kwargs)
-
-		
-    def start(self, consortiumId, sharingInstance):
-        """
-
-        ``POST /consortia/{consortiumId}/sharing/instances``
-
-        Args:
-            consortiumId (str):
-            sharingInstance (dict): See Schema below.
-
-        Returns:
-            dict: See Schema below.
-
-        Raises:
-            OkapiRequestError: Bad request
-            OkapiRequestNotFound: Resource not found
-            OkapiRequestConflict: Validation errors
-            OkapiRequestUnprocessableEntity: Validation errors
-            OkapiFatalError: Internal server error
-
-        Schema:
-
-            .. literalinclude:: ../files/SharingInstance_start_request.schema
-        """
-        return self.call("POST", f"/consortia/{consortiumId}/sharing/instances", sharingInstance)
-
-    def getsharinginstancebyid(self, consortiumId, actionId):
-        """
-
-        ``GET /consortia/{consortiumId}/sharing/instances/{actionId}``
-
-        Args:
-            consortiumId (str):
-            actionId (str):
-
-        Returns:
-            dict: See Schema below.
-
-        Raises:
-            OkapiRequestError: Bad request
-            OkapiRequestNotFound: Resource not found
-            OkapiFatalError: Internal server error
-
-        Schema:
-
-            .. literalinclude:: ../files/SharingInstance_getsharinginstancebyid_response.schema
-        """
-        return self.call("GET", f"/consortia/{consortiumId}/sharing/instances/{actionId}")
 
 
 
@@ -216,7 +216,7 @@ class ConsortiaConfiguration(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -239,7 +239,7 @@ class ConsortiaConfiguration(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestConflict: Validation errors
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -273,7 +273,7 @@ class Tenants(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Resource not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -302,7 +302,7 @@ class Tenants(FolioApi):
             OkapiRequestNotFound: Resource not found
             OkapiRequestConflict: Validation errors
             OkapiRequestUnprocessableEntity: Validation errors
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -326,7 +326,7 @@ class Tenants(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Resource not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -347,11 +347,35 @@ class Tenants(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Resource not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
         """
         return self.call("DELETE", f"/consortia/{consortiumId}/tenants/{tenantId}")
 
-    def syncprimaryaffiliations(self, consortiumId, tenantId):
+		
+    def gettenantdetailsbyid(self, consortiumId, tenantId):
+        """
+
+        ``GET /consortia/{consortiumId}/tenants/{tenantId}``
+
+        Args:
+            consortiumId (str):
+            tenantId (str): The ID of the tenant
+
+        Returns:
+            dict: See Schema below.
+
+        Raises:
+            OkapiRequestError: Bad request
+            OkapiRequestNotFound: Resource not found
+            OkapiRequestFatalError: Internal server error
+
+        Schema:
+
+            .. literalinclude:: ../files/Tenants_gettenantdetailsbyid_response.schema
+        """
+        return self.call("GET", f"/consortia/{consortiumId}/tenants/{tenantId}")
+
+    def syncprimaryaffiliations(self, consortiumId, tenantId, **kwargs):
         """
 
         ``POST /consortia/{consortiumId}/tenants/{tenantId}/sync-primary-affiliations``
@@ -360,16 +384,19 @@ class Tenants(FolioApi):
             consortiumId (str):
             tenantId (str): The ID of the tenant
 
+        Keyword Args:
+            centralTenantId (str): The ID of the central tenant
+
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Resource not found
             OkapiRequestConflict: Validation errors
             OkapiRequestUnprocessableEntity: Validation errors
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
         """
-        return self.call("POST", f"/consortia/{consortiumId}/tenants/{tenantId}/sync-primary-affiliations")
+        return self.call("POST", f"/consortia/{consortiumId}/tenants/{tenantId}/sync-primary-affiliations", query=kwargs)
 
-    def createprimaryaffiliations(self, consortiumId, tenantId, syncPrimaryAffiliationBody):
+    def createprimaryaffiliations(self, consortiumId, tenantId, syncPrimaryAffiliationBody, **kwargs):
         """
 
         ``POST /consortia/{consortiumId}/tenants/{tenantId}/create-primary-affiliations``
@@ -379,18 +406,21 @@ class Tenants(FolioApi):
             tenantId (str): The ID of the tenant
             syncPrimaryAffiliationBody (dict): See Schema below.
 
+        Keyword Args:
+            centralTenantId (str): The ID of the central tenant
+
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Resource not found
             OkapiRequestConflict: Validation errors
             OkapiRequestUnprocessableEntity: Validation errors
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
             .. literalinclude:: ../files/Tenants_createprimaryaffiliations_request.schema
         """
-        return self.call("POST", f"/consortia/{consortiumId}/tenants/{tenantId}/create-primary-affiliations", syncPrimaryAffiliationBody)
+        return self.call("POST", f"/consortia/{consortiumId}/tenants/{tenantId}/create-primary-affiliations", syncPrimaryAffiliationBody, query=kwargs)
 
 
 
@@ -415,7 +445,7 @@ class Publications(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestConflict: Validation errors
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -438,13 +468,112 @@ class Publications(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
             .. literalinclude:: ../files/Publications_getpublicationdetails_response.schema
         """
         return self.call("GET", f"/consortia/{consortiumId}/publications/{publicationId}")
+
+		
+    def deletepublicationbyid(self, consortiumId, publicationId):
+        """
+
+        ``DELETE /consortia/{consortiumId}/publications/{publicationId}``
+
+        Args:
+            consortiumId (str):
+            publicationId (str):
+
+        Raises:
+            OkapiRequestNotFound: Resource not found
+            OkapiRequestFatalError: Internal server error
+        """
+        return self.call("DELETE", f"/consortia/{consortiumId}/publications/{publicationId}")
+
+    def getpublicationresults(self, consortiumId, publicationId):
+        """
+
+        ``GET /consortia/{consortiumId}/publications/{publicationId}/results``
+
+        Args:
+            consortiumId (str):
+            publicationId (str):
+
+        Returns:
+            dict: See Schema below.
+
+        Raises:
+            OkapiRequestError: Bad request
+            OkapiRequestFatalError: Internal server error
+
+        Schema:
+
+            .. literalinclude:: ../files/Publications_getpublicationresults_response.schema
+        """
+        return self.call("GET", f"/consortia/{consortiumId}/publications/{publicationId}/results")
+
+
+
+class SharingSettings(FolioApi):
+    """Sharing instance and setting integration API
+
+    Sharing instance and setting integration API
+    """
+
+    def startsharingsetting(self, consortiumId, sharingSettingRequest):
+        """
+
+        ``POST /consortia/{consortiumId}/sharing/settings``
+
+        Args:
+            consortiumId (str):
+            sharingSettingRequest (dict): See Schema below.
+
+        Returns:
+            dict: See Schema below.
+
+        Raises:
+            OkapiRequestError: Bad request
+            OkapiRequestNotFound: Resource not found
+            OkapiRequestConflict: Validation errors
+            OkapiRequestUnprocessableEntity: Validation errors
+            OkapiRequestFatalError: Internal server error
+
+        Schema:
+
+            .. literalinclude:: ../files/SharingSettings_startsharingsetting_request.schema
+            .. literalinclude:: ../files/SharingSettings_startsharingsetting_request.schema_response.schema
+        """
+        return self.call("POST", f"/consortia/{consortiumId}/sharing/settings", sharingSettingRequest)
+
+    def deletesharingsetting(self, consortiumId, settingId, sharingSettingRequest):
+        """
+
+        ``DELETE /consortia/{consortiumId}/sharing/settings/{settingId}``
+
+        Args:
+            consortiumId (str):
+            settingId (str):
+            sharingSettingRequest (dict): See Schema below.
+
+        Returns:
+            dict: See Schema below.
+
+        Raises:
+            OkapiRequestError: Bad request
+            OkapiRequestNotFound: Resource not found
+            OkapiRequestConflict: Validation errors
+            OkapiRequestUnprocessableEntity: Validation errors
+            OkapiRequestFatalError: Internal server error
+
+        Schema:
+
+            .. literalinclude:: ../files/SharingSettings_deletesharingsetting_request.schema
+            .. literalinclude:: ../files/SharingSettings_deletesharingsetting_request.schema_response.schema
+        """
+        return self.call("DELETE", f"/consortia/{consortiumId}/sharing/settings/{settingId}", sharingSettingRequest)
 
 
 
@@ -469,7 +598,7 @@ class Self(FolioApi):
             OkapiRequestError: Bad request
             OkapiRequestUnauthorized: Not authorized to perform requested action
             OkapiRequestNotFound: Resource not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -510,7 +639,7 @@ class Consortia(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -533,7 +662,7 @@ class Consortia(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestConflict: Validation errors
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -554,7 +683,7 @@ class Consortia(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -578,7 +707,7 @@ class Consortia(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Resource not found
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 

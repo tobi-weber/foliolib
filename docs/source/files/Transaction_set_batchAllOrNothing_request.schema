@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Batch processing of transactions",
+  "type": "object",
+  "properties": {
+    "transactionsToCreate": {
+      "description": "Transactions to create (they must include the id)",
+      "type": "array",
+      "items": {
+        "$ref": "transaction.json"
+      }
+    },
+    "transactionsToUpdate": {
+      "description": "Transactions to update",
+      "type": "array",
+      "items": {
+        "$ref": "transaction.json"
+      }
+    },
+    "idsOfTransactionsToDelete": {
+      "description": "Ids of transactions to delete",
+      "type": "array",
+      "items": {
+        "$ref": "../../common/schemas/uuid.json"
+      }
+    },
+    "transactionPatches": {
+      "description": "Transaction patches (incomplete transactions that must include the id)",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "UUID of the transaction to patch",
+            "$ref": "../../common/schemas/uuid.json"
+          }
+        },
+        "additionalProperties": true,
+        "required": [
+          "id"
+        ]
+      }
+    }
+  },
+  "additionalProperties": false
+}

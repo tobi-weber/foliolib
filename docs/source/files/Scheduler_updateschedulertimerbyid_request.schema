@@ -1,0 +1,28 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "TimerDescriptor",
+    "description": "Timer",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "Timer identifier",
+            "type": "string",
+            "format": "uuid"
+        },
+        "modified": {
+            "description": "Whether modified",
+            "type": "boolean"
+        },
+        "routingEntry": {
+            "$ref": "routingEntry.json"
+        },
+        "enabled": {
+            "description": "Whether enabled",
+            "type": "boolean"
+        }
+    },
+    "required": [
+        "routingEntry",
+        "enabled"
+    ]
+}

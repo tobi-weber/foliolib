@@ -1,0 +1,23 @@
+{
+    "type": "object",
+    "properties": {
+        "item": {
+            "$ref": "dcbItem.yaml#/DcbItem"
+        },
+        "patron": {
+            "$ref": "dcbPatron.yaml#/DcbPatron"
+        },
+        "pickup": {
+            "$ref": "dcbPickup.yaml#/DcbPickup"
+        },
+        "role": {
+            "type": "string",
+            "enum": [
+                "LENDER",
+                "BORROWER",
+                "PICKUP",
+                "BORROWING-PICKUP"
+            ]
+        }
+    }
+}

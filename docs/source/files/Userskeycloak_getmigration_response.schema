@@ -1,0 +1,31 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "userMigrationJob.json",
+    "title": "User Migration Job Schema",
+    "description": "A user migration job entity for tracking migration's progress",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "An migration job identifier",
+            "type": "string",
+            "format": "uuid"
+        },
+        "status": {
+            "description": "An user migration job status",
+            "$ref": "types/userMigrationJobStatus.json"
+        },
+        "totalRecords": {
+            "type": "integer"
+        },
+        "startedAt": {
+            "description": "A user migration job start timestamp",
+            "type": "string",
+            "format": "date-time"
+        },
+        "finishedAt": {
+            "description": "A user migration job end timestamp",
+            "type": "string",
+            "format": "date-time"
+        }
+    }
+}

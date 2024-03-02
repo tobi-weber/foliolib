@@ -1,0 +1,20 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Role-Capabilities Objects Schema",
+    "description": "Response body containing role-capabilities relations for search request",
+    "type": "object",
+    "properties": {
+        "totalRecords": {
+            "description": "The total number of role-capability objects matching the provided criteria",
+            "type": "integer",
+            "format": "int64"
+        },
+        "roleCapabilities": {
+            "description": "List with found/created role-capability relations",
+            "type": "array",
+            "items": {
+                "$ref": "roleCapability.json"
+            }
+        }
+    }
+}

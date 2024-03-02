@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -33,7 +33,7 @@ class Calendar(FolioApi):
 
         Raises:
             OkapiRequestError: Invalid request or parameters
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -56,7 +56,7 @@ class Calendar(FolioApi):
         Raises:
             OkapiRequestError: Invalid request or parameters
             OkapiRequestConflict: A calendar creation/update cannot be performed due to an existing assignment overlapping with the provided date range
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -76,7 +76,7 @@ class Calendar(FolioApi):
         Raises:
             OkapiRequestError: Invalid request or parameters
             OkapiRequestNotFound: A calendar with the given UUID could not be found.
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
         """
         return self.call("DELETE", "/calendar/calendars", query=kwargs)
 
@@ -94,7 +94,7 @@ class Calendar(FolioApi):
         Raises:
             OkapiRequestError: Invalid request or parameters
             OkapiRequestNotFound: A calendar with the given UUID could not be found.
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -119,7 +119,7 @@ class Calendar(FolioApi):
             OkapiRequestError: Invalid request or parameters
             OkapiRequestNotFound: A calendar with the given UUID could not be found.
             OkapiRequestConflict: A calendar creation/update cannot be performed due to an existing assignment overlapping with the provided date range
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -139,7 +139,7 @@ class Calendar(FolioApi):
         Raises:
             OkapiRequestError: Invalid request or parameters
             OkapiRequestNotFound: A calendar with the given UUID could not be found.
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
         """
         return self.call("DELETE", f"/calendar/calendars/{calendarId}")
 
@@ -159,7 +159,7 @@ class Calendar(FolioApi):
 
         Raises:
             OkapiRequestError: Invalid request or parameters
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -187,7 +187,7 @@ class Calendar(FolioApi):
 
         Raises:
             OkapiRequestError: Invalid request or parameters
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 

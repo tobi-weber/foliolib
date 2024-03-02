@@ -1,0 +1,20 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "roles.json",
+    "title": "Roles schema",
+    "description": "Roles",
+    "type": "object",
+    "properties": {
+        "roles": {
+            "type": "array",
+            "items": {
+                "$ref": "role.json"
+            },
+            "minItems": 1,
+            "maxItems": 255
+        }
+    },
+    "required": [
+        "roles"
+    ]
+}

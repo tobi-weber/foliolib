@@ -1,0 +1,21 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "userRoles.json",
+    "title": "List of User-Role Relation Items Schema",
+    "description": "List of user-role relation items",
+    "type": "object",
+    "properties": {
+        "userRoles": {
+            "description": "List of user-role relation items",
+            "type": "array",
+            "items": {
+                "$ref": "userRole.json"
+            },
+            "nullable": false
+        },
+        "totalRecords": {
+            "description": "The total number of user-role relation items matching the provided criteria",
+            "type": "integer"
+        }
+    }
+}

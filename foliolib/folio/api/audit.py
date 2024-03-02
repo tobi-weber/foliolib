@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -41,7 +41,7 @@ class AcquisitionEvents(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -77,7 +77,7 @@ class AcquisitionEvents(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -85,6 +85,78 @@ class AcquisitionEvents(FolioApi):
             .. literalinclude:: ../files/AcquisitionEvents_get_orderLine_return.schema 
         """
         return self.call("GET", f"/audit-data/acquisition/order-line/{orderLineId}", query=kwargs)
+
+    def get_piece(self, pieceId: str, **kwargs):
+        """Get list of piece events by piece_id
+
+        ``GET /audit-data/acquisition/piece/{pieceId}``
+
+        Args:
+            pieceId (str)
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            sortBy (str): (default=action_date) sorting by field: actionDate
+            sortOrder (str): (default=desc) sort order: asc or desc
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/AcquisitionEvents_get_piece_return.schema 
+        """
+        return self.call("GET", f"/audit-data/acquisition/piece/{pieceId}", query=kwargs)
+
+    def get_statusChangeHistory_by_piece(self, pieceId: str, **kwargs):
+        """Get list of piece events which have unique status changes by piece_id
+
+        ``GET /audit-data/acquisition/piece/{pieceId}/status-change-history``
+
+        Args:
+            pieceId (str)
+            **kwargs (properties): Keyword Arguments
+
+        Keyword Args:
+            sortBy (str): (default=action_date) sorting by field: actionDate
+            sortOrder (str): (default=desc) sort order: asc or desc
+            limit (int): (default=10) Limit the number of elements returned in the response
+                    
+                    Example:
+                    
+                     - 10
+            offset (int): (default=0) Skip over a number of elements by specifying an offset value for the query
+                    
+                    Example:
+                    
+                     - 0
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestFatalError: Server Error
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+
+        Schema:
+
+            .. literalinclude:: ../files/AcquisitionEvents_get_statusChangeHistory_by_piece_return.schema 
+        """
+        return self.call("GET", f"/audit-data/acquisition/piece/{pieceId}/status-change-history", query=kwargs)
 
 
 class ModAuditHandlers(FolioApi):
@@ -153,7 +225,7 @@ class CirculationLogs(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -208,7 +280,7 @@ class AuditData(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -228,7 +300,7 @@ class AuditData(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Headers:
@@ -253,7 +325,7 @@ class AuditData(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
 
@@ -274,7 +346,7 @@ class AuditData(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnauthorized: Authentication is required
         """
         return self.call("DELETE", f"/audit-data/{auditDataId}")
@@ -291,7 +363,7 @@ class AuditData(FolioApi):
         Raises:
             OkapiRequestNotFound: Not Found
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 

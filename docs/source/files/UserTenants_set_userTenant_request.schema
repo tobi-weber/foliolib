@@ -34,6 +34,18 @@
     "email": {
       "description": "The user's email address",
       "type": "string"
+    },
+    "barcode": {
+      "description": "The barcode of the user's",
+      "type": "string"
+    },
+    "externalSystemId": {
+      "description": "The externalSystemId of the user's",
+      "type": "string"
+    },
+    "consortiumId": {
+      "description": "UUID of the consortiumId",
+      "$ref": "raml-util/schemas/uuid.schema"
     }
   },
   "additionalProperties": false,

@@ -38,8 +38,8 @@
                   "description": "The free form notes pertaining to this item",
                   "type": "string"
                 },
-                "caption": {
-                  "description": "The volume or caption of the item",
+                "displaySummary": {
+                  "description": "Display summary of the item",
                   "type": "string"
                 },
                 "itemStatus": {

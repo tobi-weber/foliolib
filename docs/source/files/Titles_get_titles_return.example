@@ -21,6 +21,8 @@
       "subscriptionFrom": "2018-10-09T00:00:00.000Z",
       "subscriptionInterval": 824,
       "subscriptionTo": "2020-10-09T00:00:00.000Z",
+      "claimingActive": false,
+      "claimingInterval": 0,
       "isAcknowledged": true,
       "productIds": [
         {
@@ -28,6 +30,10 @@
           "productIdType": "8261054f-be78-422d-bd51-4ed9f33c3422",
           "qualifier": "(paperback)"
         }
+      ],
+      "acqUnitIds": [
+        "1895e539-8dac-441e-b1f5-aab62b3fde60",
+        "47f504bd-0c1b-498e-a2ae-e2f0a0cea273"
       ],
       "metadata": {
         "createdDate": "2018-07-19T00:00:00.000+0000",

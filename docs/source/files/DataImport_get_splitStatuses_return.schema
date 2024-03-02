@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "response from teh split status api call",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "splitStatus": {
+      "type": "boolean",
+      "description": "current status of split configuration for the module",
+      "default": false
+    }
+  },
+  "required": [
+    "splitStatus"
+  ]
+}

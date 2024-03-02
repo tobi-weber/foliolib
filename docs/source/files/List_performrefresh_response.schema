@@ -1,0 +1,71 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "List Refresh Details DTO",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "List Refresh id",
+            "type": "string",
+            "format": "UUID"
+        },
+        "listId": {
+            "description": "List id",
+            "type": "string",
+            "format": "UUID"
+        },
+        "status": {
+            "description": "Status of the refresh",
+            "type": "string",
+            "enum": [
+                "IN_PROGRESS",
+                "SUCCESS",
+                "FAILED",
+                "CANCELLED"
+            ]
+        },
+        "refreshStartDate": {
+            "description": "Date and time when the list refresh was started",
+            "type": "string",
+            "format": "date-time"
+        },
+        "refreshEndDate": {
+            "description": "Date and time when the list refresh was completed",
+            "type": "string",
+            "format": "date-time"
+        },
+        "refreshedBy": {
+            "description": "ID of the user who refreshed the list",
+            "type": "string",
+            "format": "UUID"
+        },
+        "refreshedByUsername": {
+            "description": "Username of the user who refreshed the list",
+            "type": "string"
+        },
+        "recordsCount": {
+            "description": "Number of the records found",
+            "type": "integer"
+        },
+        "contentVersion": {
+            "description": "Number of times list has been refreshed",
+            "type": "integer"
+        },
+        "error": {
+            "description": "Error encountered during list refresh",
+            "$ref": "ListAppError.json"
+        },
+        "listVersion": {
+            "description": "Contains the version of the list",
+            "type": "integer"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "id",
+        "listId",
+        "status",
+        "refreshStartDate",
+        "refreshedBy",
+        "refreshedByUsername"
+    ]
+}

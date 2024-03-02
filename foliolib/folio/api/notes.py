@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -31,7 +31,7 @@ class Notes(FolioApi):
         Raises:
             OkapiRequestUnauthorized: Not authorized to perform requested action
             OkapiRequestUnprocessableEntity: Validation errors
-            OkapiFatalError: Unexpected error
+            OkapiRequestFatalError: Unexpected error
 
         Schema:
 
@@ -54,7 +54,7 @@ class Notes(FolioApi):
         Raises:
             OkapiRequestUnauthorized: Not authorized to perform requested action
             OkapiRequestUnprocessableEntity: Validation errors
-            OkapiFatalError: Unexpected error
+            OkapiRequestFatalError: Unexpected error
 
         Schema:
 
@@ -74,7 +74,7 @@ class Notes(FolioApi):
             OkapiRequestUnauthorized: Not authorized to perform requested action
             OkapiRequestNotFound: Resource with a given ID not found
             OkapiRequestUnprocessableEntity: Validation errors
-            OkapiFatalError: Unexpected error
+            OkapiRequestFatalError: Unexpected error
 
         Schema:
 
@@ -94,7 +94,7 @@ class Notes(FolioApi):
         Raises:
             OkapiRequestUnauthorized: Not authorized to perform requested action
             OkapiRequestNotFound: Resource with a given ID not found
-            OkapiFatalError: Unexpected error
+            OkapiRequestFatalError: Unexpected error
 
         Schema:
 
@@ -111,7 +111,7 @@ class Notes(FolioApi):
         Raises:
             OkapiRequestUnauthorized: Not authorized to perform requested action
             OkapiRequestNotFound: Resource with a given ID not found
-            OkapiFatalError: Unexpected error
+            OkapiRequestFatalError: Unexpected error
         """
         return self.call("DELETE", f"/note-types/{id_}")
 
@@ -131,7 +131,7 @@ class Notes(FolioApi):
         Raises:
             OkapiRequestUnauthorized: Not authorized to perform requested action
             OkapiRequestUnprocessableEntity: Validation errors
-            OkapiFatalError: Unexpected error
+            OkapiRequestFatalError: Unexpected error
 
         Schema:
 
@@ -154,7 +154,7 @@ class Notes(FolioApi):
         Raises:
             OkapiRequestUnauthorized: Not authorized to perform requested action
             OkapiRequestUnprocessableEntity: Validation errors
-            OkapiFatalError: Unexpected error
+            OkapiRequestFatalError: Unexpected error
 
         Schema:
 
@@ -174,7 +174,7 @@ class Notes(FolioApi):
             OkapiRequestUnauthorized: Not authorized to perform requested action
             OkapiRequestNotFound: Resource with a given ID not found
             OkapiRequestUnprocessableEntity: Validation errors
-            OkapiFatalError: Unexpected error
+            OkapiRequestFatalError: Unexpected error
 
         Schema:
 
@@ -194,7 +194,7 @@ class Notes(FolioApi):
         Raises:
             OkapiRequestUnauthorized: Not authorized to perform requested action
             OkapiRequestNotFound: Resource with a given ID not found
-            OkapiFatalError: Unexpected error
+            OkapiRequestFatalError: Unexpected error
 
         Schema:
 
@@ -211,7 +211,7 @@ class Notes(FolioApi):
         Raises:
             OkapiRequestUnauthorized: Not authorized to perform requested action
             OkapiRequestNotFound: Resource with a given ID not found
-            OkapiFatalError: Unexpected error
+            OkapiRequestFatalError: Unexpected error
         """
         return self.call("DELETE", f"/notes/{id_}")
 
@@ -226,7 +226,7 @@ class Notes(FolioApi):
         Raises:
             OkapiRequestUnauthorized: Not authorized to perform requested action
             OkapiRequestNotFound: Resource with a given ID not found
-            OkapiFatalError: Unexpected error
+            OkapiRequestFatalError: Unexpected error
 
         Schema:
 
@@ -254,7 +254,7 @@ class Notes(FolioApi):
         Raises:
             OkapiRequestUnauthorized: Not authorized to perform requested action
             OkapiRequestUnprocessableEntity: Validation errors
-            OkapiFatalError: Unexpected error
+            OkapiRequestFatalError: Unexpected error
 
         Schema:
 

@@ -12,12 +12,15 @@ Modules
 
 	foliolib.folio.api.audit
 	foliolib.folio.api.authtoken
+	foliolib.folio.api.batchPrint
 	foliolib.folio.api.bulkOperations
 	foliolib.folio.api.calendar
 	foliolib.folio.api.circulation
+	foliolib.folio.api.circulationItem
 	foliolib.folio.api.circulationStorage
 	foliolib.folio.api.configuration
 	foliolib.folio.api.consortia
+	foliolib.folio.api.consortiaKeycloak
 	foliolib.folio.api.copycat
 	foliolib.folio.api.courses
 	foliolib.folio.api.dataExport
@@ -25,6 +28,7 @@ Modules
 	foliolib.folio.api.dataExportWorker
 	foliolib.folio.api.dataImport
 	foliolib.folio.api.dataImportConverterStorage
+	foliolib.folio.api.dcb
 	foliolib.folio.api.diConverterStorage
 	foliolib.folio.api.ebsconet
 	foliolib.folio.api.email
@@ -40,6 +44,7 @@ Modules
 	foliolib.folio.api.folioCustomFields
 	foliolib.folio.api.folioSpringBase
 	foliolib.folio.api.folioVertxLib
+	foliolib.folio.api.fqmManager
 	foliolib.folio.api.gobi
 	foliolib.folio.api.idmConnect
 	foliolib.folio.api.innReach
@@ -51,10 +56,16 @@ Modules
 	foliolib.folio.api.kbEbscoJava
 	foliolib.folio.api.ldp
 	foliolib.folio.api.licenses
+	foliolib.folio.api.lists
 	foliolib.folio.api.login
+	foliolib.folio.api.loginKeycloak
 	foliolib.folio.api.loginSaml
+	foliolib.folio.api.marcMigrations
 	foliolib.folio.api.marccat
 	foliolib.folio.api.metaStorage
+	foliolib.folio.api.mgrApplications
+	foliolib.folio.api.mgrTenantEntitlements
+	foliolib.folio.api.mgrTenants
 	foliolib.folio.api.notes
 	foliolib.folio.api.notify
 	foliolib.folio.api.oaiPmh
@@ -69,8 +80,11 @@ Modules
 	foliolib.folio.api.pubsub
 	foliolib.folio.api.quickMarc
 	foliolib.folio.api.remoteStorage
+	foliolib.folio.api.requestsMediated
 	foliolib.folio.api.reservoir
+	foliolib.folio.api.rolesKeycloak
 	foliolib.folio.api.rtac
+	foliolib.folio.api.scheduler
 	foliolib.folio.api.search
 	foliolib.folio.api.sender
 	foliolib.folio.api.settings
@@ -79,6 +93,8 @@ Modules
 	foliolib.folio.api.sourceRecordStorage
 	foliolib.folio.api.tags
 	foliolib.folio.api.templateEngine
+	foliolib.folio.api.tlr
 	foliolib.folio.api.userImport
 	foliolib.folio.api.users
 	foliolib.folio.api.usersBl
+	foliolib.folio.api.usersKeycloak

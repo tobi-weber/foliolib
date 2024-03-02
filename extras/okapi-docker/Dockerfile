@@ -1,8 +1,16 @@
-FROM alpine:latest
+FROM openjdk:19-alpine
 
-RUN apk --no-cache --update add openjdk11-jre bash bind-tools
+ARG version
 
 WORKDIR /opt/okapi
+
+RUN apk --no-cache --update add bash bind-tools git maven
+RUN git clone -b "v${version}" --recursive https://github.com/folio-org/okapi.git
+RUN cd okapi; mvn clean install -DskipTests
+RUN cp okapi/okapi-core/target/okapi-core-fat.jar .
+RUN rm -rf okapi /root/.m2
+RUN apk del git maven
+
 
 ENV OKAPI_HOST='okapi'
 ENV OKAPI_HTTP_PORT='9130'
@@ -22,7 +30,6 @@ ENV OKAPI_DEPLOY_WAIT_ITERATIONS='60'
 ENV OKAPI_LOGLEVEL='INFO'
 ENV OKAPI_KUBERNETES='false'
 
-COPY okapi-core-fat.jar /opt/okapi/
 COPY hazelcast.xml.tpl /opt/okapi/
 COPY create_kube_config.sh /opt/okapi/
 COPY startup.sh /opt/okapi/

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -56,7 +56,7 @@ class ModUsersBl(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestForbidden: Forbidden
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -86,7 +86,7 @@ class ModUsersBl(FolioApi):
             OkapiRequestForbidden: Forbidden
             OkapiRequestNotFound: Not Found
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -118,7 +118,7 @@ class ModUsersBl(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -148,7 +148,7 @@ class ModUsersBl(FolioApi):
             OkapiRequestForbidden: Forbidden
             OkapiRequestNotFound: Not Found
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -180,7 +180,7 @@ class ModUsersBl(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -209,7 +209,7 @@ class ModUsersBl(FolioApi):
             OkapiRequestForbidden: Forbidden
             OkapiRequestNotFound: Not Found
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -225,7 +225,7 @@ class ModUsersBl(FolioApi):
         return self.call("DELETE", "/bl-users/_self")
 
     def set_login(self, login: dict, **kwargs):
-        """Allow a new user to login and return an authtoken, along with a composite user record
+        """Allow a new user to login and return an authtoken, along with a composite user record. Deprecated and will be removed in a future release. Please use /login-with-expiry.
 
         ``POST /bl-users/login``
 
@@ -244,7 +244,7 @@ class ModUsersBl(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Headers:
             - **x-okapi-token** 
@@ -255,6 +255,37 @@ class ModUsersBl(FolioApi):
             .. literalinclude:: ../files/ModUsersBl_set_login_return.schema 
         """
         return self.call("POST", "/bl-users/login", data=login, query=kwargs)
+
+    def set_loginWithExpiry(self, loginWithExpiry: dict, **kwargs):
+        """Allow a new user to login and return two cookies, one containing the user's refresh token
+        and one containing an access token. Both tokens have an expiration. The expiration time
+        for each is contained in the composite user token expiration property.
+
+        ``POST /bl-users/login-with-expiry``
+
+        Args:
+            loginWithExpiry (dict)
+            **kwargs (properties): Keyword Arguments: See Schema below
+
+        Keyword Args:
+            expandPermissions (bool): (default=False) Whether or not to expand permissions listings
+            include (list):  indicates which referenced fields should be populated (de-referenced) by the service
+                    
+
+        Returns:
+            dict: See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnprocessableEntity: Unprocessable Entity
+            OkapiRequestFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/ModUsersBl_set_loginWithExpiry_request.schema
+            .. literalinclude:: ../files/ModUsersBl_set_loginWithExpiry_return.schema 
+        """
+        return self.call("POST", "/bl-users/login-with-expiry", data=loginWithExpiry, query=kwargs)
 
     def set_username(self, username: dict):
         """called when a user has forgotten "a username"
@@ -267,7 +298,7 @@ class ModUsersBl(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -286,7 +317,7 @@ class ModUsersBl(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -305,7 +336,7 @@ class ModUsersBl(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -341,7 +372,7 @@ class ModUsersBl(FolioApi):
 
         Raises:
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -356,6 +387,6 @@ class ModUsersBl(FolioApi):
 
         Raises:
             OkapiRequestUnprocessableEntity: Unprocessable Entity
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("POST", "/bl-users/password-reset/validate")

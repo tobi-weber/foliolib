@@ -11,7 +11,8 @@ Modules
    :template: module2.rst
    :recursive:
 
-   foliolib.folio.users
-   foliolib.folio.config
-   foliolib.folio.inventoryReferenceData
+   foliolib.folio.usersImpl
+   foliolib.folio.configImpl
+   foliolib.folio.inventoryImpl
+   foliolib.folio.permissionsImpl
    foliolib.folio.exceptions

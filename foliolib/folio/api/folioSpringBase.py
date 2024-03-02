@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -26,7 +26,7 @@ class Tenant(FolioApi):
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestUnprocessableEntity: Validation errors
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
 
         Schema:
 
@@ -40,7 +40,7 @@ class Tenant(FolioApi):
         ``GET /_/tenant/{operationId}``
 
         Raises:
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
         """
         return self.call("GET", f"/_/tenant/{operationId}")
 
@@ -52,6 +52,6 @@ class Tenant(FolioApi):
 
         Raises:
             OkapiRequestError: Bad request
-            OkapiFatalError: Internal server error
+            OkapiRequestFatalError: Internal server error
         """
         return self.call("DELETE", f"/_/tenant/{operationId}")

@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "tenantAttributes.json",
+    "title": "Tenant Attributes Schema",
+    "description": "Collection of tenant attributes",
+    "type": "object",
+    "properties": {
+        "tenantAttributes": {
+            "description": "List of tenant attributes",
+            "type": "array",
+            "items": {
+                "$ref": "tenantAttribute.json"
+            }
+        },
+        "totalRecords": {
+            "type": "integer"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "tenantAttributes"
+    ]
+}

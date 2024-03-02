@@ -1,0 +1,24 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "installation.json",
+    "title": "Tenant Entitlement Result Schema",
+    "description": "Tenant entitlement result descriptor",
+    "type": "object",
+    "properties": {
+        "totalRecords": {
+            "type": "integer",
+            "description": "A total number of records"
+        },
+        "flowId": {
+            "description": "An entitlement flow identifier",
+            "type": "string",
+            "format": "uuid"
+        },
+        "entitlements": {
+            "type": "array",
+            "items": {
+                "$ref": "extendedEntitlement.json"
+            }
+        }
+    }
+}

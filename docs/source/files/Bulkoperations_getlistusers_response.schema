@@ -1,0 +1,20 @@
+{
+    "description": "A set of users",
+    "type": "object",
+    "properties": {
+        "users": {
+            "description": "Set of users",
+            "id": "users",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "$ref": "user.json"
+            }
+        },
+        "total_records": {
+            "description": "Total number of users",
+            "type": "integer"
+        }
+    },
+    "additionalProperties": false
+}

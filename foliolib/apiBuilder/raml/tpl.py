@@ -193,6 +193,8 @@ def get_doc(methodName: str, method: 'RamlMethod', dataParam: str = None,
                     example = json.dumps(example,
                                          indent=2)
                 returnExample = example
+                if not isinstance(returnExample, str):
+                    returnExample = str(returnExample)
                 with open(os.path.join(filespath, returnExampleFile), "w",
                           encoding="utf-8") as f:
                     f.write(returnExample)

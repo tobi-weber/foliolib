@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "userRolesRequest.json",
+    "title": "User-roles relation Batch Request Schema",
+    "description": "User-roles request body",
+    "type": "object",
+    "properties": {
+        "userId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "User identifier (UUID)"
+        },
+        "roleIds": {
+            "type": "array",
+            "description": "Role identifiers",
+            "items": {
+                "type": "string",
+                "format": "uuid",
+                "description": "Role identifier (UUID)"
+            }
+        }
+    }
+}

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -123,3 +123,21 @@ class Ldp(FolioApi):
             .. literalinclude:: ../files/Ldp_set_query_return.schema 
         """
         return self.call("POST", "/ldp/db/query", data=query)
+
+    def set_report(self, report: dict):
+        """
+
+        ``POST /ldp/db/reports``
+
+        Args:
+            report (dict): See Schema below
+
+        Returns:
+            dict: See Schema below
+
+        Schema:
+
+            .. literalinclude:: ../files/Ldp_set_report_request.schema
+            .. literalinclude:: ../files/Ldp_set_report_return.schema 
+        """
+        return self.call("POST", "/ldp/db/reports", data=report)

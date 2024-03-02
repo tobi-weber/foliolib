@@ -1,0 +1,14 @@
+{
+    "description": "A JSON schema for the Sharing settings object response for delete request",
+    "type": "object",
+    "properties": {
+        "pcId": {
+            "type": "string",
+            "format": "uuid"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "pcId"
+    ]
+}

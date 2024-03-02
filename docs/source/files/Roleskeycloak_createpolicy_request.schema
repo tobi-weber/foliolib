@@ -1,0 +1,38 @@
+{
+    "type": "object",
+    "description": "Object containing the details of the policy.",
+    "properties": {
+        "id": {
+            "description": "A unique identifier for this policy. System-generated if not provided.",
+            "type": "string",
+            "format": "uuid"
+        },
+        "name": {
+            "description": "A human-readable name/label for this policy. Required.",
+            "type": "string"
+        },
+        "description": {
+            "description": "Free form description of the policy. Optional.",
+            "type": "string"
+        },
+        "type": {
+            "$ref": "policyType.json"
+        },
+        "userPolicy": {
+            "$ref": "userPolicy.json"
+        },
+        "timePolicy": {
+            "$ref": "timePolicy.json"
+        },
+        "rolePolicy": {
+            "$ref": "rolePolicy.json"
+        },
+        "metadata": {
+            "$ref": "../common/metadata.json"
+        }
+    },
+    "required": [
+        "name",
+        "type"
+    ]
+}

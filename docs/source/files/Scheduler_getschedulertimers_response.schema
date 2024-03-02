@@ -1,0 +1,17 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Timer Descriptor list",
+    "description": "Timer Descriptor List",
+    "properties": {
+        "timerDescriptors": {
+            "description": "List of timer descriptors",
+            "type": "array",
+            "items": {
+                "$ref": "timerDescriptor.json"
+            }
+        },
+        "totalRecords": {
+            "type": "integer"
+        }
+    }
+}

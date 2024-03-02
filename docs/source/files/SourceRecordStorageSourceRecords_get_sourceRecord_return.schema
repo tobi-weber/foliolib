@@ -17,11 +17,6 @@
       "type": "string",
       "$ref": "../mod-source-record-storage/recordType.json"
     },
-    "rawRecord": {
-      "description": "Raw record",
-      "type": "object",
-      "$ref": "../mod-source-record-storage/rawRecord.json"
-    },
     "parsedRecord": {
       "description": "Parsed record",
       "type": "object",
@@ -58,7 +53,6 @@
     "recordId",
     "snapshotId",
     "recordType",
-    "rawRecord",
     "parsedRecord"
   ]
 }

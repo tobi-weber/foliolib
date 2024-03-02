@@ -1,0 +1,15 @@
+{
+    "description": "An Authority source file HRID response",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "Unique ID of the Authority source file",
+            "type": "string",
+            "format": "uuid"
+        },
+        "hrid": {
+            "type": "string",
+            "description": "Next available Authority source file HRID"
+        }
+    }
+}

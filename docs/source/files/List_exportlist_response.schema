@@ -1,0 +1,50 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "List Export DTO",
+    "type": "object",
+    "properties": {
+        "exportId": {
+            "description": "List Export id",
+            "type": "string",
+            "format": "UUID"
+        },
+        "listId": {
+            "description": "List Id",
+            "type": "string",
+            "format": "UUID"
+        },
+        "status": {
+            "description": "Status of the export",
+            "type": "string",
+            "enum": [
+                "IN_PROGRESS",
+                "SUCCESS",
+                "FAILED",
+                "CANCELLED"
+            ]
+        },
+        "startDate": {
+            "description": "Date and time when the export request was submitted",
+            "type": "string",
+            "format": "date-time"
+        },
+        "endDate": {
+            "description": "Date and time when the export was completed",
+            "type": "string",
+            "format": "date-time"
+        },
+        "createdBy": {
+            "description": "ID of the user who wants to export the list",
+            "type": "string",
+            "format": "UUID"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "exportId",
+        "listId",
+        "status",
+        "startDate",
+        "createdBy"
+    ]
+}

@@ -1,0 +1,27 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Role-Capability Request Schema",
+    "description": "Request body to assign existing capabilities to a role",
+    "type": "object",
+    "properties": {
+        "roleId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID of the role"
+        },
+        "capabilityIds": {
+            "description": "List of capability identifiers",
+            "type": "array",
+            "items": {
+                "type": "string",
+                "description": "Capability identifier",
+                "format": "uuid"
+            },
+            "minItems": 1
+        }
+    },
+    "required": [
+        "roleId",
+        "capabilityIds"
+    ]
+}

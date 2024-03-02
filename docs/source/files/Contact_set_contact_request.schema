@@ -7,6 +7,10 @@
       "description": "The unique id of this contact",
       "$ref": "../../common/schemas/uuid.json"
     },
+    "_version": {
+      "type": "integer",
+      "description": "Record version for optimistic locking"
+    },
     "prefix": {
       "description": "The prefix for this contact person",
       "type": "string"

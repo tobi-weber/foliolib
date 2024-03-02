@@ -1,11 +1,16 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "description": "Record processing log DTO schema",
+  "javaType": "org.folio.rest.jaxrs.model.RecordProcessingLogDto",
   "type": "object",
   "additionalProperties": false,
   "properties": {
     "jobExecutionId": {
       "description": "UUID",
+      "$ref": "../../raml-util/schemas/uuid.schema"
+    },
+    "incomingRecordId ": {
+      "description": "Incoming record identifier, UUID",
       "$ref": "../../raml-util/schemas/uuid.schema"
     },
     "sourceRecordId": {
@@ -14,8 +19,7 @@
     },
     "sourceRecordOrder": {
       "description": "Order of a record in imported file",
-      "type": "integer",
-      "minimum": 0
+      "type": "string"
     },
     "sourceRecordTitle": {
       "description": "Title from record",
@@ -25,8 +29,17 @@
       "description": "Status of action performed above a record",
       "$ref": "./actionStatus.json"
     },
+    "sourceRecordType": {
+      "description": "Type of entity",
+      "type": "string",
+      "$ref": "recordType.json"
+    },
     "error": {
       "description": "Error message",
+      "type": "string"
+    },
+    "sourceRecordTenantId": {
+      "description": "Id of tenant in which action was performed over record",
       "type": "string"
     },
     "relatedInstanceInfo": {
@@ -35,11 +48,17 @@
     },
     "relatedHoldingsInfo": {
       "description": "Information about holdings associated with source record",
-      "$ref": "processedEntityInfo.json"
+      "type": "array",
+      "items": {
+        "$ref": "processedHoldingsInfo.json"
+      }
     },
     "relatedItemInfo": {
       "description": "Information about item associated with source record",
-      "$ref": "processedEntityInfo.json"
+      "type": "array",
+      "items": {
+        "$ref": "processedItemInfo.json"
+      }
     },
     "relatedAuthorityInfo": {
       "description": "Information about authority associated with source record",
@@ -102,11 +121,14 @@
           "type": "string"
         }
       }
+    },
+    "invoiceLineJournalRecordId": {
+      "description": "UUID of journalRecord which keeps data of particular invoice line processing",
+      "$ref": "../../raml-util/schemas/uuid.schema"
     }
   },
   "required": [
     "jobExecutionId",
-    "sourceRecordId",
     "sourceRecordOrder"
   ]
 }

@@ -1,0 +1,47 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "id": "logEvent.json",
+    "title": "Log Event Schema",
+    "description": "A logging event that describes the event code and basic information for logging events",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "string",
+            "description": "The system assigned unique ID of the instance record; UUID"
+        },
+        "eventType": {
+            "description": "Log event type",
+            "$ref": "logEventType.json"
+        },
+        "tenant": {
+            "type": "string",
+            "description": "The tenant for which the event occurred"
+        },
+        "userId": {
+            "type": "string",
+            "description": "User ID for which the event is registered."
+        },
+        "ip": {
+            "type": "string",
+            "description": "Client IP address of registered user Okapi"
+        },
+        "browserInformation": {
+            "type": "string",
+            "description": "Client's browser information obtained from User-Agent http header"
+        },
+        "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Event registration time"
+        },
+        "metadata": {
+            "$ref": "metadata.json"
+        }
+    },
+    "required": [
+        "tenant",
+        "userId",
+        "eventType"
+    ],
+    "additionalProperties": false
+}

@@ -1,0 +1,72 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "List Version DTO",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "Version id",
+            "type": "string",
+            "format": "UUID"
+        },
+        "name": {
+            "description": "List name",
+            "type": "string"
+        },
+        "description": {
+            "description": "List description",
+            "type": "string"
+        },
+        "userFriendlyQuery": {
+            "description": "User Friendly Query",
+            "type": "string"
+        },
+        "fqlQuery": {
+            "description": "FQL Query",
+            "type": "string"
+        },
+        "fields": {
+            "description": "Fields to be included in list contents",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "isActive": {
+            "description": "Indicates a List is Active or not",
+            "type": "boolean"
+        },
+        "isPrivate": {
+            "description": "Indicates a List is Private or not",
+            "type": "boolean"
+        },
+        "updatedBy": {
+            "description": "ID of the user who last updated the record (when available)",
+            "type": "string",
+            "format": "UUID"
+        },
+        "updatedByUsername": {
+            "description": "Username of the user who last updated the record (when available)",
+            "type": "string"
+        },
+        "updatedDate": {
+            "description": "Date and time when the record was last updated",
+            "type": "string",
+            "format": "date-time"
+        },
+        "listId": {
+            "description": "list id",
+            "type": "string",
+            "format": "UUID"
+        },
+        "version": {
+            "description": "Number of version",
+            "type": "integer"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "id",
+        "name",
+        "version"
+    ]
+}

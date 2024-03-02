@@ -74,6 +74,9 @@
   "contacts": [
     "9a665b22-9fe5-4c95-b4ee-837a5433c95d"
   ],
+  "privilegedContacts": [
+    "785678a9-7966-4ad8-be46-22149513a386"
+  ],
   "agreements": [
     {
       "name": "History Follower Incentive",

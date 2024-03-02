@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -27,7 +27,7 @@ class TenantPermissions(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -75,7 +75,6 @@ class Permissions(FolioApi):
             start (int): (default=1) The starting index in a list of results starting from 1. Deprecated: use offset
             sortBy (str):  A comma-separated list of fieldnames to sort by
             query (str):  A query string to filter users based on matching criteria in fields.
-            hasPermissions (str):  A list of permissions that any returned users must possess.
 
         Returns:
             dict: See Schema below
@@ -83,7 +82,7 @@ class Permissions(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestForbidden: Forbidden
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -105,7 +104,7 @@ class Permissions(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestForbidden: Forbidden
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -137,7 +136,7 @@ class Permissions(FolioApi):
             OkapiRequestError: Bad Request
             OkapiRequestForbidden: Forbidden
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -161,7 +160,7 @@ class Permissions(FolioApi):
             OkapiRequestError: Bad Request
             OkapiRequestForbidden: Forbidden
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -181,7 +180,7 @@ class Permissions(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/perms/users/{usersId}")
 
@@ -218,7 +217,7 @@ class Permissions(FolioApi):
             OkapiRequestError: Bad Request
             OkapiRequestForbidden: Forbidden
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -281,7 +280,7 @@ class Permissions(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -312,7 +311,7 @@ class Permissions(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestForbidden: Forbidden
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -334,7 +333,7 @@ class Permissions(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -357,7 +356,7 @@ class Permissions(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -381,7 +380,7 @@ class Permissions(FolioApi):
             OkapiRequestError: Bad Request
             OkapiRequestForbidden: Forbidden
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
             OkapiRequestUnprocessableEntity: Unprocessable Entity
 
         Schema:
@@ -410,7 +409,7 @@ class Permissions(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/perms/users/{usersId}/permissions/{permissionname}", query=kwargs)
 
@@ -425,7 +424,7 @@ class Permissions(FolioApi):
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
         """
         return self.call("DELETE", f"/perms/permissions/{permissionsId}")
 
@@ -439,7 +438,7 @@ class Permissions(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2023-07-10
+# Generated at 2024-03-01
 
 import logging
 
@@ -23,7 +23,7 @@ class SamlLogin(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -43,7 +43,7 @@ class SamlLogin(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -53,7 +53,7 @@ class SamlLogin(FolioApi):
         return self.call("POST", "/saml/login", data=login)
 
     def set_callback(self, callback: str):
-        """Redirect browser to sso-landing page with generated token.
+        """Redirect browser to sso-landing page with generated token. Deprecated.
 
         ``POST /saml/callback``
 
@@ -64,13 +64,33 @@ class SamlLogin(FolioApi):
             OkapiRequestError: Bad Request
             OkapiRequestUnauthorized: Authentication is required
             OkapiRequestForbidden: Forbidden
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
             .. literalinclude:: ../files/SamlLogin_set_callback_request.schema
         """
         return self.call("POST", "/saml/callback", data=callback)
+
+    def set_callbackWithExpiry(self, callbackWithExpiry: str):
+        """Redirect browser to sso-landing page with expiring access and refresh tokens.
+
+        ``POST /saml/callback-with-expiry``
+
+        Args:
+            callbackWithExpiry (str): See Schema below
+
+        Raises:
+            OkapiRequestError: Bad Request
+            OkapiRequestUnauthorized: Authentication is required
+            OkapiRequestForbidden: Forbidden
+            OkapiRequestFatalError: Server Error
+
+        Schema:
+
+            .. literalinclude:: ../files/SamlLogin_set_callbackWithExpiry_request.schema
+        """
+        return self.call("POST", "/saml/callback-with-expiry", data=callbackWithExpiry)
 
     def get_checks(self):
         """Decides if SSO login is configured properly, returns true or false
@@ -82,7 +102,7 @@ class SamlLogin(FolioApi):
 
         Raises:
             OkapiRequestNotFound: Not Found
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -99,7 +119,7 @@ class SamlLogin(FolioApi):
             dict: See Schema below
 
         Raises:
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -120,7 +140,7 @@ class SamlLogin(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 
@@ -154,7 +174,7 @@ class SamlLogin(FolioApi):
 
         Raises:
             OkapiRequestError: Bad Request
-            OkapiFatalError: Server Error
+            OkapiRequestFatalError: Server Error
 
         Schema:
 

@@ -66,6 +66,8 @@ foliolib.conf
     # Wether every command needs to be confirmed.
     confirm = True
 
+    # Wether display admin commands.
+    isAdmin = True
 
     # Section for configuration for Kubernetes.
     [Kubernetes]

@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "A report template with parameters to send to the LDP",
+  "type": "object",
+  "properties": {
+    "url": {
+      "type": "string",
+      "description": "The remote URL of the SQL template to fetch"
+    },
+    "params": {
+      "type": "object",
+      "description": "The parameters that the SQL template function will be called with",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "limit": {
+      "type": [
+        "integer",
+        "string"
+      ],
+      "description": "The limit on how many records will be returned in a response"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "url",
+    "params"
+  ]
+}

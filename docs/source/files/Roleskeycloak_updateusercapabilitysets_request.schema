@@ -1,0 +1,20 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Capability Set Relation Update Request Schema",
+    "description": "Request body to update capability sets assigned to entity (role, user, etc.)",
+    "type": "object",
+    "properties": {
+        "capabilitySetIds": {
+            "description": "List of capability set identifiers",
+            "type": "array",
+            "items": {
+                "type": "string",
+                "description": "Capability identifier",
+                "format": "uuid"
+            }
+        }
+    },
+    "required": [
+        "capabilitySetIds"
+    ]
+}
