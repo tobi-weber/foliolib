@@ -4,8 +4,10 @@
     "type": "object",
     "properties": {
         "id": {
-            "description": "configuration id",
-            "$ref": "uuid.json"
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "description": "Regexp pattern for UUID validation",
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[1-5][a-fA-F0-9]{3}-[89abAB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}$"
         },
         "name": {
             "description": "configuration name",
@@ -33,24 +35,76 @@
             "minimum": 1
         },
         "accessionTimeUnit": {
-            "description": "accession schedule time unit",
-            "type": "object",
-            "$ref": "timeUnits.json"
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "description": "Time units",
+            "type": "string",
+            "enum": [
+                "minutes",
+                "hours",
+                "days",
+                "weeks",
+                "months"
+            ]
         },
         "accessionWorkflowDetails": {
-            "description": "accession workflow details",
-            "type": "object",
-            "$ref": "accessionWorkflowDetails.json"
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "description": "Accession workflow details",
+            "type": "string",
+            "enum": [
+                "Duplicate holdings",
+                "Change permanent location"
+            ]
         },
         "returningWorkflowDetails": {
-            "description": "return workflow details",
-            "type": "object",
-            "$ref": "returningWorkflowDetails.json"
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "description": "Return workflow details",
+            "type": "string",
+            "enum": [
+                "Scanned to folio",
+                "Scanned to CaiaSoft"
+            ]
         },
         "metadata": {
-            "description": "Entity metadata",
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "title": "Metadata Schema",
+            "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
             "type": "object",
-            "$ref": "metadata.json"
+            "properties": {
+                "createdDate": {
+                    "description": "Date and time when the record was created",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "createdByUserId": {
+                    "$schema": "http://json-schema.org/draft-04/schema#",
+                    "description": "Regexp pattern for UUID validation",
+                    "type": "string",
+                    "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[1-5][a-fA-F0-9]{3}-[89abAB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}$"
+                },
+                "createdByUsername": {
+                    "description": "Username of the user who created the record (when available)",
+                    "type": "string"
+                },
+                "updatedDate": {
+                    "description": "Date and time when the record was last updated",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "updatedByUserId": {
+                    "$schema": "http://json-schema.org/draft-04/schema#",
+                    "description": "Regexp pattern for UUID validation",
+                    "type": "string",
+                    "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[1-5][a-fA-F0-9]{3}-[89abAB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}$"
+                },
+                "updatedByUsername": {
+                    "description": "Username of the user who last updated the record (when available)",
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "createdDate"
+            ]
         }
     },
     "additionalProperties": false,

@@ -7,8 +7,49 @@
             "id": "errors",
             "type": "array",
             "items": {
+                "description": "An error",
                 "type": "object",
-                "$ref": "error.json"
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "description": "Error message text"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Error message type"
+                    },
+                    "code": {
+                        "type": "string",
+                        "description": "Error message code"
+                    },
+                    "parameters": {
+                        "description": "List of key/value parameters",
+                        "type": "array",
+                        "items": {
+                            "description": "List of key/value parameters",
+                            "type": "object",
+                            "properties": {
+                                "key": {
+                                    "description": "Parameter key",
+                                    "type": "string"
+                                },
+                                "value": {
+                                    "description": "Parameter value",
+                                    "type": "string"
+                                }
+                            },
+                            "additionalProperties": false,
+                            "required": [
+                                "key"
+                            ]
+                        },
+                        "additionalProperties": false
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "message"
+                ]
             }
         },
         "total_records": {

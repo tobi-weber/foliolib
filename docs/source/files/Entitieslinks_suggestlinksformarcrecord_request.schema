@@ -7,8 +7,88 @@
             "description": "List of records content",
             "type": "array",
             "items": {
+                "$schema": "http://json-schema.org/draft-04/schema#",
                 "description": "Parsed record content, e.g. MARC record",
-                "$ref": "parsedRecordContent.json"
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "fields": {
+                        "description": "List of fields",
+                        "type": "array",
+                        "items": {
+                            "description": "Map of marc fields",
+                            "title": "FieldContent",
+                            "type": "object",
+                            "maxProperties": 1,
+                            "additionalProperties": {
+                                "type": "object",
+                                "properties": {
+                                    "ind1": {
+                                        "description": "Identifier 1",
+                                        "type": "string"
+                                    },
+                                    "ind2": {
+                                        "description": "Identifier 2",
+                                        "type": "string"
+                                    },
+                                    "subfields": {
+                                        "description": "List of subfields",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "description": "Map of subfields",
+                                            "additionalProperties": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "linkDetails": {
+                                        "$schema": "http://json-schema.org/draft-04/schema#",
+                                        "description": "Collection of SRS records content",
+                                        "type": "object",
+                                        "properties": {
+                                            "authorityId": {
+                                                "description": "Authority ID",
+                                                "type": "string",
+                                                "format": "uuid"
+                                            },
+                                            "authorityNaturalId": {
+                                                "description": "Authority Natural ID",
+                                                "type": "string"
+                                            },
+                                            "status": {
+                                                "type": "string",
+                                                "$schema": "http://json-schema.org/draft-04/schema#",
+                                                "description": "Link status",
+                                                "enum": [
+                                                    "ACTUAL",
+                                                    "ERROR",
+                                                    "NEW"
+                                                ]
+                                            },
+                                            "linkingRuleId": {
+                                                "description": "Linking rule ID",
+                                                "type": "integer"
+                                            },
+                                            "errorCause": {
+                                                "description": "Error status code",
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "leader": {
+                        "description": "Parsed record content, e.g. MARC record",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "fields",
+                    "leader"
+                ]
             }
         }
     }

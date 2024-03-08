@@ -6,7 +6,91 @@
             "description": "List of authority source files",
             "type": "array",
             "items": {
-                "$ref": "./authoritySourceFileDto.yaml"
+                "description": "An Authority source file",
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "Unique ID of the Authority source file; a UUID",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Authority source file name"
+                    },
+                    "codes": {
+                        "type": "array",
+                        "description": "List of identifying prefix",
+                        "items": {
+                            "type": "string",
+                            "description": "identifying prefix, i.e. 'n', 'D', 'fst'"
+                        }
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Type of authority records stored in source file"
+                    },
+                    "baseUrl": {
+                        "type": "string",
+                        "format": "url",
+                        "description": "Base URL of the source file origin"
+                    },
+                    "source": {
+                        "type": "string",
+                        "description": "label indicating where the authority source file entry originates from, i.e. 'folio' or 'local'",
+                        "enum": [
+                            "folio",
+                            "local"
+                        ]
+                    },
+                    "selectable": {
+                        "type": "boolean"
+                    },
+                    "hridManagement": {
+                        "description": "Identifies HRID management properties",
+                        "type": "object",
+                        "properties": {
+                            "startNumber": {
+                                "type": "integer"
+                            }
+                        }
+                    },
+                    "_version": {
+                        "type": "integer",
+                        "description": "Record version for optimistic locking"
+                    },
+                    "metadata": {
+                        "description": "Creater, updater, creation date, last updated date",
+                        "type": "object",
+                        "properties": {
+                            "createdDate": {
+                                "description": "Date and time when the record was created",
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "createdByUserId": {
+                                "description": "ID of the user who created the record (when available)",
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            "updatedDate": {
+                                "description": "Date and time when the record was last updated",
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "updatedByUserId": {
+                                "description": "ID of the user who last updated the record (when available)",
+                                "type": "string",
+                                "format": "uuid"
+                            }
+                        }
+                    }
+                },
+                "required": [
+                    "name",
+                    "codes",
+                    "source"
+                ]
             }
         },
         "totalRecords": {

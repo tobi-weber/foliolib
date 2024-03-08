@@ -6,10 +6,20 @@
     ],
     "properties": {
         "entityType": {
-            "$ref": "#/components/schemas/EntityType"
+            "description": "Type of entity for migration",
+            "type": "string",
+            "enum": [
+                "authority",
+                "instance"
+            ]
         },
         "operationType": {
-            "$ref": "#/components/schemas/OperationType"
+            "description": "Type of migration",
+            "type": "string",
+            "enum": [
+                "remapping",
+                "import"
+            ]
         }
     }
 }

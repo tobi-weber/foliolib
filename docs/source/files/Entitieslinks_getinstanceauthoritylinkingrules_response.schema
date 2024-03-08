@@ -1,0 +1,8 @@
+{
+    "type": "array",
+    "title": "Collection of linking rules",
+    "description": "Collection of linking rules",
+    "items": {
+        "$ref": "#/components/schemas/linkingRuleDto"
+    }
+}

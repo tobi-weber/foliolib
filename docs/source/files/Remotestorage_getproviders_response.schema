@@ -1,6 +1,23 @@
 {
     "type": "array",
     "items": {
-        "$ref": "schemas/provider.json"
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "description": "Provider",
+        "type": "object",
+        "properties": {
+            "name": {
+                "description": "provider name",
+                "type": "string"
+            },
+            "id": {
+                "description": "provider id",
+                "type": "string"
+            }
+        },
+        "additionalProperties": false,
+        "required": [
+            "name",
+            "id"
+        ]
     }
 }

@@ -6,7 +6,130 @@
         "noteTypes": {
             "type": "array",
             "items": {
-                "$ref": "#/noteType"
+                "type": "object",
+                "title": "Note Type",
+                "description": "Defines type of note",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "The unique name of this type",
+                        "maxLength": 255
+                    },
+                    "usage": {
+                        "type": "object",
+                        "readOnly": true,
+                        "description": "Type usage statistics",
+                        "properties": {
+                            "isAssigned": {
+                                "type": "boolean",
+                                "readOnly": true,
+                                "description": "Is this note type assigned to any note"
+                            }
+                        },
+                        "required": [
+                            "noteTotal"
+                        ]
+                    },
+                    "metadata": {
+                        "type": "object",
+                        "title": "Metadata",
+                        "description": "Metadata about creation and changes to records",
+                        "properties": {
+                            "createdDate": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Date and time when the record was created"
+                            },
+                            "createdByUserId": {
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            "createdByUsername": {
+                                "type": "string",
+                                "description": "Username of the user who created the record (when available)"
+                            },
+                            "createdBy": {
+                                "type": "object",
+                                "description": "User Display Information",
+                                "properties": {
+                                    "lastName": {
+                                        "type": "string",
+                                        "readOnly": true,
+                                        "description": "Last name of the user"
+                                    },
+                                    "firstName": {
+                                        "type": "string",
+                                        "readOnly": true,
+                                        "description": "First name of the user"
+                                    },
+                                    "middleName": {
+                                        "type": "string",
+                                        "readOnly": true,
+                                        "description": "Middle name or initial of the user"
+                                    }
+                                },
+                                "example": {
+                                    "lastName": "Doe",
+                                    "firstName": "John",
+                                    "middleName": "X."
+                                }
+                            },
+                            "updatedDate": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Date and time when the record was last updated"
+                            },
+                            "updatedByUserId": {
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            "updatedByUsername": {
+                                "type": "string",
+                                "description": "Username of the user who updated the record (when available)"
+                            },
+                            "updatedBy": {
+                                "type": "object",
+                                "description": "User Display Information",
+                                "properties": {
+                                    "lastName": {
+                                        "type": "string",
+                                        "readOnly": true,
+                                        "description": "Last name of the user"
+                                    },
+                                    "firstName": {
+                                        "type": "string",
+                                        "readOnly": true,
+                                        "description": "First name of the user"
+                                    },
+                                    "middleName": {
+                                        "type": "string",
+                                        "readOnly": true,
+                                        "description": "Middle name or initial of the user"
+                                    }
+                                },
+                                "example": {
+                                    "lastName": "Doe",
+                                    "firstName": "John",
+                                    "middleName": "X."
+                                }
+                            }
+                        },
+                        "required": [
+                            "createdDate"
+                        ]
+                    }
+                },
+                "required": [
+                    "name"
+                ],
+                "example": {
+                    "id": "118dbd8c-5ba0-47a9-a850-34bbb1dbf3b7",
+                    "name": "Important Note"
+                }
             }
         },
         "totalRecords": {

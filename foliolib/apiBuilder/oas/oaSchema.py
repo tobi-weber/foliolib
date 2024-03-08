@@ -17,22 +17,27 @@ log = logging.getLogger("foliolib.oas.oaSchemaPath")
 class OASchema(BaseOAS):
 
     def __init__(self, fname, sphinx_doc_src="docs/source", hasAdminMethods=False):
-        super().__init__(fname, self)
+        super().__init__(fname)
         title = os.path.splitext(fname)[0].replace("mod-", "")
         log.info("OASchema: %s", title)
         self.spath = os.getcwd()
         self._referencedData = {fname: self._data}
-        self._title = ''.join(
-            [i for i in title if not i.isdigit() and i not in [".", "-"]])
+        self._title = "".join(
+            [i for i in title if not i.isdigit() and i not in [".", "-"]]
+        )
         self._sphinx_doc_src = sphinx_doc_src
         self._hasAdminMethods = hasAdminMethods
         self._info = self._data["info"] if "info" in self._data else ""
         if "paths" in self._data:
-            self._oaSchemaPaths = [OASchemaPath(k, v, self)
-                                   for k, v in self._data["paths"].items()]
+            self._oaSchemaPaths = [
+                OASchemaPath(k, v, self) for k, v in self._data["paths"].items()
+            ]
         else:
             self._oaSchemaPaths = []
         self._doc_include_fles = {}
+
+    def get_oaSchema(self):
+        return self
 
     def get_title(self):
         return self._title
@@ -42,7 +47,11 @@ class OASchema(BaseOAS):
         basePath = ""
         if "servers" in self._data:
             # print(self._data["servers"][0]["url"])
-            url = self._data["servers"][0]["url"] if "url" in self._data["servers"][0] else None
+            url = (
+                self._data["servers"][0]["url"]
+                if "url" in self._data["servers"][0]
+                else None
+            )
             basePath = urlparse(url).path if url is not None else ""
             if basePath.endswith("/"):
                 basePath = basePath[:-1]
@@ -82,15 +91,19 @@ class OASchema(BaseOAS):
 
         code = ""
 
-        methods_code = [oaSchemaPath.get_code()
-                        for oaSchemaPath in self._oaSchemaPaths
-                        if oaSchemaPath.get_code()]
+        methods_code = [
+            oaSchemaPath.get_code()
+            for oaSchemaPath in self._oaSchemaPaths
+            if oaSchemaPath.get_code()
+        ]
         if methods_code:
             code += "\n" + self.__get_class_code() + "".join(methods_code)
 
-        methods_code = [oaSchemaPath.get_code(adminMethods=True)
-                        for oaSchemaPath in self._oaSchemaPaths
-                        if oaSchemaPath.get_code(adminMethods=True)]
+        methods_code = [
+            oaSchemaPath.get_code(adminMethods=True)
+            for oaSchemaPath in self._oaSchemaPaths
+            if oaSchemaPath.get_code(adminMethods=True)
+        ]
         if methods_code:
             code += "\n" + self.__get_admin_class_code() + "".join(methods_code)
 
@@ -106,8 +119,7 @@ class OASchema(BaseOAS):
         if "description" in self._info:
             doc_content = self._info["description"]
             doc_content = doc_content.strip().replace("\n", "\n\t\t")
-            doc_content = doc_content.replace(
-                "<b>", "**").replace("</b>", "**")
+            doc_content = doc_content.replace("<b>", "**").replace("</b>", "**")
         else:
             doc_content = ""
 

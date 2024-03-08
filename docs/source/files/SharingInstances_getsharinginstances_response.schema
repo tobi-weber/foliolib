@@ -6,8 +6,127 @@
             "type": "array",
             "description": "The list of sharing instances",
             "items": {
+                "description": "A JSON schema for the Sharing Instance",
                 "type": "object",
-                "$ref": "sharingInstance.yaml#/SharingInstance"
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "instanceIdentifier": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "sourceTenantId": {
+                        "type": "string"
+                    },
+                    "targetTenantId": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "IN_PROGRESS",
+                            "COMPLETE",
+                            "ERROR"
+                        ]
+                    },
+                    "error": {
+                        "type": "string"
+                    },
+                    "metadata": {
+                        "type": "object",
+                        "title": "Metadata",
+                        "description": "Metadata about creation and changes to records",
+                        "properties": {
+                            "createdDate": {
+                                "type": "string",
+                                "description": "Date and time when the record was created"
+                            },
+                            "createdByUserId": {
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            "createdByUsername": {
+                                "type": "string",
+                                "description": "Username of the user who created the record (when available)"
+                            },
+                            "createdBy": {
+                                "type": "object",
+                                "description": "User Display Information",
+                                "properties": {
+                                    "lastName": {
+                                        "type": "string",
+                                        "readOnly": true,
+                                        "description": "Last name of the user"
+                                    },
+                                    "firstName": {
+                                        "type": "string",
+                                        "readOnly": true,
+                                        "description": "First name of the user"
+                                    },
+                                    "middleName": {
+                                        "type": "string",
+                                        "readOnly": true,
+                                        "description": "Middle name or initial of the user"
+                                    }
+                                },
+                                "example": {
+                                    "lastName": "Doe",
+                                    "firstName": "John",
+                                    "middleName": "X."
+                                }
+                            },
+                            "updatedDate": {
+                                "type": "string",
+                                "description": "Date and time when the record was last updated"
+                            },
+                            "updatedByUserId": {
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            "updatedByUsername": {
+                                "type": "string",
+                                "description": "Username of the user who updated the record (when available)"
+                            },
+                            "updatedBy": {
+                                "type": "object",
+                                "description": "User Display Information",
+                                "properties": {
+                                    "lastName": {
+                                        "type": "string",
+                                        "readOnly": true,
+                                        "description": "Last name of the user"
+                                    },
+                                    "firstName": {
+                                        "type": "string",
+                                        "readOnly": true,
+                                        "description": "First name of the user"
+                                    },
+                                    "middleName": {
+                                        "type": "string",
+                                        "readOnly": true,
+                                        "description": "Middle name or initial of the user"
+                                    }
+                                },
+                                "example": {
+                                    "lastName": "Doe",
+                                    "firstName": "John",
+                                    "middleName": "X."
+                                }
+                            }
+                        },
+                        "required": [
+                            "createdDate"
+                        ]
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "instanceIdentifier",
+                    "sourceTenantId",
+                    "targetTenantId"
+                ]
             }
         },
         "totalRecords": {

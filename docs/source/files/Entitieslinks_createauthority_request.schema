@@ -203,14 +203,49 @@
             "type": "array",
             "description": "An extensible set of name-value pairs of identifiers associated with the resource",
             "items": {
-                "$ref": "./authorityDtoIdentifier.yaml"
+                "description": "Identifier associated with the authority",
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "string",
+                        "description": "Resource identifier value"
+                    },
+                    "identifierTypeId": {
+                        "description": "Resource identifier type (e.g. Control number, LCCN, Other standard identifier, System control number)",
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                },
+                "required": [
+                    "value",
+                    "identifierTypeId"
+                ]
             }
         },
         "notes": {
             "type": "array",
             "description": "Notes (e.g. nonpublic general note)",
             "items": {
-                "$ref": "./authorityDtoNote.yaml"
+                "description": "Nonpublic general authority note",
+                "type": "object",
+                "properties": {
+                    "noteTypeId": {
+                        "description": "ID of the type of note",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "note": {
+                        "type": "string",
+                        "description": "Text content of the note"
+                    },
+                    "staffOnly": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "note",
+                    "noteTypeId"
+                ]
             }
         },
         "sourceFileId": {
@@ -223,7 +258,30 @@
             "description": "Authority Natural ID"
         },
         "metadata": {
-            "$ref": "../common/metadata.yaml"
+            "description": "Creater, updater, creation date, last updated date",
+            "type": "object",
+            "properties": {
+                "createdDate": {
+                    "description": "Date and time when the record was created",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "createdByUserId": {
+                    "description": "ID of the user who created the record (when available)",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "updatedDate": {
+                    "description": "Date and time when the record was last updated",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "updatedByUserId": {
+                    "description": "ID of the user who last updated the record (when available)",
+                    "type": "string",
+                    "format": "uuid"
+                }
+            }
         }
     },
     "required": [

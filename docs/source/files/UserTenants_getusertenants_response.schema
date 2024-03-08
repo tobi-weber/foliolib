@@ -6,8 +6,51 @@
             "type": "array",
             "description": "The list of user tenants",
             "items": {
+                "description": "A JSON schema for the User Tenant",
                 "type": "object",
-                "$ref": "userTenant.yaml#/UserTenant"
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "userId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "username": {
+                        "type": "string"
+                    },
+                    "tenantId": {
+                        "type": "string"
+                    },
+                    "tenantName": {
+                        "type": "string"
+                    },
+                    "isPrimary": {
+                        "type": "boolean"
+                    },
+                    "centralTenantId": {
+                        "type": "string"
+                    },
+                    "consortiumId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "mobilePhoneNumber": {
+                        "type": "string"
+                    },
+                    "phoneNumber": {
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "userId",
+                    "tenantId"
+                ]
             }
         },
         "totalRecords": {

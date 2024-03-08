@@ -7,14 +7,65 @@
             "description": "Header",
             "type": "array",
             "items": {
-                "$ref": "cell.json"
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "description": "Data cell representation",
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "description": "Cell value",
+                        "type": "string"
+                    },
+                    "dataType": {
+                        "type": "string",
+                        "enum": [
+                            "NUMERIC",
+                            "DATE_TIME",
+                            "STRING"
+                        ]
+                    },
+                    "visible": {
+                        "description": "Column visibility",
+                        "type": "boolean",
+                        "default": "true"
+                    },
+                    "forceVisible": {
+                        "description": "Column visibility (forced to display in preview)",
+                        "type": "boolean",
+                        "default": "false"
+                    },
+                    "ignoreTranslation": {
+                        "description": "Ignore translation",
+                        "type": "boolean",
+                        "default": "false"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "value",
+                    "dataType"
+                ]
             }
         },
         "rows": {
             "description": "Rows",
             "type": "array",
             "items": {
-                "$ref": "row.json"
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "description": "Row representation",
+                "type": "object",
+                "properties": {
+                    "row": {
+                        "description": "Row value",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "row"
+                ]
             }
         }
     },

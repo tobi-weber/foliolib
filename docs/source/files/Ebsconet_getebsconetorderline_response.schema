@@ -25,9 +25,11 @@
             "readOnly": false
         },
         "poLineNumber": {
-            "$ref": "../mod-orders/order_line_number.json",
-            "description": "A human readable number assigned to this PO line",
-            "readOnly": true
+            "id": "po_line_number",
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "description": "A human readable number, assigned to this product order line",
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9]{1,22}-[0-9]{1,3}$"
         },
         "publisherName": {
             "type": "string",
@@ -78,13 +80,40 @@
             "type": "array",
             "description": "Reference number items array",
             "items": {
-                "$ref": "../mod-orders/reference_number_item.json"
+                "id": "reference_number_item",
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "description": "Reference number item",
+                "type": "object",
+                "properties": {
+                    "refNumber": {
+                        "description": "a reference number for this purchase order line",
+                        "type": "string"
+                    },
+                    "refNumberType": {
+                        "description": "the reference number type",
+                        "type": "string",
+                        "enum": [
+                            "Vendor continuation reference number",
+                            "Vendor order reference number",
+                            "Vendor subscription reference number",
+                            "Vendor internal number",
+                            "Vendor title number"
+                        ]
+                    }
+                },
+                "additionalProperties": false
             }
         },
         "workflowStatus": {
-            "$ref": "../mod-orders/workflow_status.json",
-            "description": "the workflow status for the purchase order",
-            "readOnly": true
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "description": "Composite workflow status",
+            "type": "string",
+            "enum": [
+                "Pending",
+                "Open",
+                "Closed"
+            ],
+            "default": "Pending"
         },
         "type": {
             "type": "string",

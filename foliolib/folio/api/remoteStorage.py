@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2024-03-01
+# Generated at 2024-03-23
 
 import logging
 
@@ -87,6 +87,9 @@ class Remotestorage(FolioApi):
         Args:
             storageConfiguration (dict): See Schema below.
 
+        Returns:
+            dict: See Schema below.
+
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Configuration not found
@@ -95,6 +98,7 @@ class Remotestorage(FolioApi):
         Schema:
 
             .. literalinclude:: ../files/Remotestorage_putconfiguration_request.schema
+            .. literalinclude:: ../files/Remotestorage_putconfiguration_request.schema_response.schema
         """
         return self.call("PUT", f"/remote-storage/configurations/{configId}", storageConfiguration)
 
@@ -104,9 +108,16 @@ class Remotestorage(FolioApi):
 
         ``DELETE /remote-storage/configurations/{configId}``
 
+        Returns:
+            dict: See Schema below.
+
         Raises:
             OkapiRequestNotFound: Configuration not found
             OkapiRequestFatalError: Internal server error
+
+        Schema:
+
+            .. literalinclude:: ../files/Remotestorage_deleteconfigurationbyid_response.schema
         """
         return self.call("DELETE", f"/remote-storage/configurations/{configId}")
 
@@ -180,9 +191,16 @@ class Remotestorage(FolioApi):
 
         ``DELETE /remote-storage/mappings/{folioLocationId}``
 
+        Returns:
+            dict: See Schema below.
+
         Raises:
             OkapiRequestNotFound: Mapping not found
             OkapiRequestFatalError: Internal server error
+
+        Schema:
+
+            .. literalinclude:: ../files/Remotestorage_deletemappingbyid_response.schema
         """
         return self.call("DELETE", f"/remote-storage/mappings/{folioLocationId}")
 
@@ -260,9 +278,16 @@ class Remotestorage(FolioApi):
             remoteStorageConfigurationId (str): uuid
             originalLocationId (str): uuid
 
+        Returns:
+            dict: See Schema below.
+
         Raises:
             OkapiRequestNotFound: Mapping not found
             OkapiRequestFatalError: Internal server error
+
+        Schema:
+
+            .. literalinclude:: ../files/Remotestorage_deleteoriginallocationbyremotestorageconfigurationidandoriginallocationid_response.schema
         """
         return self.call("DELETE", f"/remote-storage/extended-mappings/{remoteStorageConfigurationId}/{originalLocationId}")
 
@@ -360,6 +385,13 @@ class Remotestorage(FolioApi):
 
         Args:
             accessionId (str): uuid
+
+        Returns:
+            dict: See Schema below.
+
+        Schema:
+
+            .. literalinclude:: ../files/Remotestorage_setaccessionedbyid_response.schema
         """
         return self.call("PUT", f"/remote-storage/accessions/id/{accessionId}")
 
@@ -370,6 +402,13 @@ class Remotestorage(FolioApi):
 
         Args:
             barcode (str): 
+
+        Returns:
+            dict: See Schema below.
+
+        Schema:
+
+            .. literalinclude:: ../files/Remotestorage_setaccessionedbybarcode_response.schema
         """
         return self.call("PUT", f"/remote-storage/accessions/barcode/{barcode}")
 
@@ -381,9 +420,13 @@ class Remotestorage(FolioApi):
         Args:
             pubSubEvent (dict): See Schema below.
 
+        Returns:
+            dict: See Schema below.
+
         Schema:
 
             .. literalinclude:: ../files/Remotestorage_logrecordevent_request.schema
+            .. literalinclude:: ../files/Remotestorage_logrecordevent_request.schema_response.schema
         """
         return self.call("POST", f"/remote-storage/pub-sub-handlers/log-record-event", pubSubEvent)
 
@@ -418,6 +461,13 @@ class Remotestorage(FolioApi):
 
         Args:
             retrievalId (str): uuid
+
+        Returns:
+            dict: See Schema below.
+
+        Schema:
+
+            .. literalinclude:: ../files/Remotestorage_setretrievedbyid_response.schema
         """
         return self.call("PUT", f"/remote-storage/retrievals/id/{retrievalId}")
 
@@ -428,6 +478,13 @@ class Remotestorage(FolioApi):
 
         Args:
             barcode (str): 
+
+        Returns:
+            dict: See Schema below.
+
+        Schema:
+
+            .. literalinclude:: ../files/Remotestorage_setretrievedbybarcode_response.schema
         """
         return self.call("PUT", f"/remote-storage/retrievals/barcode/{barcode}")
 
@@ -440,6 +497,9 @@ class Remotestorage(FolioApi):
             remoteStorageConfigurationId (str): uuid
             checkInItem (dict): See Schema below.
 
+        Returns:
+            dict: See Schema below.
+
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestUnprocessableEntity: Validation errors
@@ -448,6 +508,7 @@ class Remotestorage(FolioApi):
         Schema:
 
             .. literalinclude:: ../files/Remotestorage_checkinitembybarcodewithremotestorageconfigurationid_request.schema
+            .. literalinclude:: ../files/Remotestorage_checkinitembybarcodewithremotestorageconfigurationid_request.schema_response.schema
         """
         return self.call("POST", f"/remote-storage/retrieve/{remoteStorageConfigurationId}/checkInItem", checkInItem)
 
@@ -460,6 +521,9 @@ class Remotestorage(FolioApi):
             remoteStorageConfigurationId (str): 
             checkInItemByHoldId (dict): See Schema below.
 
+        Returns:
+            dict: See Schema below.
+
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestUnprocessableEntity: Validation errors
@@ -468,6 +532,7 @@ class Remotestorage(FolioApi):
         Schema:
 
             .. literalinclude:: ../files/Remotestorage_checkinitembyholdidwithremotestorageconfigurationid_request.schema
+            .. literalinclude:: ../files/Remotestorage_checkinitembyholdidwithremotestorageconfigurationid_request.schema_response.schema
         """
         return self.call("POST", f"/remote-storage/retrieve/{remoteStorageConfigurationId}/checkInItemByHoldId", checkInItemByHoldId)
 
@@ -501,8 +566,15 @@ class Remotestorage(FolioApi):
         Args:
             barcode (str): 
 
+        Returns:
+            dict: See Schema below.
+
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestFatalError: Internal server error
+
+        Schema:
+
+            .. literalinclude:: ../files/Remotestorage_markitemasmissingbybarcode_response.schema
         """
         return self.call("POST", f"/remote-storage/items/barcode/{barcode}/markAsMissing")

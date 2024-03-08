@@ -9,7 +9,66 @@
             "description": "List of tenant attributes",
             "type": "array",
             "items": {
-                "$ref": "tenantAttribute.json"
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "id": "tenantAttribute.json",
+                "title": "Tenant Attribute Schema",
+                "description": "Tenant attribute",
+                "type": "object",
+                "x-implements": [
+                    "org.folio.tm.domain.entity.base.Identifiable"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "A UUID identifying this attribute",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "key": {
+                        "description": "Key for this attribute",
+                        "type": "string"
+                    },
+                    "value": {
+                        "description": "Value for this attribute",
+                        "type": "string"
+                    },
+                    "metadata": {
+                        "$schema": "http://json-schema.org/draft-04/schema#",
+                        "title": "Metadata Schema",
+                        "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+                        "type": "object",
+                        "properties": {
+                            "createdDate": {
+                                "description": "Date and time when the record was created",
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "createdBy": {
+                                "description": "ID of the user who created the record (when available)",
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            "modifiedDate": {
+                                "description": "Date and time when the record was last updated",
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "modifiedBy": {
+                                "description": "ID of the user who last updated the record (when available)",
+                                "type": "string",
+                                "format": "uuid"
+                            }
+                        },
+                        "additionalProperties": false,
+                        "required": [
+                            "createdDate"
+                        ]
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "key",
+                    "value"
+                ]
             }
         },
         "totalRecords": {

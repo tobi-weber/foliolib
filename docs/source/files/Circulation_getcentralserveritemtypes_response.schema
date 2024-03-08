@@ -7,8 +7,51 @@
             "description": "List of item types per central server",
             "type": "array",
             "items": {
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "description": "Central server item types",
                 "type": "object",
-                "$ref": "itemTypesPerCentralServerDTO.json"
+                "properties": {
+                    "centralServerId": {
+                        "description": "Central server id",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "centralServerCode": {
+                        "description": "Central server code",
+                        "type": "string",
+                        "maxLength": 5
+                    },
+                    "itemTypes": {
+                        "description": "List of item types for this central server",
+                        "type": "array",
+                        "items": {
+                            "$schema": "http://json-schema.org/draft-04/schema#",
+                            "description": "Item type details",
+                            "type": "object",
+                            "properties": {
+                                "centralItemType": {
+                                    "description": "Item type",
+                                    "type": "integer"
+                                },
+                                "description": {
+                                    "description": "Item type description",
+                                    "type": "string"
+                                }
+                            },
+                            "additionalProperties": false,
+                            "required": [
+                                "centralItemType",
+                                "description"
+                            ]
+                        }
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "centralServerId",
+                    "centralServerCode",
+                    "itemTypes"
+                ]
             }
         },
         "totalRecords": {

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2024-03-01
+# Generated at 2024-03-23
 
 import logging
 
@@ -95,6 +95,13 @@ class Jobs(FolioApi):
         """Download exported file by the job ID
 
         ``GET /data-export-spring/jobs/{id}/download``
+
+        Returns:
+            dict: See Schema below.
+
+        Schema:
+
+            .. literalinclude:: ../files/Jobs_downloadexportedfilebyjobid_response.schema
         """
         return self.call("GET", f"/data-export-spring/jobs/{id_}/download")
 
@@ -154,6 +161,9 @@ class Exportconfigs(FolioApi):
         Args:
             exportConfig (dict): See Schema below.
 
+        Returns:
+            dict: See Schema below.
+
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
@@ -161,6 +171,7 @@ class Exportconfigs(FolioApi):
         Schema:
 
             .. literalinclude:: ../files/Exportconfigs_postexportconfig_request.schema
+            .. literalinclude:: ../files/Exportconfigs_postexportconfig_request.schema_response.schema
         """
         return self.call("POST", f"/data-export-spring/configs", exportConfig)
 

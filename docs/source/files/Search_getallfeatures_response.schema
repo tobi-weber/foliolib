@@ -7,7 +7,31 @@
             "type": "array",
             "description": "Configured features per tenant",
             "items": {
-                "$ref": "featureConfig.json"
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "type": "object",
+                "description": "Feature config request value",
+                "properties": {
+                    "feature": {
+                        "$schema": "http://json-schema.org/draft-04/schema#",
+                        "type": "string",
+                        "description": "The feature name.",
+                        "enum": [
+                            "search.all.fields",
+                            "browse.cn.intermediate.values",
+                            "browse.cn.intermediate.remove.duplicates",
+                            "browse.classifications"
+                        ]
+                    },
+                    "enabled": {
+                        "type": "boolean",
+                        "description": "Action - enable or disable option"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "feature",
+                    "enabled"
+                ]
             }
         },
         "totalRecords": {

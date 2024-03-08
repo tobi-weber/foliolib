@@ -51,8 +51,48 @@
             "type": "integer"
         },
         "error": {
-            "description": "Error encountered during list refresh",
-            "$ref": "ListAppError.json"
+            "description": "An error",
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "description": "Error message text"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "Error message type"
+                },
+                "code": {
+                    "type": "string",
+                    "description": "Error message code"
+                },
+                "parameters": {
+                    "description": "List of key/value parameters of an error",
+                    "type": "array",
+                    "items": {
+                        "description": "List of key/value parameters of an error",
+                        "type": "object",
+                        "properties": {
+                            "key": {
+                                "description": "Parameter key",
+                                "type": "string"
+                            },
+                            "value": {
+                                "description": "Parameter value",
+                                "type": "string"
+                            }
+                        },
+                        "additionalProperties": false,
+                        "required": [
+                            "key"
+                        ]
+                    }
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "message"
+            ]
         },
         "listVersion": {
             "description": "Contains the version of the list",

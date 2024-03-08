@@ -6,7 +6,48 @@
         "links": {
             "type": "array",
             "items": {
-                "$ref": "#/components/schemas/instanceLinkDto"
+                "type": "object",
+                "title": "Collection of instance links",
+                "description": "Collection of instance links",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "Unique generated identifier for the link"
+                    },
+                    "authorityId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "authorityNaturalId": {
+                        "type": "string",
+                        "description": "Natural ID of the Authority record"
+                    },
+                    "instanceId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "linkingRuleId": {
+                        "type": "integer",
+                        "description": "ID of linking rule by which link should be created"
+                    },
+                    "status": {
+                        "type": "string",
+                        "readOnly": true,
+                        "description": "Status of the link"
+                    },
+                    "errorCause": {
+                        "type": "string",
+                        "readOnly": true,
+                        "description": "Link update error cause (if present)"
+                    }
+                },
+                "required": [
+                    "authorityId",
+                    "authorityNaturalId",
+                    "instanceId",
+                    "linkingRuleId",
+                    "status"
+                ]
             }
         },
         "totalRecords": {

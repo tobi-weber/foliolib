@@ -7,7 +7,21 @@
             "description": "The list of consortia",
             "items": {
                 "type": "object",
-                "$ref": "consortium.yaml#/Consortium"
+                "description": "Consortium",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "id",
+                    "name"
+                ]
             }
         },
         "totalRecords": {

@@ -7,7 +7,35 @@
             "description": "Map with found facet items, key is the facet name, value - facet object with found values",
             "type": "object",
             "additionalProperties": {
-                "$ref": "facet.json"
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "description": "Result value for specific facet",
+                "type": "object",
+                "properties": {
+                    "values": {
+                        "$schema": "http://json-schema.org/draft-04/schema#",
+                        "description": "JSON schema for facet items",
+                        "type": "array",
+                        "items": {
+                            "$schema": "http://json-schema.org/draft-04/schema#",
+                            "type": "object",
+                            "description": "Facet item description",
+                            "properties": {
+                                "id": {
+                                    "type": "string",
+                                    "description": "Facet value"
+                                },
+                                "totalRecords": {
+                                    "type": "number",
+                                    "description": "Amount of search results for that facet"
+                                }
+                            }
+                        }
+                    },
+                    "totalRecords": {
+                        "type": "integer",
+                        "description": "Amount of facet items"
+                    }
+                }
             }
         },
         "totalRecords": {

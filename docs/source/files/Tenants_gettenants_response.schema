@@ -6,7 +6,32 @@
             "description": "Tenants",
             "items": {
                 "type": "object",
-                "$ref": "tenant.yaml#/Tenant"
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "code": {
+                        "type": "string",
+                        "minLength": 2,
+                        "maxLength": 5,
+                        "pattern": "^[a-zA-Z0-9]*$"
+                    },
+                    "name": {
+                        "type": "string",
+                        "minLength": 2,
+                        "maxLength": 150
+                    },
+                    "isCentral": {
+                        "type": "boolean"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "id",
+                    "code",
+                    "name",
+                    "isCentral"
+                ]
             }
         },
         "totalRecords": {

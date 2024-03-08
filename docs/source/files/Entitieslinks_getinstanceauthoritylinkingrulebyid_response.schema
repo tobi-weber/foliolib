@@ -15,17 +15,47 @@
         "authoritySubfields": {
             "type": "array",
             "items": {
-                "$ref": "#/components/schemas/charString"
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1
             }
         },
         "subfieldModifications": {
             "type": "array",
             "items": {
-                "$ref": "#/components/schemas/subfieldModification"
+                "type": "object",
+                "title": "Subfield modification.",
+                "description": "Subfield modification to link source and target subfields.",
+                "properties": {
+                    "source": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1
+                    },
+                    "target": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1
+                    }
+                }
             }
         },
         "validation": {
-            "$ref": "#/components/schemas/subfieldValidation"
+            "type": "object",
+            "title": "Subfield validation.",
+            "description": "Subfield validation before linking.",
+            "properties": {
+                "existence": {
+                    "type": "array",
+                    "description": "Specify if subfield should exist or not.",
+                    "items": {
+                        "type": "string",
+                        "additionalProperties": {
+                            "type": "boolean"
+                        }
+                    }
+                }
+            }
         },
         "autoLinkingEnabled": {
             "type": "boolean"

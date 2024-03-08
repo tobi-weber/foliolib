@@ -13,8 +13,47 @@
             "type": "string"
         },
         "tenantAttributes": {
-            "description": "Module information - content to initiate operation",
-            "$ref": "tenantAttributes.json"
+            "title": "Tenant job attributes",
+            "description": "Configuration how to install, upgrade or delete a module for a tenant",
+            "type": "object",
+            "properties": {
+                "module_from": {
+                    "description": "Existing module ID. If omitted, the module is not enabled already",
+                    "type": "string"
+                },
+                "module_to": {
+                    "description": "Target module ID. If omitted, the existing module is disabled.",
+                    "type": "string"
+                },
+                "purge": {
+                    "description": "On disable should data also be purged",
+                    "type": "boolean"
+                },
+                "parameters": {
+                    "description": "List of key/value parameters of an error",
+                    "type": "array",
+                    "items": {
+                        "description": "List of key/value parameters of an error",
+                        "type": "object",
+                        "properties": {
+                            "key": {
+                                "description": "The key for this parameter",
+                                "type": "string"
+                            },
+                            "value": {
+                                "description": "The value of this parameter",
+                                "type": "string"
+                            }
+                        },
+                        "additionalProperties": false,
+                        "required": [
+                            "key"
+                        ]
+                    },
+                    "additionalProperties": false
+                }
+            },
+            "additionalProperties": false
         },
         "complete": {
             "description": "Whether job is complete (true) or ongoing (false)",

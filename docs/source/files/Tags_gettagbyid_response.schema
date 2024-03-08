@@ -4,8 +4,9 @@
     "description": "Tag that can be attached to various objects",
     "properties": {
         "id": {
-            "$ref": "#/components/schemas/uuid",
-            "description": "The UUID of this tag"
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$",
+            "example": "46669e09-8b45-4ede-afbd-ca73bb89cdb3"
         },
         "label": {
             "type": "string",
@@ -16,9 +17,34 @@
             "description": "The description of this tag"
         },
         "metadata": {
-            "$ref": "#/components/schemas/metadata",
-            "readOnly": true,
-            "description": "The metadata of this tag"
+            "type": "object",
+            "title": "Metadata",
+            "description": "Metadata about creation and changes to records",
+            "properties": {
+                "createdDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Date and time when the record was created"
+                },
+                "createdByUserId": {
+                    "type": "string",
+                    "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$",
+                    "example": "46669e09-8b45-4ede-afbd-ca73bb89cdb3"
+                },
+                "updatedDate": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Date and time when the record was last updated"
+                },
+                "updatedByUserId": {
+                    "type": "string",
+                    "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$",
+                    "example": "46669e09-8b45-4ede-afbd-ca73bb89cdb3"
+                }
+            },
+            "required": [
+                "createdDate"
+            ]
         }
     },
     "required": [

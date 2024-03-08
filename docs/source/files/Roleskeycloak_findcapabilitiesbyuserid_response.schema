@@ -8,7 +8,129 @@
             "description": "A collection of capability sets",
             "type": "array",
             "items": {
-                "$ref": "capability.json"
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "type": "object",
+                "title": "Capability Set Object Schema",
+                "description": "Object containing the details of the capability set",
+                "properties": {
+                    "id": {
+                        "description": "A unique identifier for this capability",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "name": {
+                        "description": "a human-readable name/label for this capability.  Takes the form of {resourceName}.{scope}, e.g. item.create",
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "description": {
+                        "description": "Free form description of the capability",
+                        "type": "string"
+                    },
+                    "resource": {
+                        "description": "The resource this capability is associated with, e.g. item",
+                        "type": "string",
+                        "pattern": "^[A-Za-z\\s]+$"
+                    },
+                    "action": {
+                        "$schema": "http://json-schema.org/draft-04/schema#",
+                        "description": "The action this capability is associated with, e.g. create",
+                        "type": "string",
+                        "enum": [
+                            "view",
+                            "create",
+                            "edit",
+                            "delete",
+                            "manage",
+                            "execute"
+                        ]
+                    },
+                    "applicationId": {
+                        "description": "The id of the application which defines the capability",
+                        "type": "string"
+                    },
+                    "permission": {
+                        "description": "Folio permission name",
+                        "type": "string"
+                    },
+                    "endpoints": {
+                        "type": "array",
+                        "description": "List of assigned endpoints",
+                        "items": {
+                            "$schema": "http://json-schema.org/draft-04/schema#",
+                            "type": "object",
+                            "id": "endpoint.json",
+                            "description": "Object containing the details of the http-endpoint.",
+                            "properties": {
+                                "path": {
+                                    "type": "string",
+                                    "description": "Endpoint's static path / expression"
+                                },
+                                "method": {
+                                    "$schema": "http://json-schema.org/draft-04/schema#",
+                                    "description": "Http Method",
+                                    "type": "string",
+                                    "enum": [
+                                        "GET",
+                                        "HEAD",
+                                        "POST",
+                                        "PUT",
+                                        "PATCH",
+                                        "DELETE",
+                                        "OPTIONS",
+                                        "TRACE"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "type": {
+                        "$schema": "http://json-schema.org/draft-04/schema#",
+                        "description": "The type of capability",
+                        "type": "string",
+                        "enum": [
+                            "settings",
+                            "data",
+                            "procedural"
+                        ]
+                    },
+                    "metadata": {
+                        "$schema": "http://json-schema.org/draft-04/schema#",
+                        "title": "Metadata Schema",
+                        "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+                        "type": "object",
+                        "properties": {
+                            "createdDate": {
+                                "description": "Date and time when the record was created",
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "createdBy": {
+                                "description": "ID of the user who created the record (when available)",
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            "modifiedDate": {
+                                "description": "Date and time when the record was last updated",
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "modifiedBy": {
+                                "description": "ID of the user who last updated the record (when available)",
+                                "type": "string",
+                                "format": "uuid"
+                            }
+                        },
+                        "additionalProperties": false
+                    }
+                },
+                "required": [
+                    "resource",
+                    "action",
+                    "permissions",
+                    "type",
+                    "applicationId"
+                ]
             },
             "minItems": 1
         },

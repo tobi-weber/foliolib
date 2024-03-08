@@ -17,24 +17,65 @@
             "format": "uuid"
         },
         "operationType": {
-            "description": "Bulk Operation type",
-            "$ref": "operation_type.json#/OperationType"
+            "type": "string",
+            "enum": [
+                "UPDATE",
+                "DELETE"
+            ]
         },
         "entityType": {
-            "description": "Entity type",
-            "$ref": "entity_type.json#/EntityType"
+            "type": "string",
+            "enum": [
+                "USER",
+                "ITEM",
+                "HOLDINGS_RECORD",
+                "INSTANCE"
+            ]
         },
         "entityCustomIdentifierType": {
-            "description": "Entity custom identifier type",
-            "$ref": "identifier_type.json#/IdentifierType"
+            "type": "string",
+            "enum": [
+                "ID",
+                "BARCODE",
+                "HRID",
+                "FORMER_IDS",
+                "ACCESSION_NUMBER",
+                "HOLDINGS_RECORD_ID",
+                "USER_NAME",
+                "EXTERNAL_SYSTEM_ID",
+                "INSTANCE_HRID",
+                "ITEM_BARCODE",
+                "ISBN",
+                "ISSN"
+            ]
         },
         "status": {
-            "description": "Bulk Operation status",
-            "$ref": "operation_status_type.json#/OperationStatusType"
+            "type": "string",
+            "enum": [
+                "NEW",
+                "RETRIEVING_RECORDS",
+                "SAVING_RECORDS_LOCALLY",
+                "DATA_MODIFICATION",
+                "REVIEW_CHANGES",
+                "APPLY_CHANGES",
+                "SUSPENDED",
+                "COMPLETED",
+                "COMPLETED_WITH_ERRORS",
+                "CANCELLED",
+                "SCHEDULED",
+                "FAILED",
+                "EXECUTING_QUERY",
+                "RETRIEVING_IDENTIFIERS",
+                "SAVED_IDENTIFIERS"
+            ]
         },
         "approach": {
-            "description": "Bulk Operation approach type",
-            "$ref": "approach_type.json#/ApproachType"
+            "type": "string",
+            "enum": [
+                "MANUAL",
+                "IN_APP",
+                "QUERY"
+            ]
         },
         "dataExportJobId": {
             "description": "Data export Job UUID",

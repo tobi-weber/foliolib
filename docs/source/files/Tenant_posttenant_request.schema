@@ -16,8 +16,27 @@
             "type": "boolean"
         },
         "parameters": {
-            "description": "Parameters that controls what tenant init (eg reference data)",
-            "$ref": "parameters.json"
+            "description": "List of key/value parameters of an error",
+            "type": "array",
+            "items": {
+                "description": "List of key/value parameters of an error",
+                "type": "object",
+                "properties": {
+                    "key": {
+                        "description": "The key for this parameter",
+                        "type": "string"
+                    },
+                    "value": {
+                        "description": "The value of this parameter",
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "key"
+                ]
+            },
+            "additionalProperties": false
         }
     },
     "additionalProperties": false

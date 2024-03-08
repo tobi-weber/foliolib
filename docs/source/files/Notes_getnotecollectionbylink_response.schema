@@ -6,7 +6,162 @@
         "notes": {
             "type": "array",
             "items": {
-                "$ref": "#/note"
+                "type": "object",
+                "description": "Notes about all kind of objects",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "typeId": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Type of note (configured in settings)"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Note title"
+                    },
+                    "domain": {
+                        "type": "string",
+                        "description": "Domain associated with this note"
+                    },
+                    "content": {
+                        "type": "string",
+                        "description": "Content of the note"
+                    },
+                    "popUpOnCheckOut": {
+                        "type": "boolean",
+                        "description": "Flag that specify need of pop-up on check-out app"
+                    },
+                    "popUpOnUser": {
+                        "type": "boolean",
+                        "description": "Flag that specify need of pop-up on users app"
+                    },
+                    "links": {
+                        "type": "array",
+                        "description": "Collection of links to associated objects",
+                        "items": {
+                            "type": "object",
+                            "title": "Note link",
+                            "description": "Link to object associated with a note",
+                            "properties": {
+                                "id": {
+                                    "type": "string",
+                                    "description": "Id of object linked to note"
+                                },
+                                "type": {
+                                    "type": "string",
+                                    "description": "Type of object linked to note"
+                                }
+                            },
+                            "required": [
+                                "id",
+                                "type"
+                            ],
+                            "example": {
+                                "id": "1234-5678",
+                                "type": "package"
+                            }
+                        }
+                    },
+                    "metadata": {
+                        "type": "object",
+                        "title": "Metadata",
+                        "description": "Metadata about creation and changes to records",
+                        "properties": {
+                            "createdDate": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Date and time when the record was created"
+                            },
+                            "createdByUserId": {
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            "createdByUsername": {
+                                "type": "string",
+                                "description": "Username of the user who created the record (when available)"
+                            },
+                            "createdBy": {
+                                "type": "object",
+                                "description": "User Display Information",
+                                "properties": {
+                                    "lastName": {
+                                        "type": "string",
+                                        "readOnly": true,
+                                        "description": "Last name of the user"
+                                    },
+                                    "firstName": {
+                                        "type": "string",
+                                        "readOnly": true,
+                                        "description": "First name of the user"
+                                    },
+                                    "middleName": {
+                                        "type": "string",
+                                        "readOnly": true,
+                                        "description": "Middle name or initial of the user"
+                                    }
+                                },
+                                "example": {
+                                    "lastName": "Doe",
+                                    "firstName": "John",
+                                    "middleName": "X."
+                                }
+                            },
+                            "updatedDate": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Date and time when the record was last updated"
+                            },
+                            "updatedByUserId": {
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            "updatedByUsername": {
+                                "type": "string",
+                                "description": "Username of the user who updated the record (when available)"
+                            },
+                            "updatedBy": {
+                                "type": "object",
+                                "description": "User Display Information",
+                                "properties": {
+                                    "lastName": {
+                                        "type": "string",
+                                        "readOnly": true,
+                                        "description": "Last name of the user"
+                                    },
+                                    "firstName": {
+                                        "type": "string",
+                                        "readOnly": true,
+                                        "description": "First name of the user"
+                                    },
+                                    "middleName": {
+                                        "type": "string",
+                                        "readOnly": true,
+                                        "description": "Middle name or initial of the user"
+                                    }
+                                },
+                                "example": {
+                                    "lastName": "Doe",
+                                    "firstName": "John",
+                                    "middleName": "X."
+                                }
+                            }
+                        },
+                        "required": [
+                            "createdDate"
+                        ]
+                    }
+                },
+                "required": [
+                    "typeId",
+                    "domain",
+                    "title"
+                ]
             }
         },
         "totalRecords": {

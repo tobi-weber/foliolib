@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2024-03-01
+# Generated at 2024-03-23
 
 import logging
 
@@ -487,7 +487,8 @@ class Reservoir(FolioApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Reservoir_uploadrecords_response.schema
+            .. literalinclude:: ../files/Reservoir_uploadrecords_request.schema
+            .. literalinclude:: ../files/Reservoir_uploadrecords_request.schema_response.schema
         """
         import os
         headers = {}
@@ -647,9 +648,16 @@ class Reservoir(FolioApi):
 
         ``GET /reservoir/oai``
 
+        Returns:
+            dict: See Schema below.
+
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestFatalError: Internal error
+
+        Schema:
+
+            .. literalinclude:: ../files/Reservoir_oaiservice_response.schema
         """
         return self.call("GET", "/reservoir/oai")
 

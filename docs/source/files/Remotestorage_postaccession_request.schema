@@ -8,8 +8,10 @@
             "type": "string"
         },
         "remoteStorageId": {
-            "description": "Remote storage id",
-            "$ref": "uuid.json"
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "description": "Regexp pattern for UUID validation",
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[1-5][a-fA-F0-9]{3}-[89abAB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}$"
         }
     },
     "additionalProperties": false,

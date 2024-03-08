@@ -6,7 +6,19 @@
         "links": {
             "type": "array",
             "items": {
-                "$ref": "#/components/schemas/linksCountDto"
+                "type": "object",
+                "title": "Total links count map for one authority",
+                "description": "Total links count map for one authority",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "totalLinks": {
+                        "type": "integer",
+                        "description": "Number of titles linked to the authority"
+                    }
+                }
             }
         }
     },

@@ -15,7 +15,7 @@ log = logging.getLogger("foliolib.apiBuilder.oas.schemaPath")
 class OASchemaPath(BaseOAS):
 
     def __init__(self, path, data, oaSchema):
-        super().__init__(data, oaSchema)
+        super().__init__(data, parent=oaSchema)
         # print(json.dumps(data, indent=2))
         self._path = path if not path.endswith("/") else path[:-1]
         self._oaSchemaMethods = []
@@ -23,7 +23,7 @@ class OASchemaPath(BaseOAS):
         log.info("OASchemaPath: %s", self.get_path())
 
     def get_path(self):
-        return self._oaSchema.get_basePath() + self._path
+        return self.get_oaSchema().get_basePath() + self._path
 
     def get_oaSchemaMethods(self):
         return self._oaSchemaMethods
@@ -31,20 +31,20 @@ class OASchemaPath(BaseOAS):
     def _create_oaSchemaMethods(self):
         for k, v in self._data.items():
             if k.lower() in ["get", "post", "put", "delete"]:
-                self._oaSchemaMethods.append(
-                    OASchemaMethod(k, v, self, self._oaSchema))
+                self._oaSchemaMethods.append(OASchemaMethod(k, v, self))
 
     def get_code(self, adminMethods=False):
         if adminMethods:
-            oaSchemaMethods = [oasm for oasm in self._oaSchemaMethods
-                               if oasm.isAdminMethod()]
+            oaSchemaMethods = [
+                oasm for oasm in self._oaSchemaMethods if oasm.isAdminMethod()
+            ]
         else:
-            oaSchemaMethods = [oasm for oasm in self._oaSchemaMethods
-                               if not oasm.isAdminMethod()]
+            oaSchemaMethods = [
+                oasm for oasm in self._oaSchemaMethods if not oasm.isAdminMethod()
+            ]
 
         if oaSchemaMethods:
-            code = [oaSchemaMethod.get_code()
-                    for oaSchemaMethod in oaSchemaMethods]
+            code = [oaSchemaMethod.get_code() for oaSchemaMethod in oaSchemaMethods]
             return "\n\t\t".join(code)
         else:
             return ""

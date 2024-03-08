@@ -3,12 +3,882 @@
     "type": "object",
     "properties": {
         "transaction": {
-            "description": "updated INN-Reach transaction record",
-            "$ref": "innReachTransactionDTO.json"
+            "description": "INN-Reach Transaction record",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "Transaction id",
+                    "type": "string",
+                    "format": "UUID"
+                },
+                "trackingId": {
+                    "description": "ID for transaction tracking",
+                    "type": "string"
+                },
+                "centralServerCode": {
+                    "description": "Unique code that identifies the central server",
+                    "type": "string"
+                },
+                "state": {
+                    "$schema": "http://json-schema.org/draft-04/schema#",
+                    "title": "Transaction State enum",
+                    "description": "Transaction State enum",
+                    "type": "string",
+                    "additionalProperties": false,
+                    "enum": [
+                        "ITEM_HOLD",
+                        "PATRON_HOLD",
+                        "LOCAL_HOLD",
+                        "BORROWER_RENEW",
+                        "BORROWING_SITE_CANCEL",
+                        "ITEM_IN_TRANSIT",
+                        "RECEIVE_UNANNOUNCED",
+                        "RETURN_UNCIRCULATED",
+                        "CLAIMS_RETURNED",
+                        "ITEM_RECEIVED",
+                        "ITEM_SHIPPED",
+                        "LOCAL_CHECKOUT",
+                        "CANCEL_REQUEST",
+                        "FINAL_CHECKIN",
+                        "RECALL",
+                        "TRANSFER",
+                        "OWNER_RENEW"
+                    ]
+                },
+                "type": {
+                    "$schema": "http://json-schema.org/draft-04/schema#",
+                    "title": "Transaction Type enum",
+                    "description": "Transaction Type enum",
+                    "type": "string",
+                    "additionalProperties": false,
+                    "enum": [
+                        "ITEM",
+                        "PATRON",
+                        "LOCAL"
+                    ]
+                },
+                "hold": {
+                    "description": "INN-Reach Transaction hold record",
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "description": "Transaction Hold id",
+                            "type": "string",
+                            "format": "UUID"
+                        },
+                        "transactionTime": {
+                            "description": "Transaction time",
+                            "type": "integer"
+                        },
+                        "pickupLocation": {
+                            "description": "Pickup location",
+                            "type": "string"
+                        },
+                        "patronId": {
+                            "description": "Patron id",
+                            "type": "string",
+                            "pattern": "[a-z,0-9]{1,32}"
+                        },
+                        "patronAgencyCode": {
+                            "description": "Patron agency code",
+                            "type": "string",
+                            "minLength": 5,
+                            "maxLength": 5
+                        },
+                        "itemAgencyCode": {
+                            "description": "Item agency code",
+                            "type": "string",
+                            "minLength": 5,
+                            "maxLength": 5
+                        },
+                        "itemId": {
+                            "description": "Item id",
+                            "type": "string",
+                            "pattern": "[a-z,0-9]{1,32}"
+                        },
+                        "needBefore": {
+                            "description": "Need before time",
+                            "type": "integer"
+                        },
+                        "dueDateTime": {
+                            "description": "Due date time",
+                            "type": "integer"
+                        },
+                        "centralItemType": {
+                            "description": "Central item type",
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "centralPatronType": {
+                            "description": "Central patron type",
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        },
+                        "patronName": {
+                            "description": "Patron name",
+                            "type": "string"
+                        },
+                        "patronHomeLibrary": {
+                            "description": "Patron home library",
+                            "type": "string"
+                        },
+                        "patronPhone": {
+                            "description": "Patron phone",
+                            "type": "string"
+                        },
+                        "title": {
+                            "description": "Patron hold title",
+                            "type": "string"
+                        },
+                        "author": {
+                            "description": "Patron hold author",
+                            "type": "string"
+                        },
+                        "callNumber": {
+                            "description": "Patron hold call number",
+                            "type": "string"
+                        },
+                        "shippedItemBarcode": {
+                            "description": "Shipped item barcode",
+                            "type": "string"
+                        },
+                        "folioInstanceId": {
+                            "description": "Folio instance id",
+                            "type": "string",
+                            "format": "UUID",
+                            "readOnly": true
+                        },
+                        "folioHoldingId": {
+                            "description": "Folio holding id",
+                            "type": "string",
+                            "format": "UUID",
+                            "readOnly": true
+                        },
+                        "folioPatronId": {
+                            "description": "Folio patron id",
+                            "type": "string",
+                            "format": "UUID",
+                            "readOnly": true
+                        },
+                        "folioItemId": {
+                            "description": "Folio item id",
+                            "type": "string",
+                            "format": "UUID",
+                            "readOnly": true
+                        },
+                        "folioRequestId": {
+                            "description": "Folio request id",
+                            "type": "string",
+                            "format": "UUID",
+                            "readOnly": true
+                        },
+                        "folioLoanId": {
+                            "description": "Folio loan id",
+                            "type": "string",
+                            "format": "UUID",
+                            "readOnly": true
+                        },
+                        "folioPatronBarcode": {
+                            "description": "Folio patron barcode",
+                            "type": "string",
+                            "readOnly": true
+                        },
+                        "folioItemBarcode": {
+                            "description": "Folio item barcode",
+                            "type": "string",
+                            "readOnly": true
+                        },
+                        "metadata": {
+                            "title": "Metadata Schema",
+                            "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+                            "type": "object",
+                            "properties": {
+                                "createdDate": {
+                                    "description": "Date and time when the record was created",
+                                    "type": "string",
+                                    "format": "date-time"
+                                },
+                                "createdByUserId": {
+                                    "description": "ID of the user who created the record (when available)",
+                                    "type": "string",
+                                    "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+                                },
+                                "createdByUsername": {
+                                    "description": "Username of the user who created the record (when available)",
+                                    "type": "string"
+                                },
+                                "updatedDate": {
+                                    "description": "Date and time when the record was last updated",
+                                    "type": "string",
+                                    "format": "date-time"
+                                },
+                                "updatedByUserId": {
+                                    "description": "ID of the user who last updated the record (when available)",
+                                    "type": "string",
+                                    "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+                                },
+                                "updatedByUsername": {
+                                    "description": "Username of the user who last updated the record (when available)",
+                                    "type": "string"
+                                }
+                            },
+                            "additionalProperties": false,
+                            "required": [
+                                "createdDate"
+                            ]
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": [
+                        "transactionTime",
+                        "pickupLocation",
+                        "patronId",
+                        "patronAgencyCode",
+                        "itemAgencyCode",
+                        "itemId"
+                    ]
+                },
+                "metadata": {
+                    "title": "Metadata Schema",
+                    "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+                    "type": "object",
+                    "properties": {
+                        "createdDate": {
+                            "description": "Date and time when the record was created",
+                            "type": "string",
+                            "format": "date-time"
+                        },
+                        "createdByUserId": {
+                            "description": "ID of the user who created the record (when available)",
+                            "type": "string",
+                            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+                        },
+                        "createdByUsername": {
+                            "description": "Username of the user who created the record (when available)",
+                            "type": "string"
+                        },
+                        "updatedDate": {
+                            "description": "Date and time when the record was last updated",
+                            "type": "string",
+                            "format": "date-time"
+                        },
+                        "updatedByUserId": {
+                            "description": "ID of the user who last updated the record (when available)",
+                            "type": "string",
+                            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+                        },
+                        "updatedByUsername": {
+                            "description": "Username of the user who last updated the record (when available)",
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": [
+                        "createdDate"
+                    ]
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "transactionTime",
+                "pickupLocation",
+                "patronId",
+                "patronAgencyCode",
+                "itemAgencyCode",
+                "itemId",
+                "centralPatronType",
+                "patronName"
+            ]
         },
         "folioCheckIn": {
-            "description": "the FOLIO check-in response",
-            "$ref": "circulation/checkInResponseDTO.json"
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "type": "object",
+            "description": "Success response for checking in an item at a service point",
+            "properties": {
+                "loan": {
+                    "description": "Loan affected by the check in (may be none, if a receiving check in)",
+                    "$schema": "http://json-schema.org/draft-04/schema#",
+                    "type": "object",
+                    "title": "Loan",
+                    "properties": {
+                        "id": {
+                            "description": "Unique ID (generated UUID) of the loan",
+                            "type": "string",
+                            "format": "UUID"
+                        },
+                        "userId": {
+                            "description": "ID of the patron the item was lent to. Required for open loans, not required for closed loans (for anonymization).",
+                            "type": "string",
+                            "format": "UUID"
+                        },
+                        "borrower": {
+                            "description": "Additional information about the borrower of the item, taken from the user referred to by the userId",
+                            "readonly": true,
+                            "type": "object",
+                            "properties": {
+                                "firstName": {
+                                    "description": "first name of the borrower (read only, defined by the server)",
+                                    "type": "string",
+                                    "readonly": true
+                                },
+                                "lastName": {
+                                    "description": "last name of the borrower (read only, defined by the server)",
+                                    "type": "string",
+                                    "readonly": true
+                                },
+                                "middleName": {
+                                    "description": "middle name of the borrower (read only, defined by the server)",
+                                    "type": "string",
+                                    "readonly": true
+                                },
+                                "barcode": {
+                                    "description": "barcode used to identify the borrower (read only, defined by the server)",
+                                    "type": "string",
+                                    "readonly": true
+                                }
+                            },
+                            "additionalProperties": false
+                        },
+                        "proxyUserId": {
+                            "description": "ID of the user representing a proxy for the patron",
+                            "type": "string",
+                            "format": "UUID"
+                        },
+                        "itemId": {
+                            "description": "ID of the item lent to the patron",
+                            "type": "string",
+                            "format": "UUID"
+                        },
+                        "loanPolicyId": {
+                            "description": "ID of last policy used in relation to this loan",
+                            "type": "string",
+                            "format": "UUID"
+                        },
+                        "loanPolicy": {
+                            "description": "Additional information about the loan policy of the item, taken from the loan loanPolicyId",
+                            "readonly": true,
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "readonly": true,
+                                    "description": "Name of last policy used in relation to this loan (read only, defined by the server)",
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "overdueFinePolicyId": {
+                            "description": "ID of last overdue fine policy used in relation to this loan",
+                            "type": "string",
+                            "format": "UUID"
+                        },
+                        "overdueFinePolicy": {
+                            "description": "Additional information about the overdue fine policy of the item, taken from the loan overdueFinePolicyId",
+                            "readonly": true,
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "readonly": true,
+                                    "description": "Name of last overdue fine policy used in relation to this loan (read only, defined by the server)",
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "lostItemPolicyId": {
+                            "description": "ID of last lost item policy used in relation to this loan",
+                            "type": "string",
+                            "format": "UUID"
+                        },
+                        "lostItemPolicy": {
+                            "description": "Additional information about the lost item policy of the item, taken from the loan lostItemPolicyId",
+                            "readonly": true,
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "readonly": true,
+                                    "description": "Name of last lost item policy used in relation to this loan (read only, defined by the server)",
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "item": {
+                            "description": "Additional information about the item",
+                            "type": "object",
+                            "readonly": true,
+                            "properties": {
+                                "id": {
+                                    "description": "ID of the item",
+                                    "type": "string",
+                                    "format": "UUID",
+                                    "readonly": true
+                                },
+                                "title": {
+                                    "description": "The title of the item lent to the patron",
+                                    "type": "string",
+                                    "readonly": true
+                                },
+                                "callNumber": {
+                                    "description": "Deprecated call number from the holdings record, use callNumberComponents.callNumber instead",
+                                    "type": "string",
+                                    "readonly": true
+                                },
+                                "materialType": {
+                                    "description": "The material type from the item record",
+                                    "type": "object",
+                                    "readonly": true,
+                                    "properties": {
+                                        "name": {
+                                            "description": "Name of the material type",
+                                            "type": "string",
+                                            "readonly": true
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                },
+                                "contributors": {
+                                    "description": "Contributors from the instance record",
+                                    "type": "array",
+                                    "readonly": true,
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "name": {
+                                                "description": "Name of the contributor",
+                                                "type": "string",
+                                                "readonly": true
+                                            }
+                                        },
+                                        "additionalProperties": false
+                                    }
+                                },
+                                "holdingsRecordId": {
+                                    "description": "The ID of the holdings for the item",
+                                    "type": "string",
+                                    "format": "UUID",
+                                    "readonly": true
+                                },
+                                "instanceId": {
+                                    "description": "The ID of the instance for the item",
+                                    "type": "string",
+                                    "format": "UUID",
+                                    "readonly": true
+                                },
+                                "barcode": {
+                                    "description": "The barcode of the item",
+                                    "type": "string",
+                                    "readonly": true
+                                },
+                                "location": {
+                                    "description": "The effective location of the item",
+                                    "type": "object",
+                                    "readonly": true,
+                                    "properties": {
+                                        "name": {
+                                            "description": "The name of the location",
+                                            "type": "string",
+                                            "readonly": true
+                                        }
+                                    }
+                                },
+                                "status": {
+                                    "description": "Overall status of the item",
+                                    "type": "object",
+                                    "readonly": true,
+                                    "properties": {
+                                        "name": {
+                                            "description": "Name of the item status",
+                                            "type": "string",
+                                            "readonly": true
+                                        },
+                                        "date": {
+                                            "type": "string",
+                                            "description": "Date time when status was last changed",
+                                            "format": "date-time",
+                                            "readonly": true
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                },
+                                "inTransitDestinationServicePointId": {
+                                    "description": "Service point an item is intended to be transited to (should only be present when in transit)",
+                                    "type": "string",
+                                    "format": "UUID",
+                                    "readonly": true
+                                },
+                                "inTransitDestinationServicePoint": {
+                                    "description": "Service point an item is intended to be transited to (should only be present when in transit)",
+                                    "type": "object",
+                                    "readonly": true,
+                                    "properties": {
+                                        "name": {
+                                            "description": "Name of the service point",
+                                            "type": "string",
+                                            "readonly": true
+                                        }
+                                    }
+                                },
+                                "enumeration": {
+                                    "description": "Item`s enumeration",
+                                    "type": "string",
+                                    "readonly": true
+                                },
+                                "chronology": {
+                                    "description": "Item`s chronology",
+                                    "type": "string",
+                                    "readonly": true
+                                },
+                                "volume": {
+                                    "description": "Item`s volume",
+                                    "type": "string",
+                                    "readonly": true
+                                },
+                                "callNumberComponents": {
+                                    "description": "Elements of a full call number",
+                                    "readonly": true,
+                                    "$schema": "http://json-schema.org/draft-04/schema#",
+                                    "type": "object",
+                                    "properties": {
+                                        "callNumber": {
+                                            "type": "string",
+                                            "description": "Call number for item",
+                                            "readonly": true
+                                        },
+                                        "prefix": {
+                                            "description": "Call number prefix for item",
+                                            "type": "string",
+                                            "readonly": true
+                                        },
+                                        "suffix": {
+                                            "description": "Call number suffix for item",
+                                            "type": "string",
+                                            "readonly": true
+                                        }
+                                    }
+                                }
+                            },
+                            "additionalProperties": false
+                        },
+                        "itemEffectiveLocationIdAtCheckOut": {
+                            "description": "The effective location, at the time of checkout, of the item loaned to the patron.",
+                            "type": "string",
+                            "format": "UUID"
+                        },
+                        "status": {
+                            "description": "Overall status of the loan",
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "description": "Name of the status (currently can be any value, values commonly used are Open and Closed)",
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "loanDate": {
+                            "description": "Date and time when the loan began",
+                            "type": "string",
+                            "format": "date-time"
+                        },
+                        "dueDate": {
+                            "description": "Date and time when the item is due to be returned",
+                            "type": "string",
+                            "format": "date-time"
+                        },
+                        "returnDate": {
+                            "description": "Date and time when the item was returned",
+                            "type": "string",
+                            "format": "date-time"
+                        },
+                        "systemReturnDate": {
+                            "description": "Date and time when return was processed",
+                            "type": "string",
+                            "format": "date-time"
+                        },
+                        "action": {
+                            "description": "Last action performed on a loan (currently can be any value, values commonly used are checkedout and checkedin)",
+                            "type": "string"
+                        },
+                        "renewalCount": {
+                            "description": "Count of how many times a loan has been renewed (incremented by the client)",
+                            "type": "integer",
+                            "minimum": 0
+                        },
+                        "checkoutServicePointId": {
+                            "description": "ID of the Service Point where the last checkout occured",
+                            "type": "string",
+                            "format": "UUID"
+                        },
+                        "checkinServicePointId": {
+                            "description": "ID of the Service Point where the last checkin occured",
+                            "type": "string",
+                            "format": "UUID"
+                        },
+                        "checkoutServicePoint": {
+                            "description": "The Service Point where the last checkout occurred",
+                            "type": "object",
+                            "readonly": true,
+                            "properties": {
+                                "name": {
+                                    "description": "The unique name of the service point",
+                                    "type": "string",
+                                    "readonly": true
+                                },
+                                "code": {
+                                    "description": "The short code for the service point",
+                                    "type": "string",
+                                    "readonly": true
+                                },
+                                "discoveryDisplayName": {
+                                    "description": "The human readable name",
+                                    "type": "string",
+                                    "readonly": true
+                                },
+                                "shelvingLagTime": {
+                                    "description": "The time to shelving",
+                                    "type": "integer",
+                                    "readonly": true
+                                },
+                                "pickupLocation": {
+                                    "description": "Is this a pickup location",
+                                    "type": "boolean",
+                                    "readonly": true
+                                }
+                            }
+                        },
+                        "checkinServicePoint": {
+                            "description": "The Service Point where the last checkout occurred",
+                            "type": "object",
+                            "readonly": true,
+                            "properties": {
+                                "name": {
+                                    "description": "Name of the service point",
+                                    "type": "string",
+                                    "readonly": true
+                                },
+                                "code": {
+                                    "description": "The short code for the service point",
+                                    "type": "string",
+                                    "readonly": true
+                                },
+                                "discoveryDisplayName": {
+                                    "description": "The human readable name",
+                                    "type": "string",
+                                    "readonly": true
+                                },
+                                "shelvingLagTime": {
+                                    "description": "The time to shelving",
+                                    "type": "integer",
+                                    "readonly": true
+                                },
+                                "pickupLocation": {
+                                    "description": "Is this a pickup location",
+                                    "type": "boolean",
+                                    "readonly": true
+                                }
+                            }
+                        },
+                        "patronGroupAtCheckout": {
+                            "description": "Patron Group at checkout",
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "description": "Unique ID (generated UUID) of the patron group",
+                                    "type": "string",
+                                    "format": "UUID",
+                                    "readonly": true
+                                },
+                                "name": {
+                                    "description": "Patron group name",
+                                    "type": "string",
+                                    "readonly": true
+                                }
+                            },
+                            "additionalProperties": false
+                        },
+                        "feesAndFines": {
+                            "description": "Fees and fines associated with loans",
+                            "type": "object",
+                            "properties": {
+                                "amountRemainingToPay": {
+                                    "type": "number",
+                                    "description": "Total remaining amount due on fees and fines for the loan (read only, defined by the server)",
+                                    "readonly": true
+                                }
+                            },
+                            "additionalProperties": false
+                        },
+                        "declaredLostDate": {
+                            "description": "Date and time the item was declared lost during this loan",
+                            "type": "string",
+                            "format": "date-time"
+                        },
+                        "metadata": {
+                            "description": "Metadata about creation and changes to loan, provided by the server (client should not provide)",
+                            "type": "object",
+                            "$schema": "http://json-schema.org/draft-04/schema#",
+                            "title": "Metadata Schema",
+                            "properties": {
+                                "createdDate": {
+                                    "description": "Date and time when the record was created",
+                                    "type": "string",
+                                    "format": "date-time"
+                                },
+                                "createdByUserId": {
+                                    "description": "ID of the user who created the record (when available)",
+                                    "type": "string",
+                                    "format": "UUID"
+                                },
+                                "createdByUsername": {
+                                    "description": "Username of the user who created the record (when available)",
+                                    "type": "string"
+                                },
+                                "updatedDate": {
+                                    "description": "Date and time when the record was last updated",
+                                    "type": "string",
+                                    "format": "date-time"
+                                },
+                                "updatedByUserId": {
+                                    "description": "ID of the user who last updated the record (when available)",
+                                    "type": "string",
+                                    "format": "UUID"
+                                },
+                                "updatedByUsername": {
+                                    "description": "Username of the user who last updated the record (when available)",
+                                    "type": "string"
+                                }
+                            },
+                            "additionalProperties": false,
+                            "required": [
+                                "createdDate"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "itemId",
+                        "loanDate",
+                        "action"
+                    ]
+                },
+                "item": {
+                    "description": "Additional information about the item",
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "description": "ID of the item",
+                            "type": "string"
+                        },
+                        "title": {
+                            "description": "The title of the item lent to the patron",
+                            "type": "string"
+                        },
+                        "callNumber": {
+                            "description": "The call number from the holdings record",
+                            "type": "string"
+                        },
+                        "materialType": {
+                            "description": "The material type from the item record",
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "description": "Name of the material type",
+                                    "type": "string"
+                                }
+                            },
+                            "additionalProperties": false
+                        },
+                        "contributors": {
+                            "description": "Contributors from the instance record",
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "description": "Name of the contributor",
+                                        "type": "string"
+                                    }
+                                },
+                                "additionalProperties": false
+                            }
+                        },
+                        "holdingsRecordId": {
+                            "description": "The ID of the holdings for the item",
+                            "type": "string"
+                        },
+                        "instanceId": {
+                            "description": "The ID of the instance for the item",
+                            "type": "string"
+                        },
+                        "barcode": {
+                            "description": "The barcode of the item",
+                            "type": "string"
+                        },
+                        "location": {
+                            "description": "The effective location of the item",
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "description": "The name of the location",
+                                    "type": "string"
+                                }
+                            },
+                            "additionalProperties": false
+                        },
+                        "status": {
+                            "description": "Overall status of the item",
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "description": "Name of the item status",
+                                    "type": "string"
+                                },
+                                "date": {
+                                    "type": "string",
+                                    "description": "Date time when status was last changed",
+                                    "format": "date-time"
+                                }
+                            },
+                            "additionalProperties": false
+                        },
+                        "enumeration": {
+                            "description": "Item`s enumeration",
+                            "type": "string"
+                        },
+                        "chronology": {
+                            "description": "Chronology is the descriptive information for the dating scheme of a serial.",
+                            "type": "string"
+                        },
+                        "volume": {
+                            "description": "Volume is intended for monographs when a multipart monograph (e.g. a biography of George Bernard Shaw in three volumes).",
+                            "type": "string"
+                        },
+                        "inTransitDestinationServicePointId": {
+                            "description": "Service point an item is intended to be transited to (should only be present when in transit)",
+                            "type": "string",
+                            "format": "UUID"
+                        },
+                        "inTransitDestinationServicePoint": {
+                            "description": "Service point an item is intended to be transited to (should only be present when in transit)",
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "description": "Name of the service point",
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "staffSlipContext": {
+                    "description": "Context for staff slip tokens",
+                    "type": "object"
+                },
+                "inHouseUse": {
+                    "type": "boolean",
+                    "description": "Defines whether the current check-in operation considered as in-house use or not."
+                }
+            },
+            "additionalProperties": false
         },
         "barcodeAugmented": {
             "description": "indicates if the FOLIO item's barcode was augmented to avoid duplicate barcode collision (item agency code appended)",

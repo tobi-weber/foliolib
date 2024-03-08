@@ -7,8 +7,27 @@
             "id": "users",
             "type": "array",
             "items": {
+                "description": "User who runs bulk edit",
                 "type": "object",
-                "$ref": "user.json"
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "User's ID"
+                    },
+                    "firstName": {
+                        "type": "string",
+                        "description": "User's first name"
+                    },
+                    "lastName": {
+                        "type": "string",
+                        "description": "User's last name"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "id"
+                ]
             }
         },
         "total_records": {

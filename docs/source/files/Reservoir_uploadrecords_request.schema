@@ -1,0 +1,9 @@
+{
+    "type": "object",
+    "properties": {
+        "records": {
+            "type": "string",
+            "format": "binary"
+        }
+    }
+}

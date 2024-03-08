@@ -11,10 +11,30 @@
             "format": "uuid"
         },
         "status": {
-            "$ref": "types/executionStatus.json"
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "id": "types/entitlementFlowStatus.json",
+            "title": "Application/Stage Execution Status Schema",
+            "description": "An application/stage execution status",
+            "type": "string",
+            "enum": [
+                "queued",
+                "in_progress",
+                "cancelled",
+                "cancellation_failed",
+                "failed",
+                "finished"
+            ]
         },
         "entitlementType": {
-            "$ref": "types/entitlementType.json"
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "id": "types/entitlementType.json",
+            "title": "Tenant Entitlement Type Schema",
+            "description": "A tenant entitlement type",
+            "type": "string",
+            "enum": [
+                "entitle",
+                "revoke"
+            ]
         },
         "startedAt": {
             "description": "A tenant entitlement flow start timestamp",
@@ -29,7 +49,123 @@
         "applicationFlows": {
             "type": "array",
             "items": {
-                "$ref": "applicationFlow.json"
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "id": "applicationEntitlement.json",
+                "title": "Application Entitlement Flow Schema",
+                "description": "An entitlement flow result for a single application",
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "An application entitlement flow identifier",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "applicationId": {
+                        "description": "An application descriptor identifier",
+                        "type": "string"
+                    },
+                    "tenantId": {
+                        "description": "A tenant identifier",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "flowId": {
+                        "description": "An entitlement flow identifier",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "type": {
+                        "$schema": "http://json-schema.org/draft-04/schema#",
+                        "id": "types/entitlementType.json",
+                        "title": "Tenant Entitlement Type Schema",
+                        "description": "A tenant entitlement type",
+                        "type": "string",
+                        "enum": [
+                            "entitle",
+                            "revoke"
+                        ]
+                    },
+                    "status": {
+                        "$schema": "http://json-schema.org/draft-04/schema#",
+                        "id": "types/entitlementFlowStatus.json",
+                        "title": "Application/Stage Execution Status Schema",
+                        "description": "An application/stage execution status",
+                        "type": "string",
+                        "enum": [
+                            "queued",
+                            "in_progress",
+                            "cancelled",
+                            "cancellation_failed",
+                            "failed",
+                            "finished"
+                        ]
+                    },
+                    "startedAt": {
+                        "description": "An application flow start timestamp",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "finishedAt": {
+                        "description": "An application flow end timestamp",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "stages": {
+                        "description": "List of stages per application flow",
+                        "type": "array",
+                        "items": {
+                            "schema": "http://json-schema.org/draft-04/schema#",
+                            "id": "entitlementStage.json",
+                            "title": "Tenant Entitlement Stage Schema",
+                            "description": "Tenant entitlement stage descriptor",
+                            "type": "object",
+                            "properties": {
+                                "applicationFlowId": {
+                                    "description": "A parent application flow identifier",
+                                    "type": "string",
+                                    "format": "uuid"
+                                },
+                                "name": {
+                                    "description": "A stage name",
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "$schema": "http://json-schema.org/draft-04/schema#",
+                                    "id": "types/entitlementFlowStatus.json",
+                                    "title": "Application/Stage Execution Status Schema",
+                                    "description": "An application/stage execution status",
+                                    "type": "string",
+                                    "enum": [
+                                        "queued",
+                                        "in_progress",
+                                        "cancelled",
+                                        "cancellation_failed",
+                                        "failed",
+                                        "finished"
+                                    ]
+                                },
+                                "errorType": {
+                                    "description": "A relevant error type caused stage failure or cancellation, nullable if stage is finished",
+                                    "type": "string"
+                                },
+                                "errorMessage": {
+                                    "description": "A relevant error message caused stage failure or cancellation, nullable if stage is finished",
+                                    "type": "string"
+                                },
+                                "startedAt": {
+                                    "description": "Stage execution start timestamp",
+                                    "type": "string",
+                                    "format": "date-time"
+                                },
+                                "finishedAt": {
+                                    "description": "Stage execution end timestamp",
+                                    "type": "string",
+                                    "format": "date-time"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }

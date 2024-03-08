@@ -5,7 +5,119 @@
             "description": "List of bulk operation rules",
             "type": "array",
             "items": {
-                "$ref": "bulk_operation_rule.json#/BulkOperationRule"
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "Bulk operation rule ID",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "bulkOperationId": {
+                        "description": "Bulk operation ID",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "rule_details": {
+                        "description": "Rule details",
+                        "type": "object",
+                        "properties": {
+                            "option": {
+                                "type": "string",
+                                "enum": [
+                                    "PATRON_GROUP",
+                                    "EXPIRATION_DATE",
+                                    "EMAIL_ADDRESS",
+                                    "PERMANENT_LOCATION",
+                                    "TEMPORARY_LOCATION",
+                                    "PERMANENT_LOAN_TYPE",
+                                    "TEMPORARY_LOAN_TYPE",
+                                    "STATUS",
+                                    "SUPPRESS_FROM_DISCOVERY",
+                                    "ITEM_NOTE",
+                                    "ADMINISTRATIVE_NOTE",
+                                    "CHECK_IN_NOTE",
+                                    "CHECK_OUT_NOTE",
+                                    "HOLDINGS_NOTE",
+                                    "ELECTRONIC_ACCESS_URL_RELATIONSHIP",
+                                    "ELECTRONIC_ACCESS_URI",
+                                    "ELECTRONIC_ACCESS_LINK_TEXT",
+                                    "ELECTRONIC_ACCESS_MATERIALS_SPECIFIED",
+                                    "ELECTRONIC_ACCESS_URL_PUBLIC_NOTE",
+                                    "STAFF_SUPPRESS"
+                                ]
+                            },
+                            "actions": {
+                                "type": "array",
+                                "items": {
+                                    "description": "Rule action",
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string",
+                                            "enum": [
+                                                "ADD_TO_EXISTING",
+                                                "CLEAR_FIELD",
+                                                "FIND",
+                                                "FIND_AND_REMOVE_THESE",
+                                                "REPLACE_WITH",
+                                                "FIND_AND_REPLACE",
+                                                "SET_TO_TRUE",
+                                                "SET_TO_FALSE",
+                                                "SET_TO_TRUE_INCLUDING_ITEMS",
+                                                "SET_TO_FALSE_INCLUDING_ITEMS",
+                                                "MARK_AS_STAFF_ONLY",
+                                                "REMOVE_MARK_AS_STAFF_ONLY",
+                                                "REMOVE_ALL",
+                                                "CHANGE_TYPE",
+                                                "DUPLICATE"
+                                            ]
+                                        },
+                                        "initial": {
+                                            "description": "Initial value",
+                                            "type": "string"
+                                        },
+                                        "updated": {
+                                            "description": "Updated value",
+                                            "type": "string"
+                                        },
+                                        "parameters": {
+                                            "type": "array",
+                                            "items": {
+                                                "description": "Parameter for action",
+                                                "type": "object",
+                                                "properties": {
+                                                    "key": {
+                                                        "description": "Key of parameter",
+                                                        "type": "string"
+                                                    },
+                                                    "value": {
+                                                        "description": "Value of parameter",
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "key",
+                                                    "value"
+                                                ],
+                                                "additionalProperties": false
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "type"
+                                    ],
+                                    "additionalProperties": false
+                                },
+                                "minItems": 1
+                            }
+                        }
+                    }
+                },
+                "required": [
+                    "bulkOperationId",
+                    "rule_details"
+                ],
+                "additionalProperties": false
             },
             "minItems": 1
         },

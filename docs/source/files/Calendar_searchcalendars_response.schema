@@ -6,7 +6,267 @@
             "type": "array",
             "description": "Each calendar returned in the response",
             "items": {
-                "$ref": "calendar.yaml"
+                "description": "A single calendar",
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "A unique UUID identifying this calendar",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "name": {
+                        "description": "A user-provided name used to label this calendar",
+                        "type": "string"
+                    },
+                    "startDate": {
+                        "type": "string",
+                        "format": "date",
+                        "description": "The first effective date (inclusive, YYYY-MM-DD) of this calendar"
+                    },
+                    "endDate": {
+                        "type": "string",
+                        "format": "date",
+                        "description": "The first effective date (inclusive, YYYY-MM-DD) of this calendar"
+                    },
+                    "assignments": {
+                        "description": "A list of all service points that this calendar is assigned to",
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "uuid",
+                            "description": "A UUID uniquely identifying a service point"
+                        }
+                    },
+                    "normalHours": {
+                        "description": "A list of objects describing when the calendar is normally open",
+                        "type": "array",
+                        "items": {
+                            "description": "A range of hours when a calendar is open",
+                            "type": "object",
+                            "properties": {
+                                "calendarId": {
+                                    "description": "The UUID of the calendar which these hours are for",
+                                    "type": "string",
+                                    "format": "uuid"
+                                },
+                                "startDay": {
+                                    "description": "A day of the week.  Either SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, or SATURDAY",
+                                    "type": "string",
+                                    "format": "Weekday"
+                                },
+                                "startTime": {
+                                    "description": "The time when this opening starts, inclusive",
+                                    "type": "string",
+                                    "format": "time"
+                                },
+                                "endDay": {
+                                    "description": "A day of the week.  Either SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, or SATURDAY",
+                                    "type": "string",
+                                    "format": "Weekday"
+                                },
+                                "endTime": {
+                                    "description": "The last minute of this opening, inclusive (11:59 if it should be open at 11:59 and closed at 12:00)",
+                                    "type": "string",
+                                    "format": "time"
+                                }
+                            },
+                            "additionalProperties": false,
+                            "required": [
+                                "startDay",
+                                "startTime",
+                                "endDay",
+                                "endTime"
+                            ],
+                            "example": {
+                                "startDay": "MONDAY",
+                                "startTime": "07:00:00",
+                                "endDay": "FRIDAY",
+                                "endTime": "22:00:00"
+                            }
+                        }
+                    },
+                    "exceptions": {
+                        "description": "A list of objects describing exceptions to the normal hours",
+                        "type": "array",
+                        "items": {
+                            "description": "An exception to a calendar, consisting of a set of openings (or none if a closure)",
+                            "type": "object",
+                            "properties": {
+                                "calendarId": {
+                                    "description": "The UUID of the calendar which this exception is for",
+                                    "type": "string",
+                                    "format": "uuid"
+                                },
+                                "name": {
+                                    "description": "A user-provided label for this exception",
+                                    "type": "string"
+                                },
+                                "startDate": {
+                                    "description": "The first effective date (inclusive, YYYY-MM-DD) of this exception range",
+                                    "type": "string",
+                                    "format": "date"
+                                },
+                                "endDate": {
+                                    "description": "The first effective date (inclusive, YYYY-MM-DD) of this exception range",
+                                    "type": "string",
+                                    "format": "date"
+                                },
+                                "openings": {
+                                    "description": "The openings during this exception",
+                                    "type": "array",
+                                    "items": {
+                                        "description": "An opening as part of an exception",
+                                        "type": "object",
+                                        "properties": {
+                                            "exceptionId": {
+                                                "description": "The UUID of the exception which this opening is for",
+                                                "type": "string",
+                                                "format": "uuid"
+                                            },
+                                            "startDate": {
+                                                "description": "The first effective date (inclusive, YYYY-MM-DD) of this opening",
+                                                "type": "string",
+                                                "format": "date"
+                                            },
+                                            "startTime": {
+                                                "description": "The first opening time (inclusive) of this opening",
+                                                "type": "string",
+                                                "format": "time"
+                                            },
+                                            "endDate": {
+                                                "description": "The first effective date (inclusive, YYYY-MM-DD) of this opening",
+                                                "type": "string",
+                                                "format": "date"
+                                            },
+                                            "endTime": {
+                                                "description": "The last open time (inclusive) of this opening",
+                                                "type": "string",
+                                                "format": "time"
+                                            }
+                                        },
+                                        "additionalProperties": false,
+                                        "required": [
+                                            "startDate",
+                                            "startTime",
+                                            "endDate",
+                                            "endTime"
+                                        ],
+                                        "example": {
+                                            "startDate": "2022-05-01",
+                                            "startTime": "07:00:00",
+                                            "endDate": "2022-05-01",
+                                            "endTime": "22:00:00"
+                                        }
+                                    }
+                                }
+                            },
+                            "additionalProperties": false,
+                            "required": [
+                                "name",
+                                "startDate",
+                                "endDate",
+                                "openings"
+                            ],
+                            "example": {
+                                "name": "Sample exception",
+                                "startDate": "2022-05-01",
+                                "endDate": "2022-05-03",
+                                "openings": [
+                                    {
+                                        "startDate": "2022-05-01",
+                                        "startTime": "07:00:00",
+                                        "endDate": "2022-05-02",
+                                        "endTime": "22:00:00"
+                                    },
+                                    {
+                                        "startDate": "2022-05-03",
+                                        "startTime": "09:00:00",
+                                        "endDate": "2022-05-03",
+                                        "endTime": "23:00:00"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "metadata": {
+                        "description": "Metadata associated with the calendar. This is provided by the server on a best-effort basis; no fields are guaranteed to be present. Metadata is provided from Okapi; any metadata sent directly from the client will be ignored.",
+                        "type": "object",
+                        "properties": {
+                            "createdDate": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "createdByUserId": {
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            "updatedDate": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "updatedByUserId": {
+                                "type": "string",
+                                "format": "uuid"
+                            }
+                        },
+                        "additionalProperties": false,
+                        "required": []
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "name",
+                    "startDate",
+                    "endDate",
+                    "assignments",
+                    "normalHours",
+                    "exceptions"
+                ],
+                "example": {
+                    "name": "Sample Spring Calendar",
+                    "startDate": "2022-01-08",
+                    "endDate": "2022-05-09",
+                    "assignments": [
+                        "44444444-4444-4444-4444-444444444444",
+                        "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
+                        "dddddddd-dddd-dddd-dddd-dddddddddddd"
+                    ],
+                    "normalHours": [
+                        {
+                            "startDay": "MONDAY",
+                            "startTime": "07:00:00",
+                            "endDay": "FRIDAY",
+                            "endTime": "22:00:00"
+                        },
+                        {
+                            "startDay": "SATURDAY",
+                            "startTime": "07:00:00",
+                            "endDay": "SATURDAY",
+                            "endTime": "22:00:00"
+                        }
+                    ],
+                    "exceptions": [
+                        {
+                            "name": "Spring break (closed)",
+                            "startDate": "2022-03-01",
+                            "endDate": "2022-03-05",
+                            "openings": []
+                        },
+                        {
+                            "name": "Early closure",
+                            "startDate": "2022-04-01",
+                            "endDate": "2022-04-01",
+                            "openings": [
+                                {
+                                    "startDate": "2022-04-01",
+                                    "startTime": "07:00:00",
+                                    "endDate": "2022-04-01",
+                                    "endTime": "12:00:00"
+                                }
+                            ]
+                        }
+                    ]
+                }
             }
         },
         "totalRecords": {

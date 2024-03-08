@@ -13,7 +13,51 @@
             "description": "List with found/created role-capability relations",
             "type": "array",
             "items": {
-                "$ref": "roleCapability.json"
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "title": "Role-Capability Relation Schema",
+                "description": "Role-Capability Relation Schema",
+                "type": "object",
+                "properties": {
+                    "roleId": {
+                        "description": "Role identifier as UUID",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "capabilityId": {
+                        "description": "Capability identifier as UUID",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "metadata": {
+                        "$schema": "http://json-schema.org/draft-04/schema#",
+                        "title": "Metadata Schema",
+                        "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+                        "type": "object",
+                        "properties": {
+                            "createdDate": {
+                                "description": "Date and time when the record was created",
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "createdBy": {
+                                "description": "ID of the user who created the record (when available)",
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            "modifiedDate": {
+                                "description": "Date and time when the record was last updated",
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "modifiedBy": {
+                                "description": "ID of the user who last updated the record (when available)",
+                                "type": "string",
+                                "format": "uuid"
+                            }
+                        },
+                        "additionalProperties": false
+                    }
+                }
             }
         }
     }

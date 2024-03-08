@@ -12,13 +12,33 @@
             "format": "uuid"
         },
         "entityType": {
-            "$ref": "#/components/schemas/EntityType"
+            "description": "Type of entity for migration",
+            "type": "string",
+            "enum": [
+                "authority",
+                "instance"
+            ]
         },
         "operationType": {
-            "$ref": "#/components/schemas/OperationType"
+            "description": "Type of migration",
+            "type": "string",
+            "enum": [
+                "remapping",
+                "import"
+            ]
         },
         "status": {
-            "$ref": "#/components/schemas/MigrationOperationStatus"
+            "description": "Migration status",
+            "type": "string",
+            "enum": [
+                "new",
+                "data_mapping",
+                "data_mapping_completed",
+                "data_mapping_failed",
+                "data_saving",
+                "data_saving_completed",
+                "data_saving_failed"
+            ]
         },
         "totalNumOfRecords": {
             "description": "Total number of records that will be migrated",

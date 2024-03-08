@@ -16,7 +16,40 @@
             "description": "Errors",
             "type": "array",
             "items": {
-                "$ref": "innReachError.json"
+                "description": "D2IR error",
+                "type": "object",
+                "properties": {
+                    "messages": {
+                        "type": "array",
+                        "description": "Error messages",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "central": {
+                        "type": "string",
+                        "description": "Central code"
+                    },
+                    "reason": {
+                        "type": "string",
+                        "description": "Reason"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Error type"
+                    },
+                    "rejectedValue": {
+                        "description": "Rejected value"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the rejected field"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "reason"
+                ]
             }
         }
     },

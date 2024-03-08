@@ -8,7 +8,9 @@
             "type": "array",
             "id": "applicationDescriptor",
             "items": {
-                "$ref": "applicationDescriptor.json"
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "description": "Application descriptor",
+                "type": "object"
             }
         },
         "totalRecords": {

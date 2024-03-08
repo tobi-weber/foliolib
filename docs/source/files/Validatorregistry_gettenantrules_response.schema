@@ -8,8 +8,121 @@
             "type": "array",
             "id": "ruleList",
             "items": {
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "description": "Rule Schema",
                 "type": "object",
-                "$ref": "validationRule.json"
+                "properties": {
+                    "id": {
+                        "description": "Rule id",
+                        "type": "string"
+                    },
+                    "ruleId": {
+                        "description": "Rule id",
+                        "type": "string"
+                    },
+                    "name": {
+                        "description": "Rule name",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "Rule type: RegExp or Programmatic or PwnedPassword",
+                        "type": "string",
+                        "enum": [
+                            "RegExp",
+                            "Programmatic",
+                            "PwnedPassword"
+                        ]
+                    },
+                    "validationType": {
+                        "description": "Validation type: Strong or Soft. In case of soft rule validation failure the password processing can be continued",
+                        "type": "string",
+                        "enum": [
+                            "Soft",
+                            "Strong"
+                        ]
+                    },
+                    "state": {
+                        "description": "Rule state: Enabled or Disabled",
+                        "type": "string",
+                        "enum": [
+                            "Enabled",
+                            "Disabled"
+                        ]
+                    },
+                    "moduleName": {
+                        "description": "Name of the module",
+                        "type": "string"
+                    },
+                    "implementationReference": {
+                        "description": "For Programmatic rules ImplementationReference reflects the approach to call particular validation implementation whether it REST endpoint or local service",
+                        "type": "string"
+                    },
+                    "expression": {
+                        "description": "For RegExp type contains the actual expression",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Validation rule description",
+                        "type": "string"
+                    },
+                    "orderNo": {
+                        "description": "Defines the order of rule processing",
+                        "type": "integer"
+                    },
+                    "errMessageId": {
+                        "description": "message identifier which should be returned to UI in case the rule validation fails",
+                        "type": "string"
+                    },
+                    "metadata": {
+                        "$schema": "http://json-schema.org/draft-04/schema#",
+                        "title": "Metadata Schema",
+                        "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+                        "type": "object",
+                        "properties": {
+                            "createdDate": {
+                                "description": "Date and time when the record was created",
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "createdByUserId": {
+                                "description": "ID of the user who created the record (when available)",
+                                "type": "string",
+                                "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+                            },
+                            "createdByUsername": {
+                                "description": "Username of the user who created the record (when available)",
+                                "type": "string"
+                            },
+                            "updatedDate": {
+                                "description": "Date and time when the record was last updated",
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "updatedByUserId": {
+                                "description": "ID of the user who last updated the record (when available)",
+                                "type": "string",
+                                "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+                            },
+                            "updatedByUsername": {
+                                "description": "Username of the user who last updated the record (when available)",
+                                "type": "string"
+                            }
+                        },
+                        "additionalProperties": false,
+                        "required": [
+                            "createdDate"
+                        ]
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "name",
+                    "type",
+                    "validationType",
+                    "state",
+                    "moduleName",
+                    "orderNo"
+                ]
             }
         },
         "totalRecords": {

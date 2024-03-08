@@ -10,7 +10,294 @@
             "description": "List of INN-Reach Transactions",
             "type": "array",
             "items": {
-                "$ref": "innReachTransactionDTO.json"
+                "description": "INN-Reach Transaction record",
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "Transaction id",
+                        "type": "string",
+                        "format": "UUID"
+                    },
+                    "trackingId": {
+                        "description": "ID for transaction tracking",
+                        "type": "string"
+                    },
+                    "centralServerCode": {
+                        "description": "Unique code that identifies the central server",
+                        "type": "string"
+                    },
+                    "state": {
+                        "$schema": "http://json-schema.org/draft-04/schema#",
+                        "title": "Transaction State enum",
+                        "description": "Transaction State enum",
+                        "type": "string",
+                        "additionalProperties": false,
+                        "enum": [
+                            "ITEM_HOLD",
+                            "PATRON_HOLD",
+                            "LOCAL_HOLD",
+                            "BORROWER_RENEW",
+                            "BORROWING_SITE_CANCEL",
+                            "ITEM_IN_TRANSIT",
+                            "RECEIVE_UNANNOUNCED",
+                            "RETURN_UNCIRCULATED",
+                            "CLAIMS_RETURNED",
+                            "ITEM_RECEIVED",
+                            "ITEM_SHIPPED",
+                            "LOCAL_CHECKOUT",
+                            "CANCEL_REQUEST",
+                            "FINAL_CHECKIN",
+                            "RECALL",
+                            "TRANSFER",
+                            "OWNER_RENEW"
+                        ]
+                    },
+                    "type": {
+                        "$schema": "http://json-schema.org/draft-04/schema#",
+                        "title": "Transaction Type enum",
+                        "description": "Transaction Type enum",
+                        "type": "string",
+                        "additionalProperties": false,
+                        "enum": [
+                            "ITEM",
+                            "PATRON",
+                            "LOCAL"
+                        ]
+                    },
+                    "hold": {
+                        "description": "INN-Reach Transaction hold record",
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "description": "Transaction Hold id",
+                                "type": "string",
+                                "format": "UUID"
+                            },
+                            "transactionTime": {
+                                "description": "Transaction time",
+                                "type": "integer"
+                            },
+                            "pickupLocation": {
+                                "description": "Pickup location",
+                                "type": "string"
+                            },
+                            "patronId": {
+                                "description": "Patron id",
+                                "type": "string",
+                                "pattern": "[a-z,0-9]{1,32}"
+                            },
+                            "patronAgencyCode": {
+                                "description": "Patron agency code",
+                                "type": "string",
+                                "minLength": 5,
+                                "maxLength": 5
+                            },
+                            "itemAgencyCode": {
+                                "description": "Item agency code",
+                                "type": "string",
+                                "minLength": 5,
+                                "maxLength": 5
+                            },
+                            "itemId": {
+                                "description": "Item id",
+                                "type": "string",
+                                "pattern": "[a-z,0-9]{1,32}"
+                            },
+                            "needBefore": {
+                                "description": "Need before time",
+                                "type": "integer"
+                            },
+                            "dueDateTime": {
+                                "description": "Due date time",
+                                "type": "integer"
+                            },
+                            "centralItemType": {
+                                "description": "Central item type",
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 255
+                            },
+                            "centralPatronType": {
+                                "description": "Central patron type",
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 255
+                            },
+                            "patronName": {
+                                "description": "Patron name",
+                                "type": "string"
+                            },
+                            "patronHomeLibrary": {
+                                "description": "Patron home library",
+                                "type": "string"
+                            },
+                            "patronPhone": {
+                                "description": "Patron phone",
+                                "type": "string"
+                            },
+                            "title": {
+                                "description": "Patron hold title",
+                                "type": "string"
+                            },
+                            "author": {
+                                "description": "Patron hold author",
+                                "type": "string"
+                            },
+                            "callNumber": {
+                                "description": "Patron hold call number",
+                                "type": "string"
+                            },
+                            "shippedItemBarcode": {
+                                "description": "Shipped item barcode",
+                                "type": "string"
+                            },
+                            "folioInstanceId": {
+                                "description": "Folio instance id",
+                                "type": "string",
+                                "format": "UUID",
+                                "readOnly": true
+                            },
+                            "folioHoldingId": {
+                                "description": "Folio holding id",
+                                "type": "string",
+                                "format": "UUID",
+                                "readOnly": true
+                            },
+                            "folioPatronId": {
+                                "description": "Folio patron id",
+                                "type": "string",
+                                "format": "UUID",
+                                "readOnly": true
+                            },
+                            "folioItemId": {
+                                "description": "Folio item id",
+                                "type": "string",
+                                "format": "UUID",
+                                "readOnly": true
+                            },
+                            "folioRequestId": {
+                                "description": "Folio request id",
+                                "type": "string",
+                                "format": "UUID",
+                                "readOnly": true
+                            },
+                            "folioLoanId": {
+                                "description": "Folio loan id",
+                                "type": "string",
+                                "format": "UUID",
+                                "readOnly": true
+                            },
+                            "folioPatronBarcode": {
+                                "description": "Folio patron barcode",
+                                "type": "string",
+                                "readOnly": true
+                            },
+                            "folioItemBarcode": {
+                                "description": "Folio item barcode",
+                                "type": "string",
+                                "readOnly": true
+                            },
+                            "metadata": {
+                                "title": "Metadata Schema",
+                                "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+                                "type": "object",
+                                "properties": {
+                                    "createdDate": {
+                                        "description": "Date and time when the record was created",
+                                        "type": "string",
+                                        "format": "date-time"
+                                    },
+                                    "createdByUserId": {
+                                        "description": "ID of the user who created the record (when available)",
+                                        "type": "string",
+                                        "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+                                    },
+                                    "createdByUsername": {
+                                        "description": "Username of the user who created the record (when available)",
+                                        "type": "string"
+                                    },
+                                    "updatedDate": {
+                                        "description": "Date and time when the record was last updated",
+                                        "type": "string",
+                                        "format": "date-time"
+                                    },
+                                    "updatedByUserId": {
+                                        "description": "ID of the user who last updated the record (when available)",
+                                        "type": "string",
+                                        "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+                                    },
+                                    "updatedByUsername": {
+                                        "description": "Username of the user who last updated the record (when available)",
+                                        "type": "string"
+                                    }
+                                },
+                                "additionalProperties": false,
+                                "required": [
+                                    "createdDate"
+                                ]
+                            }
+                        },
+                        "additionalProperties": false,
+                        "required": [
+                            "transactionTime",
+                            "pickupLocation",
+                            "patronId",
+                            "patronAgencyCode",
+                            "itemAgencyCode",
+                            "itemId"
+                        ]
+                    },
+                    "metadata": {
+                        "title": "Metadata Schema",
+                        "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+                        "type": "object",
+                        "properties": {
+                            "createdDate": {
+                                "description": "Date and time when the record was created",
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "createdByUserId": {
+                                "description": "ID of the user who created the record (when available)",
+                                "type": "string",
+                                "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+                            },
+                            "createdByUsername": {
+                                "description": "Username of the user who created the record (when available)",
+                                "type": "string"
+                            },
+                            "updatedDate": {
+                                "description": "Date and time when the record was last updated",
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "updatedByUserId": {
+                                "description": "ID of the user who last updated the record (when available)",
+                                "type": "string",
+                                "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+                            },
+                            "updatedByUsername": {
+                                "description": "Username of the user who last updated the record (when available)",
+                                "type": "string"
+                            }
+                        },
+                        "additionalProperties": false,
+                        "required": [
+                            "createdDate"
+                        ]
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "transactionTime",
+                    "pickupLocation",
+                    "patronId",
+                    "patronAgencyCode",
+                    "itemAgencyCode",
+                    "itemId",
+                    "centralPatronType",
+                    "patronName"
+                ]
             }
         }
     },

@@ -75,8 +75,64 @@
             "description": "List of items, with access data per item",
             "type": "array",
             "items": {
+                "description": "Single row of usage report data",
                 "type": "object",
-                "$ref": "reportRow.json"
+                "properties": {
+                    "kbId": {
+                        "type": "string",
+                        "description": "KB identifier"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Title of the item"
+                    },
+                    "printISSN": {
+                        "type": "string",
+                        "description": "ISSN for print instance"
+                    },
+                    "onlineISSN": {
+                        "type": "string",
+                        "description": "ISSN for online instance"
+                    },
+                    "ISBN": {
+                        "type": "string",
+                        "description": "ISBN for instance"
+                    },
+                    "publicationYear": {
+                        "type": "string",
+                        "description": "Publication year .. or range (eg 2000 for 1Y, or 2000-2001 for 2Y)"
+                    },
+                    "periodOfUse": {
+                        "type": "string",
+                        "description": "The usage period of this publication year report row, either one month like 2018-03 or one year like 2018 or a month range like 2018-03 - 2018-05 or a year range like 2018-2019"
+                    },
+                    "accessType": {
+                        "type": "string",
+                        "description": "Counter report access type like controlled or OA_Gold"
+                    },
+                    "metricType": {
+                        "type": "string",
+                        "enum": [
+                            "Total_Item_Requests",
+                            "Unique_Item_Requests"
+                        ],
+                        "description": "Handling of multiple requests of the same client"
+                    },
+                    "accessCountTotal": {
+                        "type": "integer",
+                        "nullable": true,
+                        "description": "Sum of all access counts"
+                    },
+                    "accessCountsByPeriod": {
+                        "type": "array",
+                        "description": "Access count per reporting period",
+                        "items": {
+                            "type": "integer",
+                            "nullable": true
+                        }
+                    }
+                },
+                "additionalProperties": false
             }
         },
         "execution": {

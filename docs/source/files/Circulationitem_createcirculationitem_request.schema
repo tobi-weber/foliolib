@@ -11,7 +11,41 @@
             "format": "uuid"
         },
         "status": {
-            "$ref": "itemStatus.yaml#/ItemStatus"
+            "type": "object",
+            "description": "status of the Item",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "enum": [
+                        "Aged to lost",
+                        "Available",
+                        "Awaiting delivery",
+                        "Awaiting pickup",
+                        "Checked out",
+                        "Claimed returned",
+                        "Declared lost",
+                        "Lost and paid",
+                        "Long missing",
+                        "Missing",
+                        "In process",
+                        "In process (non-requestable)",
+                        "In transit",
+                        "Intellectual item",
+                        "On order",
+                        "Order closed",
+                        "Paged",
+                        "Restricted",
+                        "Unavailable",
+                        "Unknown",
+                        "Withdrawn"
+                    ]
+                },
+                "date": {
+                    "description": "Date of the current item state. E.g. date set when item state was changed by the Check out app",
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
         },
         "dcbItem": {
             "type": "boolean"

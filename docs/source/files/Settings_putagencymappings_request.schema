@@ -22,13 +22,188 @@
             "description": "Local server mappings",
             "type": "array",
             "items": {
-                "$ref": "agencyLocationLscMappingDTO.json"
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "description": "INN-Reach Agency to FOLIO location mapping",
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "Mapping id",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "localCode": {
+                        "description": "Local server code",
+                        "type": "string",
+                        "maxLength": 5
+                    },
+                    "locationId": {
+                        "description": "Location id",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "libraryId": {
+                        "description": "Location id",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "agencyCodeMappings": {
+                        "description": "Agency code mappings",
+                        "type": "array",
+                        "items": {
+                            "$schema": "http://json-schema.org/draft-04/schema#",
+                            "description": "INN-Reach Agency to FOLIO location mapping",
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "description": "Mapping id",
+                                    "type": "string",
+                                    "format": "uuid"
+                                },
+                                "agencyCode": {
+                                    "description": "Agency code",
+                                    "type": "string",
+                                    "maxLength": 5
+                                },
+                                "locationId": {
+                                    "description": "Location id",
+                                    "type": "string",
+                                    "format": "uuid"
+                                },
+                                "libraryId": {
+                                    "description": "Library id",
+                                    "type": "string",
+                                    "format": "uuid"
+                                },
+                                "metadata": {
+                                    "title": "Metadata Schema",
+                                    "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+                                    "type": "object",
+                                    "properties": {
+                                        "createdDate": {
+                                            "description": "Date and time when the record was created",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "createdByUserId": {
+                                            "description": "ID of the user who created the record (when available)",
+                                            "type": "string",
+                                            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+                                        },
+                                        "createdByUsername": {
+                                            "description": "Username of the user who created the record (when available)",
+                                            "type": "string"
+                                        },
+                                        "updatedDate": {
+                                            "description": "Date and time when the record was last updated",
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "updatedByUserId": {
+                                            "description": "ID of the user who last updated the record (when available)",
+                                            "type": "string",
+                                            "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+                                        },
+                                        "updatedByUsername": {
+                                            "description": "Username of the user who last updated the record (when available)",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false,
+                                    "required": [
+                                        "createdDate"
+                                    ]
+                                }
+                            },
+                            "additionalProperties": false,
+                            "required": [
+                                "agencyCode"
+                            ]
+                        }
+                    },
+                    "metadata": {
+                        "title": "Metadata Schema",
+                        "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+                        "type": "object",
+                        "properties": {
+                            "createdDate": {
+                                "description": "Date and time when the record was created",
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "createdByUserId": {
+                                "description": "ID of the user who created the record (when available)",
+                                "type": "string",
+                                "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+                            },
+                            "createdByUsername": {
+                                "description": "Username of the user who created the record (when available)",
+                                "type": "string"
+                            },
+                            "updatedDate": {
+                                "description": "Date and time when the record was last updated",
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "updatedByUserId": {
+                                "description": "ID of the user who last updated the record (when available)",
+                                "type": "string",
+                                "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+                            },
+                            "updatedByUsername": {
+                                "description": "Username of the user who last updated the record (when available)",
+                                "type": "string"
+                            }
+                        },
+                        "additionalProperties": false,
+                        "required": [
+                            "createdDate"
+                        ]
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "localCode"
+                ]
             }
         },
         "metadata": {
-            "description": "Entity metadata",
+            "title": "Metadata Schema",
+            "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
             "type": "object",
-            "$ref": "metadata.json"
+            "properties": {
+                "createdDate": {
+                    "description": "Date and time when the record was created",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "createdByUserId": {
+                    "description": "ID of the user who created the record (when available)",
+                    "type": "string",
+                    "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+                },
+                "createdByUsername": {
+                    "description": "Username of the user who created the record (when available)",
+                    "type": "string"
+                },
+                "updatedDate": {
+                    "description": "Date and time when the record was last updated",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "updatedByUserId": {
+                    "description": "ID of the user who last updated the record (when available)",
+                    "type": "string",
+                    "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+                },
+                "updatedByUsername": {
+                    "description": "Username of the user who last updated the record (when available)",
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "createdDate"
+            ]
         }
     },
     "additionalProperties": false,

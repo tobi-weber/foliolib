@@ -5,7 +5,37 @@
             "description": "List of item content updates",
             "type": "array",
             "items": {
-                "$ref": "itemContentUpdate.json#/ItemContentUpdate"
+                "type": "object",
+                "properties": {
+                    "option": {
+                        "description": "Option to change",
+                        "type": "string",
+                        "enum": [
+                            "PERMANENT_LOCATION",
+                            "TEMPORARY_LOCATION",
+                            "PERMANENT_LOAN_TYPE",
+                            "TEMPORARY_LOAN_TYPE",
+                            "STATUS"
+                        ]
+                    },
+                    "action": {
+                        "description": "Changing action",
+                        "type": "string",
+                        "enum": [
+                            "CLEAR_FIELD",
+                            "REPLACE_WITH"
+                        ]
+                    },
+                    "value": {
+                        "description": "Update value",
+                        "type": "object"
+                    }
+                },
+                "required": [
+                    "option",
+                    "action"
+                ],
+                "additionalProperties": false
             },
             "minItems": 1
         },

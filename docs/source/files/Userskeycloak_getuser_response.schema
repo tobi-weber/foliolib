@@ -55,8 +55,107 @@
             }
         },
         "personal": {
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "title": "Personal Schema",
             "description": "Personal information about the user",
-            "$ref": "personal.json"
+            "type": "object",
+            "properties": {
+                "lastName": {
+                    "description": "The user's surname",
+                    "type": "string"
+                },
+                "firstName": {
+                    "description": "The user's given name",
+                    "type": "string"
+                },
+                "middleName": {
+                    "description": "The user's middle name (if any)",
+                    "type": "string"
+                },
+                "preferredFirstName": {
+                    "description": "The user's preferred name",
+                    "type": "string"
+                },
+                "email": {
+                    "description": "The user's email address",
+                    "type": "string"
+                },
+                "phone": {
+                    "description": "The user's primary phone number",
+                    "type": "string"
+                },
+                "mobilePhone": {
+                    "description": "The user's mobile phone number",
+                    "type": "string"
+                },
+                "dateOfBirth": {
+                    "type": "string",
+                    "description": "The user's birth date",
+                    "format": "date-time"
+                },
+                "addresses": {
+                    "description": "Physical addresses associated with the user",
+                    "type": "array",
+                    "minItems": 0,
+                    "items": {
+                        "$schema": "http://json-schema.org/draft-04/schema#",
+                        "title": "Address Schema",
+                        "description": "Address information",
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "description": "A unique id for this address",
+                                "type": "string"
+                            },
+                            "countryId": {
+                                "description": "The country code for this address",
+                                "type": "string"
+                            },
+                            "addressLine1": {
+                                "description": "Address, Line 1",
+                                "type": "string"
+                            },
+                            "addressLine2": {
+                                "description": "Address, Line 2",
+                                "type": "string"
+                            },
+                            "city": {
+                                "description": "City name",
+                                "type": "string"
+                            },
+                            "region": {
+                                "description": "Region",
+                                "type": "string"
+                            },
+                            "postalCode": {
+                                "description": "Postal Code",
+                                "type": "string"
+                            },
+                            "addressTypeId": {
+                                "description": "A UUID that corresponds with an address type object",
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            "primaryAddress": {
+                                "description": "Is this the user's primary address?",
+                                "type": "boolean"
+                            }
+                        },
+                        "required": [
+                            "addressTypeId"
+                        ],
+                        "additionalProperties": false
+                    }
+                },
+                "preferredContactTypeId": {
+                    "description": "Id of user's preferred contact type like Email, Mail or Text Message, see /addresstypes API",
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "lastName"
+            ]
         },
         "enrollmentDate": {
             "description": "The date in which the user joined the organization",
@@ -79,10 +178,60 @@
             "format": "date-time"
         },
         "metadata": {
-            "$ref": "common/metadata.json"
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "title": "Metadata Schema",
+            "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+            "type": "object",
+            "properties": {
+                "createdDate": {
+                    "description": "Date and time when the record was created",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "createdByUserId": {
+                    "description": "ID of the user who created the record (when available)",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "createdByUsername": {
+                    "description": "Username of the user who created the record (when available)",
+                    "type": "string"
+                },
+                "updatedDate": {
+                    "description": "Date and time when the record was last updated",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "updatedByUserId": {
+                    "description": "ID of the user who last updated the record (when available)",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "updatedByUsername": {
+                    "description": "Username of the user who last updated the record (when available)",
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "createdDate"
+            ]
         },
         "tags": {
-            "$ref": "common/tags.json"
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "title": "tags",
+            "description": "List of simple tags that can be added to an object",
+            "type": "object",
+            "properties": {
+                "tagList": {
+                    "description": "List of tags",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "additionalProperties": false
         },
         "customFields": {
             "description": "Object that contains custom field",

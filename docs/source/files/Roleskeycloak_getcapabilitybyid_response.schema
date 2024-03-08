@@ -24,7 +24,17 @@
             "pattern": "^[A-Za-z\\s]+$"
         },
         "action": {
-            "$ref": "capabilityAction.json"
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "description": "The action this capability is associated with, e.g. create",
+            "type": "string",
+            "enum": [
+                "view",
+                "create",
+                "edit",
+                "delete",
+                "manage",
+                "execute"
+            ]
         },
         "applicationId": {
             "description": "The id of the application which defines the capability",
@@ -38,15 +48,71 @@
             "type": "array",
             "description": "List of assigned endpoints",
             "items": {
-                "$ref": "endpoint.json"
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "type": "object",
+                "id": "endpoint.json",
+                "description": "Object containing the details of the http-endpoint.",
+                "properties": {
+                    "path": {
+                        "type": "string",
+                        "description": "Endpoint's static path / expression"
+                    },
+                    "method": {
+                        "$schema": "http://json-schema.org/draft-04/schema#",
+                        "description": "Http Method",
+                        "type": "string",
+                        "enum": [
+                            "GET",
+                            "HEAD",
+                            "POST",
+                            "PUT",
+                            "PATCH",
+                            "DELETE",
+                            "OPTIONS",
+                            "TRACE"
+                        ]
+                    }
+                }
             }
         },
         "type": {
-            "$ref": "capabilityType.json"
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "description": "The type of capability",
+            "type": "string",
+            "enum": [
+                "settings",
+                "data",
+                "procedural"
+            ]
         },
         "metadata": {
-            "$ref": "../common/metadata.json",
-            "readOnly": true
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "title": "Metadata Schema",
+            "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+            "type": "object",
+            "properties": {
+                "createdDate": {
+                    "description": "Date and time when the record was created",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "createdBy": {
+                    "description": "ID of the user who created the record (when available)",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "modifiedDate": {
+                    "description": "Date and time when the record was last updated",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "modifiedBy": {
+                    "description": "ID of the user who last updated the record (when available)",
+                    "type": "string",
+                    "format": "uuid"
+                }
+            },
+            "additionalProperties": false
         }
     },
     "required": [

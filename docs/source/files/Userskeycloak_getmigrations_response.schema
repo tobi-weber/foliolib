@@ -10,7 +10,43 @@
             "type": "array",
             "id": "migrations",
             "items": {
-                "$ref": "userMigrationJob.json"
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "id": "userMigrationJob.json",
+                "title": "User Migration Job Schema",
+                "description": "A user migration job entity for tracking migration's progress",
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "An migration job identifier",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "status": {
+                        "$schema": "http://json-schema.org/draft-04/schema#",
+                        "id": "types/userMigrationJobStatus.json",
+                        "title": "User Migration Job Status Schema",
+                        "description": "An user migration job status",
+                        "type": "string",
+                        "enum": [
+                            "in_progress",
+                            "failed",
+                            "finished"
+                        ]
+                    },
+                    "totalRecords": {
+                        "type": "integer"
+                    },
+                    "startedAt": {
+                        "description": "A user migration job start timestamp",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "finishedAt": {
+                        "description": "A user migration job end timestamp",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
             }
         },
         "totalRecords": {

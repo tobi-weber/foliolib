@@ -5,7 +5,25 @@
         "notes": {
             "type": "array",
             "items": {
-                "$ref": "#/noteLinkUpdate"
+                "type": "object",
+                "description": "A note link",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "ASSIGNED",
+                            "UNASSIGNED"
+                        ]
+                    }
+                },
+                "required": [
+                    "id",
+                    "status"
+                ]
             }
         }
     },

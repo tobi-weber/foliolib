@@ -9,7 +9,53 @@
             "description": "List of agencies per central server",
             "type": "array",
             "items": {
-                "$ref": "schemas/agenciesPerCentralServerDTO.json"
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "description": "Central server agencies",
+                "type": "object",
+                "properties": {
+                    "centralServerId": {
+                        "description": "Central server id",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "centralServerCode": {
+                        "description": "Central server code",
+                        "type": "string",
+                        "maxLength": 5
+                    },
+                    "agencies": {
+                        "description": "List of agencies for this central server",
+                        "type": "array",
+                        "items": {
+                            "$schema": "http://json-schema.org/draft-04/schema#",
+                            "description": "Agency details",
+                            "type": "object",
+                            "properties": {
+                                "agencyCode": {
+                                    "description": "Agency code",
+                                    "type": "string",
+                                    "maxLength": 5
+                                },
+                                "description": {
+                                    "description": "Agency description",
+                                    "type": "string",
+                                    "maxLength": 128
+                                }
+                            },
+                            "additionalProperties": false,
+                            "required": [
+                                "agencyCode",
+                                "description"
+                            ]
+                        }
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "centralServerId",
+                    "centralServerCode",
+                    "agencies"
+                ]
             }
         }
     },

@@ -6,7 +6,8 @@
         "ids": {
             "type": "array",
             "items": {
-                "$ref": "#/components/schemas/uuid"
+                "type": "string",
+                "format": "uuid"
             }
         }
     },

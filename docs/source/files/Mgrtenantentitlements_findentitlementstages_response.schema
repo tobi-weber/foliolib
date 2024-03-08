@@ -12,7 +12,55 @@
         "entitlementStages": {
             "type": "array",
             "items": {
-                "$ref": "entitlementStage.json"
+                "schema": "http://json-schema.org/draft-04/schema#",
+                "id": "entitlementStage.json",
+                "title": "Tenant Entitlement Stage Schema",
+                "description": "Tenant entitlement stage descriptor",
+                "type": "object",
+                "properties": {
+                    "applicationFlowId": {
+                        "description": "A parent application flow identifier",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "name": {
+                        "description": "A stage name",
+                        "type": "string"
+                    },
+                    "status": {
+                        "$schema": "http://json-schema.org/draft-04/schema#",
+                        "id": "types/entitlementFlowStatus.json",
+                        "title": "Application/Stage Execution Status Schema",
+                        "description": "An application/stage execution status",
+                        "type": "string",
+                        "enum": [
+                            "queued",
+                            "in_progress",
+                            "cancelled",
+                            "cancellation_failed",
+                            "failed",
+                            "finished"
+                        ]
+                    },
+                    "errorType": {
+                        "description": "A relevant error type caused stage failure or cancellation, nullable if stage is finished",
+                        "type": "string"
+                    },
+                    "errorMessage": {
+                        "description": "A relevant error message caused stage failure or cancellation, nullable if stage is finished",
+                        "type": "string"
+                    },
+                    "startedAt": {
+                        "description": "Stage execution start timestamp",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "finishedAt": {
+                        "description": "Stage execution end timestamp",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
             }
         }
     }

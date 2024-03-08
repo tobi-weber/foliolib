@@ -2,13 +2,70 @@
     "type": "object",
     "properties": {
         "item": {
-            "$ref": "dcbItem.yaml#/DcbItem"
+            "description": "Item metadata required for the transaction",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "$schema": "http://json-schema.org/draft-04/schema#",
+                    "description": "A universally unique identifier (UUID), this is a 128-bit number used to identify a record and is shown in hex with dashes, for example 6312d172-f0cf-40f6-b27d-9fa8feaf332f; the UUID version must be from 1-5; see https://dev.folio.org/guides/uuids/",
+                    "type": "string",
+                    "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[1-5][a-fA-F0-9]{3}-[89abAB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}$"
+                },
+                "title": {
+                    "description": "The title of the item that has been requested",
+                    "type": "string"
+                },
+                "barcode": {
+                    "description": "The barcode of the item as specified in the lending library",
+                    "type": "string"
+                },
+                "materialType": {
+                    "description": "The \u201chub-normalized\u201d form of the item item type, used in the circulation rules for determining the correct loan policy.",
+                    "type": "string"
+                },
+                "lendingLibraryCode": {
+                    "description": "The code which identifies the lending library",
+                    "type": "string"
+                }
+            }
         },
         "patron": {
-            "$ref": "dcbPatron.yaml#/DcbPatron"
+            "description": "Patron metadata required for the transaction",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "$schema": "http://json-schema.org/draft-04/schema#",
+                    "description": "A universally unique identifier (UUID), this is a 128-bit number used to identify a record and is shown in hex with dashes, for example 6312d172-f0cf-40f6-b27d-9fa8feaf332f; the UUID version must be from 1-5; see https://dev.folio.org/guides/uuids/",
+                    "type": "string",
+                    "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[1-5][a-fA-F0-9]{3}-[89abAB][a-fA-F0-9]{3}-[a-fA-F0-9]{12}$"
+                },
+                "group": {
+                    "description": "The patron group associated with the requesting patron",
+                    "type": "string"
+                },
+                "barcode": {
+                    "description": "The barcode of the patron",
+                    "type": "string"
+                }
+            }
         },
         "pickup": {
-            "$ref": "dcbPickup.yaml#/DcbPickup"
+            "description": "Pickup Location metadata required for the pickup service point",
+            "type": "object",
+            "properties": {
+                "libraryCode": {
+                    "description": "The code which identifies the pickup library",
+                    "type": "string"
+                },
+                "servicePointId": {
+                    "description": "UUID of the pickup service point",
+                    "type": "string"
+                },
+                "servicePointName": {
+                    "description": "The name of the pickup service point",
+                    "type": "string"
+                }
+            }
         },
         "role": {
             "type": "string",

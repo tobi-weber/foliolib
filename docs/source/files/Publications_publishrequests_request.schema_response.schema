@@ -3,12 +3,16 @@
     "title": "Publication response",
     "properties": {
         "id": {
-            "description": "id of publication record",
-            "$ref": "common.yaml#/uuid"
+            "type": "string",
+            "format": "uuid"
         },
         "status": {
-            "type": "string",
-            "$ref": "publication_schema.yaml#/PublicationStatus"
+            "description": "publication status",
+            "enum": [
+                "IN_PROGRESS",
+                "ERROR",
+                "COMPLETE"
+            ]
         }
     },
     "additionalProperties": false

@@ -2,12 +2,20 @@
     "type": "object",
     "properties": {
         "id": {
-            "description": "Option ID",
-            "$ref": "#/components/schemas/browseOptionType"
+            "type": "string",
+            "enum": [
+                "all",
+                "lc",
+                "dewey"
+            ]
         },
         "shelvingAlgorithm": {
-            "description": "Defines shelving order algorithm",
-            "$ref": "#/components/schemas/shelvingOrderAlgorithmType"
+            "type": "string",
+            "enum": [
+                "lc",
+                "dewey",
+                "default"
+            ]
         },
         "typeIds": {
             "description": "Type IDs that should be used by the option",

@@ -6,14 +6,141 @@
             "description": "List of data entries",
             "type": "array",
             "items": {
+                "description": "report data entry (agreement line information)",
                 "type": "object",
-                "$ref": "reportDataEntry.json"
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "report data identifier",
+                        "format": "uuid"
+                    },
+                    "kbTitleId": {
+                        "type": "string",
+                        "description": "kb title identifier (if the agreement line is a title)",
+                        "format": "uuid"
+                    },
+                    "kbPackageId": {
+                        "type": "string",
+                        "description": "kb package identifier (if the agreement line is a package)",
+                        "format": "uuid"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "one of journal, package, ebook"
+                    },
+                    "agreementId": {
+                        "type": "string",
+                        "description": "agreement identifier",
+                        "format": "uuid"
+                    },
+                    "agreementLineId": {
+                        "type": "string",
+                        "description": "agreement line identifier",
+                        "format": "uuid"
+                    },
+                    "poLineId": {
+                        "type": "string",
+                        "description": "po line identifier (UUID)",
+                        "format": "uuid"
+                    },
+                    "encumberedCost": {
+                        "type": "number",
+                        "description": "cost from the PO line"
+                    },
+                    "invoicedCost": {
+                        "type": "number",
+                        "description": "Total access count"
+                    },
+                    "fiscalYearRange": {
+                        "type": "string",
+                        "description": "kept on the fiscal year record, there should be a link from the invoice to that record"
+                    },
+                    "subscriptionDateRange": {
+                        "type": "string",
+                        "description": "subscription period - retrieved from the invoice"
+                    },
+                    "coverageDateRanges": {
+                        "type": "string",
+                        "description": "coverage dates as retrieved from the agreement"
+                    },
+                    "orderType": {
+                        "type": "string",
+                        "description": "purchase order type",
+                        "enum": [
+                            "One-Time",
+                            "Ongoing"
+                        ]
+                    },
+                    "invoiceNumber": {
+                        "type": "string",
+                        "description": "invoice line number"
+                    },
+                    "poLineNumber": {
+                        "type": "string",
+                        "description": "human readable PO line number"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "id",
+                    "agreementLineId"
+                ]
             }
         },
         "resultInfo": {
-            "description": "Common result set information",
+            "description": "Common result set information for streaming response",
             "type": "object",
-            "$ref": "resultInfo.json"
+            "properties": {
+                "totalRecords": {
+                    "description": "Total number of entries in response",
+                    "type": "integer"
+                },
+                "diagnostics": {
+                    "description": "Diagnostics for response",
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "message": {
+                                "description": "single diagnostic message",
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "facets": {
+                    "type": "array",
+                    "description": "Array of facets",
+                    "items": {
+                        "type": "object",
+                        "description": "A facet",
+                        "properties": {
+                            "facetValues": {
+                                "type": "array",
+                                "description": "Array of facet values",
+                                "items": {
+                                    "type": "object",
+                                    "description": "A facet value",
+                                    "properties": {
+                                        "count": {
+                                            "type": "integer",
+                                            "description": "Count of facet values"
+                                        },
+                                        "value": {
+                                            "description": "Value Object"
+                                        }
+                                    }
+                                }
+                            },
+                            "type": {
+                                "type": "string",
+                                "description": "Type of facet"
+                            }
+                        }
+                    }
+                }
+            },
+            "additionalProperties": false
         }
     },
     "additionalProperties": false,

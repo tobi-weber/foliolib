@@ -6,14 +6,95 @@
             "description": "List of code modules",
             "type": "array",
             "items": {
+                "description": "Reservoir code module (extensibility)",
                 "type": "object",
-                "$ref": "codeModule.json"
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "local identifier of the module, name"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "type of the module'",
+                        "enum": [
+                            "jsonpath",
+                            "javascript"
+                        ]
+                    },
+                    "url": {
+                        "type": "string",
+                        "description": "HTTP URL of the module e.g GitHub url, required if no 'script' specified"
+                    },
+                    "function": {
+                        "type": "string",
+                        "description": "DEPRECATED: do not use, specify function during invocation",
+                        "deprecated": true
+                    },
+                    "script": {
+                        "type": "string",
+                        "description": "inline contents of the code module"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "id"
+                ]
             }
         },
         "resultInfo": {
-            "description": "Common result set information",
+            "description": "Common result set information for streaming response",
             "type": "object",
-            "$ref": "resultInfo.json"
+            "properties": {
+                "totalRecords": {
+                    "description": "Total number of entries in response",
+                    "type": "integer"
+                },
+                "diagnostics": {
+                    "description": "Diagnostics for response",
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "message": {
+                                "description": "single diagnostic message",
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "facets": {
+                    "type": "array",
+                    "description": "Array of facets",
+                    "items": {
+                        "type": "object",
+                        "description": "A facet",
+                        "properties": {
+                            "facetValues": {
+                                "type": "array",
+                                "description": "Array of facet values",
+                                "items": {
+                                    "type": "object",
+                                    "description": "A facet value",
+                                    "properties": {
+                                        "count": {
+                                            "type": "integer",
+                                            "description": "Count of facet values"
+                                        },
+                                        "value": {
+                                            "description": "Value Object"
+                                        }
+                                    }
+                                }
+                            },
+                            "type": {
+                                "type": "string",
+                                "description": "Type of facet"
+                            }
+                        }
+                    }
+                }
+            },
+            "additionalProperties": false
         }
     },
     "additionalProperties": false,

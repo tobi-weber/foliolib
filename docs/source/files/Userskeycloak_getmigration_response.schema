@@ -11,8 +11,16 @@
             "format": "uuid"
         },
         "status": {
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "id": "types/userMigrationJobStatus.json",
+            "title": "User Migration Job Status Schema",
             "description": "An user migration job status",
-            "$ref": "types/userMigrationJobStatus.json"
+            "type": "string",
+            "enum": [
+                "in_progress",
+                "failed",
+                "finished"
+            ]
         },
         "totalRecords": {
             "type": "integer"

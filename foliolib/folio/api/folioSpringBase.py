@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2024-03-01
+# Generated at 2024-03-23
 
 import logging
 
@@ -39,8 +39,15 @@ class Tenant(FolioApi):
 
         ``GET /_/tenant/{operationId}``
 
+        Returns:
+            dict: See Schema below.
+
         Raises:
             OkapiRequestFatalError: Internal server error
+
+        Schema:
+
+            .. literalinclude:: ../files/Tenant_gettenant_response.schema
         """
         return self.call("GET", f"/_/tenant/{operationId}")
 

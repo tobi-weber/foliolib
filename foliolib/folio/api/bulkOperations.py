@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2024-03-01
+# Generated at 2024-03-23
 
 import logging
 
@@ -38,7 +38,8 @@ class Bulkoperations(FolioApi):
 
         Schema:
 
-            .. literalinclude:: ../files/Bulkoperations_uploadcsvfile_response.schema
+            .. literalinclude:: ../files/Bulkoperations_uploadcsvfile_request.schema
+            .. literalinclude:: ../files/Bulkoperations_uploadcsvfile_request.schema_response.schema
         """
         import os
         headers = {}
@@ -205,10 +206,17 @@ class Bulkoperations(FolioApi):
         Keyword Args:
             fileContentType (str): The file content type
 
+        Returns:
+            dict: See Schema below.
+
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not found
             OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
+
+        Schema:
+
+            .. literalinclude:: ../files/Bulkoperations_downloadfilebyoperationid_response.schema
         """
         return self.call("GET", f"/bulk-operations/{operationId}/download", query=kwargs)
 

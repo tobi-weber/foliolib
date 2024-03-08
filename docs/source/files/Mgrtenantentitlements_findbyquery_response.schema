@@ -12,7 +12,35 @@
         "entitlements": {
             "type": "array",
             "items": {
-                "$ref": "entitlement.json"
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "id": "installation.json",
+                "title": "Tenant Entitlement Schema",
+                "description": "Tenant entitlement descriptor",
+                "type": "object",
+                "properties": {
+                    "applicationId": {
+                        "description": "A Name-Version id of application",
+                        "type": "string"
+                    },
+                    "tenantId": {
+                        "description": "A tenant identifier",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "modules": {
+                        "description": "A list of module identifiers",
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "description": "A module identifier"
+                        }
+                    }
+                },
+                "required": [
+                    "applicationId",
+                    "tenantId",
+                    "complete"
+                ]
             }
         }
     }

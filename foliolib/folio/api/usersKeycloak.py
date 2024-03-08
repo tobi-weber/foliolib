@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2024-03-01
+# Generated at 2024-03-23
 
 import logging
 
@@ -73,9 +73,16 @@ class Userskeycloak(FolioApi):
         Keyword Args:
             query (str): A CQL query string with search conditions.
 
+        Returns:
+            dict: See Schema below.
+
         Raises:
             OkapiRequestError: Bad request, e.g. malformed request body or query parameter
             OkapiRequestFatalError: Error response for unhandled or critical server exceptions, e.g. NullPointerException.
+
+        Schema:
+
+            .. literalinclude:: ../files/Userskeycloak_deleteusers_response.schema
         """
         return self.call("DELETE", "/users-keycloak/users", query=kwargs)
 
@@ -87,6 +94,9 @@ class Userskeycloak(FolioApi):
         Args:
             user (dict): See Schema below.
 
+        Returns:
+            dict: See Schema below.
+
         Raises:
             OkapiRequestError: Bad request, e.g. malformed request body or query parameter
             OkapiRequestNotFound: Error response if entity is not found by id (in json format)
@@ -95,6 +105,7 @@ class Userskeycloak(FolioApi):
         Schema:
 
             .. literalinclude:: ../files/Userskeycloak_updateuser_request.schema
+            .. literalinclude:: ../files/Userskeycloak_updateuser_request.schema_response.schema
         """
         return self.call("PUT", f"/users-keycloak/users/{id_}", user)
 
@@ -123,10 +134,17 @@ class Userskeycloak(FolioApi):
 
         ``DELETE /users-keycloak/users/{id}``
 
+        Returns:
+            dict: See Schema below.
+
         Raises:
             OkapiRequestError: Bad request, e.g. malformed request body or query parameter
             OkapiRequestNotFound: Error response if entity is not found by id (in json format)
             OkapiRequestFatalError: Error response for unhandled or critical server exceptions, e.g. NullPointerException.
+
+        Schema:
+
+            .. literalinclude:: ../files/Userskeycloak_deleteuser_response.schema
         """
         return self.call("DELETE", f"/users-keycloak/users/{id_}")
 
@@ -220,6 +238,13 @@ class Userskeycloak(FolioApi):
         """Delete a user migration
 
         ``DELETE /users-keycloak/migrations/{id}``
+
+        Returns:
+            dict: See Schema below.
+
+        Schema:
+
+            .. literalinclude:: ../files/Userskeycloak_deletemigration_response.schema
         """
         return self.call("DELETE", f"/users-keycloak/migrations/{id_}")
 
@@ -231,6 +256,9 @@ class Userskeycloak(FolioApi):
         Args:
             identifier (dict): See Schema below.
 
+        Returns:
+            dict: See Schema below.
+
         Raises:
             OkapiRequestError: Bad request, e.g. malformed request body or query parameter
             OkapiRequestUnprocessableEntity: Validation errors
@@ -239,6 +267,7 @@ class Userskeycloak(FolioApi):
         Schema:
 
             .. literalinclude:: ../files/Userskeycloak_resetforgottenpassword_request.schema
+            .. literalinclude:: ../files/Userskeycloak_resetforgottenpassword_request.schema_response.schema
         """
         return self.call("POST", f"/users-keycloak/forgotten/password", identifier)
 
@@ -250,6 +279,9 @@ class Userskeycloak(FolioApi):
         Args:
             identifier (dict): See Schema below.
 
+        Returns:
+            dict: See Schema below.
+
         Raises:
             OkapiRequestError: Bad request, e.g. malformed request body or query parameter
             OkapiRequestUnprocessableEntity: Validation errors
@@ -258,6 +290,7 @@ class Userskeycloak(FolioApi):
         Schema:
 
             .. literalinclude:: ../files/Userskeycloak_recoverforgottenusername_request.schema
+            .. literalinclude:: ../files/Userskeycloak_recoverforgottenusername_request.schema_response.schema
         """
         return self.call("POST", f"/users-keycloak/forgotten/username", identifier)
 
@@ -269,6 +302,9 @@ class Userskeycloak(FolioApi):
         Args:
             passwordReset (dict): See Schema below.
 
+        Returns:
+            dict: See Schema below.
+
         Raises:
             OkapiRequestError: Bad request, e.g. malformed request body or query parameter
             OkapiRequestUnprocessableEntity: Validation errors
@@ -277,6 +313,7 @@ class Userskeycloak(FolioApi):
         Schema:
 
             .. literalinclude:: ../files/Userskeycloak_passwordreset_request.schema
+            .. literalinclude:: ../files/Userskeycloak_passwordreset_request.schema_response.schema
         """
         return self.call("POST", f"/users-keycloak/password-reset/reset", passwordReset)
 
@@ -303,8 +340,15 @@ class Userskeycloak(FolioApi):
 
         ``POST /users-keycloak/password-reset/validate``
 
+        Returns:
+            dict: See Schema below.
+
         Raises:
             OkapiRequestUnprocessableEntity: Validation errors
             OkapiRequestFatalError: Error response for unhandled or critical server exceptions, e.g. NullPointerException.
+
+        Schema:
+
+            .. literalinclude:: ../files/Userskeycloak_validatepasswordresetlink_response.schema
         """
         return self.call("POST", "/users-keycloak/password-reset/validate")

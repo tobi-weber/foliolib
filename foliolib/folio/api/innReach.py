@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2024-03-01
+# Generated at 2024-03-23
 
 import logging
 
@@ -514,9 +514,16 @@ class Settings(FolioApi):
         Args:
             centralServerId (str):  (format: uuid)
 
+        Returns:
+            dict: See Schema below.
+
         Raises:
             OkapiRequestError: Bad request, e.g. malformed query parameter.
             OkapiRequestFatalError: Internal server error
+
+        Schema:
+
+            .. literalinclude:: ../files/Settings_getlocationmappingsforalllibrariesbyserverid_response.schema
         """
         return self.call("GET", f"/inn-reach/central-servers/{centralServerId}/libraries/locations/location-mappings")
 

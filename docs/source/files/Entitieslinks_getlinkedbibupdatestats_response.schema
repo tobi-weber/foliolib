@@ -6,7 +6,37 @@
             "description": "Changes statistic",
             "type": "array",
             "items": {
-                "$ref": "schemas/authority/control/bibStatsDto.json"
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "description": "Linked bib statistics",
+                "type": "object",
+                "properties": {
+                    "instanceId": {
+                        "description": "Linked instance id, UUID",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "instanceTitle": {
+                        "description": "Instance title",
+                        "type": "string"
+                    },
+                    "bibRecordTag": {
+                        "description": "Bib record tag",
+                        "type": "string"
+                    },
+                    "authorityNaturalId": {
+                        "description": "Linked authority natural id",
+                        "type": "string"
+                    },
+                    "updatedAt": {
+                        "description": "Link last updated at",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "errorCause": {
+                        "description": "Cause of error for updating linked bib",
+                        "type": "string"
+                    }
+                }
             }
         },
         "next": {

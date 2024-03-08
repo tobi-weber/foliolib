@@ -2,20 +2,46 @@
     "type": "object",
     "properties": {
         "step": {
-            "description": "Bulk operation step",
-            "$ref": "bulk_operation_step.json#/BulkOperationStep"
+            "type": "string",
+            "enum": [
+                "UPLOAD",
+                "EDIT",
+                "COMMIT"
+            ]
         },
         "approach": {
-            "description": "Bulk Operation approach type",
-            "$ref": "approach_type.json#/ApproachType"
+            "type": "string",
+            "enum": [
+                "MANUAL",
+                "IN_APP",
+                "QUERY"
+            ]
         },
         "entityType": {
-            "description": "Entity type",
-            "$ref": "entity_type.json#/EntityType"
+            "type": "string",
+            "enum": [
+                "USER",
+                "ITEM",
+                "HOLDINGS_RECORD",
+                "INSTANCE"
+            ]
         },
         "entityCustomIdentifierType": {
-            "description": "Entity custom identifier type",
-            "$ref": "identifier_type.json#/IdentifierType"
+            "type": "string",
+            "enum": [
+                "ID",
+                "BARCODE",
+                "HRID",
+                "FORMER_IDS",
+                "ACCESSION_NUMBER",
+                "HOLDINGS_RECORD_ID",
+                "USER_NAME",
+                "EXTERNAL_SYSTEM_ID",
+                "INSTANCE_HRID",
+                "ITEM_BARCODE",
+                "ISBN",
+                "ISSN"
+            ]
         },
         "query": {
             "description": "CQL query for",

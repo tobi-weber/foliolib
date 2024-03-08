@@ -6,7 +6,227 @@
             "description": "A list of policies.",
             "type": "array",
             "items": {
-                "$ref": "policy.json"
+                "type": "object",
+                "description": "Object containing the details of the policy.",
+                "properties": {
+                    "id": {
+                        "description": "A unique identifier for this policy. System-generated if not provided.",
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "name": {
+                        "description": "A human-readable name/label for this policy. Required.",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Free form description of the policy. Optional.",
+                        "type": "string"
+                    },
+                    "type": {
+                        "$schema": "http://json-schema.org/draft-04/schema#",
+                        "description": "The type of policy. Required.",
+                        "type": "string",
+                        "enum": [
+                            "USER",
+                            "TIME",
+                            "ROLE"
+                        ]
+                    },
+                    "userPolicy": {
+                        "type": "object",
+                        "description": "Object containing the details of the user-based policy",
+                        "properties": {
+                            "users": {
+                                "description": "Collection of user IDs. Required.",
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            },
+                            "logic": {
+                                "description": "The logic to apply for this policy.",
+                                "type": "string",
+                                "enum": [
+                                    "positive",
+                                    "negative"
+                                ],
+                                "default": "positive",
+                                "examples": [
+                                    "positive",
+                                    "negative"
+                                ]
+                            }
+                        },
+                        "required": [
+                            "users"
+                        ],
+                        "example": {
+                            "id": "3f3f3f3f-3f3f-3333-3f3f-3f3f3f3f3f3f",
+                            "name": "user_based_policy",
+                            "description": "This policy is meant to be an example",
+                            "users": [
+                                "f7f7f7f7-7777-f7f7-f7f7-f7f7f7f7f7f7",
+                                "7f7f7f7f-7f7f-7777-7f7f-7f7f7f7f7f7f"
+                            ],
+                            "logic": "positive"
+                        }
+                    },
+                    "timePolicy": {
+                        "type": "object",
+                        "description": "Object containing the details of the time-based policy.",
+                        "required": [],
+                        "properties": {
+                            "repeat": {
+                                "description": "Whether or not to repeat the policy.",
+                                "type": "boolean",
+                                "default": false
+                            },
+                            "start": {
+                                "description": "Defines the time before which access must not be granted. Permission is granted only if the current date/time is later than or equal to this value. Ignored if repeat is true.",
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "expires": {
+                                "description": "Defines the time after which access must not be granted. Permission is granted only if the current date/time is earlier than or equal to this value. Must be greater than the start time. Ignored if repeat is true.",
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "dayOfMonthStart": {
+                                "description": "Defines the day of the month that access must be granted. You can also specify a range of dates. In this case, permission is granted only if the current day of the month is between or equal to the two values specified. Ignored if repeat is false.",
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 31
+                            },
+                            "dayOfMonthEnd": {
+                                "description": "Defines the end of the day of the month range. Must be greater than dayOfMonthStart. Ignored if repeat is false.",
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 31
+                            },
+                            "monthStart": {
+                                "description": "Defines the month that access must be granted. You can also specify a range of months. In this case, permission is granted only if the current month is between or equal to the two values specified. Ignored if repeat is false.",
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 12
+                            },
+                            "monthEnd": {
+                                "description": "Defines the end of the month range. Must be greater than monthStart. Ignored if repeat is false.",
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 12
+                            },
+                            "hourStart": {
+                                "description": "Defines the hour that access must be granted. You can also specify a range of hours. In this case, permission is granted only if the current hour is between or equal to the two values specified. Ignored if repeat is false.",
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 23
+                            },
+                            "hourEnd": {
+                                "description": "Defines the end of the hour range. Must be greater than hourStart. Ignored if repeat is false.",
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 23
+                            },
+                            "minuteStart": {
+                                "description": "Defines the minute that access must be granted. You can also specify a range of minutes. In this case, permission is granted only if the current minute is between or equal to the two values specified. Ignored if repeat is false.",
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 59
+                            },
+                            "minuteEnd": {
+                                "description": "Defines the end of the minutes range. Must be greater than minuteStart. Ignored if repeat is false.",
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 59,
+                                "min": "${minuteStart}"
+                            },
+                            "logic": {
+                                "description": "Policies can be configured with positive or negative logic. Briefly, you can use this option to define whether the policy result should be kept as it is or be negated.",
+                                "type": "string",
+                                "enum": [
+                                    "positive",
+                                    "negative"
+                                ],
+                                "default": "positive"
+                            }
+                        }
+                    },
+                    "rolePolicy": {
+                        "type": "object",
+                        "description": "Object containing the details of the aggregated policy.",
+                        "properties": {
+                            "roles": {
+                                "description": "Specifies which roles are permitted by this policy. Required",
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "description": "Object containing the details of the aggregated policy.",
+                                    "required": [
+                                        "id"
+                                    ],
+                                    "properties": {
+                                        "id": {
+                                            "description": "Specifies a role permitted by this policy. Required.",
+                                            "type": "string",
+                                            "format": "uuid"
+                                        },
+                                        "required": {
+                                            "description": "When creating a role-based policy, you can specify a specific role as Required. When you do that, the policy will grant access only if the user requesting access has been granted all the required roles.",
+                                            "type": "boolean",
+                                            "default": false
+                                        }
+                                    }
+                                }
+                            },
+                            "logic": {
+                                "description": "The logic to apply for this policy.",
+                                "type": "string",
+                                "enum": [
+                                    "positive",
+                                    "negative"
+                                ],
+                                "default": "positive"
+                            }
+                        },
+                        "required": [
+                            "roles"
+                        ]
+                    },
+                    "metadata": {
+                        "$schema": "http://json-schema.org/draft-04/schema#",
+                        "title": "Metadata Schema",
+                        "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+                        "type": "object",
+                        "properties": {
+                            "createdDate": {
+                                "description": "Date and time when the record was created",
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "createdBy": {
+                                "description": "ID of the user who created the record (when available)",
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            "modifiedDate": {
+                                "description": "Date and time when the record was last updated",
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "modifiedBy": {
+                                "description": "ID of the user who last updated the record (when available)",
+                                "type": "string",
+                                "format": "uuid"
+                            }
+                        },
+                        "additionalProperties": false
+                    }
+                },
+                "required": [
+                    "name",
+                    "type"
+                ]
             }
         },
         "totalRecords": {

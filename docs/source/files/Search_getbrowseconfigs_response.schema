@@ -4,7 +4,38 @@
         "configs": {
             "type": "array",
             "items": {
-                "$ref": "#/components/schemas/browseConfig"
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "enum": [
+                            "all",
+                            "lc",
+                            "dewey"
+                        ]
+                    },
+                    "shelvingAlgorithm": {
+                        "type": "string",
+                        "enum": [
+                            "lc",
+                            "dewey",
+                            "default"
+                        ]
+                    },
+                    "typeIds": {
+                        "description": "Type IDs that should be used by the option",
+                        "type": "array",
+                        "items": {
+                            "description": "Type ID",
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                },
+                "required": [
+                    "id",
+                    "shelvingAlgorithm"
+                ]
             }
         },
         "totalRecords": {

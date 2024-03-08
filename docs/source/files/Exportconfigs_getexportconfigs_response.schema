@@ -5,7 +5,691 @@
             "description": "List of configs",
             "type": "array",
             "items": {
-                "$ref": "exportConfig.json#/ExportConfig"
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "CIRCULATION_LOG",
+                            "BURSAR_FEES_FINES",
+                            "BATCH_VOUCHER_EXPORT",
+                            "EDIFACT_ORDERS_EXPORT",
+                            "ORDERS_EXPORT",
+                            "INVOICE_EXPORT",
+                            "BULK_EDIT_IDENTIFIERS",
+                            "BULK_EDIT_QUERY",
+                            "BULK_EDIT_UPDATE",
+                            "E_HOLDINGS",
+                            "AUTH_HEADINGS_UPDATES",
+                            "FAILED_LINKED_BIB_UPDATES"
+                        ],
+                        "default": "BURSAR_FEES_FINES"
+                    },
+                    "tenant": {
+                        "description": "Tenant id",
+                        "type": "string"
+                    },
+                    "exportTypeSpecificParameters": {
+                        "type": "object",
+                        "properties": {
+                            "bursarFeeFines": {
+                                "description": "Bursar export job schema",
+                                "type": "object",
+                                "properties": {
+                                    "filter": {
+                                        "description": "Filter for bursar export job",
+                                        "oneOf": [
+                                            {
+                                                "$ref": "bursarExportFilterAge.json"
+                                            },
+                                            {
+                                                "$ref": "bursarExportFilterAmount.json"
+                                            },
+                                            {
+                                                "$ref": "bursarExportFilterFeeType.json"
+                                            },
+                                            {
+                                                "$ref": "bursarExportFilterLocation.json"
+                                            },
+                                            {
+                                                "$ref": "bursarExportFilterPatronGroup.json"
+                                            },
+                                            {
+                                                "$ref": "bursarExportFilterServicePoint.json"
+                                            },
+                                            {
+                                                "$ref": "bursarExportFilterCondition.json"
+                                            },
+                                            {
+                                                "$ref": "bursarExportFilterNegation.json"
+                                            },
+                                            {
+                                                "$ref": "bursarExportFilterPass.json"
+                                            },
+                                            {
+                                                "$ref": "bursarExportFilterFeeFineOwner.json"
+                                            }
+                                        ],
+                                        "discriminator": {
+                                            "propertyName": "type",
+                                            "mapping": {
+                                                "Age": "bursarExportFilterAge.json",
+                                                "Amount": "bursarExportFilterAmount.json",
+                                                "FeeType": "bursarExportFilterFeeType.json",
+                                                "FeeFineOwner": "bursarExportFilterFeeFineOwner.json",
+                                                "Location": "bursarExportFilterLocation.json",
+                                                "PatronGroup": "bursarExportFilterPatronGroup.json",
+                                                "ServicePoint": "bursarExportFilterServicePoint.json",
+                                                "Condition": "bursarExportFilterCondition.json",
+                                                "Negation": "bursarExportFilterNegation.json",
+                                                "Pass": "bursarExportFilterPass.json"
+                                            }
+                                        }
+                                    },
+                                    "groupByPatron": {
+                                        "description": "Choose whether to group fee/fines by patron",
+                                        "type": "boolean"
+                                    },
+                                    "groupByPatronFilter": {
+                                        "description": "Filter by aggregate data",
+                                        "type": "object",
+                                        "properties": {
+                                            "type": {
+                                                "description": "Type of filter",
+                                                "type": "string",
+                                                "default": "Aggregate"
+                                            },
+                                            "property": {
+                                                "description": "Property to filter on",
+                                                "type": "string",
+                                                "enum": [
+                                                    "NUM_ROWS",
+                                                    "TOTAL_AMOUNT"
+                                                ]
+                                            },
+                                            "amount": {
+                                                "description": "Amount to filter on",
+                                                "type": "integer"
+                                            },
+                                            "condition": {
+                                                "description": "Condition to filter on",
+                                                "type": "string",
+                                                "enum": [
+                                                    "LESS_THAN_EQUAL",
+                                                    "LESS_THAN",
+                                                    "GREATER_THAN",
+                                                    "GREATER_THAN_EQUAL"
+                                                ]
+                                            }
+                                        },
+                                        "additionalProperties": false,
+                                        "required": [
+                                            "type",
+                                            "property",
+                                            "amount",
+                                            "condition"
+                                        ]
+                                    },
+                                    "header": {
+                                        "description": "Header format for the export file",
+                                        "type": "array",
+                                        "items": {
+                                            "description": "Token permitted in header/footer",
+                                            "oneOf": [
+                                                {
+                                                    "$ref": "bursarExportTokenAggregate.json"
+                                                },
+                                                {
+                                                    "$ref": "bursarExportTokenConstant.json"
+                                                },
+                                                {
+                                                    "$ref": "bursarExportTokenCurrentDate.json"
+                                                }
+                                            ],
+                                            "discriminator": {
+                                                "propertyName": "type",
+                                                "mapping": {
+                                                    "Aggregate": "bursarExportTokenAggregate.json",
+                                                    "Constant": "bursarExportTokenConstant.json",
+                                                    "CurrentDate": "bursarExportTokenCurrentDate.json"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "data": {
+                                        "description": "Data format for the export file",
+                                        "type": "array",
+                                        "items": {
+                                            "description": "Usable token for bursar export",
+                                            "oneOf": [
+                                                {
+                                                    "$ref": "bursarExportTokenAggregate.json"
+                                                },
+                                                {
+                                                    "$ref": "bursarExportTokenConstant.json"
+                                                },
+                                                {
+                                                    "$ref": "bursarExportTokenCurrentDate.json"
+                                                },
+                                                {
+                                                    "$ref": "bursarExportTokenFeeDate.json"
+                                                },
+                                                {
+                                                    "$ref": "bursarExportTokenFeeAmount.json"
+                                                },
+                                                {
+                                                    "$ref": "bursarExportTokenFeeMetadata.json"
+                                                },
+                                                {
+                                                    "$ref": "bursarExportTokenItemData.json"
+                                                },
+                                                {
+                                                    "$ref": "bursarExportTokenUserData.json"
+                                                },
+                                                {
+                                                    "$ref": "bursarExportTokenUserDataOptional.json"
+                                                },
+                                                {
+                                                    "$ref": "bursarExportTokenConditional.json"
+                                                }
+                                            ],
+                                            "discriminator": {
+                                                "propertyName": "type",
+                                                "mapping": {
+                                                    "Aggregate": "bursarExportTokenAggregate.json",
+                                                    "Constant": "bursarExportTokenConstant.json",
+                                                    "CurrentDate": "bursarExportTokenCurrentDate.json",
+                                                    "FeeDate": "bursarExportTokenFeeDate.json",
+                                                    "FeeAmount": "bursarExportTokenFeeAmount.json",
+                                                    "FeeMetadata": "bursarExportTokenFeeMetadata.json",
+                                                    "ItemData": "bursarExportTokenItemData.json",
+                                                    "UserData": "bursarExportTokenUserData.json",
+                                                    "UserDataOptional": "bursarExportTokenUserDataOptional.json",
+                                                    "Conditional": "bursarExportTokenConditional.json"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "footer": {
+                                        "description": "Footer format for the export file",
+                                        "type": "array",
+                                        "items": {
+                                            "description": "Token permitted in header/footer",
+                                            "oneOf": [
+                                                {
+                                                    "$ref": "bursarExportTokenAggregate.json"
+                                                },
+                                                {
+                                                    "$ref": "bursarExportTokenConstant.json"
+                                                },
+                                                {
+                                                    "$ref": "bursarExportTokenCurrentDate.json"
+                                                }
+                                            ],
+                                            "discriminator": {
+                                                "propertyName": "type",
+                                                "mapping": {
+                                                    "Aggregate": "bursarExportTokenAggregate.json",
+                                                    "Constant": "bursarExportTokenConstant.json",
+                                                    "CurrentDate": "bursarExportTokenCurrentDate.json"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "transferInfo": {
+                                        "description": "Transfer criteria",
+                                        "type": "object",
+                                        "properties": {
+                                            "conditions": {
+                                                "description": "Conditions to apply to the transfer of fees/fines",
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "condition": {
+                                                            "description": "Filter for bursar export job",
+                                                            "oneOf": [
+                                                                {
+                                                                    "$ref": "bursarExportFilterAge.json"
+                                                                },
+                                                                {
+                                                                    "$ref": "bursarExportFilterAmount.json"
+                                                                },
+                                                                {
+                                                                    "$ref": "bursarExportFilterFeeType.json"
+                                                                },
+                                                                {
+                                                                    "$ref": "bursarExportFilterLocation.json"
+                                                                },
+                                                                {
+                                                                    "$ref": "bursarExportFilterPatronGroup.json"
+                                                                },
+                                                                {
+                                                                    "$ref": "bursarExportFilterServicePoint.json"
+                                                                },
+                                                                {
+                                                                    "$ref": "bursarExportFilterCondition.json"
+                                                                },
+                                                                {
+                                                                    "$ref": "bursarExportFilterNegation.json"
+                                                                },
+                                                                {
+                                                                    "$ref": "bursarExportFilterPass.json"
+                                                                },
+                                                                {
+                                                                    "$ref": "bursarExportFilterFeeFineOwner.json"
+                                                                }
+                                                            ],
+                                                            "discriminator": {
+                                                                "propertyName": "type",
+                                                                "mapping": {
+                                                                    "Age": "bursarExportFilterAge.json",
+                                                                    "Amount": "bursarExportFilterAmount.json",
+                                                                    "FeeType": "bursarExportFilterFeeType.json",
+                                                                    "FeeFineOwner": "bursarExportFilterFeeFineOwner.json",
+                                                                    "Location": "bursarExportFilterLocation.json",
+                                                                    "PatronGroup": "bursarExportFilterPatronGroup.json",
+                                                                    "ServicePoint": "bursarExportFilterServicePoint.json",
+                                                                    "Condition": "bursarExportFilterCondition.json",
+                                                                    "Negation": "bursarExportFilterNegation.json",
+                                                                    "Pass": "bursarExportFilterPass.json"
+                                                                }
+                                                            }
+                                                        },
+                                                        "account": {
+                                                            "description": "Account to transfer fees/fines that meet this condition to",
+                                                            "type": "string",
+                                                            "format": "uuid"
+                                                        }
+                                                    },
+                                                    "additionalProperties": false,
+                                                    "required": [
+                                                        "condition",
+                                                        "account"
+                                                    ]
+                                                }
+                                            },
+                                            "else": {
+                                                "type": "object",
+                                                "description": "If none of the specified conditions is met",
+                                                "properties": {
+                                                    "account": {
+                                                        "description": "Account to transfer fees/fines that do not meet any specified conditions to",
+                                                        "type": "string",
+                                                        "format": "uuid"
+                                                    }
+                                                },
+                                                "additionalProperties": false,
+                                                "required": [
+                                                    "account"
+                                                ]
+                                            }
+                                        },
+                                        "additionalProperties": false,
+                                        "required": [
+                                            "conditions",
+                                            "else"
+                                        ]
+                                    }
+                                },
+                                "additionalProperties": false,
+                                "required": [
+                                    "filter",
+                                    "groupByPatron",
+                                    "header",
+                                    "data",
+                                    "footer",
+                                    "transferInfo"
+                                ]
+                            },
+                            "vendorEdiOrdersExportConfig": {
+                                "type": "object",
+                                "properties": {
+                                    "exportConfigId": {
+                                        "description": "UUID of the export configuration. Needed to find Jobs by export config UUID",
+                                        "type": "string",
+                                        "format": "uuid"
+                                    },
+                                    "vendorId": {
+                                        "description": "UUID of the acquisition method",
+                                        "type": "string",
+                                        "format": "uuid"
+                                    },
+                                    "configName": {
+                                        "description": "Configuration name",
+                                        "type": "string"
+                                    },
+                                    "configDescription": {
+                                        "description": "Configuration description",
+                                        "type": "string"
+                                    },
+                                    "ediConfig": {
+                                        "type": "object",
+                                        "properties": {
+                                            "accountNoList": {
+                                                "description": "The list of account numbers of the vendor",
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "defaultAcquisitionMethods": {
+                                                "description": "Default acquisition methods for the accounts",
+                                                "type": "array",
+                                                "items": {
+                                                    "description": "UUID of the acquisition method",
+                                                    "type": "string",
+                                                    "format": "uuid"
+                                                }
+                                            },
+                                            "ediNamingConvention": {
+                                                "description": "The naming convention for this EDI",
+                                                "type": "string"
+                                            },
+                                            "libEdiCode": {
+                                                "description": "The library code for this EDI",
+                                                "type": "string"
+                                            },
+                                            "libEdiType": {
+                                                "description": "The library type for this EDI",
+                                                "type": "string",
+                                                "enum": [
+                                                    "014/EAN",
+                                                    "31B/US-SAN",
+                                                    "091/Vendor-assigned",
+                                                    "092/Customer-assigned"
+                                                ]
+                                            },
+                                            "vendorEdiCode": {
+                                                "description": "The library code for this EDI",
+                                                "type": "string"
+                                            },
+                                            "vendorEdiType": {
+                                                "description": "The library type for this EDI",
+                                                "type": "string",
+                                                "enum": [
+                                                    "014/EAN",
+                                                    "31B/US-SAN",
+                                                    "091/Vendor-assigned",
+                                                    "092/Customer-assigned"
+                                                ]
+                                            },
+                                            "notes": {
+                                                "description": "The notes for this EDI",
+                                                "type": "string"
+                                            },
+                                            "sendAccountNumber": {
+                                                "description": "If true then send account number",
+                                                "type": "boolean",
+                                                "default": false
+                                            },
+                                            "supportOrder": {
+                                                "description": "If true then order support",
+                                                "type": "boolean",
+                                                "default": false
+                                            },
+                                            "supportInvoice": {
+                                                "description": "If true then invoice support",
+                                                "type": "boolean",
+                                                "default": false
+                                            }
+                                        }
+                                    },
+                                    "ediFtp": {
+                                        "type": "object",
+                                        "properties": {
+                                            "ftpConnMode": {
+                                                "description": "The FTP connection mode for this EDI",
+                                                "type": "string",
+                                                "enum": [
+                                                    "Active",
+                                                    "Passive"
+                                                ]
+                                            },
+                                            "ftpFormat": {
+                                                "description": "The FTP format for this EDI",
+                                                "type": "string",
+                                                "enum": [
+                                                    "SFTP",
+                                                    "FTP"
+                                                ]
+                                            },
+                                            "ftpMode": {
+                                                "description": "The FTP mode for this EDI",
+                                                "type": "string",
+                                                "enum": [
+                                                    "ASCII",
+                                                    "Binary"
+                                                ]
+                                            },
+                                            "ftpPort": {
+                                                "description": "The port for this EDI",
+                                                "type": "integer"
+                                            },
+                                            "invoiceDirectory": {
+                                                "description": "The invoice directory for this EDI",
+                                                "type": "string"
+                                            },
+                                            "isPrimaryTransmissionMethod": {
+                                                "description": "Primary transmission method",
+                                                "type": "boolean"
+                                            },
+                                            "notes": {
+                                                "description": "The notes for this EDI",
+                                                "type": "string"
+                                            },
+                                            "orderDirectory": {
+                                                "description": "The order directory for this EDI",
+                                                "type": "string"
+                                            },
+                                            "password": {
+                                                "description": "The login password for this EDI",
+                                                "type": "string"
+                                            },
+                                            "serverAddress": {
+                                                "description": "The server address for this EDI",
+                                                "type": "string"
+                                            },
+                                            "username": {
+                                                "description": "The login username for this EDI",
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "ediSchedule": {
+                                        "type": "object",
+                                        "properties": {
+                                            "enableScheduledExport": {
+                                                "description": "Whether or not to enable scheduled for exports",
+                                                "type": "boolean",
+                                                "default": false
+                                            },
+                                            "scheduleParameters": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "Schedule unique identifier",
+                                                        "type": "string",
+                                                        "format": "uuid"
+                                                    },
+                                                    "scheduleFrequency": {
+                                                        "type": "integer",
+                                                        "description": "Number of time periods"
+                                                    },
+                                                    "schedulePeriod": {
+                                                        "type": "string",
+                                                        "description": "Time period for repeating job",
+                                                        "enum": [
+                                                            "MONTH",
+                                                            "WEEK",
+                                                            "DAY",
+                                                            "HOUR",
+                                                            "EXACT_DATE",
+                                                            "NONE"
+                                                        ]
+                                                    },
+                                                    "schedulingDate": {
+                                                        "description": "The date (MM/DD/YYYY) for this job to start running",
+                                                        "format": "date-time",
+                                                        "type": "string"
+                                                    },
+                                                    "scheduleTime": {
+                                                        "type": "string",
+                                                        "description": "Time to run the job"
+                                                    },
+                                                    "scheduleDay": {
+                                                        "type": "integer",
+                                                        "description": "Day of month to run the job (One-based)"
+                                                    },
+                                                    "weekDays": {
+                                                        "type": "array",
+                                                        "description": "Day of week to run the job",
+                                                        "items": {
+                                                            "type": "string",
+                                                            "description": "Day of week",
+                                                            "enum": [
+                                                                "MONDAY",
+                                                                "TUESDAY",
+                                                                "WEDNESDAY",
+                                                                "THURSDAY",
+                                                                "FRIDAY",
+                                                                "SATURDAY",
+                                                                "SUNDAY"
+                                                            ]
+                                                        }
+                                                    },
+                                                    "timeZone": {
+                                                        "type": "string",
+                                                        "description": "Schedule time zone",
+                                                        "default": "UTC"
+                                                    }
+                                                }
+                                            },
+                                            "schedulingNotes": {
+                                                "description": "The schedule notes for this EDI job",
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "isDefaultConfig": {
+                                        "description": "If true then config is default",
+                                        "type": "boolean",
+                                        "default": false
+                                    }
+                                }
+                            },
+                            "query": {
+                                "description": "CQL query to be passed to the module which data is being exported. Use it to filter data.",
+                                "type": "string",
+                                "maxLength": 5000
+                            },
+                            "eHoldingsExportConfig": {
+                                "type": "object",
+                                "properties": {
+                                    "recordId": {
+                                        "description": "Unique identifier of package - combination of providerId-packageId",
+                                        "example": "91525-1152699-659590",
+                                        "type": "string"
+                                    },
+                                    "recordType": {
+                                        "type": "string",
+                                        "description": "The record type",
+                                        "enum": [
+                                            "PACKAGE",
+                                            "RESOURCE"
+                                        ]
+                                    },
+                                    "titleSearchFilters": {
+                                        "description": "The filters needed to filter package titles",
+                                        "example": "filter[name]=title&sort=name",
+                                        "type": "string"
+                                    },
+                                    "packageFields": {
+                                        "description": "The list of package fields for export",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "titleFields": {
+                                        "description": "The list of title fields for export",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "recordId",
+                                    "recordType"
+                                ]
+                            },
+                            "authorityControlExportConfig": {
+                                "type": "object",
+                                "properties": {
+                                    "fromDate": {
+                                        "description": "Report date range start",
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "toDate": {
+                                        "description": "Report date range end",
+                                        "type": "string",
+                                        "format": "date"
+                                    }
+                                },
+                                "required": [
+                                    "fromDate",
+                                    "toDate"
+                                ]
+                            }
+                        }
+                    },
+                    "scheduleFrequency": {
+                        "type": "integer",
+                        "description": "Number of time periods"
+                    },
+                    "schedulePeriod": {
+                        "type": "string",
+                        "description": "Time period for repeating job",
+                        "enum": [
+                            "WEEK",
+                            "DAY",
+                            "HOUR",
+                            "NONE"
+                        ]
+                    },
+                    "scheduleTime": {
+                        "type": "string",
+                        "description": "Time to run the job"
+                    },
+                    "weekDays": {
+                        "type": "array",
+                        "description": "Day of week to run the job",
+                        "items": {
+                            "type": "string",
+                            "description": "Day of week",
+                            "enum": [
+                                "MONDAY",
+                                "TUESDAY",
+                                "WEDNESDAY",
+                                "THURSDAY",
+                                "FRIDAY",
+                                "SATURDAY",
+                                "SUNDAY"
+                            ]
+                        }
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "type",
+                    "exportTypeSpecificParameters",
+                    "schedulePeriod"
+                ]
             }
         },
         "totalRecords": {

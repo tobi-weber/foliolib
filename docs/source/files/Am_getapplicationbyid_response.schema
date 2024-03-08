@@ -17,15 +17,59 @@
             "type": "string"
         },
         "metadata": {
-            "$ref": "common/metadata.json",
-            "readonly": true
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "title": "Metadata Schema",
+            "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+            "type": "object",
+            "properties": {
+                "createdDate": {
+                    "description": "Date and time when the record was created",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "createdBy": {
+                    "description": "ID of the user who created the record (when available)",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "modifiedDate": {
+                    "description": "Date and time when the record was last updated",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "modifiedBy": {
+                    "description": "ID of the user who last updated the record (when available)",
+                    "type": "string",
+                    "format": "uuid"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "createdDate"
+            ]
         },
         "modules": {
             "description": "List of modules which are grouped by the application",
             "type": "array",
             "id": "module",
             "items": {
-                "$ref": "module/module.json"
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "type": "object",
+                "description": "Module",
+                "x-implements": [
+                    "org.folio.am.domain.model.Artifact"
+                ],
+                "allOf": [
+                    {
+                        "$ref": "../common/artifact.json"
+                    }
+                ],
+                "properties": {
+                    "url": {
+                        "description": "URL to the artifact",
+                        "type": "string"
+                    }
+                }
             }
         },
         "uiModules": {
@@ -33,7 +77,23 @@
             "type": "array",
             "id": "uiModule",
             "items": {
-                "$ref": "module/module.json"
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "type": "object",
+                "description": "Module",
+                "x-implements": [
+                    "org.folio.am.domain.model.Artifact"
+                ],
+                "allOf": [
+                    {
+                        "$ref": "../common/artifact.json"
+                    }
+                ],
+                "properties": {
+                    "url": {
+                        "description": "URL to the artifact",
+                        "type": "string"
+                    }
+                }
             }
         },
         "moduleDescriptors": {
@@ -41,7 +101,9 @@
             "type": "array",
             "id": "moduleDescriptor",
             "items": {
-                "$ref": "module/descriptor/moduleDescriptor.json"
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "description": "A FOLIO Module",
+                "type": "object"
             }
         },
         "uiModuleDescriptors": {
@@ -49,7 +111,9 @@
             "type": "array",
             "id": "uiModuleDescriptor",
             "items": {
-                "$ref": "module/descriptor/moduleDescriptor.json"
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "description": "A FOLIO Module",
+                "type": "object"
             }
         },
         "platform": {
@@ -61,11 +125,99 @@
             "type": "array",
             "id": "dependency",
             "items": {
-                "$ref": "dependency.json"
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "type": "object",
+                "description": "Dependency",
+                "x-class-extra-annotation": "@com.fasterxml.jackson.annotation.JsonIgnoreProperties({\"id\"})",
+                "properties": {
+                    "name": {
+                        "description": "Artifact name",
+                        "type": "string"
+                    },
+                    "version": {
+                        "description": "The concrete version of an artifact (semantic version) or the version range",
+                        "type": "string",
+                        "x-extra-annotation": "@org.folio.am.domain.validation.constraints.SemVersionOrRange"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "name",
+                    "version"
+                ]
             }
         },
         "deployment": {
-            "$ref": "applicationDeployment.json"
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "title": "Application Deployment Schema",
+            "description": "An information about application deployment generated by pipelines",
+            "type": "object",
+            "properties": {
+                "modules": {
+                    "description": "List of modules which are grouped by the application",
+                    "type": "array",
+                    "id": "module",
+                    "items": {
+                        "$schema": "http://json-schema.org/draft-04/schema#",
+                        "type": "object",
+                        "description": "Module",
+                        "x-implements": [
+                            "org.folio.am.domain.model.Artifact"
+                        ],
+                        "allOf": [
+                            {
+                                "$ref": "../common/artifact.json"
+                            }
+                        ],
+                        "properties": {
+                            "url": {
+                                "description": "URL to the artifact",
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "ui-modules": {
+                    "description": "List of modules which are grouped by the application",
+                    "type": "array",
+                    "id": "module",
+                    "items": {
+                        "$schema": "http://json-schema.org/draft-04/schema#",
+                        "type": "object",
+                        "description": "Module",
+                        "x-implements": [
+                            "org.folio.am.domain.model.Artifact"
+                        ],
+                        "allOf": [
+                            {
+                                "$ref": "../common/artifact.json"
+                            }
+                        ],
+                        "properties": {
+                            "url": {
+                                "description": "URL to the artifact",
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "deployment": {
+                    "description": "Deployment info about application",
+                    "type": "object",
+                    "title": "Deployment",
+                    "properties": {
+                        "type": {
+                            "description": "type of deployment",
+                            "type": "string"
+                        },
+                        "chart": {
+                            "description": "url address of application where its been deployed",
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "additionalProperties": false
         }
     },
     "additionalProperties": false

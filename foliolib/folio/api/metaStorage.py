@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2024-03-01
+# Generated at 2024-03-23
 
 import logging
 
@@ -593,9 +593,16 @@ class Metastorage(FolioApi):
 
         ``GET /meta-storage/oai``
 
+        Returns:
+            dict: See Schema below.
+
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestFatalError: Internal error
+
+        Schema:
+
+            .. literalinclude:: ../files/Metastorage_oaiservice_response.schema
         """
         return self.call("GET", "/meta-storage/oai")
 

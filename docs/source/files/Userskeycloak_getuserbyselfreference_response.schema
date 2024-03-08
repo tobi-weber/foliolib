@@ -4,28 +4,767 @@
     "description": "Composite user object",
     "properties": {
         "user": {
-            "description": "User object",
-            "$ref": "user.json"
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "title": "User Schema",
+            "description": "A user",
+            "type": "object",
+            "properties": {
+                "username": {
+                    "description": "A unique name belonging to a user. Typically used for login",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "A globally unique (UUID) identifier for the user",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "externalSystemId": {
+                    "description": "A unique ID that corresponds to an external authority",
+                    "type": "string"
+                },
+                "barcode": {
+                    "description": "The unique library barcode for this user",
+                    "type": "string"
+                },
+                "active": {
+                    "description": "A flag to determine if the user's account is effective and not expired. The tenant configuration can require the user to be active for login. Active is different from the loan patron block",
+                    "type": "boolean"
+                },
+                "type": {
+                    "description": "The class of user like staff or patron; this is different from patronGroup",
+                    "type": "string"
+                },
+                "patronGroup": {
+                    "description": "A UUID corresponding to the group the user belongs to, see /groups API, example groups are undergraduate and faculty; loan rules, patron blocks, fees/fines and expiration days can use the patron group",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "departments": {
+                    "description": "A list of UUIDs corresponding to the departments the user belongs to, see /departments API",
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                },
+                "meta": {
+                    "description": "Deprecated",
+                    "type": "object"
+                },
+                "proxyFor": {
+                    "description": "Deprecated",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "personal": {
+                    "$schema": "http://json-schema.org/draft-04/schema#",
+                    "title": "Personal Schema",
+                    "description": "Personal information about the user",
+                    "type": "object",
+                    "properties": {
+                        "lastName": {
+                            "description": "The user's surname",
+                            "type": "string"
+                        },
+                        "firstName": {
+                            "description": "The user's given name",
+                            "type": "string"
+                        },
+                        "middleName": {
+                            "description": "The user's middle name (if any)",
+                            "type": "string"
+                        },
+                        "preferredFirstName": {
+                            "description": "The user's preferred name",
+                            "type": "string"
+                        },
+                        "email": {
+                            "description": "The user's email address",
+                            "type": "string"
+                        },
+                        "phone": {
+                            "description": "The user's primary phone number",
+                            "type": "string"
+                        },
+                        "mobilePhone": {
+                            "description": "The user's mobile phone number",
+                            "type": "string"
+                        },
+                        "dateOfBirth": {
+                            "type": "string",
+                            "description": "The user's birth date",
+                            "format": "date-time"
+                        },
+                        "addresses": {
+                            "description": "Physical addresses associated with the user",
+                            "type": "array",
+                            "minItems": 0,
+                            "items": {
+                                "$schema": "http://json-schema.org/draft-04/schema#",
+                                "title": "Address Schema",
+                                "description": "Address information",
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "description": "A unique id for this address",
+                                        "type": "string"
+                                    },
+                                    "countryId": {
+                                        "description": "The country code for this address",
+                                        "type": "string"
+                                    },
+                                    "addressLine1": {
+                                        "description": "Address, Line 1",
+                                        "type": "string"
+                                    },
+                                    "addressLine2": {
+                                        "description": "Address, Line 2",
+                                        "type": "string"
+                                    },
+                                    "city": {
+                                        "description": "City name",
+                                        "type": "string"
+                                    },
+                                    "region": {
+                                        "description": "Region",
+                                        "type": "string"
+                                    },
+                                    "postalCode": {
+                                        "description": "Postal Code",
+                                        "type": "string"
+                                    },
+                                    "addressTypeId": {
+                                        "description": "A UUID that corresponds with an address type object",
+                                        "type": "string",
+                                        "format": "uuid"
+                                    },
+                                    "primaryAddress": {
+                                        "description": "Is this the user's primary address?",
+                                        "type": "boolean"
+                                    }
+                                },
+                                "required": [
+                                    "addressTypeId"
+                                ],
+                                "additionalProperties": false
+                            }
+                        },
+                        "preferredContactTypeId": {
+                            "description": "Id of user's preferred contact type like Email, Mail or Text Message, see /addresstypes API",
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": [
+                        "lastName"
+                    ]
+                },
+                "enrollmentDate": {
+                    "description": "The date in which the user joined the organization",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "expirationDate": {
+                    "description": "The date for when the user becomes inactive",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "createdDate": {
+                    "description": "Deprecated",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "updatedDate": {
+                    "description": "Deprecated",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "metadata": {
+                    "$schema": "http://json-schema.org/draft-04/schema#",
+                    "title": "Metadata Schema",
+                    "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+                    "type": "object",
+                    "properties": {
+                        "createdDate": {
+                            "description": "Date and time when the record was created",
+                            "type": "string",
+                            "format": "date-time"
+                        },
+                        "createdByUserId": {
+                            "description": "ID of the user who created the record (when available)",
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "createdByUsername": {
+                            "description": "Username of the user who created the record (when available)",
+                            "type": "string"
+                        },
+                        "updatedDate": {
+                            "description": "Date and time when the record was last updated",
+                            "type": "string",
+                            "format": "date-time"
+                        },
+                        "updatedByUserId": {
+                            "description": "ID of the user who last updated the record (when available)",
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "updatedByUsername": {
+                            "description": "Username of the user who last updated the record (when available)",
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": [
+                        "createdDate"
+                    ]
+                },
+                "tags": {
+                    "$schema": "http://json-schema.org/draft-04/schema#",
+                    "title": "tags",
+                    "description": "List of simple tags that can be added to an object",
+                    "type": "object",
+                    "properties": {
+                        "tagList": {
+                            "description": "List of tags",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "customFields": {
+                    "description": "Object that contains custom field",
+                    "type": "object",
+                    "additionalProperties": true
+                }
+            },
+            "additionalProperties": false
         },
         "patronGroup": {
-            "description": "Patron group object",
-            "$ref": "userGroup.json"
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "title": "User Group Schema",
+            "description": "User group schema",
+            "type": "object",
+            "properties": {
+                "group": {
+                    "type": "string",
+                    "description": "group"
+                },
+                "desc": {
+                    "type": "string",
+                    "description": "description"
+                },
+                "id": {
+                    "type": "string",
+                    "description": "id"
+                },
+                "metadata": {
+                    "$schema": "http://json-schema.org/draft-04/schema#",
+                    "title": "Metadata Schema",
+                    "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+                    "type": "object",
+                    "properties": {
+                        "createdDate": {
+                            "description": "Date and time when the record was created",
+                            "type": "string",
+                            "format": "date-time"
+                        },
+                        "createdByUserId": {
+                            "description": "ID of the user who created the record (when available)",
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "createdByUsername": {
+                            "description": "Username of the user who created the record (when available)",
+                            "type": "string"
+                        },
+                        "updatedDate": {
+                            "description": "Date and time when the record was last updated",
+                            "type": "string",
+                            "format": "date-time"
+                        },
+                        "updatedByUserId": {
+                            "description": "ID of the user who last updated the record (when available)",
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "updatedByUsername": {
+                            "description": "Username of the user who last updated the record (when available)",
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": [
+                        "createdDate"
+                    ]
+                }
+            },
+            "required": [
+                "group"
+            ]
         },
         "permissions": {
-            "description": "Permissions object",
-            "$ref": "permissionUser.json"
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "type": "object",
+            "description": "Permission User Object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Id"
+                },
+                "userId": {
+                    "type": "string",
+                    "description": "User Id"
+                },
+                "permissions": {
+                    "type": "array",
+                    "description": "Permissions array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "metadata": {
+                    "$schema": "http://json-schema.org/draft-04/schema#",
+                    "title": "Metadata Schema",
+                    "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+                    "type": "object",
+                    "properties": {
+                        "createdDate": {
+                            "description": "Date and time when the record was created",
+                            "type": "string",
+                            "format": "date-time"
+                        },
+                        "createdByUserId": {
+                            "description": "ID of the user who created the record (when available)",
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "createdByUsername": {
+                            "description": "Username of the user who created the record (when available)",
+                            "type": "string"
+                        },
+                        "updatedDate": {
+                            "description": "Date and time when the record was last updated",
+                            "type": "string",
+                            "format": "date-time"
+                        },
+                        "updatedByUserId": {
+                            "description": "ID of the user who last updated the record (when available)",
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "updatedByUsername": {
+                            "description": "Username of the user who last updated the record (when available)",
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": [
+                        "createdDate"
+                    ]
+                }
+            },
+            "additionalProperties": false
         },
         "proxiesFor": {
             "type": "array",
             "description": "Proxies for, array",
             "id": "proxyFor",
             "items": {
-                "$ref": "proxyFor.json"
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "title": "ProxyFor Schema",
+                "description": "Proxy For Schema",
+                "type": "object",
+                "properties": {
+                    "userId": {
+                        "type": "string",
+                        "description": "User Id"
+                    },
+                    "proxyUserId": {
+                        "type": "string",
+                        "description": "Proxy User Id"
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "Id"
+                    },
+                    "requestForSponsor": {
+                        "type": "string",
+                        "description": "Request For Sponsor"
+                    },
+                    "createdDate": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Created Date"
+                    },
+                    "notificationsTo": {
+                        "type": "string",
+                        "description": "Notifications To"
+                    },
+                    "accrueTo": {
+                        "type": "string",
+                        "description": "Accrue To"
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "Status"
+                    },
+                    "expirationDate": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Expiration Date"
+                    },
+                    "metadata": {
+                        "$schema": "http://json-schema.org/draft-04/schema#",
+                        "title": "Metadata Schema",
+                        "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+                        "type": "object",
+                        "properties": {
+                            "createdDate": {
+                                "description": "Date and time when the record was created",
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "createdByUserId": {
+                                "description": "ID of the user who created the record (when available)",
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            "createdByUsername": {
+                                "description": "Username of the user who created the record (when available)",
+                                "type": "string"
+                            },
+                            "updatedDate": {
+                                "description": "Date and time when the record was last updated",
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "updatedByUserId": {
+                                "description": "ID of the user who last updated the record (when available)",
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            "updatedByUsername": {
+                                "description": "Username of the user who last updated the record (when available)",
+                                "type": "string"
+                            }
+                        },
+                        "additionalProperties": false,
+                        "required": [
+                            "createdDate"
+                        ]
+                    }
+                },
+                "additionalProperties": false
             }
         },
         "servicePointsUser": {
-            "description": "Service point user",
-            "$ref": "servicePointUser.json"
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "type": "object",
+            "description": "Service points expanded user",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Id"
+                },
+                "userId": {
+                    "type": "string",
+                    "description": "User Id"
+                },
+                "servicePointsIds": {
+                    "type": "array",
+                    "description": "Service Points Ids",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "servicePoints": {
+                    "type": "array",
+                    "description": "Service Points",
+                    "items": {
+                        "$schema": "http://json-schema.org/draft-04/schema#",
+                        "type": "object",
+                        "description": "Service point",
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "description": "id"
+                            },
+                            "name": {
+                                "type": "string",
+                                "description": "Service point name"
+                            },
+                            "code": {
+                                "type": "string",
+                                "description": "Service point code"
+                            },
+                            "discoveryDisplayName": {
+                                "type": "string",
+                                "description": "Service point discovery name"
+                            },
+                            "description": {
+                                "type": "string",
+                                "description": "Service point description"
+                            },
+                            "shelvingLagTime": {
+                                "type": "integer",
+                                "description": "Shelving lag time"
+                            },
+                            "pickupLocation": {
+                                "type": "boolean",
+                                "description": "Pick up location"
+                            },
+                            "staffSlips": {
+                                "type": "array",
+                                "description": "List of staff slips for this service point",
+                                "items": {
+                                    "$schema": "http://json-schema.org/draft-04/schema#",
+                                    "title": "Staff slip Schema",
+                                    "description": "Staff slip",
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "description": "The ID of the staff slip"
+                                        },
+                                        "printByDefault": {
+                                            "type": "boolean",
+                                            "description": "Whether or not to print the staff slip by default"
+                                        }
+                                    },
+                                    "additionalProperties": false,
+                                    "required": [
+                                        "id",
+                                        "printByDefault"
+                                    ]
+                                }
+                            },
+                            "locationIds": {
+                                "type": "array",
+                                "description": "Location Ids",
+                                "items": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            },
+                            "metadata": {
+                                "$schema": "http://json-schema.org/draft-04/schema#",
+                                "title": "Metadata Schema",
+                                "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+                                "type": "object",
+                                "properties": {
+                                    "createdDate": {
+                                        "description": "Date and time when the record was created",
+                                        "type": "string",
+                                        "format": "date-time"
+                                    },
+                                    "createdByUserId": {
+                                        "description": "ID of the user who created the record (when available)",
+                                        "type": "string",
+                                        "format": "uuid"
+                                    },
+                                    "createdByUsername": {
+                                        "description": "Username of the user who created the record (when available)",
+                                        "type": "string"
+                                    },
+                                    "updatedDate": {
+                                        "description": "Date and time when the record was last updated",
+                                        "type": "string",
+                                        "format": "date-time"
+                                    },
+                                    "updatedByUserId": {
+                                        "description": "ID of the user who last updated the record (when available)",
+                                        "type": "string",
+                                        "format": "uuid"
+                                    },
+                                    "updatedByUsername": {
+                                        "description": "Username of the user who last updated the record (when available)",
+                                        "type": "string"
+                                    }
+                                },
+                                "additionalProperties": false,
+                                "required": [
+                                    "createdDate"
+                                ]
+                            }
+                        },
+                        "required": [
+                            "name",
+                            "code",
+                            "discoveryDisplayName"
+                        ]
+                    }
+                },
+                "defaultServicePointId": {
+                    "type": "string",
+                    "description": "Default Service Point Id"
+                },
+                "defaultServicePoint": {
+                    "$schema": "http://json-schema.org/draft-04/schema#",
+                    "type": "object",
+                    "description": "Service point",
+                    "properties": {
+                        "id": {
+                            "type": "string",
+                            "description": "id"
+                        },
+                        "name": {
+                            "type": "string",
+                            "description": "Service point name"
+                        },
+                        "code": {
+                            "type": "string",
+                            "description": "Service point code"
+                        },
+                        "discoveryDisplayName": {
+                            "type": "string",
+                            "description": "Service point discovery name"
+                        },
+                        "description": {
+                            "type": "string",
+                            "description": "Service point description"
+                        },
+                        "shelvingLagTime": {
+                            "type": "integer",
+                            "description": "Shelving lag time"
+                        },
+                        "pickupLocation": {
+                            "type": "boolean",
+                            "description": "Pick up location"
+                        },
+                        "staffSlips": {
+                            "type": "array",
+                            "description": "List of staff slips for this service point",
+                            "items": {
+                                "$schema": "http://json-schema.org/draft-04/schema#",
+                                "title": "Staff slip Schema",
+                                "description": "Staff slip",
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "description": "The ID of the staff slip"
+                                    },
+                                    "printByDefault": {
+                                        "type": "boolean",
+                                        "description": "Whether or not to print the staff slip by default"
+                                    }
+                                },
+                                "additionalProperties": false,
+                                "required": [
+                                    "id",
+                                    "printByDefault"
+                                ]
+                            }
+                        },
+                        "locationIds": {
+                            "type": "array",
+                            "description": "Location Ids",
+                            "items": {
+                                "type": "string",
+                                "format": "uuid"
+                            }
+                        },
+                        "metadata": {
+                            "$schema": "http://json-schema.org/draft-04/schema#",
+                            "title": "Metadata Schema",
+                            "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+                            "type": "object",
+                            "properties": {
+                                "createdDate": {
+                                    "description": "Date and time when the record was created",
+                                    "type": "string",
+                                    "format": "date-time"
+                                },
+                                "createdByUserId": {
+                                    "description": "ID of the user who created the record (when available)",
+                                    "type": "string",
+                                    "format": "uuid"
+                                },
+                                "createdByUsername": {
+                                    "description": "Username of the user who created the record (when available)",
+                                    "type": "string"
+                                },
+                                "updatedDate": {
+                                    "description": "Date and time when the record was last updated",
+                                    "type": "string",
+                                    "format": "date-time"
+                                },
+                                "updatedByUserId": {
+                                    "description": "ID of the user who last updated the record (when available)",
+                                    "type": "string",
+                                    "format": "uuid"
+                                },
+                                "updatedByUsername": {
+                                    "description": "Username of the user who last updated the record (when available)",
+                                    "type": "string"
+                                }
+                            },
+                            "additionalProperties": false,
+                            "required": [
+                                "createdDate"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "code",
+                        "discoveryDisplayName"
+                    ]
+                },
+                "metadata": {
+                    "$schema": "http://json-schema.org/draft-04/schema#",
+                    "title": "Metadata Schema",
+                    "description": "Metadata about creation and changes to records, provided by the server (client should not provide)",
+                    "type": "object",
+                    "properties": {
+                        "createdDate": {
+                            "description": "Date and time when the record was created",
+                            "type": "string",
+                            "format": "date-time"
+                        },
+                        "createdByUserId": {
+                            "description": "ID of the user who created the record (when available)",
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "createdByUsername": {
+                            "description": "Username of the user who created the record (when available)",
+                            "type": "string"
+                        },
+                        "updatedDate": {
+                            "description": "Date and time when the record was last updated",
+                            "type": "string",
+                            "format": "date-time"
+                        },
+                        "updatedByUserId": {
+                            "description": "ID of the user who last updated the record (when available)",
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "updatedByUsername": {
+                            "description": "Username of the user who last updated the record (when available)",
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": [
+                        "createdDate"
+                    ]
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "userId"
+            ]
         }
     }
 }

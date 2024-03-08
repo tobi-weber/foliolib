@@ -6,7 +6,62 @@
         "tags": {
             "type": "array",
             "items": {
-                "$ref": "#/components/schemas/tagDto"
+                "type": "object",
+                "title": "Tag",
+                "description": "Tag that can be attached to various objects",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$",
+                        "example": "46669e09-8b45-4ede-afbd-ca73bb89cdb3"
+                    },
+                    "label": {
+                        "type": "string",
+                        "description": "The short label of this tag"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "The description of this tag"
+                    },
+                    "metadata": {
+                        "type": "object",
+                        "title": "Metadata",
+                        "description": "Metadata about creation and changes to records",
+                        "properties": {
+                            "createdDate": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Date and time when the record was created"
+                            },
+                            "createdByUserId": {
+                                "type": "string",
+                                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$",
+                                "example": "46669e09-8b45-4ede-afbd-ca73bb89cdb3"
+                            },
+                            "updatedDate": {
+                                "type": "string",
+                                "format": "date-time",
+                                "description": "Date and time when the record was last updated"
+                            },
+                            "updatedByUserId": {
+                                "type": "string",
+                                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$",
+                                "example": "46669e09-8b45-4ede-afbd-ca73bb89cdb3"
+                            }
+                        },
+                        "required": [
+                            "createdDate"
+                        ]
+                    }
+                },
+                "required": [
+                    "label"
+                ],
+                "example": {
+                    "id": "118dbd8c-5ba0-47a9-a850-34bbb1dbf3b7",
+                    "label": "important",
+                    "description": "This is important stuff."
+                }
             }
         },
         "totalRecords": {

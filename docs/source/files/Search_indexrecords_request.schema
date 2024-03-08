@@ -1,6 +1,51 @@
 {
     "type": "array",
     "items": {
-        "$ref": "#/components/schemas/resourceEvent"
+        "type": "object",
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "description": "Resource event body",
+        "properties": {
+            "id": {
+                "description": "Resource id",
+                "type": "string"
+            },
+            "type": {
+                "type": "string",
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "description": "Resource event operation type - one of [update, create, delete, delete_all, reindex]",
+                "enum": [
+                    "UPDATE",
+                    "CREATE",
+                    "DELETE",
+                    "REINDEX",
+                    "DELETE_ALL"
+                ]
+            },
+            "deleteEventSubType": {
+                "type": "string",
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "description": "Resource event delete operation type - one of [soft-delete, hard-delete]",
+                "enum": [
+                    "SOFT_DELETE",
+                    "HARD_DELETE"
+                ]
+            },
+            "tenant": {
+                "description": "Tenant id",
+                "type": "string"
+            },
+            "resourceName": {
+                "description": "Name of resource",
+                "type": "string"
+            },
+            "new": {
+                "description": "Instance record new fields",
+                "type": "object"
+            },
+            "old": {
+                "description": "Instance record old fields",
+                "type": "object"
+            }
+        }
     }
 }

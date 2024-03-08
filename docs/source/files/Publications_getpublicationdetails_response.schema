@@ -3,12 +3,16 @@
     "title": "Publication details response",
     "properties": {
         "id": {
-            "description": "id of publication record",
-            "$ref": "common.yaml#/uuid"
+            "type": "string",
+            "format": "uuid"
         },
         "status": {
-            "type": "string",
-            "$ref": "publication_schema.yaml#/PublicationStatus"
+            "description": "publication status",
+            "enum": [
+                "IN_PROGRESS",
+                "ERROR",
+                "COMPLETE"
+            ]
         },
         "dateTime": {
             "description": "the date of publication was created",
@@ -22,8 +26,21 @@
             "description": "List of errors",
             "type": "array",
             "items": {
-                "type": "object",
-                "$ref": "publication_schema.yaml#/PublicationStatusError"
+                "description": "publication status error",
+                "properties": {
+                    "tenantId": {
+                        "description": "tenant name which failed to execute request",
+                        "type": "string"
+                    },
+                    "errorMessage": {
+                        "description": "error message of failed request",
+                        "type": "string"
+                    },
+                    "errorCode": {
+                        "description": "error code of failed request",
+                        "type": "integer"
+                    }
+                }
             }
         }
     },

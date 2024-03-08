@@ -6,14 +6,112 @@
             "description": "List of titles",
             "type": "array",
             "items": {
+                "description": "report title entry",
                 "type": "object",
-                "$ref": "reportTitle.json"
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "title identifier",
+                        "format": "uuid"
+                    },
+                    "counterReportTitle": {
+                        "type": "string",
+                        "description": "Title as it appears in counter report"
+                    },
+                    "kbTitleName": {
+                        "type": "string",
+                        "description": "KB title name"
+                    },
+                    "kbTitleId": {
+                        "type": "string",
+                        "description": "KB title identifier. If not given, title is ignored (kbManualMatch=true) or unmatched (kbManualMatch=false)",
+                        "format": "uuid"
+                    },
+                    "kbManualMatch": {
+                        "type": "boolean",
+                        "description": "whether the counter title to kb title is manually set or ignored"
+                    },
+                    "printISSN": {
+                        "type": "string",
+                        "description": "ISSN for print instance"
+                    },
+                    "onlineISSN": {
+                        "type": "string",
+                        "description": "ISSN for online instance"
+                    },
+                    "ISBN": {
+                        "type": "string",
+                        "description": "ISBN-13 with hyphens"
+                    },
+                    "DOI": {
+                        "type": "string",
+                        "description": "Digital Object identifier"
+                    },
+                    "publicationType": {
+                        "type": "string",
+                        "description": "publication type from ERM ('serial', 'monograph')"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "id"
+                ]
             }
         },
         "resultInfo": {
-            "description": "Common result set information",
+            "description": "Common result set information for streaming response",
             "type": "object",
-            "$ref": "resultInfo.json"
+            "properties": {
+                "totalRecords": {
+                    "description": "Total number of entries in response",
+                    "type": "integer"
+                },
+                "diagnostics": {
+                    "description": "Diagnostics for response",
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "message": {
+                                "description": "single diagnostic message",
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "facets": {
+                    "type": "array",
+                    "description": "Array of facets",
+                    "items": {
+                        "type": "object",
+                        "description": "A facet",
+                        "properties": {
+                            "facetValues": {
+                                "type": "array",
+                                "description": "Array of facet values",
+                                "items": {
+                                    "type": "object",
+                                    "description": "A facet value",
+                                    "properties": {
+                                        "count": {
+                                            "type": "integer",
+                                            "description": "Count of facet values"
+                                        },
+                                        "value": {
+                                            "description": "Value Object"
+                                        }
+                                    }
+                                }
+                            },
+                            "type": {
+                                "type": "string",
+                                "description": "Type of facet"
+                            }
+                        }
+                    }
+                }
+            },
+            "additionalProperties": false
         }
     },
     "additionalProperties": false,

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2024-03-01
+# Generated at 2024-03-23
 
 import logging
 
@@ -131,10 +131,17 @@ class Bulkedit(FolioApi):
         Args:
             jobId (str): UUID of the JobCommand (format: uuid)
 
+        Returns:
+            dict: See Schema below.
+
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not found
             OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
+
+        Schema:
+
+            .. literalinclude:: ../files/Bulkedit_downloaditemspreviewbyjobid_response.schema
         """
         return self.call("GET", f"/bulk-edit/{jobId}/preview/updated-items/download")
 
@@ -146,10 +153,17 @@ class Bulkedit(FolioApi):
         Args:
             jobId (str): UUID of the JobCommand (format: uuid)
 
+        Returns:
+            dict: See Schema below.
+
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not found
             OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
+
+        Schema:
+
+            .. literalinclude:: ../files/Bulkedit_downloaduserspreviewbyjobid_response.schema
         """
         return self.call("GET", f"/bulk-edit/{jobId}/preview/updated-users/download")
 
@@ -161,10 +175,17 @@ class Bulkedit(FolioApi):
         Args:
             jobId (str): UUID of the JobCommand (format: uuid)
 
+        Returns:
+            dict: See Schema below.
+
         Raises:
             OkapiRequestError: Bad request
             OkapiRequestNotFound: Not found
             OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
+
+        Schema:
+
+            .. literalinclude:: ../files/Bulkedit_downloadholdingspreviewbyjobid_response.schema
         """
         return self.call("GET", f"/bulk-edit/{jobId}/preview/updated-holdings/download")
 
@@ -276,9 +297,17 @@ class Bulkedit(FolioApi):
             jobId (str): UUID of the JobCommand (format: uuid)
             filePath (str): Path of file to upload.
 
+        Returns:
+            dict: See Schema below.
+
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
+
+        Schema:
+
+            .. literalinclude:: ../files/Bulkedit_uploadcsvfile_request.schema
+            .. literalinclude:: ../files/Bulkedit_uploadcsvfile_request.schema_response.schema
         """
         import os
         headers = {}
@@ -299,10 +328,17 @@ class Bulkedit(FolioApi):
         Args:
             jobId (str): UUID of the JobCommand (format: uuid)
 
+        Returns:
+            dict: See Schema below.
+
         Raises:
             OkapiRequestError: Bad Request
             OkapiRequestNotFound: Bad Request
             OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
+
+        Schema:
+
+            .. literalinclude:: ../files/Bulkedit_startjob_response.schema
         """
         return self.call("POST", f"/bulk-edit/{jobId}/start")
 
@@ -314,8 +350,15 @@ class Bulkedit(FolioApi):
         Args:
             jobId (str): UUID of the JobCommand (format: uuid)
 
+        Returns:
+            dict: See Schema below.
+
         Raises:
             OkapiRequestFatalError: Internal server errors, e.g. due to misconfiguration
+
+        Schema:
+
+            .. literalinclude:: ../files/Bulkedit_rollbackcsvfile_response.schema
         """
         return self.call("POST", f"/bulk-edit/{jobId}/roll-back")
 

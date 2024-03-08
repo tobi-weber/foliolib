@@ -10,9 +10,47 @@
     "x-implements": "org.folio.innreach.domain.dto.InnReachResponseData",
     "properties": {
         "bibInfo": {
+            "$schema": "http://json-schema.org/draft-04/schema#",
             "description": "D2IR Bib info",
             "type": "object",
-            "$ref": "bibInfo.json"
+            "properties": {
+                "bibId": {
+                    "type": "string",
+                    "description": "32-character, alphanumeric id corresponding to a FOLIO instance record HRID",
+                    "maxLength": 32,
+                    "minLength": 32
+                },
+                "marc21BibFormat": {
+                    "type": "string",
+                    "description": "Currently supports ISO2709",
+                    "default": "ISO2709"
+                },
+                "marc21BibData": {
+                    "type": "string",
+                    "description": "Base 64 encoded MARC data"
+                },
+                "titleHoldCount": {
+                    "type": "integer",
+                    "description": "Number of title level holds - 0 (title level holds not currently supported in FOLIO)",
+                    "default": 0
+                },
+                "itemCount": {
+                    "type": "integer",
+                    "description": "Number of items linked to this bib (max 99, count of items associated with the FOLIO instance record that are contributed)",
+                    "default": 0
+                },
+                "suppress": {
+                    "type": "string",
+                    "description": "ASCII y, n, or g; g means display the resource in the discovery layer as having been provided by the consortium, not by the individual site.",
+                    "default": "n"
+                }
+            },
+            "additionalProperties": false,
+            "required": [
+                "bibId",
+                "marc21BibFormat",
+                "marc21BibData"
+            ]
         }
     },
     "additionalProperties": false,

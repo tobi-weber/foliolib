@@ -16,8 +16,33 @@
             "description": "List of records",
             "type": "array",
             "items": {
+                "description": "Global record",
                 "type": "object",
-                "$ref": "globalRecord.json"
+                "properties": {
+                    "globalId": {
+                        "type": "string",
+                        "description": "Global identifier",
+                        "format": "uuid"
+                    },
+                    "localId": {
+                        "type": "string",
+                        "description": "Local identifier"
+                    },
+                    "sourceId": {
+                        "type": "string",
+                        "description": "Source identifier"
+                    },
+                    "payload": {
+                        "type": "object",
+                        "description": "Payload in JSON"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "globalId",
+                    "localId",
+                    "sourceId"
+                ]
             }
         },
         "matchKeys": {

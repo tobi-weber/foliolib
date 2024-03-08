@@ -5,15 +5,311 @@
             "description": "List of userdata items",
             "type": "array",
             "items": {
-                "$ref": "user.json#/User"
+                "type": "object",
+                "title": "User Schema",
+                "properties": {
+                    "username": {
+                        "description": "A unique name belonging to a user. Typically used for login",
+                        "type": "string"
+                    },
+                    "id": {
+                        "description": "A globally unique (UUID) identifier for the user",
+                        "type": "string"
+                    },
+                    "externalSystemId": {
+                        "description": "An ID that corresponds to an external authority",
+                        "type": "string"
+                    },
+                    "barcode": {
+                        "description": "The library barcode for this user",
+                        "type": "string"
+                    },
+                    "active": {
+                        "description": "A flag to determine if a user can log in, take out loans, etc.",
+                        "type": "boolean"
+                    },
+                    "type": {
+                        "description": "The class of user",
+                        "type": "string"
+                    },
+                    "patronGroup": {
+                        "description": "A UUID corresponding to the group the user belongs to",
+                        "type": "string"
+                    },
+                    "departments": {
+                        "description": "A UUIDs corresponding to the departments the user belongs to",
+                        "type": "array",
+                        "uniqueItems": true,
+                        "items": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    "meta": {
+                        "description": "Deprecated",
+                        "type": "object"
+                    },
+                    "proxyFor": {
+                        "description": "Deprecated",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "personal": {
+                        "type": "object",
+                        "properties": {
+                            "lastName": {
+                                "description": "The user's surname",
+                                "type": "string"
+                            },
+                            "firstName": {
+                                "description": "The user's given name",
+                                "type": "string"
+                            },
+                            "middleName": {
+                                "description": "The user's middle name (if any)",
+                                "type": "string"
+                            },
+                            "preferredFirstName": {
+                                "description": "The user's preferred name",
+                                "type": "string"
+                            },
+                            "email": {
+                                "description": "The user's email address",
+                                "type": "string"
+                            },
+                            "phone": {
+                                "description": "The user's primary phone number",
+                                "type": "string"
+                            },
+                            "mobilePhone": {
+                                "description": "The user's mobile phone number",
+                                "type": "string"
+                            },
+                            "dateOfBirth": {
+                                "type": "string",
+                                "description": "The user's birth date",
+                                "format": "date-time"
+                            },
+                            "addresses": {
+                                "description": "Physical addresses associated with the user",
+                                "type": "array",
+                                "minItems": 0,
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "description": "A unique id for this address",
+                                            "type": "string"
+                                        },
+                                        "countryId": {
+                                            "description": "The country code for this address",
+                                            "type": "string"
+                                        },
+                                        "addressLine1": {
+                                            "description": "Address, Line 1",
+                                            "type": "string"
+                                        },
+                                        "addressLine2": {
+                                            "description": "Address, Line 2",
+                                            "type": "string"
+                                        },
+                                        "city": {
+                                            "description": "City name",
+                                            "type": "string"
+                                        },
+                                        "region": {
+                                            "description": "Region",
+                                            "type": "string"
+                                        },
+                                        "postalCode": {
+                                            "description": "Postal Code",
+                                            "type": "string"
+                                        },
+                                        "addressTypeId": {
+                                            "description": "A UUID that corresponds with an address type object",
+                                            "type": "string"
+                                        },
+                                        "primaryAddress": {
+                                            "description": "Is this the user's primary address?",
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            },
+                            "preferredContactTypeId": {
+                                "description": "Id of user's preferred contact type",
+                                "type": "string"
+                            }
+                        },
+                        "additionalProperties": false,
+                        "required": [
+                            "lastName"
+                        ]
+                    },
+                    "enrollmentDate": {
+                        "description": "The date in which the user joined the organization",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "expirationDate": {
+                        "description": "The date for when the user becomes inactive",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createdDate": {
+                        "description": "Deprecated",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedDate": {
+                        "description": "Deprecated",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "metadata": {
+                        "type": "object",
+                        "title": "Metadata Schema",
+                        "properties": {
+                            "createdDate": {
+                                "description": "Date and time when the record was created",
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "createdByUserId": {
+                                "description": "ID of the user who created the record (when available)",
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            "createdByUsername": {
+                                "description": "Username of the user who created the record (when available)",
+                                "type": "string",
+                                "maxLength": 50
+                            },
+                            "updatedDate": {
+                                "description": "Date and time when the record was last updated",
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "updatedByUserId": {
+                                "description": "ID of the user who last updated the record (when available)",
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            "updatedByUsername": {
+                                "description": "Username of the user who last updated the record (when available)",
+                                "type": "string",
+                                "maxLength": 50
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "tags": {
+                        "type": "object",
+                        "title": "tags",
+                        "properties": {
+                            "tagList": {
+                                "description": "List of tags",
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "customFields": {
+                        "description": "Object that contains custom field",
+                        "type": "object",
+                        "additionalProperties": true
+                    }
+                },
+                "additionalProperties": false
             }
         },
         "totalRecords": {
             "type": "integer"
         },
         "resultInfo": {
-            "$ref": "../common/resultInfo.json#/ResultInfo",
-            "readonly": true
+            "type": "object",
+            "properties": {
+                "totalRecords": {
+                    "type": "integer",
+                    "description": "Total number of records"
+                },
+                "responseTime": {
+                    "type": "number",
+                    "description": "Response time"
+                },
+                "facets": {
+                    "type": "array",
+                    "description": "Array of facets",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "facetValues": {
+                                "type": "array",
+                                "description": "Array of facet values",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "count": {
+                                            "type": "integer",
+                                            "description": "Count of facet values"
+                                        },
+                                        "value": {
+                                            "type": "object",
+                                            "description": "Value Object"
+                                        }
+                                    }
+                                },
+                                "additionalProperties": false
+                            },
+                            "type": {
+                                "type": "string",
+                                "description": "Type of facet"
+                            }
+                        },
+                        "additionalProperties": false
+                    }
+                },
+                "diagnostics": {
+                    "type": "array",
+                    "description": "Array of diagnostic information",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "source": {
+                                "type": "string",
+                                "description": "Source reporting the diagnostic information"
+                            },
+                            "code": {
+                                "type": "string",
+                                "description": "Diagnostic Code"
+                            },
+                            "message": {
+                                "type": "string",
+                                "description": "Diagnostic Message"
+                            },
+                            "module": {
+                                "type": "string",
+                                "description": "Module reporting diagnostic information"
+                            },
+                            "recordCount": {
+                                "type": "integer",
+                                "description": "Record Count for diagnostics"
+                            },
+                            "query": {
+                                "type": "string",
+                                "description": "CQL Query associated with results"
+                            }
+                        }
+                    }
+                }
+            },
+            "additionalProperties": false
         }
     },
     "required": [

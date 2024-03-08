@@ -5,14 +5,708 @@
             "description": "List of item records",
             "type": "array",
             "items": {
-                "$ref": "item.json#/Item"
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "Item id",
+                        "type": "string"
+                    },
+                    "_version": {
+                        "type": "integer",
+                        "description": "Record version for optimistic locking"
+                    },
+                    "hrid": {
+                        "type": "string",
+                        "description": "The human readable ID, also called eye readable ID. A system-assigned sequential alternate ID"
+                    },
+                    "holdingsRecordId": {
+                        "description": "ID of the holdings record the item is a member of",
+                        "type": "string"
+                    },
+                    "formerIds": {
+                        "type": "array",
+                        "description": "Previous identifiers assigned to the item",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "discoverySuppress": {
+                        "type": "boolean",
+                        "description": "Records the fact that the record should not be displayed in a discovery system"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Resouce title (read only, inherited from associated instance record)"
+                    },
+                    "contributorNames": {
+                        "description": "A list of contributor names",
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "description": "The contributor name",
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "callNumber": {
+                        "type": "string",
+                        "description": "Call number is an identifier assigned to an item, usually printed on a label attached to the item, and used to determine its physical position in a shelving sequence (e.g. K1 .M44, read only, inherited from associated holdings record)"
+                    },
+                    "barcode": {
+                        "description": "Text, with input likely validated by the barcode scanner",
+                        "type": "string"
+                    },
+                    "effectiveShelvingOrder": {
+                        "type": "string",
+                        "description": "A system generated normalization of the call number that allows for call number sorting in reports and search results"
+                    },
+                    "accessionNumber": {
+                        "type": "string",
+                        "description": "Accession number is also called inventar number. Accession number is a unique number assigned to an item in the order in which it is added to a library collection. Most libraries assign accession numbers in continous numerical sequece, but some use a code system to indicate type of material and/or year of accession in addition to order of accession"
+                    },
+                    "itemLevelCallNumber": {
+                        "description": "Call number is an identifier assigned to an item, usually printed on a label attached to the item, and used to determine its physical position in a shelving sequence (e.g. K1 .M44, read only, inherited from associated holdings record). The item level call number, is the call number on item level",
+                        "type": "string"
+                    },
+                    "itemLevelCallNumberPrefix": {
+                        "description": "Prefix of the call number on the item level",
+                        "type": "string"
+                    },
+                    "itemLevelCallNumberSuffix": {
+                        "description": "Suffix of the call number on the item level",
+                        "type": "string"
+                    },
+                    "itemLevelCallNumberTypeId": {
+                        "description": "Call number type, refers to a call-number-type reference record",
+                        "type": "string"
+                    },
+                    "effectiveCallNumberComponents": {
+                        "type": "object",
+                        "description": "Elements of a full call number generated from the item or holding",
+                        "properties": {
+                            "callNumber": {
+                                "type": "string",
+                                "description": "Effective Call Number is an identifier assigned to an item or its holding and associated with the item."
+                            },
+                            "prefix": {
+                                "type": "string",
+                                "description": "Effective Call Number Prefix is the prefix of the identifier assigned to an item or its holding and associated with the item."
+                            },
+                            "suffix": {
+                                "type": "string",
+                                "description": "Effective Call Number Suffix is the suffix of the identifier assigned to an item or its holding and associated with the item."
+                            },
+                            "typeId": {
+                                "type": "string",
+                                "description": "Effective Call Number Type Id is the call number type id assigned to the item or associated holding."
+                            }
+                        }
+                    },
+                    "volume": {
+                        "description": "Volume is intended for monographs when a multipart monograph (e.g. a biography of Gerorge Bernard Shaw in three volumes)",
+                        "type": "string"
+                    },
+                    "enumeration": {
+                        "description": "Enumeration is the descriptive information for the numbering scheme of a serial, usually identified by level and a descriptive caption, e.g., level 0 = v. and level 1 = no. This means that each issue of the serial has a volume and an issue number that would appear (e.g. v.71:no.6-2)",
+                        "type": "string"
+                    },
+                    "chronology": {
+                        "description": "Chronology is the descriptive information for the dating scheme of a serial, usually identified by level, e.g., level 0 = year level 1 = month. This means that each issue of the serial has a month and a year on each issue (e.g. 1985:July-Dec.)",
+                        "type": "string"
+                    },
+                    "yearCaption": {
+                        "description": "In multipart monographs, a caption is characters used to label a level of chronology (e.g. 'year 1985')",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "itemIdentifier": {
+                        "description": "Item identifier number, e.g. imported from the union catalogue (read only)",
+                        "type": "string"
+                    },
+                    "copyNumber": {
+                        "description": "Copy number is the piece identifier. The copy number reflects if the library has a copy of a single-volume monograph; a copy of a multi-volume, (e.g. Copy 1, or C.7.)",
+                        "type": "string"
+                    },
+                    "numberOfPieces": {
+                        "description": "Number of pieces. Used when an item is checked out or returned to verify that all parts are present (e.g. 7 CDs in a set)",
+                        "type": "string"
+                    },
+                    "descriptionOfPieces": {
+                        "description": "Text which descripe the pieces",
+                        "type": "string"
+                    },
+                    "numberOfMissingPieces": {
+                        "description": "Number of missing pieces",
+                        "type": "string"
+                    },
+                    "missingPieces": {
+                        "description": "Text which descripes the missing pieces",
+                        "type": "string"
+                    },
+                    "missingPiecesDate": {
+                        "description": "Date when the piece(s) went missing",
+                        "type": "string"
+                    },
+                    "itemDamagedStatusId": {
+                        "description": "Item Damage status Id, refers to an Item damage Status ID reference record",
+                        "type": "string"
+                    },
+                    "itemDamagedStatusDate": {
+                        "description": "Date when damage status was last changed",
+                        "type": "string"
+                    },
+                    "administrativeNotes": {
+                        "type": "array",
+                        "description": "Administrative notes",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "notes": {
+                        "description": "notes",
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "itemNoteTypeId": {
+                                    "description": "Item note type, refers to a item-note-type reference record",
+                                    "type": "string"
+                                },
+                                "note": {
+                                    "description": "Text to display (e.g. action note, binding, use and reproduction)",
+                                    "type": "string"
+                                },
+                                "staffOnly": {
+                                    "description": "Records the fact that the record should only be displayed for staff",
+                                    "type": "boolean",
+                                    "default": false
+                                }
+                            }
+                        }
+                    },
+                    "circulationNotes": {
+                        "type": "array",
+                        "description": "Notes to be displayed in circulation processes",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string",
+                                    "description": "Note id"
+                                },
+                                "noteType": {
+                                    "type": "string",
+                                    "description": "Type of circulation process that the note applies to",
+                                    "enum": [
+                                        "Check in",
+                                        "Check out"
+                                    ]
+                                },
+                                "note": {
+                                    "type": "string",
+                                    "description": "Text to display"
+                                },
+                                "staffOnly": {
+                                    "type": "boolean",
+                                    "description": "Records the fact that the note should only be displayed for staff"
+                                },
+                                "source": {
+                                    "type": "object",
+                                    "description": "The user who added/updated the note. The property is generated by the server and needed to support sorting.",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "description": "The id of the user who added/updated the note"
+                                        },
+                                        "personal": {
+                                            "type": "object",
+                                            "properties": {
+                                                "lastName": {
+                                                    "description": "The user's surname",
+                                                    "type": "string"
+                                                },
+                                                "firstName": {
+                                                    "description": "The user's given name",
+                                                    "type": "string"
+                                                },
+                                                "middleName": {
+                                                    "description": "The user's middle name (if any)",
+                                                    "type": "string"
+                                                },
+                                                "preferredFirstName": {
+                                                    "description": "The user's preferred name",
+                                                    "type": "string"
+                                                },
+                                                "email": {
+                                                    "description": "The user's email address",
+                                                    "type": "string"
+                                                },
+                                                "phone": {
+                                                    "description": "The user's primary phone number",
+                                                    "type": "string"
+                                                },
+                                                "mobilePhone": {
+                                                    "description": "The user's mobile phone number",
+                                                    "type": "string"
+                                                },
+                                                "dateOfBirth": {
+                                                    "type": "string",
+                                                    "description": "The user's birth date",
+                                                    "format": "date-time"
+                                                },
+                                                "addresses": {
+                                                    "description": "Physical addresses associated with the user",
+                                                    "type": "array",
+                                                    "minItems": 0,
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "description": "A unique id for this address",
+                                                                "type": "string"
+                                                            },
+                                                            "countryId": {
+                                                                "description": "The country code for this address",
+                                                                "type": "string"
+                                                            },
+                                                            "addressLine1": {
+                                                                "description": "Address, Line 1",
+                                                                "type": "string"
+                                                            },
+                                                            "addressLine2": {
+                                                                "description": "Address, Line 2",
+                                                                "type": "string"
+                                                            },
+                                                            "city": {
+                                                                "description": "City name",
+                                                                "type": "string"
+                                                            },
+                                                            "region": {
+                                                                "description": "Region",
+                                                                "type": "string"
+                                                            },
+                                                            "postalCode": {
+                                                                "description": "Postal Code",
+                                                                "type": "string"
+                                                            },
+                                                            "addressTypeId": {
+                                                                "description": "A UUID that corresponds with an address type object",
+                                                                "type": "string"
+                                                            },
+                                                            "primaryAddress": {
+                                                                "description": "Is this the user's primary address?",
+                                                                "type": "boolean"
+                                                            }
+                                                        },
+                                                        "additionalProperties": false
+                                                    }
+                                                },
+                                                "preferredContactTypeId": {
+                                                    "description": "Id of user's preferred contact type",
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "additionalProperties": false,
+                                            "required": [
+                                                "lastName"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "date": {
+                                    "type": "string",
+                                    "description": "Date and time the record is added/updated. The property is generated by the server and needed to support sorting.",
+                                    "format": "date-time"
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    },
+                    "status": {
+                        "description": "The status of the item",
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "description": "Name of the item state (e.g. Available, Checked out, In transit, Awaiting pickup, On order). Default value is set to: Available",
+                                "type": "string",
+                                "enum": [
+                                    "Aged to lost",
+                                    "Available",
+                                    "Awaiting delivery",
+                                    "Awaiting pickup",
+                                    "Checked out",
+                                    "Claimed returned",
+                                    "Declared lost",
+                                    "Lost and paid",
+                                    "Long missing",
+                                    "Missing",
+                                    "In process",
+                                    "In process (non-requestable)",
+                                    "In transit",
+                                    "Intellectual item",
+                                    "On order",
+                                    "Order closed",
+                                    "Paged",
+                                    "Restricted",
+                                    "Unavailable",
+                                    "Unknown",
+                                    "Withdrawn"
+                                ]
+                            },
+                            "date": {
+                                "description": "Date of the current item state. E.g. date set when item state was changed by the Check out app",
+                                "type": "string",
+                                "format": "date-time"
+                            }
+                        },
+                        "additionalProperties": false,
+                        "required": [
+                            "name"
+                        ]
+                    },
+                    "materialType": {
+                        "description": "Material type define what type of thing the item is",
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "description": "Material type Id, refers to a material type reference record",
+                                "type": "string"
+                            },
+                            "name": {
+                                "description": "Material type name (e.g. Audio book, Audio disc, Computer file, Pamphelet) ",
+                                "type": "string"
+                            }
+                        },
+                        "additionalProperties": false,
+                        "required": [
+                            "id"
+                        ]
+                    },
+                    "isBoundWith": {
+                        "description": "Indicates if this Item is a bound-with",
+                        "type": "boolean"
+                    },
+                    "boundWithTitles": {
+                        "description": "List of titles that are bound together within this Item",
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "description": "A title that is bound with other titles within this Item",
+                            "properties": {
+                                "briefHoldingsRecord": {
+                                    "type": "object",
+                                    "description": "Information about a holdings record that links a title to the bound-with Item",
+                                    "properties": {
+                                        "id": {
+                                            "description": "The UUID of the holdingsRecord",
+                                            "type": "string"
+                                        },
+                                        "hrid": {
+                                            "description": "The human-readable ID of the holdingsRecord",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                },
+                                "briefInstance": {
+                                    "type": "object",
+                                    "description": "Information about an Instance / title that is bound with other title within this Item",
+                                    "properties": {
+                                        "id": {
+                                            "description": "The UUID of the Instance",
+                                            "type": "string"
+                                        },
+                                        "hrid": {
+                                            "description": "The human-readable ID of the Instance",
+                                            "type": "string"
+                                        },
+                                        "title": {
+                                            "description": "The title of the Instance",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    },
+                    "permanentLoanType": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "description": "Loan type Id, refers to a loan type reference record",
+                                "type": "string"
+                            },
+                            "name": {
+                                "description": "Loan type name",
+                                "type": "string"
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "temporaryLoanType": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "description": "Loan type Id, refers to a loan type reference record",
+                                "type": "string"
+                            },
+                            "name": {
+                                "description": "Loan type name",
+                                "type": "string"
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "permanentLocation": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "description": "Location id",
+                                "type": "string"
+                            },
+                            "name": {
+                                "description": "location name",
+                                "type": "string"
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "temporaryLocation": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "description": "Location id",
+                                "type": "string"
+                            },
+                            "name": {
+                                "description": "location name",
+                                "type": "string"
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "effectiveLocation": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "description": "Location id",
+                                "type": "string"
+                            },
+                            "name": {
+                                "description": "location name",
+                                "type": "string"
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "electronicAccess": {
+                        "description": "Whether an item is available electronically",
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "uri": {
+                                    "type": "string",
+                                    "description": "Uniform Resource Identifier (URI) is a string of characters designed for unambiguous identification of resources"
+                                },
+                                "linkText": {
+                                    "type": "string",
+                                    "description": "Link text is used for display in place of the URL"
+                                },
+                                "materialsSpecification": {
+                                    "type": "string",
+                                    "description": "Materials specified is used to specify to what portion or aspect of the resource the electronic location and access information applies (e.g. a portion or subset of the item is electronic, or a related electronic resource is being linked to the record)"
+                                },
+                                "publicNote": {
+                                    "type": "string",
+                                    "description": "URL public note to be displayed in the discovery"
+                                },
+                                "relationshipId": {
+                                    "type": "string",
+                                    "description": "Relationship Id, refers to a Relationship type reference record. Relationship between the electronic resource at the location identified and the item described in the record as a whole. (E.g. values from MARC 21, tag field 856 2nd indicator, where the values are: No information provided, Resource, Version of resource, Related resource, No display constant generate"
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    },
+                    "inTransitDestinationServicePointId": {
+                        "description": "Service point an item is intended to be transited to (should only be present when in transit)",
+                        "type": "string"
+                    },
+                    "statisticalCodeIds": {
+                        "type": "array",
+                        "description": "Statistical code Id, refers to a Statistical code reference record",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "purchaseOrderLineIdentifier": {
+                        "type": "string",
+                        "description": "ID referencing a remote purchase order object related to this item"
+                    },
+                    "metadata": {
+                        "type": "object",
+                        "title": "Metadata Schema",
+                        "properties": {
+                            "createdDate": {
+                                "description": "Date and time when the record was created",
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "createdByUserId": {
+                                "description": "ID of the user who created the record (when available)",
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            "createdByUsername": {
+                                "description": "Username of the user who created the record (when available)",
+                                "type": "string",
+                                "maxLength": 50
+                            },
+                            "updatedDate": {
+                                "description": "Date and time when the record was last updated",
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "updatedByUserId": {
+                                "description": "ID of the user who last updated the record (when available)",
+                                "type": "string",
+                                "format": "uuid"
+                            },
+                            "updatedByUsername": {
+                                "description": "Username of the user who last updated the record (when available)",
+                                "type": "string",
+                                "maxLength": 50
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "tags": {
+                        "type": "object",
+                        "title": "tags",
+                        "properties": {
+                            "tagList": {
+                                "description": "List of tags",
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "lastCheckIn": {
+                        "type": "object",
+                        "properties": {
+                            "dateTime": {
+                                "type": "string",
+                                "description": "Date and time of the last check in of the item."
+                            },
+                            "servicePointId": {
+                                "type": "string",
+                                "description": "Service point ID being used by a staff member when item was scanned in Check in app."
+                            },
+                            "staffMemberId": {
+                                "type": "string",
+                                "description": "ID a staff member who scanned the item"
+                            }
+                        }
+                    },
+                    "displaySummary": {
+                        "description": "A summary of the item",
+                        "type": "string"
+                    }
+                }
             }
         },
         "totalRecords": {
             "type": "integer"
         },
         "resultInfo": {
-            "$ref": "../common/resultInfo.json#/ResultInfo"
+            "type": "object",
+            "properties": {
+                "totalRecords": {
+                    "type": "integer",
+                    "description": "Total number of records"
+                },
+                "responseTime": {
+                    "type": "number",
+                    "description": "Response time"
+                },
+                "facets": {
+                    "type": "array",
+                    "description": "Array of facets",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "facetValues": {
+                                "type": "array",
+                                "description": "Array of facet values",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "count": {
+                                            "type": "integer",
+                                            "description": "Count of facet values"
+                                        },
+                                        "value": {
+                                            "type": "object",
+                                            "description": "Value Object"
+                                        }
+                                    }
+                                },
+                                "additionalProperties": false
+                            },
+                            "type": {
+                                "type": "string",
+                                "description": "Type of facet"
+                            }
+                        },
+                        "additionalProperties": false
+                    }
+                },
+                "diagnostics": {
+                    "type": "array",
+                    "description": "Array of diagnostic information",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "source": {
+                                "type": "string",
+                                "description": "Source reporting the diagnostic information"
+                            },
+                            "code": {
+                                "type": "string",
+                                "description": "Diagnostic Code"
+                            },
+                            "message": {
+                                "type": "string",
+                                "description": "Diagnostic Message"
+                            },
+                            "module": {
+                                "type": "string",
+                                "description": "Module reporting diagnostic information"
+                            },
+                            "recordCount": {
+                                "type": "integer",
+                                "description": "Record Count for diagnostics"
+                            },
+                            "query": {
+                                "type": "string",
+                                "description": "CQL Query associated with results"
+                            }
+                        }
+                    }
+                }
+            },
+            "additionalProperties": false
         }
     }
 }

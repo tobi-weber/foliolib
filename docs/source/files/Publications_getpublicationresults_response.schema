@@ -6,8 +6,21 @@
             "type": "array",
             "description": "The list of publication results",
             "items": {
-                "type": "object",
-                "$ref": "publication_schema.yaml#/PublicationResult"
+                "description": "publication result",
+                "properties": {
+                    "tenantId": {
+                        "description": "tenant name",
+                        "type": "string"
+                    },
+                    "response": {
+                        "description": "response message of tenant request",
+                        "type": "string"
+                    },
+                    "statusCode": {
+                        "description": "response code of tenant request",
+                        "type": "integer"
+                    }
+                }
             }
         },
         "totalRecords": {

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Generated at 2024-03-01
+# Generated at 2024-03-23
 
 import logging
 
@@ -190,6 +190,13 @@ class List(FolioApi):
 
         Args:
             exportId (str): exportId of the list (format: UUID)
+
+        Returns:
+            dict: See Schema below.
+
+        Schema:
+
+            .. literalinclude:: ../files/List_downloadlist_response.schema
         """
         return self.call("GET", f"/lists/{id_}/exports/{exportId}/download")
 
@@ -211,6 +218,13 @@ class List(FolioApi):
         """Get all the historic versions of the specified list.
 
         ``GET /lists/{id}/versions``
+
+        Returns:
+            dict: See Schema below.
+
+        Schema:
+
+            .. literalinclude:: ../files/List_getlistversions_response.schema
         """
         return self.call("GET", f"/lists/{id_}/versions")
 

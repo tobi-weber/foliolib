@@ -11,9 +11,29 @@
             "description": "Source version"
         },
         "records": {
+            "description": "Ingest job records chunk",
             "type": "array",
-            "description": "Records",
-            "$ref": "ingestRecordChunk.json"
+            "items": {
+                "type": "object",
+                "properties": {
+                    "localId": {
+                        "type": "string",
+                        "description": "Local identifier"
+                    },
+                    "delete": {
+                        "type": "boolean",
+                        "description": "If true, record is deleted. Default: false"
+                    },
+                    "payload": {
+                        "type": "object",
+                        "description": "Payload in JSON"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "localId"
+                ]
+            }
         }
     },
     "additionalProperties": false,

@@ -5,7 +5,52 @@
             "description": "List of user content updates",
             "type": "array",
             "items": {
-                "$ref": "userContentUpdate.json#/UserContentUpdate"
+                "type": "object",
+                "properties": {
+                    "option": {
+                        "description": "Option to change",
+                        "type": "string",
+                        "enum": [
+                            "PATRON_GROUP",
+                            "EXPIRATION_DATE",
+                            "EMAIL_ADDRESS"
+                        ]
+                    },
+                    "actions": {
+                        "type": "array",
+                        "items": {
+                            "description": "User Changing action",
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "description": "Action name",
+                                    "type": "string",
+                                    "enum": [
+                                        "FIND",
+                                        "ADD_TO_EXISTING",
+                                        "CLEAR_FIELD",
+                                        "REPLACE_WITH",
+                                        "FIND_AND_REMOVE_THESE"
+                                    ]
+                                },
+                                "value": {
+                                    "description": "Action value",
+                                    "type": "object"
+                                }
+                            },
+                            "required": [
+                                "name"
+                            ],
+                            "additionalProperties": false
+                        },
+                        "minItems": 1
+                    }
+                },
+                "required": [
+                    "option",
+                    "actions"
+                ],
+                "additionalProperties": false
             },
             "minItems": 1
         },

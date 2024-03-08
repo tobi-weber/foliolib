@@ -11,7 +11,749 @@
             "type": "array",
             "description": "List of instances found",
             "items": {
-                "$ref": "../instance.json"
+                "type": "object",
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "description": "instance description",
+                "properties": {
+                    "id": {
+                        "description": "The unique ID of the instance record; a UUID",
+                        "type": "string"
+                    },
+                    "tenantId": {
+                        "description": "Tenant ID",
+                        "type": "string"
+                    },
+                    "shared": {
+                        "description": "Indicate if it shared record",
+                        "type": "boolean"
+                    },
+                    "hrid": {
+                        "type": "string",
+                        "description": "The human readable ID, also called eye readable ID. A system-assigned sequential ID which maps to the Instance ID"
+                    },
+                    "source": {
+                        "type": "string",
+                        "description": "The metadata source and its format of the underlying record to the instance record. (e.g. FOLIO if it's a record created in Inventory;  MARC if it's a MARC record created in MARCcat or EPKB if it's a record coming from eHoldings)"
+                    },
+                    "statisticalCodeIds": {
+                        "type": "array",
+                        "description": "List of statistical code IDs",
+                        "items": {
+                            "type": "string",
+                            "description": "UUID for a statistical code"
+                        }
+                    },
+                    "statusId": {
+                        "type": "string",
+                        "description": "UUID for the Instance status term (e.g. cataloged, uncatalogued, batch loaded, temporary, other, not yet assigned)"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "The primary title (or label) associated with the resource"
+                    },
+                    "indexTitle": {
+                        "type": "string",
+                        "description": "Title normalized for browsing and searching; based on the title with articles removed"
+                    },
+                    "series": {
+                        "type": "array",
+                        "description": "List of series titles associated with the resource (e.g. Harry Potter)",
+                        "items": {
+                            "type": "object",
+                            "$schema": "http://json-schema.org/draft-04/schema#",
+                            "description": "A series item description",
+                            "properties": {
+                                "value": {
+                                    "type": "string",
+                                    "description": "Series title value"
+                                },
+                                "authorityId": {
+                                    "type": "string",
+                                    "description": "UUID of authority record that controls an series title"
+                                }
+                            }
+                        }
+                    },
+                    "alternativeTitles": {
+                        "type": "array",
+                        "description": "List of alternative titles for the resource (e.g. original language version title of a movie)",
+                        "items": {
+                            "type": "object",
+                            "$schema": "http://json-schema.org/draft-04/schema#",
+                            "description": "An alternative title description",
+                            "properties": {
+                                "alternativeTitleTypeId": {
+                                    "type": "string",
+                                    "description": "UUID for an alternative title qualifier"
+                                },
+                                "alternativeTitle": {
+                                    "type": "string",
+                                    "description": "An alternative title for the resource"
+                                },
+                                "authorityId": {
+                                    "type": "string",
+                                    "description": "UUID of authority record that controls an alternative title"
+                                }
+                            }
+                        }
+                    },
+                    "identifiers": {
+                        "type": "array",
+                        "description": "Resource identifier value array",
+                        "items": {
+                            "type": "object",
+                            "$schema": "http://json-schema.org/draft-04/schema#",
+                            "description": "Resource identifier",
+                            "properties": {
+                                "value": {
+                                    "type": "string",
+                                    "description": "Resource identifier value"
+                                },
+                                "identifierTypeId": {
+                                    "type": "string",
+                                    "description": "Resource identifier type (e.g. Control number, LCCN, Other standard identifier, System control number)"
+                                }
+                            }
+                        }
+                    },
+                    "contributors": {
+                        "type": "array",
+                        "description": "List of contributors names",
+                        "items": {
+                            "type": "object",
+                            "$schema": "http://json-schema.org/draft-04/schema#",
+                            "description": "A contributor description",
+                            "properties": {
+                                "name": {
+                                    "type": "string",
+                                    "description": "Personal name, corporate name, meeting name"
+                                },
+                                "contributorTypeId": {
+                                    "type": "string",
+                                    "description": "ID for the contributor type term defined as a reference table in settings"
+                                },
+                                "contributorTypeText": {
+                                    "type": "string",
+                                    "description": "Free text element for adding contributor type terms other that defined by the MARC code list for relators"
+                                },
+                                "contributorNameTypeId": {
+                                    "type": "string",
+                                    "description": "Contributor type terms defined by the MARC code list for relators"
+                                },
+                                "authorityId": {
+                                    "type": "string",
+                                    "description": "ID of authority record that controls the contributor"
+                                },
+                                "primary": {
+                                    "type": "boolean",
+                                    "description": "Whether this is the primary contributor"
+                                }
+                            }
+                        }
+                    },
+                    "subjects": {
+                        "type": "array",
+                        "description": "List of subject headings",
+                        "items": {
+                            "type": "object",
+                            "$schema": "http://json-schema.org/draft-04/schema#",
+                            "description": "A subject heading description",
+                            "properties": {
+                                "value": {
+                                    "type": "string",
+                                    "description": "Subject heading value"
+                                },
+                                "authorityId": {
+                                    "type": "string",
+                                    "description": "UUID of authority record that controls a subject heading"
+                                }
+                            }
+                        }
+                    },
+                    "instanceTypeId": {
+                        "type": "string",
+                        "description": "UUID of the unique term for the resource type whether it's from the RDA content term list of locally defined"
+                    },
+                    "instanceFormatIds": {
+                        "type": "array",
+                        "description": "UUIDs for the unique terms for the format whether it's from the RDA carrier term list of locally defined",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "languages": {
+                        "type": "array",
+                        "description": "The set of languages used by the resource",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "metadata": {
+                        "type": "object",
+                        "$schema": "http://json-schema.org/draft-04/schema#",
+                        "description": "Record metadata",
+                        "properties": {
+                            "createdDate": {
+                                "description": "Date and time when the record was created",
+                                "type": "string"
+                            },
+                            "createdByUserId": {
+                                "description": "ID of the user who created the record (when available)",
+                                "type": "string"
+                            },
+                            "createdByUsername": {
+                                "description": "Username of the user who created the record (when available)",
+                                "type": "string"
+                            },
+                            "updatedDate": {
+                                "description": "Date and time when the record was last updated",
+                                "type": "string"
+                            },
+                            "updatedByUserId": {
+                                "description": "ID of the user who last updated the record (when available)",
+                                "type": "string"
+                            },
+                            "updatedByUsername": {
+                                "description": "Username of the user who last updated the record (when available)",
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "administrativeNotes": {
+                        "type": "array",
+                        "description": "Administrative notes",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "modeOfIssuanceId": {
+                        "type": "string",
+                        "description": "UUID of the RDA mode of issuance, a categorization reflecting whether a resource is issued in one or more parts, the way it is updated, and whether its termination is predetermined or not (e.g. monograph,  sequential monograph, serial; integrating Resource, other)"
+                    },
+                    "natureOfContentTermIds": {
+                        "type": "array",
+                        "description": "Array of UUID for the Instance nature of content (e.g. bibliography, biography, exhibition catalogue, festschrift, newspaper, proceedings, research report, thesis or website)",
+                        "items": {
+                            "type": "string",
+                            "description": "Single UUID for the Instance nature of content"
+                        }
+                    },
+                    "publication": {
+                        "type": "array",
+                        "description": "List of publication items",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "publisher": {
+                                    "type": "string",
+                                    "description": "Name of publisher, distributor, etc."
+                                },
+                                "dateOfPublication": {
+                                    "type": "string",
+                                    "description": "Date (year YYYY) of publication, distribution, etc."
+                                }
+                            }
+                        }
+                    },
+                    "staffSuppress": {
+                        "type": "boolean",
+                        "description": "Records the fact that the record should not be displayed for others than catalogers"
+                    },
+                    "discoverySuppress": {
+                        "type": "boolean",
+                        "description": "Records the fact that the record should not be displayed in a discovery system"
+                    },
+                    "isBoundWith": {
+                        "description": "Indicates if this instance is included in a bound-with",
+                        "type": "boolean"
+                    },
+                    "tags": {
+                        "$schema": "http://json-schema.org/draft-04/schema#",
+                        "id": "tags.schema",
+                        "title": "tags",
+                        "description": "List of simple tags that can be added to an object",
+                        "type": "object",
+                        "properties": {
+                            "tagList": {
+                                "description": "List of tags",
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "classifications": {
+                        "type": "array",
+                        "description": "List of classifications",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "classificationNumber": {
+                                    "type": "string",
+                                    "description": "Classification (e.g. classification scheme, classification schedule)"
+                                },
+                                "classificationTypeId": {
+                                    "type": "string",
+                                    "description": "Classification type ID"
+                                }
+                            }
+                        }
+                    },
+                    "electronicAccess": {
+                        "type": "array",
+                        "description": "List of electronic access items",
+                        "items": {
+                            "$schema": "http://json-schema.org/draft-04/schema#",
+                            "description": "Electronic access object",
+                            "type": "object",
+                            "properties": {
+                                "uri": {
+                                    "type": "string",
+                                    "description": "uniform resource identifier (URI) is a string of characters designed for unambiguous identification of resources"
+                                },
+                                "linkText": {
+                                    "type": "string",
+                                    "description": "The value of the MARC tag field 856 2nd indicator, where the values are: no information provided, resource, version of resource, related resource, no display constant generated"
+                                },
+                                "materialsSpecification": {
+                                    "type": "string",
+                                    "description": "Materials specified is used to specify to what portion or aspect of the resource the electronic location and access information applies (e.g. a portion or subset of the item is electronic, or a related electronic resource is being linked to the record)"
+                                },
+                                "publicNote": {
+                                    "type": "string",
+                                    "description": "URL public note to be displayed in the discovery"
+                                }
+                            }
+                        }
+                    },
+                    "notes": {
+                        "type": "array",
+                        "description": "Bibliographic notes (e.g. general notes, specialized notes), and administrative notes",
+                        "items": {
+                            "$schema": "http://json-schema.org/draft-04/schema#",
+                            "description": "Bibliographic or administrative note for instance/item/holding",
+                            "type": "object",
+                            "properties": {
+                                "note": {
+                                    "type": "string",
+                                    "description": "Text content of the note"
+                                },
+                                "staffOnly": {
+                                    "type": "boolean",
+                                    "description": "If true, determines that the note should not be visible for others than staff",
+                                    "default": false
+                                }
+                            }
+                        }
+                    },
+                    "items": {
+                        "type": "array",
+                        "description": "List of instance items",
+                        "items": {
+                            "$schema": "http://json-schema.org/draft-04/schema#",
+                            "description": "Item description",
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string",
+                                    "description": "Unique ID of the item record"
+                                },
+                                "tenantId": {
+                                    "description": "Tenant ID",
+                                    "type": "string"
+                                },
+                                "hrid": {
+                                    "type": "string",
+                                    "description": "The human readable ID, also called eye readable ID. A system-assigned sequential alternate ID"
+                                },
+                                "accessionNumber": {
+                                    "type": "string",
+                                    "description": "Also called inventory number"
+                                },
+                                "formerIds": {
+                                    "type": "array",
+                                    "description": "Previous identifiers assigned to the item",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "itemIdentifier": {
+                                    "type": "string",
+                                    "description": "Item identifier number, e.g. imported from the union catalogue (read only)."
+                                },
+                                "barcode": {
+                                    "type": "string",
+                                    "description": "Unique inventory control number for physical resources, used largely for circulation purposes"
+                                },
+                                "effectiveLocationId": {
+                                    "type": "string",
+                                    "description": "Read only current home location for the item."
+                                },
+                                "status": {
+                                    "description": "The status of the item",
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "description": "Name of the status e.g. Available, Checked out, In transit",
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "materialTypeId": {
+                                    "type": "string",
+                                    "description": "Material type, term. Define what type of thing the item is."
+                                },
+                                "discoverySuppress": {
+                                    "type": "boolean",
+                                    "description": "Records the fact that the record should not be displayed in a discovery system"
+                                },
+                                "effectiveCallNumberComponents": {
+                                    "type": "object",
+                                    "description": "Elements of a full call number generated from the item or holding",
+                                    "properties": {
+                                        "callNumber": {
+                                            "type": "string",
+                                            "description": "Effective Call Number is an identifier assigned to an item or its holding and associated with the item."
+                                        },
+                                        "prefix": {
+                                            "type": "string",
+                                            "description": "Effective Call Number Prefix is the prefix of the identifier assigned to an item or its holding and associated with the item."
+                                        },
+                                        "suffix": {
+                                            "type": "string",
+                                            "description": "Effective Call Number Suffix is the suffix of the identifier assigned to an item or its holding and associated with the item."
+                                        },
+                                        "typeId": {
+                                            "type": "string",
+                                            "description": "Effective Call Number Type Id is the call number type id of the item, if available, otherwise that of the holding."
+                                        }
+                                    }
+                                },
+                                "effectiveShelvingOrder": {
+                                    "type": "string",
+                                    "description": "A system generated normalization of the call number that allows for call number sorting in reports and search results"
+                                },
+                                "itemLevelCallNumberTypeId": {
+                                    "type": "string",
+                                    "description": "Call number type id"
+                                },
+                                "tags": {
+                                    "$schema": "http://json-schema.org/draft-04/schema#",
+                                    "id": "tags.schema",
+                                    "title": "tags",
+                                    "description": "List of simple tags that can be added to an object",
+                                    "type": "object",
+                                    "properties": {
+                                        "tagList": {
+                                            "description": "List of tags",
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                },
+                                "electronicAccess": {
+                                    "type": "array",
+                                    "description": "List of electronic access items",
+                                    "items": {
+                                        "$schema": "http://json-schema.org/draft-04/schema#",
+                                        "description": "Electronic access object",
+                                        "type": "object",
+                                        "properties": {
+                                            "uri": {
+                                                "type": "string",
+                                                "description": "uniform resource identifier (URI) is a string of characters designed for unambiguous identification of resources"
+                                            },
+                                            "linkText": {
+                                                "type": "string",
+                                                "description": "The value of the MARC tag field 856 2nd indicator, where the values are: no information provided, resource, version of resource, related resource, no display constant generated"
+                                            },
+                                            "materialsSpecification": {
+                                                "type": "string",
+                                                "description": "Materials specified is used to specify to what portion or aspect of the resource the electronic location and access information applies (e.g. a portion or subset of the item is electronic, or a related electronic resource is being linked to the record)"
+                                            },
+                                            "publicNote": {
+                                                "type": "string",
+                                                "description": "URL public note to be displayed in the discovery"
+                                            }
+                                        }
+                                    }
+                                },
+                                "administrativeNotes": {
+                                    "type": "array",
+                                    "description": "Administrative notes",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "notes": {
+                                    "type": "array",
+                                    "description": "Notes about action, copy, binding etc.",
+                                    "items": {
+                                        "$schema": "http://json-schema.org/draft-04/schema#",
+                                        "description": "Bibliographic or administrative note for instance/item/holding",
+                                        "type": "object",
+                                        "properties": {
+                                            "note": {
+                                                "type": "string",
+                                                "description": "Text content of the note"
+                                            },
+                                            "staffOnly": {
+                                                "type": "boolean",
+                                                "description": "If true, determines that the note should not be visible for others than staff",
+                                                "default": false
+                                            }
+                                        }
+                                    }
+                                },
+                                "statisticalCodeIds": {
+                                    "type": "array",
+                                    "description": "List of statistical code IDs",
+                                    "items": {
+                                        "type": "string",
+                                        "description": "UUID for a statistical code"
+                                    }
+                                },
+                                "circulationNotes": {
+                                    "type": "array",
+                                    "description": "Notes to be displayed in circulation processes.",
+                                    "items": {
+                                        "$schema": "http://json-schema.org/draft-04/schema#",
+                                        "description": "Circulations note for item",
+                                        "type": "object",
+                                        "properties": {
+                                            "note": {
+                                                "type": "string",
+                                                "description": "Text to display"
+                                            },
+                                            "staffOnly": {
+                                                "type": "boolean",
+                                                "description": "Flag to restrict display of this note",
+                                                "default": false
+                                            }
+                                        }
+                                    }
+                                },
+                                "metadata": {
+                                    "type": "object",
+                                    "$schema": "http://json-schema.org/draft-04/schema#",
+                                    "description": "Record metadata",
+                                    "properties": {
+                                        "createdDate": {
+                                            "description": "Date and time when the record was created",
+                                            "type": "string"
+                                        },
+                                        "createdByUserId": {
+                                            "description": "ID of the user who created the record (when available)",
+                                            "type": "string"
+                                        },
+                                        "createdByUsername": {
+                                            "description": "Username of the user who created the record (when available)",
+                                            "type": "string"
+                                        },
+                                        "updatedDate": {
+                                            "description": "Date and time when the record was last updated",
+                                            "type": "string"
+                                        },
+                                        "updatedByUserId": {
+                                            "description": "ID of the user who last updated the record (when available)",
+                                            "type": "string"
+                                        },
+                                        "updatedByUsername": {
+                                            "description": "Username of the user who last updated the record (when available)",
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            },
+                            "required": [
+                                "notes"
+                            ]
+                        }
+                    },
+                    "holdings": {
+                        "type": "array",
+                        "description": "List of instance holding records",
+                        "items": {
+                            "$schema": "http://json-schema.org/draft-04/schema#",
+                            "description": "Holding description",
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "string",
+                                    "description": "Unique ID of the holding record"
+                                },
+                                "tenantId": {
+                                    "description": "Tenant ID",
+                                    "type": "string"
+                                },
+                                "permanentLocationId": {
+                                    "type": "string",
+                                    "description": "The permanent shelving location in which an item resides."
+                                },
+                                "discoverySuppress": {
+                                    "type": "boolean",
+                                    "description": "Indicates that the record should not be displayed in a discovery system"
+                                },
+                                "hrid": {
+                                    "type": "string",
+                                    "description": "the human readable ID, also called eye readable ID. A system-assigned sequential ID which maps to the Instance ID"
+                                },
+                                "sourceId": {
+                                    "description": "(A reference to) the source of a holdings record",
+                                    "type": "string"
+                                },
+                                "formerIds": {
+                                    "type": "array",
+                                    "description": "Previous identifiers assigned to the holding",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "statisticalCodeIds": {
+                                    "type": "array",
+                                    "description": "List of statistical code IDs",
+                                    "items": {
+                                        "type": "string",
+                                        "description": "UUID for a statistical code"
+                                    }
+                                },
+                                "tags": {
+                                    "$schema": "http://json-schema.org/draft-04/schema#",
+                                    "id": "tags.schema",
+                                    "title": "tags",
+                                    "description": "List of simple tags that can be added to an object",
+                                    "type": "object",
+                                    "properties": {
+                                        "tagList": {
+                                            "description": "List of tags",
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                },
+                                "holdingsTypeId": {
+                                    "type": "string",
+                                    "description": "unique ID for the type of this holdings record, a UUID"
+                                },
+                                "callNumberPrefix": {
+                                    "type": "string",
+                                    "description": "Prefix of the call number on the holding level."
+                                },
+                                "callNumber": {
+                                    "type": "string",
+                                    "description": "Call Number is an identifier assigned to an item, usually printed on a label attached to the item."
+                                },
+                                "callNumberSuffix": {
+                                    "type": "string",
+                                    "description": "Suffix of the call number on the holding level."
+                                },
+                                "electronicAccess": {
+                                    "type": "array",
+                                    "description": "List of electronic access items",
+                                    "items": {
+                                        "$schema": "http://json-schema.org/draft-04/schema#",
+                                        "description": "Electronic access object",
+                                        "type": "object",
+                                        "properties": {
+                                            "uri": {
+                                                "type": "string",
+                                                "description": "uniform resource identifier (URI) is a string of characters designed for unambiguous identification of resources"
+                                            },
+                                            "linkText": {
+                                                "type": "string",
+                                                "description": "The value of the MARC tag field 856 2nd indicator, where the values are: no information provided, resource, version of resource, related resource, no display constant generated"
+                                            },
+                                            "materialsSpecification": {
+                                                "type": "string",
+                                                "description": "Materials specified is used to specify to what portion or aspect of the resource the electronic location and access information applies (e.g. a portion or subset of the item is electronic, or a related electronic resource is being linked to the record)"
+                                            },
+                                            "publicNote": {
+                                                "type": "string",
+                                                "description": "URL public note to be displayed in the discovery"
+                                            }
+                                        }
+                                    }
+                                },
+                                "administrativeNotes": {
+                                    "type": "array",
+                                    "description": "Administrative notes",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "notes": {
+                                    "type": "array",
+                                    "description": "Notes about action, copy, binding etc.",
+                                    "items": {
+                                        "$schema": "http://json-schema.org/draft-04/schema#",
+                                        "description": "Bibliographic or administrative note for instance/item/holding",
+                                        "type": "object",
+                                        "properties": {
+                                            "note": {
+                                                "type": "string",
+                                                "description": "Text content of the note"
+                                            },
+                                            "staffOnly": {
+                                                "type": "boolean",
+                                                "description": "If true, determines that the note should not be visible for others than staff",
+                                                "default": false
+                                            }
+                                        }
+                                    }
+                                },
+                                "metadata": {
+                                    "type": "object",
+                                    "$schema": "http://json-schema.org/draft-04/schema#",
+                                    "description": "Record metadata",
+                                    "properties": {
+                                        "createdDate": {
+                                            "description": "Date and time when the record was created",
+                                            "type": "string"
+                                        },
+                                        "createdByUserId": {
+                                            "description": "ID of the user who created the record (when available)",
+                                            "type": "string"
+                                        },
+                                        "createdByUsername": {
+                                            "description": "Username of the user who created the record (when available)",
+                                            "type": "string"
+                                        },
+                                        "updatedDate": {
+                                            "description": "Date and time when the record was last updated",
+                                            "type": "string"
+                                        },
+                                        "updatedByUserId": {
+                                            "description": "ID of the user who last updated the record (when available)",
+                                            "type": "string"
+                                        },
+                                        "updatedByUsername": {
+                                            "description": "Username of the user who last updated the record (when available)",
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            },
+                            "required": [
+                                "electronicAccess",
+                                "notes"
+                            ]
+                        }
+                    }
+                },
+                "required": [
+                    "electronicAccess",
+                    "notes",
+                    "items",
+                    "holdings"
+                ]
             }
         }
     }
